@@ -2,18 +2,18 @@
  * ============================================================================
  * APP STATE - STORE REACTIVO CENTRALIZADO (PUB/SUB)
  * ============================================================================
- * Maneja el estado global de la interfaz sin acoplamiento a frameworks.
+ * Maneja el estado global de la interfaz con persistencia de vista y navegación.
  */
 
 export class AppState {
   constructor() {
     this.state = {
-      activeView: 'library',       // 'library', 'current', 'favorites', 'annotations', 'vocabulary', 'settings'
-      activeFilter: 'all',         // 'all', 'to_read', 'reading', 'completed', 'favorites'
-      viewMode: localStorage.getItem('arcadia_view_mode') || 'grid', // 'grid' | 'list'
+      activeView: localStorage.getItem('arcadia_active_view') || 'library',       // 'library', 'reader', 'settings'
+      activeFilter: localStorage.getItem('arcadia_active_filter') || 'all',       // 'all', 'to_read', 'reading', 'completed', 'favorites', 'annotations', 'vocabulary', 'col-...'
+      viewMode: localStorage.getItem('arcadia_view_mode') || 'grid',              // 'grid' | 'list'
       sortBy: 'recent',            // 'recent', 'title', 'author', 'progress'
       searchQuery: '',
-      currentReadingId: 'book-1',  // ID del libro en lectura activa
+      currentReadingId: localStorage.getItem('arcadia_active_book_id') || 'book-1', // ID del libro en lectura activa
       selectedTheme: localStorage.getItem('arcadia_theme') || 'mystic-night'
     };
 
@@ -36,6 +36,21 @@ export class AppState {
 
     if (key === 'viewMode') {
       localStorage.setItem('arcadia_view_mode', value);
+    }
+    if (key === 'activeFilter') {
+      localStorage.setItem('arcadia_active_filter', value);
+      if (this.state.activeView !== 'reader') {
+        const hashVal = value === 'all' ? '#library' : `#${value}`;
+        if (window.location.hash !== hashVal) {
+          window.location.hash = hashVal;
+        }
+      }
+    }
+    if (key === 'activeView') {
+      localStorage.setItem('arcadia_active_view', value);
+    }
+    if (key === 'currentReadingId') {
+      localStorage.setItem('arcadia_active_book_id', value);
     }
 
     this.notify(key, value);

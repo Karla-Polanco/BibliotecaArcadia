@@ -240,6 +240,9 @@ export class ReaderView {
   async open(bookId, initialCfi = null) {
     this.currentBookId = bookId;
     this.isOpen = true;
+    appState.set('activeView', 'reader');
+    appState.set('currentReadingId', bookId);
+    window.location.hash = `#reader/${bookId}`;
 
     if (this.container) {
       this.container.classList.add('active');
@@ -280,6 +283,9 @@ export class ReaderView {
 
     // Actualizar el estado global
     appState.set('activeView', 'library');
+    localStorage.removeItem('arcadia_active_book_id');
+    const filter = appState.get('activeFilter') || 'all';
+    window.location.hash = filter === 'all' ? '#library' : `#${filter}`;
   }
 
   /**

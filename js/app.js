@@ -103,6 +103,9 @@ class App {
     // 10. Vincular Modal de Selector de Temas
     this.initThemeModal();
 
+    // 11. Restaurar vista, filtro o libro activo tras recargar la página
+    this.restorePreviousState();
+
     console.log('✦ Biblioteca Arcadia inicializada con éxito (Fase 3: Motor de Lectura EPUB con epub.js)');
   }
 
@@ -375,8 +378,58 @@ class App {
       }
     }
 
-    if (storageTextEl) storageTextEl.textContent = '1.2 GB de 5 GB usados';
-    if (storageFillEl) storageFillEl.style.width = '24%';
+    /**
+   * Restaura la vista, sección o libro activo previo a la recarga de página (F5 / Ctrl+R).
+   */
+  restorePreviousState() {
+    const hash = window.location.hash;
+    const savedView = localStorage.getItem('arcadia_active_view');
+    const savedBookId = localStorage.getItem('arcadia_active_book_id');
+    const savedFilter = localStorage.getItem('arcadia_active_filter') || 'all';
+
+    // 1. Si estábamos dentro del lector EPUB
+    if (hash.startsWith('#reader/')) {
+      const bookId = hash.replace('#reader/', '');
+      if (bookId && this.readerView) {
+        setTimeout(() => this.readerView.open(bookId), 60);
+        return;
+      }
+    } else if (savedView === 'reader' && savedBookId && this.readerView) {
+      setTimeout(() => this.readerView.open(savedBookId), 60);
+      return;
+    }
+
+    // 2. Si estábamos en un filtro o sección específica
+    let targetFilter = savedFilter;
+    if (hash && hash !== '#' && hash !== '#library') {
+      targetFilter = hash.replace('#', '');
+    }
+
+    if (targetFilter) {
+      document.querySelectorAll('[data-nav-filter]').forEach(el => {
+        el.classList.toggle('active', el.dataset.navFilter === targetFilter);
+      });
+      document.querySelectorAll('.mobile-nav-link[data-nav-filter]').forEach(mItem => {
+        mItem.classList.toggle('active', mItem.dataset.navFilter === targetFilter);
+      });
+      appState.set('activeFilter', targetFilter);
+    }
+
+    // Oyente para navegación por historial del navegador (Atrás / Adelante)
+    window.addEventListener('hashchange', () => {
+      const currentHash = window.location.hash;
+      if (currentHash.startsWith('#reader/')) {
+        const bId = currentHash.replace('#reader/', '');
+        if (bId && this.readerView && !this.readerView.isOpen) {
+          this.readerView.open(bId);
+        }
+      } else if (this.readerView && this.readerView.isOpen) {
+        this.readerView.close();
+      } else {
+        const f = currentHash.replace('#', '') || 'all';
+        appState.set('activeFilter', f);
+      }
+    });
   }
 }
 

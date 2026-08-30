@@ -450,25 +450,38 @@
 }
 
 .settings-btn-grid {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  flex-wrap: wrap;
+  width: 100%;
+}
+
+.settings-btn-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  width: 100%;
 }
 
 .setting-pill-btn {
-  flex: 1;
-  min-width: 70px;
-  padding: 10px 14px;
+  width: 100%;
+  min-width: 0;
+  height: 42px;
+  padding: 0 4px;
   background-color: var(--color-surface);
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-md, 10px);
   color: var(--color-text-secondary);
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   transition: all var(--transition-fast);
+  box-sizing: border-box;
 }
 
 .setting-pill-btn:hover {
@@ -522,16 +535,17 @@
 
 /* Swatches de Temas en el Lector */
 .reader-theme-swatches {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
-  flex-wrap: wrap;
+  width: 100%;
 }
 
 .reader-theme-chip {
-  flex: 1;
-  min-width: 44px;
-  height: 44px;
-  padding: 0 10px;
+  width: 100%;
+  min-width: 0;
+  height: 42px;
+  padding: 0 4px;
   border-radius: var(--radius-md, 10px);
   border: 2px solid var(--color-border);
   display: flex;
@@ -541,6 +555,7 @@
   font-weight: 700;
   cursor: pointer;
   transition: all var(--transition-fast);
+  box-sizing: border-box;
 }
 
 .reader-theme-chip:hover {

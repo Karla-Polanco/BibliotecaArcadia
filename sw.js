@@ -6,26 +6,29 @@
  * mediante caché Cache-First del App Shell y limpieza de versiones obsoletas.
  */
 
-const CACHE_NAME = 'arcadia-pwa-v15';
+const CACHE_NAME = 'arcadia-pwa-v16';
 
 // Recursos esenciales del App Shell a precachear
 const APP_SHELL_ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './css/main.css',
+  './css/tokens.css',
   './css/themes.css',
+  './css/main.css',
+  './css/layout.css',
+  './css/library.css',
   './css/reader.css',
+  './css/responsive.css',
   './js/app.js',
   './js/db.js',
   './js/state.js',
-  './js/epub/EPUBParser.js',
-  './js/epub/EPUBValidator.js',
+  './js/quotes/QuotesService.js',
   './js/library/BookManager.js',
   './js/library/CollectionManager.js',
+  './js/library/CoverExtractor.js',
   './js/library/LibraryView.js',
   './js/library/StorageWidget.js',
-  './js/quotes/QuotesService.js',
   './js/reader/BookmarkManager.js',
   './js/reader/LocationsManager.js',
   './js/reader/ReaderManager.js',
@@ -45,11 +48,7 @@ const APP_SHELL_ASSETS = [
   './js/ui/Toast.js',
   './assets/libs/jszip.min.js',
   './assets/libs/epub.min.js',
-  './assets/sample/sample_book.epub',
-  './assets/icons/logo.png',
-  './assets/icons/icon.svg',
-  './assets/icons/icon-192.png',
-  './assets/icons/icon-512.png'
+  './assets/sample/sample_book.epub'
 ];
 
 // 1. INSTALACIÓN: Precarga en caché de todos los archivos del App Shell
