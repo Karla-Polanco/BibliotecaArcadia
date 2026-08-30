@@ -6,7 +6,7 @@
  * mediante caché Cache-First del App Shell y limpieza de versiones obsoletas.
  */
 
-const CACHE_NAME = 'arcadia-pwa-v1';
+const CACHE_NAME = 'arcadia-pwa-v2';
 
 // Recursos esenciales del App Shell a precachear
 const APP_SHELL_ASSETS = [
@@ -24,7 +24,6 @@ const APP_SHELL_ASSETS = [
   './js/library/BookManager.js',
   './js/library/CollectionManager.js',
   './js/library/LibraryView.js',
-  './js/library/mockBooks.js',
   './js/library/StorageWidget.js',
   './js/quotes/QuotesService.js',
   './js/reader/BookmarkManager.js',
@@ -38,6 +37,7 @@ const APP_SHELL_ASSETS = [
   './js/annotations/NoteManager.js',
   './js/vocabulary/VocabularyManager.js',
   './js/vocabulary/VocabularyView.js',
+  './js/pwa/PWAManager.js',
   './js/ui/CollectionModal.js',
   './js/ui/FloatingMenu.js',
   './js/ui/ThemeManager.js',

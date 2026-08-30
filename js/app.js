@@ -76,11 +76,18 @@ class App {
       );
     }
 
-    // 8. Vincular Botón "Continuar leyendo" de la barra inferior
+    // 9. Vincular Botón "Continuar leyendo" de la barra inferior
     const btnContinue = document.getElementById('btn-continue-reading');
     if (btnContinue) {
       btnContinue.addEventListener('click', () => {
-        const currentId = appState.get('currentReadingId') || (this.bookManager.getAllBooks()[0] ? this.bookManager.getAllBooks()[0].id : null);
+        const books = this.bookManager.getAllBooks();
+        if (books.length === 0) {
+          Toast.info('Tu biblioteca está vacía. Haz clic en "Subir libro (EPUB)" para agregar tus lecturas.');
+          document.getElementById('epub-file-input')?.click();
+          return;
+        }
+
+        const currentId = appState.get('currentReadingId') || books[0].id;
         if (currentId && this.readerView) {
           this.readerView.open(currentId);
         }

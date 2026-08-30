@@ -8,7 +8,6 @@
 import { dbManager } from '../db.js';
 import { EPUBValidator } from '../epub/EPUBValidator.js';
 import { EPUBParser } from '../epub/EPUBParser.js';
-import { mockBooks } from './mockBooks.js';
 import { appState } from '../state.js';
 
 export class BookManager {
@@ -18,17 +17,24 @@ export class BookManager {
   }
 
   /**
-   * Inicializa la base de datos y carga los libros en memoria.
-   * Si la base de datos está vacía, pre-siembra los libros iniciales en IndexedDB.
+   * Inicializa la base de datos y carga únicamente los libros subidos por el usuario.
+   * Purga automáticamente cualquier libro ficticio/mock que haya quedado en IndexedDB.
    */
   async init() {
     await dbManager.init();
     let storedBooks = await dbManager.getAll('books');
 
-    if (storedBooks.length === 0) {
-      console.log('✦ Sembrando catálogo inicial en IndexedDB...');
-      for (const b of mockBooks) {
-        await dbManager.put('books', b);
+    // Purgar libros de demostración previos (id con prefijo 'book-' o sin fileBlob)
+    const mockBookIds = storedBooks
+      .filter(b => (b.id && b.id.startsWith('book-')) || !b.fileBlob)
+      .map(b => b.id);
+
+    if (mockBookIds.length > 0) {
+      console.log(`✦ Eliminando ${mockBookIds.length} libros de ejemplo de la base de datos local...`);
+      for (const id of mockBookIds) {
+        await dbManager.delete('books', id);
+        await dbManager.delete('readingProgress', id);
+        await dbManager.delete('readerSettings', id);
       }
       storedBooks = await dbManager.getAll('books');
     }

@@ -101,7 +101,6 @@ BibliotecaArcadia/
 │   │   ├── BookManager.js      # CRUD de libros en IndexedDB
 │   │   ├── CollectionManager.js# Gestión de colecciones y relaciones N:M
 │   │   ├── LibraryView.js      # Renderizador del catálogo (Grid/Lista) y filtros
-│   │   ├── mockBooks.js        # Libros iniciales y generadores de portada
 │   │   └── StorageWidget.js    # Monitor de espacio local
 │   ├── reader/
 │   │   ├── LocationsManager.js # Generación y mapeo de ubicaciones CFI

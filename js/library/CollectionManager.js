@@ -56,14 +56,12 @@ export class CollectionManager {
         await dbManager.put('collections', col);
       }
 
-      // Asociar algunos libros si existen
-      if (books && books.length >= 6) {
-        await this.addBookToCollection(books[0].id, 'col-filosofia');
-        await this.addBookToCollection(books[1].id, 'col-filosofia');
-        await this.addBookToCollection(books[2].id, 'col-ficcion');
-        await this.addBookToCollection(books[3].id, 'col-ficcion');
-        await this.addBookToCollection(books[4].id, 'col-clasicos');
-        await this.addBookToCollection(books[5].id, 'col-clasicos');
+      // Purgar cualquier relación residual de libros ficticios
+      const allRels = await dbManager.getAll('book_collections');
+      for (const rel of allRels) {
+        if (rel.bookId && rel.bookId.startsWith('book-')) {
+          await dbManager.delete('book_collections', rel.id);
+        }
       }
 
       return await dbManager.getAll('collections');
