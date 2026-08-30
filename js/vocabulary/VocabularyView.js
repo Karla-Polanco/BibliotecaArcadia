@@ -10,6 +10,7 @@ import { VocabularyManager } from './VocabularyManager.js';
 import { dbManager } from '../db.js';
 import { appState } from '../state.js';
 import { Toast } from '../ui/Toast.js';
+import { Modal } from '../ui/Modal.js';
 
 export class VocabularyView {
   constructor(containerElement) {
@@ -253,7 +254,14 @@ export class VocabularyView {
       btn.addEventListener('click', async (e) => {
         e.stopPropagation();
         const id = btn.dataset.id;
-        if (confirm('¿Eliminar este término del vocabulario?')) {
+        const confirmed = await Modal.confirm({
+          title: 'Eliminar término',
+          message: '¿Estás seguro de que deseas eliminar este término de tu cuaderno de vocabulario?',
+          danger: true,
+          confirmText: 'Eliminar'
+        });
+
+        if (confirmed) {
           await VocabularyManager.removeWord(id);
           Toast.info('Término eliminado.');
           this.loadAndRender();
@@ -263,13 +271,22 @@ export class VocabularyView {
   }
 
   async promptAddWord() {
-    const rawWord = prompt('Introduce la palabra que deseas agregar:');
+    const rawWord = await Modal.prompt({
+      title: 'Añadir palabra al vocabulario',
+      message: 'Introduce la palabra o expresión que deseas incorporar:',
+      placeholder: 'Ej. Catarsis, Epifanía...'
+    });
     if (!rawWord || !rawWord.trim()) return;
 
     Toast.info(`Buscando definición para «${rawWord.trim()}»...`);
     const defData = await VocabularyManager.lookupDefinition(rawWord.trim());
 
-    const def = prompt('Definición del término:', defData.definition);
+    const def = await Modal.prompt({
+      title: `Definición de «${defData.word}»`,
+      message: 'Confirma o personaliza el significado del término:',
+      defaultValue: defData.definition,
+      multiline: true
+    });
     if (def === null) return;
 
     try {

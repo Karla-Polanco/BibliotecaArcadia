@@ -10,6 +10,7 @@ import { annotationManager, AnnotationManager } from '../annotations/AnnotationM
 import { NoteManager } from '../annotations/NoteManager.js';
 import { VocabularyManager } from '../vocabulary/VocabularyManager.js';
 import { Toast } from './Toast.js';
+import { Modal } from './Modal.js';
 
 export class FloatingMenu {
   constructor() {
@@ -232,36 +233,49 @@ export class FloatingMenu {
   /**
    * Diálogo modal para redactar una nota vinculada.
    */
-  openNoteDialog(selection) {
+  async openNoteDialog(selection) {
     const quote = selection.text.length > 120 ? selection.text.substring(0, 120) + '...' : selection.text;
-    const noteText = prompt(`Crear nota para la cita:\n\n"${quote}"\n\nEscribe tu nota aquí:`);
+    const noteText = await Modal.prompt({
+      title: 'Nota al margen',
+      message: `Cita seleccionada:\n«${quote}»`,
+      placeholder: 'Escribe tu nota o reflexión personal...',
+      multiline: true,
+      confirmText: 'Guardar nota'
+    });
 
     if (noteText === null || !noteText.trim()) return;
 
-    NoteManager.createNote({
-      bookId: annotationManager.currentBookId,
-      cfiRange: selection.cfiRange,
-      selectedText: selection.text,
-      title: noteText.trim().substring(0, 35) + '...',
-      content: noteText.trim()
-    }).then(() => {
+    try {
+      await NoteManager.createNote({
+        bookId: annotationManager.currentBookId,
+        cfiRange: selection.cfiRange,
+        selectedText: selection.text,
+        title: noteText.trim().substring(0, 35) + '...',
+        content: noteText.trim()
+      });
       // También agregar un resaltado suave en amarillo
       annotationManager.addHighlight(selection.cfiRange, selection.text, 'yellow', selection.chapterTitle);
       Toast.success('Nota guardada con éxito.');
-    }).catch(err => {
+    } catch (err) {
       Toast.error('Error al guardar la nota.');
-    });
+    }
   }
 
   /**
    * Menú emergente para eliminar o editar un resaltado existente.
    */
-  showAnnotationOptions(annotation) {
-    const confirmed = confirm(`Anotación: "${annotation.text.substring(0, 60)}..."\n\n¿Deseas eliminar este ${annotation.type === 'underline' ? 'subrayado' : 'resaltado'}?`);
+  async showAnnotationOptions(annotation) {
+    const quote = annotation.text ? annotation.text.substring(0, 60) + '...' : 'Pasaje seleccionado';
+    const confirmed = await Modal.confirm({
+      title: 'Eliminar anotación',
+      message: `Cita: «${quote}»\n\n¿Deseas eliminar este ${annotation.type === 'underline' ? 'subrayado' : 'resaltado'}?`,
+      danger: true,
+      confirmText: 'Eliminar'
+    });
+
     if (confirmed) {
-      annotationManager.removeAnnotation(annotation.id).then(() => {
-        Toast.success('Anotación eliminada.');
-      });
+      await annotationManager.removeAnnotation(annotation.id);
+      Toast.success('Anotación eliminada.');
     }
   }
 

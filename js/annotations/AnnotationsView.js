@@ -10,6 +10,7 @@ import { dbManager } from '../db.js';
 import { appState } from '../state.js';
 import { Toast } from '../ui/Toast.js';
 import { AnnotationManager } from './AnnotationManager.js';
+import { Modal } from '../ui/Modal.js';
 
 export class AnnotationsView {
   constructor(containerElement, onOpenBookCfi) {
@@ -275,7 +276,14 @@ export class AnnotationsView {
       btn.addEventListener('click', async () => {
         const id = btn.dataset.id;
         const kind = btn.dataset.kind;
-        if (confirm('¿Deseas eliminar este elemento?')) {
+        const confirmed = await Modal.confirm({
+          title: 'Eliminar elemento',
+          message: `¿Estás seguro de que deseas eliminar este ${kind === 'note' ? 'comentario' : 'subrayado'}?`,
+          danger: true,
+          confirmText: 'Eliminar'
+        });
+
+        if (confirmed) {
           if (kind === 'note') {
             await dbManager.delete('notes', id);
           } else {

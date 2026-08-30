@@ -11,6 +11,7 @@ import { dbManager } from '../db.js';
 import { CollectionManager } from './CollectionManager.js';
 import { CollectionModal } from '../ui/CollectionModal.js';
 import { Toast } from '../ui/Toast.js';
+import { Modal } from '../ui/Modal.js';
 
 export class LibraryView {
   constructor(containerElement, bookManager, onOpenBook = null, annotationsView = null, vocabularyView = null) {
@@ -215,11 +216,18 @@ export class LibraryView {
         const col = collections.find(c => c.id === colId);
         if (!col) return;
 
-        const action = confirm(`Colección: "${col.name}"\n\n¿Deseas editar esta colección?\n(Aceptar = Editar, Cancelar = Opciones de eliminación)`);
-        if (action) {
+        const action = await Modal.collectionActionModal(col);
+        if (action === 'edit') {
           CollectionModal.openEditModal(col, () => this.updateBadges());
-        } else {
-          if (confirm(`¿Eliminar la colección "${col.name}"?\n(Los libros no se borrarán de la biblioteca)`)) {
+        } else if (action === 'delete') {
+          const confirmed = await Modal.confirm({
+            title: 'Eliminar colección',
+            message: `¿Estás seguro de que deseas eliminar la colección «${col.name}»?\n\nLos libros continuarán intactos en tu biblioteca.`,
+            danger: true,
+            confirmText: 'Eliminar colección'
+          });
+
+          if (confirmed) {
             await CollectionManager.deleteCollection(col.id);
             Toast.success('Colección eliminada.');
             this.updateBadges();
@@ -610,16 +618,13 @@ export class LibraryView {
    * Diálogo para editar metadatos básicos (título y autor).
    */
   async promptEditBook(book) {
-    const newTitle = prompt('Editar título del libro:', book.title);
-    if (newTitle === null) return;
-
-    const newAuthor = prompt('Editar autor:', book.author);
-    if (newAuthor === null) return;
+    const updated = await Modal.editBookDetails(book);
+    if (!updated) return;
 
     try {
       await this.bookManager.updateBook(book.id, {
-        title: newTitle.trim() || book.title,
-        author: newAuthor.trim() || book.author
+        title: updated.title || book.title,
+        author: updated.author || book.author
       });
       Toast.success('Detalles del libro actualizados.');
     } catch (err) {
@@ -631,12 +636,18 @@ export class LibraryView {
    * Diálogo de confirmación para eliminar un libro de IndexedDB.
    */
   async confirmDeleteBook(book) {
-    const confirmed = confirm(`¿Estás seguro de que deseas eliminar "${book.title}" de tu biblioteca local?`);
+    const confirmed = await Modal.confirm({
+      title: 'Eliminar libro',
+      message: `¿Estás seguro de que deseas eliminar «${book.title}» de tu biblioteca local?\n\nSe eliminarán permanentemente el archivo, sus notas y su progreso de lectura.`,
+      danger: true,
+      confirmText: 'Eliminar libro'
+    });
+
     if (!confirmed) return;
 
     try {
       await this.bookManager.deleteBook(book.id);
-      Toast.success(`"${book.title}" ha sido eliminado.`);
+      Toast.success(`«${book.title}» ha sido eliminado.`);
     } catch (err) {
       Toast.error('Error al eliminar el libro de IndexedDB.');
     }
