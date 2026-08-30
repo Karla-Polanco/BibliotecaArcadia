@@ -9,6 +9,8 @@
   min-height: 100dvh;
   background-color: transparent;
   position: relative;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* ==========================================================================
@@ -273,6 +275,9 @@
   position: relative;
   background-color: var(--color-background);
   transition: margin-left var(--transition-normal);
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .main-content {
@@ -281,6 +286,8 @@
   max-width: 1540px;
   width: 100%;
   margin: 0 auto;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 /* Backdrop para Drawer Móvil */

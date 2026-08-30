@@ -208,6 +208,85 @@
     font-size: var(--text-xs);
   }
 
+  /* Lista de Libros en Móvil (Evita desbordamiento horizontal) */
+  .books-list {
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .book-list-item {
+    padding: 8px 10px;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .list-item-left {
+    gap: 8px;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .list-cover-thumb {
+    width: 36px;
+    height: 50px;
+    flex-shrink: 0;
+  }
+
+  .list-info {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .list-title {
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .list-author {
+    font-size: 0.7rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .list-item-right {
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .list-progress-box {
+    min-width: unset;
+    gap: 4px;
+  }
+
+  .list-progress-bar {
+    width: 32px;
+    flex: none;
+  }
+
+  .list-progress-text {
+    width: auto;
+    font-size: 0.68rem;
+  }
+
+  .list-status-badge {
+    font-size: 0.62rem;
+    padding: 2px 6px;
+    white-space: nowrap;
+  }
+
+  .book-list-item .btn-book-fav {
+    width: 28px !important;
+    height: 28px !important;
+    padding: 0 !important;
+  }
+
   /* Barra de lectura actual en móvil */
   .current-reading-bar {
     left: var(--space-sm);
