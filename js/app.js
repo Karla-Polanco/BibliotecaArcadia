@@ -264,7 +264,11 @@ class App {
           mItem.classList.toggle('active', mItem.dataset.navFilter === filter);
         });
 
-        appState.set('activeFilter', filter);
+        if (this.readerView && this.readerView.isOpen) {
+          this.readerView.close();
+        }
+
+        appState.set('activeFilter', filter, true);
         toggleDrawer(false);
       });
     });
@@ -288,7 +292,11 @@ class App {
             sItem.classList.toggle('active', sItem.dataset.navFilter === filter);
           });
 
-          appState.set('activeFilter', filter);
+          if (this.readerView && this.readerView.isOpen) {
+            this.readerView.close();
+          }
+
+          appState.set('activeFilter', filter, true);
         }
       });
     });
@@ -382,7 +390,7 @@ class App {
    * Restaura la vista, sección o libro activo previo a la recarga de página (F5 / Ctrl+R).
    */
   restorePreviousState() {
-    const hash = window.location.hash;
+    const hash = window.location.hash || '';
     const savedView = localStorage.getItem('arcadia_active_view');
     const savedBookId = localStorage.getItem('arcadia_active_book_id');
     const savedFilter = localStorage.getItem('arcadia_active_filter') || 'all';
@@ -400,24 +408,25 @@ class App {
     }
 
     // 2. Si estábamos en un filtro o sección específica
-    let targetFilter = savedFilter;
+    let targetFilter = 'all';
     if (hash && hash !== '#' && hash !== '#library') {
       targetFilter = hash.replace('#', '');
+    } else if (savedFilter) {
+      targetFilter = savedFilter;
     }
 
-    if (targetFilter) {
-      document.querySelectorAll('[data-nav-filter]').forEach(el => {
-        el.classList.toggle('active', el.dataset.navFilter === targetFilter);
-      });
-      document.querySelectorAll('.mobile-nav-link[data-nav-filter]').forEach(mItem => {
-        mItem.classList.toggle('active', mItem.dataset.navFilter === targetFilter);
-      });
-      appState.set('activeFilter', targetFilter);
-    }
+    document.querySelectorAll('[data-nav-filter]').forEach(el => {
+      el.classList.toggle('active', el.dataset.navFilter === targetFilter);
+    });
+    document.querySelectorAll('.mobile-nav-link[data-nav-filter]').forEach(mItem => {
+      mItem.classList.toggle('active', mItem.dataset.navFilter === targetFilter);
+    });
+
+    appState.set('activeFilter', targetFilter, true);
 
     // Oyente para navegación por historial del navegador (Atrás / Adelante)
-    window.addEventListener('hashchange', () => {
-      const currentHash = window.location.hash;
+    window.addEventListener('popstate', () => {
+      const currentHash = window.location.hash || '';
       if (currentHash.startsWith('#reader/')) {
         const bId = currentHash.replace('#reader/', '');
         if (bId && this.readerView && (!this.readerView.isOpen || this.readerView.currentBookId !== bId)) {
@@ -425,9 +434,15 @@ class App {
         }
       } else if (!currentHash.startsWith('#reader/') && this.readerView && this.readerView.isOpen) {
         this.readerView.close();
-      } else if (!currentHash.startsWith('#reader/')) {
+      } else {
         const f = currentHash.replace('#', '') || 'all';
-        appState.set('activeFilter', f);
+        document.querySelectorAll('[data-nav-filter]').forEach(el => {
+          el.classList.toggle('active', el.dataset.navFilter === f);
+        });
+        document.querySelectorAll('.mobile-nav-link[data-nav-filter]').forEach(mItem => {
+          mItem.classList.toggle('active', mItem.dataset.navFilter === f);
+        });
+        appState.set('activeFilter', f, true);
       }
     });
   }

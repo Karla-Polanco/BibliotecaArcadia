@@ -29,9 +29,14 @@ export class AppState {
 
   /**
    * Actualiza una propiedad del estado y notifica a los suscriptores.
+   * @param {string} key - Clave del estado
+   * @param {*} value - Nuevo valor
+   * @param {boolean} [forceNotify=false] - Forzar notificación aun si el valor es igual
    */
-  set(key, value) {
-    if (this.state[key] === value) return;
+  set(key, value, forceNotify = false) {
+    const isSame = this.state[key] === value;
+    if (isSame && !forceNotify) return;
+
     this.state[key] = value;
 
     if (key === 'viewMode') {
@@ -41,9 +46,11 @@ export class AppState {
       localStorage.setItem('arcadia_active_filter', value);
       if (this.state.activeView !== 'reader') {
         const hashVal = value === 'all' ? '#library' : `#${value}`;
-        if (window.location.hash !== hashVal) {
-          window.location.hash = hashVal;
-        }
+        try {
+          if (window.location.hash !== hashVal) {
+            history.replaceState(null, '', hashVal);
+          }
+        } catch (_) {}
       }
     }
     if (key === 'activeView') {
