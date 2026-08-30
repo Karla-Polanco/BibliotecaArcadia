@@ -544,6 +544,210 @@ export class Modal {
     });
   }
 
+  /**
+   * Muestra el modal estético de instalación de la PWA (Biblioteca Arcadia).
+   */
+  static showInstallModal(deferredPrompt, onPromptHandled) {
+    return new Promise((resolve) => {
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+      const overlay = document.createElement('div');
+      overlay.className = 'arcadia-modal-overlay active';
+      overlay.style.cssText = `
+        position: fixed !important;
+        inset: 0 !important;
+        z-index: 99999 !important;
+        background: rgba(0, 0, 0, 0.75) !important;
+        backdrop-filter: blur(8px) !important;
+        -webkit-backdrop-filter: blur(8px) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 20px !important;
+        opacity: 0;
+        transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      `;
+
+      overlay.innerHTML = `
+        <div class="arcadia-modal-card" style="
+          width: 100%;
+          max-width: 480px;
+          background-color: var(--color-surface, #1E1C2E);
+          border: 1px solid var(--color-border, rgba(255, 255, 255, 0.12));
+          border-radius: var(--radius-lg, 18px);
+          padding: 28px 24px;
+          box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.75);
+          transform: scale(0.95);
+          transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+          color: var(--color-text, #FFF);
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
+        ">
+          <!-- Encabezado con Icono -->
+          <div style="display: flex; gap: 16px; align-items: center;">
+            <div style="
+              width: 52px;
+              height: 52px;
+              border-radius: 14px;
+              background: linear-gradient(135deg, var(--color-primary, #30256F), var(--color-primary-light, #5B4CC4));
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-shrink: 0;
+              box-shadow: 0 8px 20px -4px var(--color-primary-glow, rgba(91, 76, 196, 0.4));
+              border: 1px solid rgba(255, 255, 255, 0.15);
+            ">
+              <svg style="width: 26px; height: 26px; color: #FFF;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+            </div>
+            <div>
+              <span style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-primary-light, #5B4CC4);">Aplicación Web Progresiva</span>
+              <h3 style="font-size: 1.25rem; font-weight: 700; margin: 2px 0 0 0; color: var(--color-text, #FFF);">Instalar Biblioteca Arcadia</h3>
+            </div>
+          </div>
+
+          <!-- Descripción -->
+          <p style="font-size: 0.88rem; color: var(--color-text-secondary, #A09DB8); line-height: 1.5; margin: 0;">
+            Instala Arcadia en tu equipo o dispositivo móvil para disfrutar de una lectura fluida, privada y a pantalla completa.
+          </p>
+
+          <!-- Beneficios -->
+          <div style="
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: var(--color-surface-secondary, rgba(255, 255, 255, 0.03));
+            border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
+            border-radius: 12px;
+            padding: 14px 16px;
+          ">
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <span style="font-size: 1.1rem; line-height: 1.2;">⚡</span>
+              <div>
+                <strong style="font-size: 0.84rem; display: block; color: var(--color-text, #FFF);">Acceso directo y pantalla completa</strong>
+                <span style="font-size: 0.78rem; color: var(--color-text-muted, #8E88A8);">Ábrela desde el escritorio o inicio sin barras de navegación del explorador.</span>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <span style="font-size: 1.1rem; line-height: 1.2;">📖</span>
+              <div>
+                <strong style="font-size: 0.84rem; display: block; color: var(--color-text, #FFF);">Lectura 100% sin conexión</strong>
+                <span style="font-size: 0.78rem; color: var(--color-text-muted, #8E88A8);">Todos tus libros EPUB, notas, marcas y citas disponibles sin internet.</span>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <span style="font-size: 1.1rem; line-height: 1.2;">🔒</span>
+              <div>
+                <strong style="font-size: 0.84rem; display: block; color: var(--color-text, #FFF);">Totalmente privada y local</strong>
+                <span style="font-size: 0.78rem; color: var(--color-text-muted, #8E88A8);">Tus libros se almacenan en tu dispositivo; cero rastreo y cero servidores externos.</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="install-instruction-box" style="display: none; font-size: 0.82rem; color: var(--color-text-secondary); background: rgba(91, 76, 196, 0.08); border: 1px solid var(--color-primary-glow); border-radius: 8px; padding: 12px 14px; line-height: 1.5;"></div>
+
+          <!-- Botones de Acción -->
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 4px;">
+            <button id="btn-cancel-install" style="
+              padding: 9px 18px;
+              border-radius: var(--radius-md, 8px);
+              background: var(--color-surface-hover, rgba(255, 255, 255, 0.06));
+              border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
+              color: var(--color-text-secondary, #A09DB8);
+              font-size: 0.85rem;
+              font-weight: 600;
+              cursor: pointer;
+              transition: all 0.15s ease;
+            ">Cancelar</button>
+
+            <button id="btn-confirm-install" style="
+              padding: 9px 22px;
+              border-radius: var(--radius-md, 8px);
+              border: none;
+              font-size: 0.85rem;
+              font-weight: 600;
+              cursor: pointer;
+              background: var(--color-primary-light, #5B4CC4);
+              color: #FFF;
+              box-shadow: 0 4px 14px var(--color-primary-glow, rgba(91, 76, 196, 0.35));
+              transition: all 0.15s ease;
+              display: inline-flex;
+              align-items: center;
+              gap: 6px;
+            ">
+              <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              <span id="btn-confirm-install-text">Instalar ahora</span>
+            </button>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(overlay);
+
+      requestAnimationFrame(() => {
+        overlay.style.opacity = '1';
+        const card = overlay.querySelector('.arcadia-modal-card');
+        if (card) card.style.transform = 'scale(1)';
+      });
+
+      const close = (result) => {
+        overlay.style.opacity = '0';
+        const card = overlay.querySelector('.arcadia-modal-card');
+        if (card) card.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          overlay.remove();
+          resolve(result);
+        }, 180);
+      };
+
+      overlay.querySelector('#btn-cancel-install').addEventListener('click', () => close(false));
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) close(false);
+      });
+
+      const confirmBtn = overlay.querySelector('#btn-confirm-install');
+      confirmBtn.addEventListener('click', async () => {
+        if (isStandalone) {
+          const infoBox = overlay.querySelector('#install-instruction-box');
+          infoBox.style.display = 'block';
+          infoBox.innerHTML = '✨ <strong>¡Ya estás usando la aplicación instalada!</strong> Arcadia ya se encuentra ejecutándose como app en este dispositivo.';
+          confirmBtn.style.display = 'none';
+          return;
+        }
+
+        if (deferredPrompt) {
+          try {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (typeof onPromptHandled === 'function') onPromptHandled(outcome);
+            close(outcome === 'accepted');
+          } catch (err) {
+            console.warn('[PWA] Error en prompt:', err);
+            close(false);
+          }
+        } else {
+          // Instrucciones para instalación en navegador
+          const infoBox = overlay.querySelector('#install-instruction-box');
+          infoBox.style.display = 'block';
+          infoBox.innerHTML = `
+            <strong>Instalación manual según tu navegador:</strong><br>
+            • <strong>Chrome / Edge:</strong> Haz clic en el icono 🖥️ o ➕ en el lado derecho de la barra de direcciones superior, o ve al menú (tres puntos) &gt; <em>Instalar aplicación</em>.<br>
+            • <strong>Safari (iPhone / iPad):</strong> Pulsa el botón Compartir ⬆️ y selecciona <em>«Añadir a pantalla de inicio»</em>.<br>
+            • <strong>Android:</strong> Pulsa el menú (⋮) de tu navegador y selecciona <em>«Instalar aplicación»</em> o <em>«Añadir a inicio»</em>.
+          `;
+          overlay.querySelector('#btn-confirm-install-text').textContent = '¡Entendido!';
+          confirmBtn.onclick = () => close(true);
+        }
+      });
+    });
+  }
+
   static escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text || '';

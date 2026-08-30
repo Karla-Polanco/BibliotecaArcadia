@@ -7,6 +7,7 @@
  */
 
 import { Toast } from '../ui/Toast.js';
+import { Modal } from '../ui/Modal.js';
 
 export class PWAManager {
   static deferredPrompt = null;
@@ -71,39 +72,32 @@ export class PWAManager {
       e.preventDefault();
       this.deferredPrompt = e;
       console.log('[PWA] Evento beforeinstallprompt capturado.');
-
-      // Mostrar opción de instalar en la barra o footer si existe el botón
-      const installBtn = document.getElementById('btn-pwa-install');
-      if (installBtn) {
-        installBtn.style.display = 'flex';
-        installBtn.addEventListener('click', () => this.promptInstall());
-      }
     });
 
     window.addEventListener('appinstalled', () => {
       this.deferredPrompt = null;
       Toast.success('¡Biblioteca Arcadia instalada con éxito en tu dispositivo!');
-      const installBtn = document.getElementById('btn-pwa-install');
-      if (installBtn) installBtn.style.display = 'none';
     });
+
+    // Permitir abrir siempre el modal informativo / de instalación desde la barra lateral
+    const installBtn = document.getElementById('btn-pwa-install');
+    if (installBtn) {
+      installBtn.style.display = 'flex';
+      installBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.promptInstall();
+      });
+    }
   }
 
   /**
-   * Dispara el diálogo de instalación nativo.
+   * Abre la ventana modal estética para instalar la aplicación o recibir instrucciones.
    */
   static async promptInstall() {
-    if (!this.deferredPrompt) {
-      Toast.info('La aplicación ya está instalada o tu navegador no soporta instalación directa.');
-      return;
-    }
-
-    try {
-      this.deferredPrompt.prompt();
-      const { outcome } = await this.deferredPrompt.userChoice;
-      console.log(`[PWA] Respuesta del usuario a la instalación: ${outcome}`);
-      this.deferredPrompt = null;
-    } catch (err) {
-      console.warn('[PWA] Error al invocar prompt de instalación:', err);
-    }
+    Modal.showInstallModal(this.deferredPrompt, (outcome) => {
+      if (outcome === 'accepted') {
+        this.deferredPrompt = null;
+      }
+    });
   }
 }
