@@ -56,16 +56,17 @@
 }
 
 .brand-logo-img {
-  width: 84px;
-  height: 84px;
+  width: 106px;
+  height: auto;
+  max-height: 82px;
   object-fit: contain;
-  filter: var(--logo-filter, none) var(--logo-drop-shadow, drop-shadow(0 4px 14px rgba(123, 107, 240, 0.45)));
+  filter: var(--logo-filter, none);
   transition: filter 0.4s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
 }
 
 .brand-logo-img:hover {
-  transform: scale(1.06);
+  transform: scale(1.05) translateY(-2px);
 }
 
 .brand-typography {
@@ -73,14 +74,14 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 215px;
+  max-width: 220px;
 }
 
 .brand-ornament-top {
   font-size: 0.55rem;
-  color: var(--brand-star-color, #9D8EF8);
+  color: var(--brand-star-color, #E5A93C);
   line-height: 1;
-  margin-bottom: 3px;
+  margin-bottom: 2px;
   opacity: 0.9;
   transition: color 0.3s ease;
 }
@@ -89,16 +90,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   width: 100%;
 }
 
 .brand-eyebrow {
-  font-family: 'Cinzel', serif, var(--font-family-serif);
-  font-size: 0.65rem;
-  letter-spacing: 0.24em;
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.30em;
+  text-indent: 0.30em;
   font-weight: 600;
-  color: var(--brand-eyebrow-color, var(--color-text-secondary));
+  color: var(--brand-eyebrow-color, #D6D0F0);
   text-transform: uppercase;
   white-space: nowrap;
   transition: color 0.3s ease;
@@ -107,22 +109,23 @@
 .brand-rule {
   flex: 1;
   height: 1px;
-  background: var(--brand-rule-color, rgba(123, 107, 240, 0.45));
-  max-width: 28px;
+  background: var(--brand-rule-color, rgba(157, 142, 248, 0.4));
+  max-width: 30px;
   transition: background 0.3s ease;
 }
 
 .brand-wordmark {
-  font-family: 'Cinzel', serif, var(--font-family-serif);
-  font-size: 1.75rem;
+  font-family: 'Cinzel Decorative', 'Cinzel', 'Playfair Display', Georgia, serif;
+  font-size: 1.85rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
-  margin: 3px 0 4px 0;
+  letter-spacing: 0.14em;
+  text-indent: 0.14em;
+  margin: 3px 0 6px 0;
   line-height: 1.05;
-  background: var(--brand-title-gradient, linear-gradient(180deg, #FFFFFF 0%, #E6E1F5 50%, #C4B9FC 100%));
+  background: var(--brand-title-gradient, linear-gradient(180deg, #FFFFFF 0%, #F5EFEB 50%, #DFD5C6 100%));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: var(--brand-title-shadow, 0 2px 14px rgba(91, 76, 196, 0.4));
+  filter: drop-shadow(0 2px 10px var(--brand-title-shadow, rgba(229, 169, 60, 0.25)));
   transition: all 0.3s ease;
 }
 
@@ -130,13 +133,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  width: 100%;
+  gap: 10px;
+  width: 70%;
 }
 
 .brand-star {
   font-size: 0.65rem;
-  color: var(--brand-star-color, #9D8EF8);
+  color: var(--brand-star-color, #E5A93C);
   line-height: 1;
   transition: color 0.3s ease;
 }
