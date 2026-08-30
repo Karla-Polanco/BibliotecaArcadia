@@ -12,6 +12,7 @@ import { CollectionManager } from './CollectionManager.js';
 import { CollectionModal } from '../ui/CollectionModal.js';
 import { Toast } from '../ui/Toast.js';
 import { Modal } from '../ui/Modal.js';
+import { BookmarkManager } from '../reader/BookmarkManager.js';
 
 export class LibraryView {
   constructor(containerElement, bookManager, onOpenBook = null, annotationsView = null, vocabularyView = null) {
@@ -576,6 +577,10 @@ export class LibraryView {
         <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
         <span>Colecciones...</span>
       </button>
+      <button class="menu-action-btn" data-opt="bookmarks" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; border-radius: 6px; font-size: var(--text-xs); color: var(--color-text); cursor: pointer;">
+        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+        <span>Marcadores...</span>
+      </button>
       <button class="menu-action-btn" data-opt="delete" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; border-radius: 6px; font-size: var(--text-xs); color: #EF4444; cursor: pointer;">
         <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
         <span>Eliminar libro</span>
@@ -608,9 +613,112 @@ export class LibraryView {
       CollectionModal.openAssignModal(book, () => this.updateBadges());
     });
 
+    menu.querySelector('[data-opt="bookmarks"]').addEventListener('click', () => {
+      menu.remove();
+      this.showBookBookmarks(book);
+    });
+
     menu.querySelector('[data-opt="delete"]').addEventListener('click', () => {
       menu.remove();
       this.confirmDeleteBook(book);
+    });
+  }
+
+  /**
+   * Muestra un modal centrado con los marcadores guardados de este libro.
+   */
+  async showBookBookmarks(book) {
+    const bookmarks = await BookmarkManager.getBookmarks(book.id);
+
+    const overlay = document.createElement('div');
+    overlay.className = 'theme-modal-overlay active';
+    overlay.style.cssText = `
+      position: fixed;
+      inset: 0;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 99999;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+    `;
+
+    overlay.innerHTML = `
+      <div class="theme-modal-dialog" style="max-width: 440px; padding: 24px;">
+        <div class="theme-modal-header" style="margin-bottom: 16px;">
+          <div>
+            <h2 class="theme-modal-title">Marcadores de página</h2>
+            <span style="font-size: var(--text-xs); color: var(--color-text-muted);">${this.escapeHtml(book.title)}</span>
+          </div>
+          <button class="theme-modal-close" id="btn-close-bm-modal">
+            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; max-height: 320px; overflow-y: auto; margin-bottom: 16px;">
+          ${bookmarks.length === 0 ? `
+            <div style="padding: 30px 20px; text-align: center; color: var(--color-text-muted);">
+              <svg style="width: 36px; height: 36px; margin: 0 auto 10px; opacity: 0.4;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+              <p style="font-size: var(--text-xs); margin: 0; line-height: 1.5;">Aún no has añadido marcadores en este libro.<br>Puedes agregarlos mientras lees usando el icono de cinta en la cabecera del lector.</p>
+            </div>
+          ` : bookmarks.map(bm => `
+            <div class="modal-bookmark-item" style="
+              display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px;
+              border-radius: var(--radius-sm); background-color: var(--color-surface-hover); border: 1px solid var(--color-border);
+            ">
+              <div style="flex: 1; cursor: pointer;" data-jump-cfi="${this.escapeHtml(bm.cfi)}">
+                <h4 style="font-size: var(--text-xs); font-weight: bold; margin: 0 0 2px 0; color: var(--color-text);">${this.escapeHtml(bm.chapterTitle || 'Página marcada')}</h4>
+                <span style="font-size: 0.72rem; color: var(--color-primary-light);">${bm.percentage || 0}% leído</span>
+              </div>
+              <button class="btn-delete-bm-modal" data-id="${bm.id}" title="Eliminar marcador" style="
+                background: transparent; border: none; color: var(--color-text-muted); cursor: pointer; padding: 4px; border-radius: 4px;
+              ">
+                <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+              </button>
+            </div>
+          `).join('')}
+        </div>
+
+        <div style="display: flex; justify-content: flex-end;">
+          <button id="btn-close-bm-done" style="padding: 8px 20px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: bold; background-color: var(--color-primary-light); color: #FFFFFF; cursor: pointer;">Cerrar</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const close = () => overlay.remove();
+    overlay.querySelector('#btn-close-bm-modal').addEventListener('click', close);
+    overlay.querySelector('#btn-close-bm-done').addEventListener('click', close);
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) close();
+    });
+
+    overlay.querySelectorAll('[data-jump-cfi]').forEach(el => {
+      el.addEventListener('click', () => {
+        const cfi = el.dataset.jumpCfi;
+        close();
+        if (this.onOpenBook) this.onOpenBook(book.id, cfi);
+      });
+    });
+
+    overlay.querySelectorAll('.btn-delete-bm-modal').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const id = btn.dataset.id;
+        await BookmarkManager.removeBookmark(id);
+        Toast.info('Marcador eliminado.');
+        close();
+        this.showBookBookmarks(book);
+      });
     });
   }
 

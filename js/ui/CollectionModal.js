@@ -19,7 +19,24 @@ export class CollectionModal {
     const isEdit = !!collectionToEdit;
     const overlay = document.createElement('div');
     overlay.className = 'theme-modal-overlay active';
-    overlay.style.zIndex = '300';
+    overlay.style.cssText = `
+      position: fixed;
+      inset: 0;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 99999;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+    `;
 
     let selectedColor = isEdit ? collectionToEdit.color : CollectionManager.PRESET_COLORS[0].value;
 
@@ -150,7 +167,24 @@ export class CollectionModal {
 
     const overlay = document.createElement('div');
     overlay.className = 'theme-modal-overlay active';
-    overlay.style.zIndex = '300';
+    overlay.style.cssText = `
+      position: fixed;
+      inset: 0;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 99999;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+    `;
 
     overlay.innerHTML = `
       <div class="theme-modal-dialog" style="max-width: 420px; padding: 24px;">
