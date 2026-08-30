@@ -88,7 +88,7 @@ export class ReaderSettings {
         font-style: normal;
       }
 
-      html, body {
+      html {
         width: 100% !important;
         max-width: 100% !important;
         margin: 0 !important;
@@ -98,13 +98,11 @@ export class ReaderSettings {
         color: ${themeColors.text} !important;
         -webkit-font-smoothing: antialiased !important;
         text-rendering: optimizeLegibility !important;
-        word-break: normal !important;
-        overflow-wrap: break-word !important;
       }
 
       body {
         margin: 0 !important;
-        padding: 0 !important;
+        padding: 0 22px !important;
         font-family: ${fontStack} !important;
         font-size: ${settings.fontSize}px !important;
         font-weight: ${fontWeightVal} !important;
@@ -162,18 +160,26 @@ export class ReaderSettings {
     // 3. Registrar en rendition.themes de epub.js
     try {
       rendition.themes.default({
-        'html, body': {
+        'html': {
           'width': '100% !important',
           'max-width': '100% !important',
           'margin': '0 !important',
           'padding': '0 !important',
+          'background': `${themeColors.bg} !important`,
+          'box-sizing': 'border-box !important'
+        },
+        'body': {
+          'margin': '0 !important',
+          'padding': '0 22px !important',
           'color': `${themeColors.text} !important`,
           'background': `${themeColors.bg} !important`,
           'font-family': `${fontStack} !important`,
           'font-size': `${settings.fontSize}px !important`,
           'font-weight': `${fontWeightVal} !important`,
           'line-height': `${settings.lineHeight} !important`,
-          'box-sizing': 'border-box !important'
+          'box-sizing': 'border-box !important',
+          'word-break': 'normal !important',
+          'overflow-wrap': 'break-word !important'
         },
         'p, span, div, li, em, strong, b, i, blockquote, a': {
           'font-family': `${fontStack} !important`,

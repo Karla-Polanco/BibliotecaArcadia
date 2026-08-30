@@ -137,7 +137,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px 64px;
+  padding: 16px 48px;
   box-sizing: border-box;
   background-color: var(--reader-bg, var(--color-background));
 }
@@ -874,7 +874,7 @@
   }
 
   .reader-viewport {
-    padding: 8px 12px; /* Margen cómodo sin desperdiciar pantalla */
+    padding: 4px 6px;
   }
 
   .btn-reader-nav {
