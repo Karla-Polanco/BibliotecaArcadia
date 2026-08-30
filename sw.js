@@ -6,7 +6,7 @@
  * mediante caché Cache-First del App Shell y limpieza de versiones obsoletas.
  */
 
-const CACHE_NAME = 'arcadia-pwa-v26';
+const CACHE_NAME = 'arcadia-pwa-v27';
 
 // Recursos esenciales del App Shell a precachear
 const APP_SHELL_ASSETS = [
@@ -48,6 +48,7 @@ const APP_SHELL_ASSETS = [
   './js/ui/Modal.js',
   './js/ui/CollectionModal.js',
   './js/ui/QuoteModal.js',
+  './js/ui/ScaleManager.js',
   './js/ui/FloatingMenu.js',
   './js/ui/ThemeManager.js',
   './js/ui/Toast.js',

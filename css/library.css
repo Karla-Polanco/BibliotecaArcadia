@@ -788,6 +788,26 @@
   display: none !important;
 }
 
+/* Presets de Escala y Zoom */
+.btn-ui-scale-preset:hover {
+  background-color: var(--color-surface-hover) !important;
+  color: var(--color-text) !important;
+}
+
+.btn-ui-scale-preset.active {
+  background-color: var(--color-primary-light) !important;
+  color: #FFFFFF !important;
+  border-color: var(--color-primary-light) !important;
+  box-shadow: 0 2px 8px var(--color-primary-glow);
+}
+
+/* Ocultar botón de descargar si la app ya está instalada o en standalone */
+@media (display-mode: standalone) {
+  #btn-pwa-install {
+    display: none !important;
+  }
+}
+
 /* --------------------------------------------------------------------------
    6. MODAL SELECTOR DE TEMAS (Fiel a la referencia visual)
    -------------------------------------------------------------------------- */

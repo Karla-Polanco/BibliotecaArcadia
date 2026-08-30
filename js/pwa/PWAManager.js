@@ -3,7 +3,8 @@
  * PWA MANAGER - REGISTRO DE SERVICE WORKER, MODO OFFLINE E INSTALACIÓN
  * ============================================================================
  * Maneja el registro y ciclo de vida del Service Worker, la detección
- * reactiva del estado de red (online/offline) y el prompt de instalación PWA.
+ * reactiva del estado de red (online/offline), el prompt de instalación PWA
+ * y el ocultamiento inteligente del botón de descarga si la app ya está instalada.
  */
 
 import { Toast } from '../ui/Toast.js';
@@ -16,6 +17,35 @@ export class PWAManager {
     this.registerServiceWorker();
     this.initNetworkListeners();
     this.initInstallPrompt();
+    this.syncInstallButtonVisibility();
+  }
+
+  /**
+   * Comprueba si la aplicación se está ejecutando instalada como PWA o si ya fue instalada.
+   * @returns {boolean}
+   */
+  static isAppInstalled() {
+    const isStandalone = (
+      window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true ||
+      document.referrer.includes('android-app://') ||
+      localStorage.getItem('arcadia_pwa_installed') === 'true'
+    );
+    return isStandalone;
+  }
+
+  /**
+   * Oculta el botón "Descargar app" en la barra lateral si la app ya está instalada.
+   */
+  static syncInstallButtonVisibility() {
+    const installBtn = document.getElementById('btn-pwa-install');
+    if (!installBtn) return;
+
+    if (this.isAppInstalled()) {
+      installBtn.style.setProperty('display', 'none', 'important');
+    } else {
+      installBtn.style.display = 'flex';
+    }
   }
 
   /**
@@ -71,18 +101,30 @@ export class PWAManager {
       // Prevenir el banner automático del navegador
       e.preventDefault();
       this.deferredPrompt = e;
-      console.log('[PWA] Evento beforeinstallprompt capturado.');
+      this.syncInstallButtonVisibility();
     });
 
     window.addEventListener('appinstalled', () => {
       this.deferredPrompt = null;
+      try {
+        localStorage.setItem('arcadia_pwa_installed', 'true');
+      } catch (_) {}
+      this.syncInstallButtonVisibility();
       Toast.success('¡Biblioteca Arcadia instalada con éxito en tu dispositivo!');
     });
+
+    // Escuchar si cambia el modo de visualización a standalone
+    try {
+      const matchMediaStandalone = window.matchMedia('(display-mode: standalone)');
+      if (matchMediaStandalone.addEventListener) {
+        matchMediaStandalone.addEventListener('change', () => this.syncInstallButtonVisibility());
+      }
+    } catch (_) {}
 
     // Permitir abrir siempre el modal informativo / de instalación desde la barra lateral
     const installBtn = document.getElementById('btn-pwa-install');
     if (installBtn) {
-      installBtn.style.display = 'flex';
+      this.syncInstallButtonVisibility();
       installBtn.addEventListener('click', (e) => {
         e.preventDefault();
         this.promptInstall();
@@ -97,6 +139,10 @@ export class PWAManager {
     Modal.showInstallModal(this.deferredPrompt, (outcome) => {
       if (outcome === 'accepted') {
         this.deferredPrompt = null;
+        try {
+          localStorage.setItem('arcadia_pwa_installed', 'true');
+        } catch (_) {}
+        this.syncInstallButtonVisibility();
       }
     });
   }

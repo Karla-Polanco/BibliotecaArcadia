@@ -6,6 +6,7 @@
  */
 
 import { ThemeManager } from './ui/ThemeManager.js';
+import { ScaleManager } from './ui/ScaleManager.js';
 import { QuotesService } from './quotes/QuotesService.js';
 import { QuotesView } from './quotes/QuotesView.js';
 import { QuotesManager } from './quotes/QuotesManager.js';
@@ -38,8 +39,9 @@ class App {
     // 1. Inicializar PWA (Service Worker, Offline y Prompt de Instalación)
     PWAManager.init();
 
-    // 2. Inicializar Gestor de Temas
+    // 2. Inicializar Gestor de Temas y Escala Global de Tipografía
     this.themeManager.init();
+    ScaleManager.init();
 
     // 3. Cargar citas literarias del usuario y configurar Banner
     await this.quotesService.reload();

@@ -6,6 +6,11 @@
       try {
         var savedTheme = localStorage.getItem('arcadia_theme') || 'mystic-night';
         document.documentElement.setAttribute('data-theme', savedTheme);
+        var savedScale = localStorage.getItem('arcadia_ui_scale');
+        if (savedScale && !isNaN(parseInt(savedScale))) {
+          var scale = parseInt(savedScale);
+          document.documentElement.style.fontSize = (16.5 * (scale / 100)) + 'px';
+        }
       } catch (e) {}
     })();
   </script>
@@ -495,18 +500,43 @@
       </div>
 
       <!-- Preferencias y Elementos de la Interfaz -->
-      <div class="settings-preferences-section" style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 12px;">
-        <h4 style="font-size: 0.8rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0;">Elementos de la Interfaz</h4>
-        
-        <label style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 18px; border-radius: var(--radius-md); background-color: var(--color-surface-secondary); border: 1px solid var(--color-border); cursor: pointer; transition: background-color var(--transition-fast);">
-          <div style="display: flex; flex-direction: column; gap: 2px;">
-            <span style="font-size: var(--text-sm); font-weight: bold; color: var(--color-text);">Barra inferior de «Lectura Actual»</span>
-            <span style="font-size: 0.75rem; color: var(--color-text-muted);">Muestra la barra flotante con el libro en progreso y el botón «Continuar leyendo» en el catálogo.</span>
+      <div class="settings-preferences-section" style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 16px;">
+        <!-- 1. Tamaño de Letras y Zoom de la App -->
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <h4 style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0;">Tamaño de Letras y Zoom de la App</h4>
+              <p style="font-size: 0.75rem; color: var(--color-text-muted); margin: 2px 0 0 0;">Ajusta la escala visual y la tipografía general de la aplicación.</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; background-color: var(--color-surface-secondary); padding: 4px 8px; border-radius: var(--radius-sm); border: 1px solid var(--color-border);">
+              <button id="btn-scale-decrease" style="width: 28px; height: 28px; border-radius: 4px; background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: 1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;" title="Reducir tamaño">−</button>
+              <span id="label-scale-percent" style="font-size: var(--text-sm); font-weight: bold; color: var(--color-primary-light); min-width: 48px; text-align: center;">100%</span>
+              <button id="btn-scale-increase" style="width: 28px; height: 28px; border-radius: 4px; background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: 1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;" title="Aumentar tamaño">+</button>
+            </div>
           </div>
-          <div style="flex-shrink: 0; display: flex; align-items: center;">
-            <input type="checkbox" id="toggle-reading-bar" checked style="width: 20px; height: 20px; accent-color: var(--color-primary-light); cursor: pointer;">
+
+          <!-- Presets de Escala -->
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+            <button class="btn-ui-scale-preset" data-scale="90" style="padding: 8px 10px; border-radius: var(--radius-sm); background: var(--color-surface-secondary); border: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center; transition: all var(--transition-fast);">Compacto (90%)</button>
+            <button class="btn-ui-scale-preset active" data-scale="100" style="padding: 8px 10px; border-radius: var(--radius-sm); background: var(--color-surface-secondary); border: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center; transition: all var(--transition-fast);">Normal (100%)</button>
+            <button class="btn-ui-scale-preset" data-scale="115" style="padding: 8px 10px; border-radius: var(--radius-sm); background: var(--color-surface-secondary); border: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center; transition: all var(--transition-fast);">Grande (115%)</button>
+            <button class="btn-ui-scale-preset" data-scale="130" style="padding: 8px 10px; border-radius: var(--radius-sm); background: var(--color-surface-secondary); border: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center; transition: all var(--transition-fast);">Muy Grande (130%)</button>
           </div>
-        </label>
+        </div>
+
+        <!-- 2. Visibilidad de Barra de Lectura Actual -->
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <h4 style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0;">Elementos de la Biblioteca</h4>
+          <label style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 16px; border-radius: var(--radius-md); background-color: var(--color-surface-secondary); border: 1px solid var(--color-border); cursor: pointer; transition: background-color var(--transition-fast);">
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-size: var(--text-sm); font-weight: bold; color: var(--color-text);">Barra inferior de «Lectura Actual»</span>
+              <span style="font-size: 0.75rem; color: var(--color-text-muted);">Muestra la barra flotante con el libro en progreso y el botón «Continuar leyendo».</span>
+            </div>
+            <div style="flex-shrink: 0; display: flex; align-items: center;">
+              <input type="checkbox" id="toggle-reading-bar" checked style="width: 20px; height: 20px; accent-color: var(--color-primary-light); cursor: pointer;">
+            </div>
+          </label>
+        </div>
       </div>
     </div>
   </div>
