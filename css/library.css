@@ -101,14 +101,17 @@
 .library-header {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
-  margin-bottom: var(--space-lg);
+  gap: 26px;
+  margin-bottom: 32px;
 }
 
 .library-header-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 4px;
 }
 
 .library-title {
