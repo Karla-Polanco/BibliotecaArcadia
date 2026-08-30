@@ -533,10 +533,12 @@ export class ReaderView {
   initSettingsControls() {
     // 1. Tipografía
     document.querySelectorAll('#font-family-options [data-font]').forEach(btn => {
-      btn.addEventListener('click', async () => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         const font = btn.dataset.font;
         const updated = await readerManager.updateSettings({ fontFamily: font });
-        this.syncSettingsUI(updated);
+        this.syncSettingsUI(updated || { ...readerManager.getSettings(), fontFamily: font });
       });
     });
 
@@ -545,65 +547,79 @@ export class ReaderView {
     const btnIncrease = document.getElementById('btn-font-increase');
 
     if (btnDecrease) {
-      btnDecrease.addEventListener('click', async () => {
+      btnDecrease.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         const cur = readerManager.getSettings();
         const newSize = Math.max(12, cur.fontSize - 2);
         const updated = await readerManager.updateSettings({ fontSize: newSize });
-        this.syncSettingsUI(updated);
+        this.syncSettingsUI(updated || { ...cur, fontSize: newSize });
       });
     }
 
     if (btnIncrease) {
-      btnIncrease.addEventListener('click', async () => {
+      btnIncrease.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         const cur = readerManager.getSettings();
         const newSize = Math.min(36, cur.fontSize + 2);
         const updated = await readerManager.updateSettings({ fontSize: newSize });
-        this.syncSettingsUI(updated);
+        this.syncSettingsUI(updated || { ...cur, fontSize: newSize });
       });
     }
 
     // 3. Grosor de Fuente
     document.querySelectorAll('#font-weight-options [data-weight]').forEach(btn => {
-      btn.addEventListener('click', async () => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         const weight = btn.dataset.weight;
         const updated = await readerManager.updateSettings({ fontWeight: weight });
-        this.syncSettingsUI(updated);
+        this.syncSettingsUI(updated || { ...readerManager.getSettings(), fontWeight: weight });
       });
     });
 
     // 4. Interlineado
     document.querySelectorAll('#line-height-options [data-lh]').forEach(btn => {
-      btn.addEventListener('click', async () => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         const lh = parseFloat(btn.dataset.lh);
         const updated = await readerManager.updateSettings({ lineHeight: lh });
-        this.syncSettingsUI(updated);
+        this.syncSettingsUI(updated || { ...readerManager.getSettings(), lineHeight: lh });
       });
     });
 
     // 5. Márgenes
     document.querySelectorAll('#margins-options [data-margin]').forEach(btn => {
-      btn.addEventListener('click', async () => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         const margin = btn.dataset.margin;
         const updated = await readerManager.updateSettings({ margins: margin });
-        this.syncSettingsUI(updated);
+        this.syncSettingsUI(updated || { ...readerManager.getSettings(), margins: margin });
       });
     });
 
     // 6. Columnas
     document.querySelectorAll('#columns-options [data-col]').forEach(btn => {
-      btn.addEventListener('click', async () => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         const cols = parseInt(btn.dataset.col);
         const updated = await readerManager.updateSettings({ columns: cols });
-        this.syncSettingsUI(updated);
+        this.syncSettingsUI(updated || { ...readerManager.getSettings(), columns: cols });
       });
     });
 
     // 7. Tema del Lector
     document.querySelectorAll('#reader-theme-options [data-reader-theme]').forEach(chip => {
-      chip.addEventListener('click', async () => {
+      chip.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         const theme = chip.dataset.readerTheme;
         const updated = await readerManager.updateSettings({ theme });
-        this.syncSettingsUI(updated);
+        this.syncSettingsUI(updated || { ...readerManager.getSettings(), theme });
       });
     });
   }

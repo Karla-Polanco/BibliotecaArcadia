@@ -206,11 +206,12 @@ export class ReaderManager {
    * @returns {Promise<Object>} Configuración actualizada
    */
   async updateSettings(partialSettings) {
-    if (!this.currentBookId || !this.rendition) return;
-
-    this.currentSettings = await ReaderSettings.save(this.currentBookId, partialSettings);
+    const bookId = this.currentBookId || 'global_reader';
+    this.currentSettings = await ReaderSettings.save(bookId, partialSettings);
     const activeGlobalTheme = document.documentElement.getAttribute('data-theme') || 'mystic-night';
-    ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
+    if (this.rendition) {
+      ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
+    }
 
     return this.currentSettings;
   }
