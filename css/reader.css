@@ -148,28 +148,26 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 52px;
-  height: 68px;
-  background-color: var(--color-surface);
-  border: 1.5px solid var(--color-border);
-  color: var(--color-text);
-  border-radius: var(--radius-md, 12px);
-  z-index: 100 !important;
+  width: 48px;
+  height: 64px;
+  background-color: var(--color-surface-hover);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  border-radius: var(--radius-md);
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.6;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  opacity: 0.2;
   transition: all var(--transition-fast);
   cursor: pointer;
 }
 
 .btn-reader-nav:hover {
-  opacity: 1 !important;
-  background-color: var(--color-surface-hover);
-  color: var(--color-primary-light);
+  opacity: 1;
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
   border-color: var(--color-primary-light);
-  transform: translateY(-50%) scale(1.06);
 }
 
 .btn-reader-nav.nav-prev {
@@ -455,35 +453,33 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  width: 100%;
 }
 
-.settings-btn-grid-2 {
-  display: grid;
+#columns-options {
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  width: 100%;
+}
+
+#font-family-options {
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .setting-pill-btn {
   width: 100%;
-  min-width: 0;
-  height: 42px;
-  padding: 0 4px;
+  box-sizing: border-box;
+  padding: 10px 4px;
   background-color: var(--color-surface);
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-md, 10px);
   color: var(--color-text-secondary);
   font-size: 0.82rem;
   font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   transition: all var(--transition-fast);
-  box-sizing: border-box;
 }
 
 .setting-pill-btn:hover {
@@ -540,13 +536,12 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
-  width: 100%;
 }
 
 .reader-theme-chip {
   width: 100%;
-  min-width: 0;
   height: 42px;
+  box-sizing: border-box;
   padding: 0 4px;
   border-radius: var(--radius-md, 10px);
   border: 2px solid var(--color-border);
@@ -555,9 +550,11 @@
   justify-content: center;
   font-size: 0.78rem;
   font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   cursor: pointer;
   transition: all var(--transition-fast);
-  box-sizing: border-box;
 }
 
 .reader-theme-chip:hover {

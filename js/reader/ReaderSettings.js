@@ -59,12 +59,15 @@ export class ReaderSettings {
     const readerTheme = settings.theme && settings.theme !== 'inherit' ? settings.theme : effectiveTheme;
     const themeColors = this._getThemeColors(readerTheme);
 
-    // 2. Determinar padding lateral según márgenes
-    let paddingHoriz = '36px';
+    // 2. Determinar padding lateral y ancho máximo según márgenes
+    let paddingHoriz = '38px';
+    let maxContentWidth = '88%';
     if (settings.margins === 'compact') {
-      paddingHoriz = '12px';
+      paddingHoriz = '10px';
+      maxContentWidth = '98%';
     } else if (settings.margins === 'relaxed') {
-      paddingHoriz = '64px';
+      paddingHoriz = '75px';
+      maxContentWidth = '74%';
     }
 
     const fontStack = this._getFontStack(settings.fontFamily);
@@ -89,8 +92,8 @@ export class ReaderSettings {
 
       body {
         padding: 0 ${paddingHoriz} !important;
-        margin: 0 !important;
-        width: 100% !important;
+        max-width: ${maxContentWidth} !important;
+        margin: 0 auto !important;
         color: ${themeColors.text} !important;
         background: ${themeColors.bg} !important;
         font-family: ${fontStack} !important;
@@ -147,8 +150,8 @@ export class ReaderSettings {
       rendition.themes.default({
         'body': {
           'padding': `0 ${paddingHoriz} !important`,
-          'margin': '0 !important',
-          'width': '100% !important',
+          'max-width': `${maxContentWidth} !important`,
+          'margin': '0 auto !important',
           'color': `${themeColors.text} !important`,
           'background': `${themeColors.bg} !important`,
           'font-family': `${fontStack} !important`,
@@ -181,10 +184,8 @@ export class ReaderSettings {
     }
 
     // 6. Configuración de columnas (spread)
-    if (typeof rendition.spread === 'function') {
-      try {
-        rendition.spread(settings.columns === 2 ? 'always' : 'none');
-      } catch (_) {}
+    if (rendition.spread) {
+      rendition.spread(settings.columns === 2 ? 'always' : 'none');
     }
   }
 
@@ -263,6 +264,14 @@ export class ReaderSettings {
         text: '#132D48',
         heading: '#0F233B',
         accent: '#3182CE'
+      };
+    }
+    if (themeName === 'mystic-purple') {
+      return {
+        bg: '#18132B',
+        text: '#EFEBFB',
+        heading: '#F7F5FE',
+        accent: '#8B5CF6'
       };
     }
     // mystic-night por defecto

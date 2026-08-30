@@ -2,7 +2,7 @@
  * ============================================================================
  * QUOTES SERVICE - BANCO DE CITAS LITERARIAS
  * ============================================================================
- * Gestiona la selección y rotación interactiva de frases literarias célebres.
+ * Gestiona la selección, persistencia y rotación interactiva de frases literarias célebres.
  */
 
 export class QuotesService {
@@ -50,18 +50,28 @@ export class QuotesService {
       }
     ];
 
-    this.currentIndex = 0;
+    // Recuperar índice previamente visto para que no regrese a la primera al recargar
+    try {
+      const saved = localStorage.getItem('arcadia_saved_quote_idx');
+      if (saved !== null && !isNaN(parseInt(saved)) && parseInt(saved) >= 0 && parseInt(saved) < this.quotes.length) {
+        this.currentIndex = parseInt(saved);
+      } else {
+        this.currentIndex = 0;
+      }
+    } catch (e) {
+      this.currentIndex = 0;
+    }
   }
 
   /**
-   * Obtiene la cita actual.
+   * Obtiene la cita actual guardada.
    */
   getCurrentQuote() {
-    return this.quotes[this.currentIndex];
+    return this.quotes[this.currentIndex] || this.quotes[0];
   }
 
   /**
-   * Obtiene la siguiente cita de forma secuencial o aleatoria diferente a la actual.
+   * Obtiene la siguiente cita de forma aleatoria persistiendo la elección.
    */
   getNextQuote() {
     let nextIndex;
@@ -70,6 +80,10 @@ export class QuotesService {
     } while (nextIndex === this.currentIndex && this.quotes.length > 1);
 
     this.currentIndex = nextIndex;
+    try {
+      localStorage.setItem('arcadia_saved_quote_idx', this.currentIndex.toString());
+    } catch (e) {}
+
     return this.quotes[this.currentIndex];
   }
 

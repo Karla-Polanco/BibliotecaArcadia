@@ -240,9 +240,6 @@ export class ReaderView {
   async open(bookId, initialCfi = null) {
     this.currentBookId = bookId;
     this.isOpen = true;
-    appState.set('activeView', 'reader');
-    appState.set('currentReadingId', bookId);
-    window.location.hash = `#reader/${bookId}`;
 
     if (this.container) {
       this.container.classList.add('active');
@@ -252,6 +249,12 @@ export class ReaderView {
     }
 
     try {
+      localStorage.setItem('arcadia_active_view', 'reader');
+      localStorage.setItem('arcadia_active_book_id', bookId);
+      try {
+        history.replaceState({ view: 'reader', bookId }, '', `#reader/${bookId}`);
+      } catch (_) {}
+
       const result = await readerManager.openBook(bookId, 'reader-content', initialCfi);
 
       if (this.titleEl && result.book) {
@@ -259,6 +262,10 @@ export class ReaderView {
       }
 
       this.renderToc(result.toc);
+
+      // Sincronizar UI de ajustes
+      const currentSettings = readerManager.getSettings();
+      this.syncSettingsUI(currentSettings);
     } catch (err) {
       console.error('Error al abrir el libro en el lector:', err);
       Toast.error(err.message || 'No se pudo abrir el libro.');
@@ -281,11 +288,15 @@ export class ReaderView {
     this.toggleToc(false);
     readerManager.destroy();
 
-    // Actualizar el estado global
-    appState.set('activeView', 'library');
+    // Actualizar el estado global y limpiar persistencia del lector
+    localStorage.setItem('arcadia_active_view', 'library');
     localStorage.removeItem('arcadia_active_book_id');
-    const filter = appState.get('activeFilter') || 'all';
-    window.location.hash = filter === 'all' ? '#library' : `#${filter}`;
+    const activeFilter = appState.get('activeFilter') || 'all';
+    try {
+      history.replaceState({ view: 'library', filter: activeFilter }, '', activeFilter === 'all' ? '#' : `#${activeFilter}`);
+    } catch (_) {}
+
+    appState.set('activeView', 'library');
   }
 
   /**
@@ -504,8 +515,14 @@ export class ReaderView {
       btn.classList.toggle('active', btn.dataset.margin === settings.margins);
     });
 
-    if (readerManager.rendition && typeof readerManager.rendition.resize === 'function') {
-      try { readerManager.rendition.resize(); } catch (_) {}
+    if (this.contentEl) {
+      if (settings.margins === 'compact') {
+        this.contentEl.style.maxWidth = '1480px';
+      } else if (settings.margins === 'relaxed') {
+        this.contentEl.style.maxWidth = '940px';
+      } else {
+        this.contentEl.style.maxWidth = '1200px';
+      }
     }
 
     // 6. Columnas
@@ -533,12 +550,10 @@ export class ReaderView {
   initSettingsControls() {
     // 1. Tipografía
     document.querySelectorAll('#font-family-options [data-font]').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      btn.addEventListener('click', async () => {
         const font = btn.dataset.font;
         const updated = await readerManager.updateSettings({ fontFamily: font });
-        this.syncSettingsUI(updated || { ...readerManager.getSettings(), fontFamily: font });
+        this.syncSettingsUI(updated);
       });
     });
 
@@ -547,79 +562,65 @@ export class ReaderView {
     const btnIncrease = document.getElementById('btn-font-increase');
 
     if (btnDecrease) {
-      btnDecrease.addEventListener('click', async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      btnDecrease.addEventListener('click', async () => {
         const cur = readerManager.getSettings();
         const newSize = Math.max(12, cur.fontSize - 2);
         const updated = await readerManager.updateSettings({ fontSize: newSize });
-        this.syncSettingsUI(updated || { ...cur, fontSize: newSize });
+        this.syncSettingsUI(updated);
       });
     }
 
     if (btnIncrease) {
-      btnIncrease.addEventListener('click', async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      btnIncrease.addEventListener('click', async () => {
         const cur = readerManager.getSettings();
         const newSize = Math.min(36, cur.fontSize + 2);
         const updated = await readerManager.updateSettings({ fontSize: newSize });
-        this.syncSettingsUI(updated || { ...cur, fontSize: newSize });
+        this.syncSettingsUI(updated);
       });
     }
 
     // 3. Grosor de Fuente
     document.querySelectorAll('#font-weight-options [data-weight]').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      btn.addEventListener('click', async () => {
         const weight = btn.dataset.weight;
         const updated = await readerManager.updateSettings({ fontWeight: weight });
-        this.syncSettingsUI(updated || { ...readerManager.getSettings(), fontWeight: weight });
+        this.syncSettingsUI(updated);
       });
     });
 
     // 4. Interlineado
     document.querySelectorAll('#line-height-options [data-lh]').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      btn.addEventListener('click', async () => {
         const lh = parseFloat(btn.dataset.lh);
         const updated = await readerManager.updateSettings({ lineHeight: lh });
-        this.syncSettingsUI(updated || { ...readerManager.getSettings(), lineHeight: lh });
+        this.syncSettingsUI(updated);
       });
     });
 
     // 5. Márgenes
     document.querySelectorAll('#margins-options [data-margin]').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      btn.addEventListener('click', async () => {
         const margin = btn.dataset.margin;
         const updated = await readerManager.updateSettings({ margins: margin });
-        this.syncSettingsUI(updated || { ...readerManager.getSettings(), margins: margin });
+        this.syncSettingsUI(updated);
       });
     });
 
     // 6. Columnas
     document.querySelectorAll('#columns-options [data-col]').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      btn.addEventListener('click', async () => {
         const cols = parseInt(btn.dataset.col);
         const updated = await readerManager.updateSettings({ columns: cols });
-        this.syncSettingsUI(updated || { ...readerManager.getSettings(), columns: cols });
+        this.syncSettingsUI(updated);
       });
     });
 
     // 7. Tema del Lector
     document.querySelectorAll('#reader-theme-options [data-reader-theme]').forEach(chip => {
-      chip.addEventListener('click', async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      chip.addEventListener('click', async () => {
         const theme = chip.dataset.readerTheme;
         const updated = await readerManager.updateSettings({ theme });
-        this.syncSettingsUI(updated || { ...readerManager.getSettings(), theme });
+        this.syncSettingsUI(updated);
       });
     });
   }

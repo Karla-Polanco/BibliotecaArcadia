@@ -103,8 +103,8 @@ class App {
     // 10. Vincular Modal de Selector de Temas
     this.initThemeModal();
 
-    // 11. Restaurar vista, filtro o libro activo tras recargar la página
-    this.restorePreviousState();
+    // 11. Restaurar última vista, libro o sección activa al recargar
+    await this.restoreLastState();
 
     console.log('✦ Biblioteca Arcadia inicializada con éxito (Fase 3: Motor de Lectura EPUB con epub.js)');
   }
@@ -264,11 +264,13 @@ class App {
           mItem.classList.toggle('active', mItem.dataset.navFilter === filter);
         });
 
-        if (this.readerView && this.readerView.isOpen) {
-          this.readerView.close();
+        appState.set('activeFilter', filter);
+        localStorage.setItem('arcadia_active_filter', filter);
+        if (localStorage.getItem('arcadia_active_view') !== 'reader') {
+          try {
+            history.replaceState({ view: 'library', filter }, '', filter === 'all' ? '#' : `#${filter}`);
+          } catch (_) {}
         }
-
-        appState.set('activeFilter', filter, true);
         toggleDrawer(false);
       });
     });
@@ -292,11 +294,13 @@ class App {
             sItem.classList.toggle('active', sItem.dataset.navFilter === filter);
           });
 
-          if (this.readerView && this.readerView.isOpen) {
-            this.readerView.close();
+          appState.set('activeFilter', filter);
+          localStorage.setItem('arcadia_active_filter', filter);
+          if (localStorage.getItem('arcadia_active_view') !== 'reader') {
+            try {
+              history.replaceState({ view: 'library', filter }, '', filter === 'all' ? '#' : `#${filter}`);
+            } catch (_) {}
           }
-
-          appState.set('activeFilter', filter, true);
         }
       });
     });
@@ -386,65 +390,43 @@ class App {
       }
     }
 
-    /**
-   * Restaura la vista, sección o libro activo previo a la recarga de página (F5 / Ctrl+R).
+  /**
+   * Restaura la última vista activa (lector con el libro abierto en su página, o la sección/filtro activo).
    */
-  restorePreviousState() {
+  async restoreLastState() {
     const hash = window.location.hash || '';
     const savedView = localStorage.getItem('arcadia_active_view');
     const savedBookId = localStorage.getItem('arcadia_active_book_id');
-    const savedFilter = localStorage.getItem('arcadia_active_filter') || 'all';
 
-    // 1. Si estábamos dentro del lector EPUB
-    if (hash.startsWith('#reader/')) {
-      const bookId = hash.replace('#reader/', '');
-      if (bookId && this.readerView) {
-        setTimeout(() => this.readerView.open(bookId), 60);
-        return;
-      }
-    } else if (savedView === 'reader' && savedBookId && this.readerView) {
-      setTimeout(() => this.readerView.open(savedBookId), 60);
-      return;
-    }
-
-    // 2. Si estábamos en un filtro o sección específica
-    let targetFilter = 'all';
-    if (hash && hash !== '#' && hash !== '#library') {
-      targetFilter = hash.replace('#', '');
-    } else if (savedFilter) {
-      targetFilter = savedFilter;
-    }
-
-    document.querySelectorAll('[data-nav-filter]').forEach(el => {
-      el.classList.toggle('active', el.dataset.navFilter === targetFilter);
-    });
-    document.querySelectorAll('.mobile-nav-link[data-nav-filter]').forEach(mItem => {
-      mItem.classList.toggle('active', mItem.dataset.navFilter === targetFilter);
-    });
-
-    appState.set('activeFilter', targetFilter, true);
-
-    // Oyente para navegación por historial del navegador (Atrás / Adelante)
-    window.addEventListener('popstate', () => {
-      const currentHash = window.location.hash || '';
-      if (currentHash.startsWith('#reader/')) {
-        const bId = currentHash.replace('#reader/', '');
-        if (bId && this.readerView && (!this.readerView.isOpen || this.readerView.currentBookId !== bId)) {
-          this.readerView.open(bId);
+    // 1. Si estaba leyendo un libro, reabrir el lector en ese libro
+    if (hash.startsWith('#reader/') || (savedView === 'reader' && savedBookId)) {
+      const bookId = hash.startsWith('#reader/') ? hash.replace('#reader/', '') : savedBookId;
+      if (bookId && this.bookManager) {
+        const book = this.bookManager.getBookById(bookId);
+        if (book && this.readerView) {
+          await this.readerView.open(bookId);
+          return;
         }
-      } else if (!currentHash.startsWith('#reader/') && this.readerView && this.readerView.isOpen) {
-        this.readerView.close();
-      } else {
-        const f = currentHash.replace('#', '') || 'all';
-        document.querySelectorAll('[data-nav-filter]').forEach(el => {
-          el.classList.toggle('active', el.dataset.navFilter === f);
-        });
-        document.querySelectorAll('.mobile-nav-link[data-nav-filter]').forEach(mItem => {
-          mItem.classList.toggle('active', mItem.dataset.navFilter === f);
-        });
-        appState.set('activeFilter', f, true);
       }
-    });
+    }
+
+    // 2. Si estaba en una sección (Notas, Vocabulario, Favoritos, Leyendo, etc.), restaurar filtro
+    let targetFilter = 'all';
+    if (hash && hash.length > 1 && !hash.startsWith('#reader/')) {
+      targetFilter = hash.substring(1);
+    } else {
+      targetFilter = localStorage.getItem('arcadia_active_filter') || 'all';
+    }
+
+    if (targetFilter && targetFilter !== 'all') {
+      appState.set('activeFilter', targetFilter);
+      document.querySelectorAll('[data-nav-filter]').forEach(el => {
+        el.classList.toggle('active', el.dataset.navFilter === targetFilter);
+      });
+      document.querySelectorAll('.mobile-nav-link[data-nav-filter]').forEach(el => {
+        el.classList.toggle('active', el.dataset.navFilter === targetFilter);
+      });
+    }
   }
 }
 

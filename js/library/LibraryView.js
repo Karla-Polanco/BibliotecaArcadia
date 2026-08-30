@@ -363,35 +363,7 @@ export class LibraryView {
     if (!this.container) return;
     const viewMode = appState.get('viewMode') || 'grid';
 
-    const filter = appState.get('activeFilter') || 'all';
-
     if (this.filteredBooks.length === 0) {
-      let emptyTitle = 'Tu biblioteca está vacía';
-      let emptyDesc = 'No hay libros cargados. Arrastra y suelta aquí tus archivos <strong>.epub</strong> o pulsa el botón para subir tus libros y comenzar a leer.';
-      let showUpload = true;
-
-      if (filter === 'favorites') {
-        emptyTitle = 'No tienes libros favoritos todavía';
-        emptyDesc = 'Pulsa el icono de estrella en la portada de cualquier libro para añadirlo a tus favoritos.';
-        showUpload = false;
-      } else if (filter === 'reading') {
-        emptyTitle = 'No tienes lecturas en curso';
-        emptyDesc = 'Abre cualquier libro de tu biblioteca para comenzar a leer.';
-        showUpload = false;
-      } else if (filter === 'to_read') {
-        emptyTitle = 'No tienes libros pendientes';
-        emptyDesc = 'Marca libros como "Por leer" desde el menú de opciones de cada libro.';
-        showUpload = false;
-      } else if (filter === 'completed') {
-        emptyTitle = 'No has completado ningún libro todavía';
-        emptyDesc = 'Tus libros leídos al 100% se organizarán automáticamente en esta sección.';
-        showUpload = false;
-      } else if (filter.startsWith('collection:')) {
-        emptyTitle = 'Esta colección está vacía';
-        emptyDesc = 'Añade libros a esta colección desde el menú de opciones de cada libro.';
-        showUpload = false;
-      }
-
       this.container.innerHTML = `
         ${this.renderCollectionHeader()}
         <div style="grid-column: 1 / -1; text-align: center; padding: 70px 20px; color: var(--color-text-muted);">
@@ -400,19 +372,17 @@ export class LibraryView {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
           </div>
-          <h3 style="font-size: var(--text-lg); font-weight: bold; color: var(--color-text); margin-bottom: 8px;">${emptyTitle}</h3>
+          <h3 style="font-size: var(--text-lg); font-weight: bold; color: var(--color-text); margin-bottom: 8px;">Tu biblioteca está vacía</h3>
           <p style="font-size: var(--text-sm); color: var(--color-text-secondary); max-width: 440px; margin: 0 auto 20px; line-height: 1.5;">
-            ${emptyDesc}
+            No hay libros de ejemplo cargados. Arrastra y suelta aquí tus archivos <strong>.epub</strong> o pulsa el botón para subir tus libros y comenzar a leer.
           </p>
-          ${showUpload ? `
-            <button id="btn-empty-upload" style="
-              display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: var(--radius-sm);
-              background-color: var(--color-primary-light); color: #FFF; font-size: var(--text-xs); font-weight: bold; cursor: pointer; border: none;
-            ">
-              <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
-              <span>Subir libro (EPUB)</span>
-            </button>
-          ` : ''}
+          <button id="btn-empty-upload" style="
+            display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: var(--radius-sm);
+            background-color: var(--color-primary-light); color: #FFF; font-size: var(--text-xs); font-weight: bold; cursor: pointer; border: none;
+          ">
+            <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+            <span>Subir libro (EPUB)</span>
+          </button>
         </div>
       `;
       const btnEmptyUpload = this.container.querySelector('#btn-empty-upload');
