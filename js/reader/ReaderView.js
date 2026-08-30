@@ -88,6 +88,13 @@ export class ReaderView {
       }
     });
 
+    // 4. Escuchar evento cuando se inyecta un capítulo en el iframe para vincular eventos táctiles y de clic
+    window.addEventListener('arcadia:reader-content-loaded', (e) => {
+      if (e.detail && e.detail.contents) {
+        this.attachIframeEvents(e.detail.contents);
+      }
+    });
+
     // 4. Botón y Drawer de Tabla de Contenidos (TOC) y Marcadores
     const tocBtn = document.getElementById('btn-reader-toc');
     const tocCloseBtn = document.getElementById('toc-close-btn');
@@ -401,7 +408,7 @@ export class ReaderView {
   }
 
   /**
-   * Gestos táctiles y detección de toques para alternar barras de herramientas.
+   * Gestos táctiles y detección de toques para alternar páginas y barras de herramientas.
    */
   initTouchAndClickZones() {
     let touchStartX = 0;
@@ -411,23 +418,23 @@ export class ReaderView {
     if (!viewport) return;
 
     viewport.addEventListener('touchstart', (e) => {
-      if (e.touches.length === 1) {
+      if (e.touches && e.touches.length === 1) {
         touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
       }
     }, { passive: true });
 
     viewport.addEventListener('touchend', (e) => {
-      if (e.changedTouches.length === 1) {
+      if (e.changedTouches && e.changedTouches.length === 1) {
         const deltaX = e.changedTouches[0].clientX - touchStartX;
         const deltaY = e.changedTouches[0].clientY - touchStartY;
 
-        // Deslizamiento horizontal significativo (Swipe > 50px)
-        if (Math.abs(deltaX) > 50 && Math.abs(deltaY) < 40) {
+        // Deslizamiento horizontal (Swipe > 35px)
+        if (Math.abs(deltaX) > 35 && Math.abs(deltaX) > Math.abs(deltaY)) {
           if (deltaX < 0) {
-            readerManager.nextPage(); // Deslizar hacia la izquierda -> Siguiente
+            readerManager.nextPage();
           } else {
-            readerManager.prevPage(); // Deslizar hacia la derecha -> Anterior
+            readerManager.prevPage();
           }
         }
       }
@@ -435,25 +442,126 @@ export class ReaderView {
 
     // Alternar barras (Header y Footer) al pulsar en el tercio central
     viewport.addEventListener('click', (e) => {
-      // Ignorar si se pulsó un botón o flecha
       if (e.target.closest('button, a, .btn-reader-nav')) return;
 
       const width = window.innerWidth;
       const clickX = e.clientX;
 
-      // Tercio izquierdo: página anterior
-      if (clickX < width * 0.22) {
+      if (clickX < width * 0.28) {
         readerManager.prevPage();
-      }
-      // Tercio derecho: página siguiente
-      else if (clickX > width * 0.78) {
+      } else if (clickX > width * 0.72) {
         readerManager.nextPage();
-      }
-      // Tercio central: conmutar visibilidad de barras (inmersivo)
-      else {
+      } else {
         if (this.container) {
           this.container.classList.toggle('bars-hidden');
         }
+      }
+    });
+  }
+
+  /**
+   * Conecta oyentes de toque (swipe/tap), clic y teclado dentro del iframe del libro.
+   * Esto permite pasar de página deslizando o tocando los lados de la pantalla en móviles.
+   * @param {Object} contents - Objeto contents de epub.js
+   */
+  attachIframeEvents(contents) {
+    if (!contents || !contents.document) return;
+    const doc = contents.document;
+    const win = contents.window || window;
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchStartTime = 0;
+
+    // 1. Detección de Swipe y Taps táctiles en móviles
+    doc.addEventListener('touchstart', (e) => {
+      if (e.touches && e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchStartTime = Date.now();
+      }
+    }, { passive: true });
+
+    doc.addEventListener('touchend', (e) => {
+      if (e.changedTouches && e.changedTouches.length === 1) {
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+        const deltaX = touchEndX - touchStartX;
+        const deltaY = touchEndY - touchStartY;
+        const deltaTime = Date.now() - touchStartTime;
+
+        // Deslizamiento horizontal rápido (Swipe > 30px)
+        if (Math.abs(deltaX) > 30 && Math.abs(deltaX) > Math.abs(deltaY) && deltaTime < 800) {
+          if (deltaX < 0) {
+            readerManager.nextPage();
+          } else {
+            readerManager.prevPage();
+          }
+          return;
+        }
+
+        // Toque simple sin desplazamiento
+        if (Math.abs(deltaX) < 18 && Math.abs(deltaY) < 18 && deltaTime < 450) {
+          let selection = '';
+          try {
+            selection = (win.getSelection ? win.getSelection().toString() : '') ||
+                        (window.getSelection ? window.getSelection().toString() : '');
+          } catch (_) {}
+
+          if (selection && selection.trim().length > 0) return;
+
+          const screenWidth = win.innerWidth || window.innerWidth;
+
+          // Tercio izquierdo: página anterior
+          if (touchEndX < screenWidth * 0.30) {
+            readerManager.prevPage();
+          }
+          // Tercio derecho: página siguiente
+          else if (touchEndX > screenWidth * 0.70) {
+            readerManager.nextPage();
+          }
+          // Tercio central: alternar barras de herramientas
+          else {
+            if (this.container) {
+              this.container.classList.toggle('bars-hidden');
+            }
+          }
+        }
+      }
+    }, { passive: true });
+
+    // 2. Detección de clics de ratón dentro del iframe
+    doc.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return;
+
+      let selection = '';
+      try {
+        selection = (win.getSelection ? win.getSelection().toString() : '') ||
+                    (window.getSelection ? window.getSelection().toString() : '');
+      } catch (_) {}
+
+      if (selection && selection.trim().length > 0) return;
+
+      const screenWidth = win.innerWidth || window.innerWidth;
+      const clickX = e.clientX;
+
+      if (clickX < screenWidth * 0.30) {
+        readerManager.prevPage();
+      } else if (clickX > screenWidth * 0.70) {
+        readerManager.nextPage();
+      } else {
+        if (this.container) {
+          this.container.classList.toggle('bars-hidden');
+        }
+      }
+    });
+
+    // 3. Atajos de teclado dentro del iframe
+    doc.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+        readerManager.nextPage();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        readerManager.prevPage();
       }
     });
   }

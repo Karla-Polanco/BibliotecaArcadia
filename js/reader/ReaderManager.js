@@ -83,6 +83,7 @@ export class ReaderManager {
     if (this.rendition.hooks && this.rendition.hooks.content) {
       this.rendition.hooks.content.register((contents) => {
         ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
+        window.dispatchEvent(new CustomEvent('arcadia:reader-content-loaded', { detail: { contents } }));
       });
     }
     ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
@@ -123,18 +124,26 @@ export class ReaderManager {
   /**
    * Navega a la siguiente página.
    */
-  nextPage() {
+  async nextPage() {
     if (this.rendition) {
-      this.rendition.next();
+      try {
+        await this.rendition.next();
+      } catch (err) {
+        console.warn('[ReaderManager] nextPage:', err);
+      }
     }
   }
 
   /**
    * Navega a la página anterior.
    */
-  prevPage() {
+  async prevPage() {
     if (this.rendition) {
-      this.rendition.prev();
+      try {
+        await this.rendition.prev();
+      } catch (err) {
+        console.warn('[ReaderManager] prevPage:', err);
+      }
     }
   }
 
@@ -213,8 +222,9 @@ export class ReaderManager {
 
       const activeGlobalTheme = document.documentElement.getAttribute('data-theme') || 'mystic-night';
       if (this.rendition.hooks && this.rendition.hooks.content) {
-        this.rendition.hooks.content.register(() => {
+        this.rendition.hooks.content.register((contents) => {
           ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
+          window.dispatchEvent(new CustomEvent('arcadia:reader-content-loaded', { detail: { contents } }));
         });
       }
       ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
