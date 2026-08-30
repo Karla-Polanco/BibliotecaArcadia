@@ -149,6 +149,22 @@ export class ReaderSettings {
         accent: '#F5A623'
       };
     }
+    if (themeName === 'enchanted-forest') {
+      return {
+        bg: '#F5F0E6',
+        text: '#262922',
+        heading: '#1E2B1A',
+        accent: '#6C8B5E'
+      };
+    }
+    if (themeName === 'clear-sky') {
+      return {
+        bg: '#EBF4FA',
+        text: '#132D48',
+        heading: '#0F233B',
+        accent: '#3182CE'
+      };
+    }
     // mystic-night por defecto
     return {
       bg: '#111111',

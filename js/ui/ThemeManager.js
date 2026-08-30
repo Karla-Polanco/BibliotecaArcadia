@@ -10,6 +10,8 @@ export class ThemeManager {
     MYSTIC_NIGHT: 'mystic-night',
     LAVENDER_LIGHT: 'lavender-light',
     DEEP_TWILIGHT: 'deep-twilight',
+    ENCHANTED_FOREST: 'enchanted-forest',
+    CLEAR_SKY: 'clear-sky',
     SYSTEM: 'system'
   };
 

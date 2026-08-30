@@ -160,7 +160,111 @@
 }
 
 /* --------------------------------------------------------------------------
-   4. TEMA DEL SISTEMA (Reglas fallback cuando data-theme="system")
+   4. TEMA: BOSQUE ENCANTADO (enchanted-forest)
+   Fondo beige cálido tipo pergamino, acentos verde musgo y dorado tenue.
+   -------------------------------------------------------------------------- */
+[data-theme="enchanted-forest"] {
+  --color-background: #F7F3E9;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #EFE9DC;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-hover: rgba(108, 139, 94, 0.08);
+  --color-surface-active: rgba(108, 139, 94, 0.15);
+
+  /* Acentos de Color */
+  --color-primary-dark: #2D3D27;
+  --color-primary: #465E3C;
+  --color-primary-light: #6C8B5E;
+  --color-primary-glow: rgba(108, 139, 94, 0.3);
+  --color-secondary: #B38E5D;
+  --color-secondary-glow: rgba(179, 142, 93, 0.28);
+
+  /* Tipografía y Contraste */
+  --color-text: #23271F;
+  --color-text-secondary: #575E50;
+  --color-text-muted: #848B7C;
+  --color-text-inverse: #FFFFFF;
+
+  /* Bordes y Divisores */
+  --color-border: #DFD7C6;
+  --color-border-subtle: #EAE3D4;
+  --color-border-focus: #6C8B5E;
+
+  /* Badges y Estados */
+  --color-badge-bg: rgba(108, 139, 94, 0.15);
+  --color-badge-text: #465E3C;
+  --color-accent-gold: #B38E5D;
+
+  /* Banner Literario */
+  --banner-gradient: linear-gradient(135deg, #2D3D27 0%, #465E3C 55%, #B38E5D 100%);
+  --banner-border: rgba(108, 139, 94, 0.4);
+
+  /* Lector */
+  --reader-bg: #F5F0E6;
+  --reader-text: #262922;
+
+  /* Marca Tipográfica Emblemática */
+  --brand-eyebrow-color: #384D30;
+  --brand-rule-color: rgba(108, 139, 94, 0.45);
+  --brand-star-color: #B38E5D;
+  --brand-title-gradient: linear-gradient(180deg, #1E2B1A 0%, #364B2E 55%, #6C8B5E 100%);
+  --brand-title-shadow: rgba(108, 139, 94, 0.25);
+}
+
+/* --------------------------------------------------------------------------
+   5. TEMA: CIELO CLARO (clear-sky)
+   Fondo celeste muy pálido, acentos azul cielo y azul marino profundo.
+   -------------------------------------------------------------------------- */
+[data-theme="clear-sky"] {
+  --color-background: #F0F6FB;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #E4EFF8;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-hover: rgba(66, 153, 225, 0.08);
+  --color-surface-active: rgba(66, 153, 225, 0.15);
+
+  /* Acentos de Color */
+  --color-primary-dark: #1A365D;
+  --color-primary: #2B6CB0;
+  --color-primary-light: #4299E1;
+  --color-primary-glow: rgba(66, 153, 225, 0.3);
+  --color-secondary: #3182CE;
+  --color-secondary-glow: rgba(49, 130, 206, 0.25);
+
+  /* Tipografía y Contraste */
+  --color-text: #102A43;
+  --color-text-secondary: #486581;
+  --color-text-muted: #829AB1;
+  --color-text-inverse: #FFFFFF;
+
+  /* Bordes y Divisores */
+  --color-border: #D0E2F2;
+  --color-border-subtle: #E1EDF7;
+  --color-border-focus: #4299E1;
+
+  /* Badges y Estados */
+  --color-badge-bg: rgba(66, 153, 225, 0.14);
+  --color-badge-text: #2B6CB0;
+  --color-accent-gold: #3182CE;
+
+  /* Banner Literario */
+  --banner-gradient: linear-gradient(135deg, #1A365D 0%, #2B6CB0 60%, #4299E1 100%);
+  --banner-border: rgba(66, 153, 225, 0.35);
+
+  /* Lector */
+  --reader-bg: #EBF4FA;
+  --reader-text: #132D48;
+
+  /* Marca Tipográfica Emblemática */
+  --brand-eyebrow-color: #1A365D;
+  --brand-rule-color: rgba(66, 153, 225, 0.4);
+  --brand-star-color: #3182CE;
+  --brand-title-gradient: linear-gradient(180deg, #0F233B 0%, #1A365D 50%, #2B6CB0 100%);
+  --brand-title-shadow: rgba(66, 153, 225, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   6. TEMA DEL SISTEMA (Reglas fallback cuando data-theme="system")
    -------------------------------------------------------------------------- */
 @media (prefers-color-scheme: light) {
   [data-theme="system"] {

@@ -160,12 +160,20 @@ ul, ol {
   color: var(--color-text, #FFFFFF) !important;
   position: relative !important;
   width: 100% !important;
-  max-width: 480px !important;
+  max-width: 500px;
   max-height: 90vh !important;
   overflow-y: auto !important;
   margin: auto !important;
   transform: scale(0.95);
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Modales amplios (Formato Horizontal / Landscape) */
+#theme-modal .modal-card,
+.modal-card.modal-wide,
+.theme-modal-dialog.wide {
+  max-width: 960px !important;
+  width: 92vw !important;
 }
 
 .theme-modal-overlay.active .theme-modal-dialog,
