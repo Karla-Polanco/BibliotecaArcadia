@@ -6,7 +6,7 @@
  * mediante caché Cache-First del App Shell y limpieza de versiones obsoletas.
  */
 
-const CACHE_NAME = 'arcadia-pwa-v4';
+const CACHE_NAME = 'arcadia-pwa-v5';
 
 // Recursos esenciales del App Shell a precachear
 const APP_SHELL_ASSETS = [
@@ -46,6 +46,7 @@ const APP_SHELL_ASSETS = [
   './assets/libs/jszip.min.js',
   './assets/libs/epub.min.js',
   './assets/sample/sample_book.epub',
+  './assets/icons/logo.png',
   './assets/icons/icon.svg',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png'

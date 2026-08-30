@@ -12,6 +12,12 @@
   "categories": ["books", "education", "productivity"],
   "icons": [
     {
+      "src": "assets/icons/logo.png",
+      "sizes": "750x709",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
       "src": "assets/icons/icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",

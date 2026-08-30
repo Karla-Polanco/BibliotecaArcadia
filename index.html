@@ -9,11 +9,16 @@
 
   <!-- PWA Web App Manifest e Iconos -->
   <link rel="manifest" href="manifest.json">
-  <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
-  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="icon" type="image/png" href="assets/icons/logo.png">
+  <link rel="apple-touch-icon" href="assets/icons/logo.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Arcadia">
+
+  <!-- Fuentes Tipográficas Literarias y de Marca (Cinzel, Playfair, Literata, Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
 
   <!-- Hojas de Estilo Modulares -->
   <link rel="stylesheet" href="css/main.css">
@@ -33,13 +38,9 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
     </button>
-    <div class="mobile-logo-wrap">
-      <div class="brand-logo" style="width: 28px; height: 28px;">
-        <svg style="width: 16px; height: 16px;" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 2l2.4 7.2h7.6l-6.1 4.5 2.3 7.3-6.2-4.6-6.2 4.6 2.3-7.3-6.1-4.5h7.6z"/>
-        </svg>
-      </div>
-      <span style="font-weight: var(--weight-bold); font-size: var(--text-sm); color: var(--color-text);">Arcadia</span>
+    <div class="mobile-logo-wrap" style="display: flex; align-items: center; gap: 8px;">
+      <img src="assets/icons/logo.png" alt="Arcadia" class="brand-logo-img" style="width: 32px; height: 32px;">
+      <span style="font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.1rem; letter-spacing: 0.1em; color: var(--color-text);">ARCADIA</span>
     </div>
     <button class="btn-upload-epub" id="mobile-upload-trigger" style="padding: 6px 12px; font-size: var(--text-xs);" aria-label="Subir libro">
       <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,16 +58,28 @@
          SIDEBAR LATERAL (ESCRITORIO / DRAWER MÓVIL)
          ====================================================================== -->
     <aside class="app-sidebar" id="app-sidebar">
-      <!-- Header / Logotipo -->
+      <!-- Header / Logotipo Celestial y Marca Emblemática -->
       <div class="sidebar-header">
-        <div class="brand-logo">
-          <svg style="width: 20px; height: 20px;" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2l2.4 7.2h7.6l-6.1 4.5 2.3 7.3-6.2-4.6-6.2 4.6 2.3-7.3-6.1-4.5h7.6z"/>
-          </svg>
-        </div>
-        <div class="brand-info">
-          <h1 class="brand-title">Biblioteca Arcadia</h1>
-          <span class="brand-subtitle">App de lectura</span>
+        <div class="brand-block">
+          <div class="brand-logo-wrapper">
+            <img src="assets/icons/logo.png" alt="Biblioteca Arcadia Logo" class="brand-logo-img">
+          </div>
+          <div class="brand-typography">
+            <div class="brand-ornament-top">
+              <span class="brand-diamond">✦</span>
+            </div>
+            <div class="brand-eyebrow-row">
+              <span class="brand-rule"></span>
+              <span class="brand-eyebrow">BIBLIOTECA</span>
+              <span class="brand-rule"></span>
+            </div>
+            <h1 class="brand-wordmark">ARCADIA</h1>
+            <div class="brand-footer-row">
+              <span class="brand-rule"></span>
+              <span class="brand-star">✦</span>
+              <span class="brand-rule"></span>
+            </div>
+          </div>
         </div>
       </div>
 
