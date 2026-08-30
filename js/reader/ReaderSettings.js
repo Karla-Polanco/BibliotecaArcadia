@@ -3,7 +3,7 @@
  * READER SETTINGS - GESTIÓN DE CONFIGURACIÓN AVANZADA POR LIBRO
  * ============================================================================
  * Maneja fuentes, tamaños, grosor, interlineado, márgenes, columnas, flujo
- * y temas visuales con persistencia individual en IndexedDB.
+ * y temas visuales con persistencia individual en IndexedDB e inyección directa en iframe.
  */
 
 import { dbManager } from '../db.js';
@@ -17,7 +17,7 @@ export class ReaderSettings {
     margins: 'normal',   // 'compact', 'normal', 'relaxed'
     columns: 1,          // 1 o 2 columnas
     flowMode: 'paginated', // 'paginated' o 'scrolled-doc'
-    theme: 'inherit'     // 'inherit', 'mystic-night', 'lavender-light', 'deep-twilight'
+    theme: 'inherit'     // 'inherit', 'mystic-night', 'lavender-light', 'deep-twilight', 'enchanted-forest', 'clear-sky'
   };
 
   /**
@@ -47,7 +47,7 @@ export class ReaderSettings {
   }
 
   /**
-   * Inyecta y actualiza los estilos en el Rendition de epub.js.
+   * Inyecta y actualiza los estilos en el Rendition de epub.js y en todos los iframes activos.
    * @param {Object} rendition - Objeto Rendition de epub.js
    * @param {Object} settings - Configuración a aplicar
    * @param {string} effectiveTheme - Tema visual activo
@@ -60,48 +60,116 @@ export class ReaderSettings {
     const themeColors = this._getThemeColors(readerTheme);
 
     // 2. Determinar padding lateral según márgenes
-    let paddingHoriz = '32px';
-    if (settings.margins === 'compact') paddingHoriz = '16px';
-    else if (settings.margins === 'relaxed') paddingHoriz = '56px';
+    let paddingHoriz = '28px';
+    if (settings.margins === 'compact') paddingHoriz = '12px';
+    else if (settings.margins === 'relaxed') paddingHoriz = '48px';
 
-    // 3. Reglas de estilo para el documento interno del libro
-    rendition.themes.default({
-      'body': {
-        'padding': `0 ${paddingHoriz} !important`,
-        'margin': '0 auto !important',
-        'color': `${themeColors.text} !important`,
-        'background': `${themeColors.bg} !important`,
-        'font-family': `${this._getFontStack(settings.fontFamily)} !important`,
-        'font-size': `${settings.fontSize}px !important`,
-        'font-weight': `${settings.fontWeight === 'bold' ? '700' : (settings.fontWeight === 'medium' ? '500' : '400')} !important`,
-        'line-height': `${settings.lineHeight} !important`,
-        '-webkit-font-smoothing': 'antialiased'
-      },
-      'p': {
-        'margin-bottom': '1em !important',
-        'line-height': 'inherit !important',
-        'color': `${themeColors.text} !important`
-      },
-      'h1, h2, h3, h4, h5, h6': {
-        'color': `${themeColors.heading} !important`,
-        'font-family': `${this._getFontStack(settings.fontFamily)} !important`,
-        'margin-top': '1.5em !important',
-        'margin-bottom': '0.5em !important'
-      },
-      'a': {
-        'color': `${themeColors.accent} !important`,
-        'text-decoration': 'none !important'
-      },
-      'blockquote': {
-        'border-left': `3px solid ${themeColors.accent} !important`,
-        'padding-left': '16px !important',
-        'margin-left': '0 !important',
-        'font-style': 'italic !important',
-        'opacity': '0.9'
+    const fontStack = this._getFontStack(settings.fontFamily);
+    const fontWeightVal = settings.fontWeight === 'bold' ? '700' : (settings.fontWeight === 'medium' ? '500' : '400');
+
+    // 3. Generar bloque CSS completo para inyección
+    const customCss = `
+      @import url('https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Roboto:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+      @font-face {
+        font-family: 'OpenDyslexic';
+        src: url('https://cdn.jsdelivr.net/npm/opendyslexic@1.0.3/dist/OpenDyslexic-Regular.otf') format('opentype');
+        font-weight: normal;
+        font-style: normal;
       }
-    });
 
-    // 4. Configuración de columnas (spread)
+      html, body {
+        background-color: ${themeColors.bg} !important;
+        color: ${themeColors.text} !important;
+      }
+
+      body {
+        padding: 0 ${paddingHoriz} !important;
+        margin: 0 auto !important;
+        color: ${themeColors.text} !important;
+        background: ${themeColors.bg} !important;
+        font-family: ${fontStack} !important;
+        font-size: ${settings.fontSize}px !important;
+        font-weight: ${fontWeightVal} !important;
+        line-height: ${settings.lineHeight} !important;
+        -webkit-font-smoothing: antialiased !important;
+      }
+
+      *, p, span, div, li, em, strong, b, i, blockquote, a {
+        font-family: ${fontStack} !important;
+      }
+
+      p, div, li, blockquote {
+        color: ${themeColors.text} !important;
+        font-size: inherit !important;
+        line-height: ${settings.lineHeight} !important;
+        font-weight: ${fontWeightVal} !important;
+      }
+
+      p {
+        margin-bottom: 1.15em !important;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        color: ${themeColors.heading} !important;
+        font-family: ${fontStack} !important;
+        margin-top: 1.4em !important;
+        margin-bottom: 0.6em !important;
+      }
+
+      a {
+        color: ${themeColors.accent} !important;
+        text-decoration: none !important;
+      }
+
+      blockquote {
+        border-left: 3px solid ${themeColors.accent} !important;
+        padding-left: 16px !important;
+        margin-left: 0 !important;
+        font-style: italic !important;
+        opacity: 0.95 !important;
+      }
+
+      ::selection {
+        background: rgba(123, 107, 240, 0.35) !important;
+      }
+    `;
+
+    // 4. Registrar en rendition.themes de epub.js
+    try {
+      rendition.themes.default({
+        'body': {
+          'padding': `0 ${paddingHoriz} !important`,
+          'color': `${themeColors.text} !important`,
+          'background': `${themeColors.bg} !important`,
+          'font-family': `${fontStack} !important`,
+          'font-size': `${settings.fontSize}px !important`,
+          'line-height': `${settings.lineHeight} !important`
+        },
+        'p, span, div, li, em, strong, b, i, blockquote, a': {
+          'font-family': `${fontStack} !important`
+        }
+      });
+    } catch (_) {}
+
+    // 5. Inyectar / Actualizar directamente en los iframes renderizados
+    try {
+      const contents = rendition.getContents ? rendition.getContents() : [];
+      contents.forEach(content => {
+        if (!content || !content.document) return;
+        let styleTag = content.document.getElementById('arcadia-reader-custom-style');
+        if (!styleTag) {
+          styleTag = content.document.createElement('style');
+          styleTag.id = 'arcadia-reader-custom-style';
+          content.document.head.appendChild(styleTag);
+        }
+        styleTag.textContent = customCss;
+      });
+    } catch (e) {
+      console.warn('Aviso inyectando estilos en iframe:', e);
+    }
+
+    // 6. Configuración de columnas (spread)
     if (rendition.spread) {
       rendition.spread(settings.columns === 2 ? 'always' : 'none');
     }

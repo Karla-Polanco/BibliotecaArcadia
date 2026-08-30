@@ -569,16 +569,19 @@
     <div class="reader-search-panel" id="reader-search-panel" role="dialog" aria-label="Búsqueda en el libro">
       <div class="search-panel-header">
         <div class="search-input-wrapper">
-          <svg style="width: 18px; height: 18px; color: var(--color-text-muted);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg style="width: 18px; height: 18px; color: var(--color-text-muted); flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input type="text" id="input-reader-search" placeholder="Buscar texto en este libro..." autocomplete="off">
-          <button id="btn-clear-reader-search" style="color: var(--color-text-muted); cursor: pointer; padding: 4px; display: none;">
+          <button id="btn-clear-reader-search" title="Borrar búsqueda" style="color: var(--color-text-muted); cursor: pointer; padding: 4px; display: none; background: transparent; border: none;">
             <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+          <button id="btn-submit-reader-search" style="padding: 5px 12px; border-radius: var(--radius-full, 999px); background: var(--color-primary-light); color: #FFF; font-size: 0.75rem; font-weight: 600; cursor: pointer; border: none; flex-shrink: 0;">
+            Buscar
           </button>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 4px;">
-          <span id="search-status-text" style="font-size: var(--text-xs); color: var(--color-text-muted);">Escribe y pulsa Enter</span>
+          <span id="search-status-text" style="font-size: var(--text-xs); color: var(--color-text-muted);">Escribe y pulsa Buscar o Enter</span>
           <button id="btn-close-reader-search" style="font-size: var(--text-xs); color: var(--color-primary-light); cursor: pointer; font-weight: bold;">Cerrar</button>
         </div>
       </div>

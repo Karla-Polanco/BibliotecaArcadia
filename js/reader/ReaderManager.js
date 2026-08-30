@@ -75,8 +75,13 @@ export class ReaderManager {
       allowScriptedContent: false // Seguridad contra XSS en libros
     });
 
-    // 5. Inyectar estilos y temas en el iframe
+    // 5. Inyectar estilos y temas en el iframe (inicial y en cada nuevo capítulo cargado)
     const activeGlobalTheme = document.documentElement.getAttribute('data-theme') || 'mystic-night';
+    if (this.rendition.hooks && this.rendition.hooks.content) {
+      this.rendition.hooks.content.register((contents) => {
+        ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
+      });
+    }
     ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
 
     // 6. Cargar Tabla de Contenidos (TOC)

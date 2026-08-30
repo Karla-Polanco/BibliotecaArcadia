@@ -170,12 +170,18 @@ export class ReaderView {
         }
       });
     }
+
+    const searchSubmitBtn = document.getElementById('btn-submit-reader-search');
+    if (searchSubmitBtn) {
+      searchSubmitBtn.addEventListener('click', () => this.executeSearch());
+    }
+
     if (this.searchClearBtn) {
       this.searchClearBtn.addEventListener('click', () => {
         this.searchInput.value = '';
         this.searchClearBtn.style.display = 'none';
         if (this.searchResultsList) this.searchResultsList.innerHTML = '';
-        if (this.searchStatusText) this.searchStatusText.textContent = 'Escribe y pulsa Enter';
+        if (this.searchStatusText) this.searchStatusText.textContent = 'Escribe y pulsa Buscar o Enter';
         this.searchInput.focus();
       });
     }
