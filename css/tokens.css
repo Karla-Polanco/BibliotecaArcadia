@@ -1,0 +1,68 @@
+/* ==========================================================================
+   TOKENS DE DISEÑO Y VARIABLES GLOBALES - BIBLIOTECA ARCADIA
+   ========================================================================== */
+
+:root {
+  /* Tipografía */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: 'Literata', 'Merriweather', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
+
+  /* Escala Tipográfica */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.844rem;   /* 13.5px */
+  --text-base: 0.938rem; /* 15px */
+  --text-md: 1.063rem;   /* 17px */
+  --text-lg: 1.25rem;    /* 20px */
+  --text-xl: 1.5rem;     /* 24px */
+  --text-2xl: 1.875rem;  /* 30px */
+
+  /* Pesos de Fuente */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Espaciado */
+  --space-2xs: 0.25rem; /* 4px */
+  --space-xs: 0.5rem;   /* 8px */
+  --space-sm: 0.75rem;  /* 12px */
+  --space-md: 1rem;     /* 16px */
+  --space-lg: 1.5rem;   /* 24px */
+  --space-xl: 2rem;     /* 32px */
+  --space-2xl: 3rem;    /* 48px */
+
+  /* Radios de Curvatura */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Elevación y Sombras */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+
+  /* Transiciones */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Dimensiones Estructurales */
+  --sidebar-width: 260px;
+  --mobile-nav-height: 64px;
+  --header-height: 60px;
+  --reading-banner-height: 72px;
+
+  /* Z-Index */
+  --z-sidebar: 40;
+  --z-sticky: 30;
+  --z-mobile-nav: 50;
+  --z-drawer: 100;
+  --z-floating-menu: 110;
+  --z-modal: 200;
+  --z-toast: 300;
+}

@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="mystic-night">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Biblioteca Arcadia - Biblioteca virtual y lector EPUB personal local-first, inspirado en la experiencia Kindle.">
+  <meta name="theme-color" content="#17113D">
+  <title>Biblioteca Arcadia · App de lectura</title>
+
+  <!-- PWA Web App Manifest e Iconos -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Arcadia">
+
+  <!-- Hojas de Estilo Modulares -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/library.css">
+  <link rel="stylesheet" href="css/reader.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       TOPBAR EXCLUSIVA PARA MÓVIL
+       ======================================================================== -->
+  <header class="mobile-topbar" id="mobile-topbar">
+    <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Abrir menú lateral">
+      <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+    <div class="mobile-logo-wrap">
+      <div class="brand-logo" style="width: 28px; height: 28px;">
+        <svg style="width: 16px; height: 16px;" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2l2.4 7.2h7.6l-6.1 4.5 2.3 7.3-6.2-4.6-6.2 4.6 2.3-7.3-6.1-4.5h7.6z"/>
+        </svg>
+      </div>
+      <span style="font-weight: var(--weight-bold); font-size: var(--text-sm); color: var(--color-text);">Arcadia</span>
+    </div>
+    <button class="btn-upload-epub" id="mobile-upload-trigger" style="padding: 6px 12px; font-size: var(--text-xs);" aria-label="Subir libro">
+      <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+      </svg>
+      <span>Subir</span>
+    </button>
+  </header>
+
+  <!-- Overlay para cerrar el Drawer en móvil -->
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <div class="app-container">
+    <!-- ======================================================================
+         SIDEBAR LATERAL (ESCRITORIO / DRAWER MÓVIL)
+         ====================================================================== -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <!-- Header / Logotipo -->
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <svg style="width: 20px; height: 20px;" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2l2.4 7.2h7.6l-6.1 4.5 2.3 7.3-6.2-4.6-6.2 4.6 2.3-7.3-6.1-4.5h7.6z"/>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <h1 class="brand-title">Biblioteca Arcadia</h1>
+          <span class="brand-subtitle">App de lectura</span>
+        </div>
+      </div>
+
+      <!-- Menú de Navegación -->
+      <div class="sidebar-content">
+        <!-- Navegación Principal -->
+        <nav class="nav-group" aria-label="Navegación principal">
+          <a href="#library" class="nav-item active" data-nav-filter="all">
+            <div class="nav-item-content">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+              <span>Biblioteca</span>
+            </div>
+            <span class="nav-badge" id="badge-library-total">24</span>
+          </a>
+
+          <a href="#reading" class="nav-item" data-nav-filter="reading">
+            <div class="nav-item-content">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>Lectura actual</span>
+            </div>
+          </a>
+
+          <a href="#favorites" class="nav-item" data-nav-filter="favorites">
+            <div class="nav-item-content">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+              </svg>
+              <span>Favoritos</span>
+            </div>
+            <span class="nav-badge" id="badge-favorites">8</span>
+          </a>
+
+          <a href="#annotations" class="nav-item" data-nav-filter="annotations">
+            <div class="nav-item-content">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+              <span>Notas y subrayados</span>
+            </div>
+            <span class="nav-badge" id="badge-annotations">0</span>
+          </a>
+
+          <a href="#vocabulary" class="nav-item" data-nav-filter="vocabulary">
+            <div class="nav-item-content">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+              </svg>
+              <span>Vocabulario</span>
+            </div>
+            <span class="nav-badge" id="badge-vocabulary">0</span>
+          </a>
+
+          <a href="#settings" class="nav-item" id="nav-settings">
+            <div class="nav-item-content">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <span>Ajustes</span>
+            </div>
+          </a>
+
+          <!-- Botón Instalar App PWA -->
+          <button class="nav-item" id="btn-pwa-install" style="display: none; width: 100%; border: none; background: transparent; cursor: pointer; text-align: left;">
+            <div class="nav-item-content">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              <span>Instalar app</span>
+            </div>
+            <span class="nav-badge" style="background-color: var(--color-primary-light); color: #FFF; font-size: 0.65rem;">PWA</span>
+          </button>
+        </nav>
+
+        <!-- Estados de Lectura -->
+        <div class="nav-group" aria-label="Estados de lectura">
+          <span class="nav-group-title">Estado</span>
+
+          <a href="#to_read" class="nav-item" data-nav-filter="to_read">
+            <div class="nav-item-content">
+              <span>Por leer</span>
+            </div>
+            <span class="nav-badge" id="badge-to-read">12</span>
+          </a>
+
+          <a href="#reading" class="nav-item" data-nav-filter="reading">
+            <div class="nav-item-content">
+              <span>En lectura</span>
+            </div>
+            <span class="nav-badge" id="badge-reading">7</span>
+          </a>
+
+          <a href="#completed" class="nav-item" data-nav-filter="completed">
+            <div class="nav-item-content">
+              <span>Completados</span>
+            </div>
+            <span class="nav-badge" id="badge-completed">5</span>
+          </a>
+        </div>
+
+        <!-- Colecciones Personalizadas -->
+        <div class="nav-group" aria-label="Colecciones personalizadas">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding-right: 8px; margin-bottom: 6px;">
+            <span class="nav-group-title" style="margin-bottom: 0;">Colecciones</span>
+            <button id="btn-create-collection" title="Nueva colección" style="
+              width: 22px; height: 22px; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--color-text-muted); cursor: pointer;
+            ">
+              <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            </button>
+          </div>
+
+          <div id="custom-collections-list" style="display: flex; flex-direction: column; gap: 2px;"></div>
+        </div>
+      </div>
+
+      <!-- Widget Inferior de Almacenamiento Local -->
+      <div class="sidebar-footer">
+        <div class="storage-widget">
+          <div class="storage-header">
+            <div class="storage-icon-title">
+              <svg style="width: 14px; height: 14px; color: var(--color-primary-light);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+              </svg>
+              <span>Almacenamiento local</span>
+            </div>
+          </div>
+          <div class="storage-progress-bar">
+            <div class="storage-progress-fill" id="storage-progress-fill"></div>
+          </div>
+          <span class="storage-info-text" id="storage-info-text">1.2 GB de 5 GB usados</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ======================================================================
+         ÁREA PRINCIPAL DE CONTENIDO
+         ====================================================================== -->
+    <main class="app-main" id="app-main">
+      <div class="main-content">
+
+        <!-- 1. Banner Literario Superior -->
+        <section class="quote-banner" aria-label="Cita literaria">
+          <div class="quote-content">
+            <p class="quote-text" id="quote-text">«Un lector vive mil vidas antes de morir. El que nunca lee solo vive una.»</p>
+            <span class="quote-author" id="quote-author">— George R. R. Martin</span>
+          </div>
+          <button class="btn-quote-refresh" id="btn-refresh-quote" aria-label="Cambiar frase literaria">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            <span>Nueva frase</span>
+          </button>
+        </section>
+
+        <!-- 2. Barra de Control de Biblioteca (Toolbar) -->
+        <section class="library-header">
+          <div class="library-header-top">
+            <h2 class="library-title">Tu biblioteca</h2>
+            <button class="btn-upload-epub" id="btn-upload-trigger">
+              <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+              </svg>
+              <span>Subir libro (EPUB)</span>
+            </button>
+            <input type="file" id="epub-file-input" accept=".epub,application/epub+zip" style="display: none;">
+          </div>
+
+          <div class="library-controls">
+            <!-- Buscador en tiempo real -->
+            <div class="search-box">
+              <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input type="text" id="library-search" class="search-input" placeholder="Buscar un libro o autor..." autocomplete="off">
+            </div>
+
+            <div class="view-actions">
+              <!-- Selector Dropdown de Ordenación -->
+              <div class="sort-select-wrapper">
+                <select id="library-sort" class="sort-select" aria-label="Ordenar biblioteca">
+                  <option value="recent">Más reciente</option>
+                  <option value="title">Título A-Z</option>
+                  <option value="author">Autor</option>
+                  <option value="progress">Progreso de lectura</option>
+                </select>
+                <svg class="sort-icon-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+
+              <!-- Conmutador Segmentado Grid / Lista -->
+              <div class="view-mode-toggle" role="group" aria-label="Modo de vista">
+                <button class="toggle-btn active" id="btn-view-grid" aria-label="Vista Cuadrícula">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                  </svg>
+                  <span>Grid</span>
+                </button>
+                <button class="toggle-btn" id="btn-view-list" aria-label="Vista Lista">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                  </svg>
+                  <span>Lista</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. Contenedor de Libros (Grid / Lista Dinámico) -->
+        <section id="books-container" class="books-grid" aria-label="Catálogo de libros"></section>
+      </div>
+
+      <!-- ====================================================================
+           4. BARRA ANCLADA DE LECTURA ACTUAL
+           ==================================================================== -->
+      <aside class="current-reading-bar" id="current-reading-bar" aria-label="Lectura en curso">
+        <div class="current-reading-info">
+          <div class="current-reading-thumb" id="current-reading-thumb">
+            <svg style="width: 22px; height: 22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          </div>
+          <div class="current-reading-details">
+            <span class="current-reading-label">Lectura actual</span>
+            <h3 class="current-reading-title" id="current-reading-title">El Nombre del Viento</h3>
+            <span class="current-reading-meta" id="current-reading-meta">Patrick Rothfuss · 67% leído</span>
+          </div>
+        </div>
+
+        <button class="btn-continue-reading" id="btn-continue-reading">
+          <span>Continuar leyendo</span>
+          <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </button>
+      </aside>
+    </main>
+  </div>
+
+  <!-- ========================================================================
+       BARRA DE NAVEGACIÓN INFERIOR PARA MÓVIL
+       ======================================================================== -->
+  <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Navegación móvil">
+    <a href="#library" class="mobile-nav-link active" data-nav-filter="all">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+      </svg>
+      <span>Biblioteca</span>
+      <span class="mobile-nav-badge">24</span>
+    </a>
+
+    <a href="#reading" class="mobile-nav-link" data-nav-filter="reading">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <span>Lectura</span>
+    </a>
+
+    <a href="#favorites" class="mobile-nav-link" data-nav-filter="favorites">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+      </svg>
+      <span>Favoritos</span>
+    </a>
+
+    <button class="mobile-nav-link" data-action="open-settings">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+      <span>Temas</span>
+    </button>
+  </nav>
+
+  <!-- ========================================================================
+       MODAL DE SELECCIÓN DE TEMAS (FIEL A LA REFERENCIA VISUAL)
+       ======================================================================== -->
+  <div class="modal-overlay" id="theme-modal" role="dialog" aria-modal="true" aria-labelledby="modal-theme-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-theme-title">Apariencia y Sistema de Temas</h3>
+        <button class="modal-close-btn" id="modal-close-btn" aria-label="Cerrar modal">
+          <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="theme-options-grid">
+        <!-- 1. Nocturno Místico -->
+        <div class="theme-option-card" data-theme-value="mystic-night">
+          <div class="theme-card-name">Nocturno místico</div>
+          <p class="theme-card-desc">Fondo casi negro, acentos púrpura y azul eléctrico. Fiel a la visión original.</p>
+          <div class="theme-swatches">
+            <div class="color-swatch" style="background-color: #111111;" title="Fondo"></div>
+            <div class="color-swatch" style="background-color: #17113D;" title="Púrpura oscuro"></div>
+            <div class="color-swatch" style="background-color: #5B4CC4;" title="Púrpura principal"></div>
+            <div class="color-swatch" style="background-color: #368EDC;" title="Azul"></div>
+          </div>
+          <span class="theme-card-footer-note">Mejor con tema oscuro por defecto</span>
+        </div>
+
+        <!-- 2. Lavanda Claro -->
+        <div class="theme-option-card" data-theme-value="lavender-light">
+          <span class="theme-card-badge">Recomendado</span>
+          <div class="theme-card-name">Lavanda claro</div>
+          <p class="theme-card-desc">Fondo blanco/lavanda muy pálido, acentos púrpura-azul. Más legible en uso diario, se ve premium.</p>
+          <div class="theme-swatches">
+            <div class="color-swatch" style="background-color: #FFFFFF; border: 1px solid #ddd;" title="Blanco"></div>
+            <div class="color-swatch" style="background-color: #F0EDF9;" title="Lavanda"></div>
+            <div class="color-swatch" style="background-color: #6C5CE7;" title="Púrpura suave"></div>
+            <div class="color-swatch" style="background-color: #2B78C5;" title="Azul"></div>
+          </div>
+          <span class="theme-card-footer-note">Funciona bien con modo claro y diurno</span>
+        </div>
+
+        <!-- 3. Crepúsculo Profundo -->
+        <div class="theme-option-card" data-theme-value="deep-twilight">
+          <div class="theme-card-name">Crepúsculo profundo</div>
+          <p class="theme-card-desc">Azul marino intenso con toques púrpura y un dorado tenue para acentos, tipo "hora dorada".</p>
+          <div class="theme-swatches">
+            <div class="color-swatch" style="background-color: #0B111E;" title="Azul marino"></div>
+            <div class="color-swatch" style="background-color: #253358;" title="Púrpura marino"></div>
+            <div class="color-swatch" style="background-color: #4A5FA5;" title="Lavanda nocturno"></div>
+            <div class="color-swatch" style="background-color: #F5A623;" title="Hora dorada"></div>
+          </div>
+          <span class="theme-card-footer-note">El dorado como acento ocasional, no dominante</span>
+        </div>
+
+        <!-- 4. Tema del Sistema -->
+        <div class="theme-option-card" data-theme-value="system">
+          <div class="theme-card-name">Tema del sistema</div>
+          <p class="theme-card-desc">Sincroniza automáticamente la apariencia con las preferencias de tu sistema operativo.</p>
+          <div class="theme-swatches">
+            <div class="color-swatch" style="background: linear-gradient(135deg, #F8F7FC 50%, #111111 50%); border: 1px solid #555;" title="Auto"></div>
+            <div class="color-swatch" style="background-color: #5B4CC4;" title="Acento"></div>
+          </div>
+          <span class="theme-card-footer-note">Adaptación automática en tiempo real</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       VISOR Y LECTOR EPUB (READER VIEW)
+       ======================================================================== -->
+  <div class="reader-view" id="reader-view" role="region" aria-label="Lector de libro">
+    <!-- Cabecera del Lector -->
+    <header class="reader-header">
+      <div class="reader-header-left">
+        <button class="btn-reader-back" id="btn-reader-back" aria-label="Volver a la biblioteca">
+          <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          <span>Biblioteca</span>
+        </button>
+      </div>
+
+      <div class="reader-header-center">
+        <h2 class="reader-book-title" id="reader-book-title">Cargando libro...</h2>
+        <span class="reader-chapter-title" id="reader-chapter-title">Iniciando lectura</span>
+      </div>
+
+      <div class="reader-header-right">
+        <!-- Búsqueda Intra-Libro -->
+        <button class="btn-reader-action" id="btn-reader-search" title="Buscar en este libro" aria-label="Buscar en el libro">
+          <svg style="width: 19px; height: 19px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+
+        <!-- Marcador de Posición -->
+        <button class="btn-reader-action" id="btn-reader-bookmark" title="Marcar página actual" aria-label="Marcar página">
+          <svg style="width: 19px; height: 19px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+          </svg>
+        </button>
+
+        <!-- Tabla de Contenidos -->
+        <button class="btn-reader-action" id="btn-reader-toc" title="Tabla de Contenidos y Marcadores" aria-label="Tabla de Contenidos">
+          <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+          </svg>
+        </button>
+
+        <!-- Ajustes de Lectura (Fuentes, Márgenes, etc.) -->
+        <button class="btn-reader-action" id="btn-reader-settings" title="Ajustes de lectura y tipografía" aria-label="Ajustes de lectura">
+          <svg style="width: 19px; height: 19px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+          </svg>
+        </button>
+
+        <!-- Pantalla Completa -->
+        <button class="btn-reader-action" id="btn-reader-fullscreen" title="Pantalla Completa" aria-label="Alternar pantalla completa">
+          <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Lienzo de Lectura Central -->
+    <div class="reader-viewport" id="reader-viewport">
+      <!-- Flecha Anterior -->
+      <button class="btn-reader-nav nav-prev" id="btn-reader-prev" aria-label="Página anterior">
+        <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      <!-- Contenedor del Libro Renderizado por epub.js -->
+      <div id="reader-content"></div>
+
+      <!-- Spinner de Carga -->
+      <div class="reader-loading-spinner" id="reader-loading-spinner">
+        <div class="loading-ring"></div>
+        <span>Abriendo libro...</span>
+      </div>
+
+      <!-- Flecha Siguiente -->
+      <button class="btn-reader-nav nav-next" id="btn-reader-next" aria-label="Página siguiente">
+        <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Barra Inferior del Lector -->
+    <footer class="reader-footer">
+      <div class="reader-progress-track" id="reader-progress-track" title="Clic para saltar a porcentaje">
+        <div class="reader-progress-bar" id="reader-progress-fill"></div>
+      </div>
+      <span class="reader-progress-text" id="reader-progress-text">0%</span>
+    </footer>
+
+    <!-- Drawer de Tabla de Contenidos y Marcadores -->
+    <div class="reader-toc-backdrop" id="reader-toc-backdrop"></div>
+    <aside class="reader-toc-drawer" id="reader-toc-drawer" aria-label="Navegación del libro">
+      <div class="toc-header">
+        <div class="drawer-tab-nav">
+          <button class="drawer-tab-btn active" id="tab-toc-chapters">Capítulos</button>
+          <button class="drawer-tab-btn" id="tab-toc-bookmarks">Marcadores</button>
+        </div>
+        <button class="toc-close-btn" id="toc-close-btn" aria-label="Cerrar panel">
+          <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <!-- Lista de Capítulos -->
+      <nav class="toc-content-list" id="toc-content-list"></nav>
+      <!-- Lista de Marcadores -->
+      <div class="toc-content-list" id="bookmarks-content-list" style="display: none;"></div>
+    </aside>
+
+    <!-- Panel de Búsqueda Intra-Libro -->
+    <div class="reader-search-backdrop" id="reader-search-backdrop"></div>
+    <div class="reader-search-panel" id="reader-search-panel" role="dialog" aria-label="Búsqueda en el libro">
+      <div class="search-panel-header">
+        <div class="search-input-wrapper">
+          <svg style="width: 18px; height: 18px; color: var(--color-text-muted);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input type="text" id="input-reader-search" placeholder="Buscar texto en este libro..." autocomplete="off">
+          <button id="btn-clear-reader-search" style="color: var(--color-text-muted); cursor: pointer; padding: 4px; display: none;">
+            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 4px;">
+          <span id="search-status-text" style="font-size: var(--text-xs); color: var(--color-text-muted);">Escribe y pulsa Enter</span>
+          <button id="btn-close-reader-search" style="font-size: var(--text-xs); color: var(--color-primary-light); cursor: pointer; font-weight: bold;">Cerrar</button>
+        </div>
+      </div>
+      <div class="search-results-list" id="search-results-list"></div>
+    </div>
+
+    <!-- Panel de Configuración Avanzada del Lector -->
+    <div class="reader-settings-backdrop" id="reader-settings-backdrop"></div>
+    <div class="reader-settings-panel" id="reader-settings-panel" role="dialog" aria-label="Ajustes del lector">
+      <!-- Tipografía -->
+      <div class="settings-group">
+        <span class="settings-group-label">Tipografía</span>
+        <div class="settings-btn-grid" id="font-family-options">
+          <button class="setting-pill-btn active" data-font="Literata" style="font-family: 'Literata', Georgia, serif;">Literata</button>
+          <button class="setting-pill-btn" data-font="Merriweather" style="font-family: 'Merriweather', serif;">Merriweather</button>
+          <button class="setting-pill-btn" data-font="Roboto" style="font-family: 'Roboto', sans-serif;">Roboto</button>
+          <button class="setting-pill-btn" data-font="Inter" style="font-family: 'Inter', sans-serif;">Inter</button>
+          <button class="setting-pill-btn" data-font="OpenDyslexic" style="font-family: 'OpenDyslexic', sans-serif;">Dyslexic</button>
+        </div>
+      </div>
+
+      <!-- Tamaño de Fuente -->
+      <div class="settings-group">
+        <span class="settings-group-label">Tamaño de Texto</span>
+        <div class="font-size-control">
+          <button class="btn-font-size-step" id="btn-font-decrease" aria-label="Disminuir tamaño">A-</button>
+          <span class="font-size-value" id="font-size-display">18px</span>
+          <button class="btn-font-size-step" id="btn-font-increase" aria-label="Aumentar tamaño">A+</button>
+        </div>
+      </div>
+
+      <!-- Grosor de Texto -->
+      <div class="settings-group">
+        <span class="settings-group-label">Grosor de Fuente</span>
+        <div class="settings-btn-grid" id="font-weight-options">
+          <button class="setting-pill-btn active" data-weight="normal">Normal</button>
+          <button class="setting-pill-btn" data-weight="medium">Medio</button>
+          <button class="setting-pill-btn" data-weight="bold">Negrita</button>
+        </div>
+      </div>
+
+      <!-- Interlineado -->
+      <div class="settings-group">
+        <span class="settings-group-label">Interlineado</span>
+        <div class="settings-btn-grid" id="line-height-options">
+          <button class="setting-pill-btn" data-lh="1.3">Compacto</button>
+          <button class="setting-pill-btn active" data-lh="1.6">Normal</button>
+          <button class="setting-pill-btn" data-lh="1.9">Amplio</button>
+        </div>
+      </div>
+
+      <!-- Márgenes Laterales -->
+      <div class="settings-group">
+        <span class="settings-group-label">Márgenes</span>
+        <div class="settings-btn-grid" id="margins-options">
+          <button class="setting-pill-btn" data-margin="compact">Estrecho</button>
+          <button class="setting-pill-btn active" data-margin="normal">Normal</button>
+          <button class="setting-pill-btn" data-margin="relaxed">Amplio</button>
+        </div>
+      </div>
+
+      <!-- Columnas -->
+      <div class="settings-group">
+        <span class="settings-group-label">Columnas</span>
+        <div class="settings-btn-grid" id="columns-options">
+          <button class="setting-pill-btn active" data-col="1">1 Columna</button>
+          <button class="setting-pill-btn" data-col="2">2 Columnas</button>
+        </div>
+      </div>
+
+      <!-- Tema del Lector (Anulable por libro) -->
+      <div class="settings-group">
+        <span class="settings-group-label">Tema de Lectura</span>
+        <div class="reader-theme-swatches" id="reader-theme-options">
+          <div class="reader-theme-chip active" data-reader-theme="inherit" title="Heredar tema global">Auto</div>
+          <div class="reader-theme-chip" data-reader-theme="mystic-night" style="background-color: #111111; color: #F2F0F7;">Noche</div>
+          <div class="reader-theme-chip" data-reader-theme="lavender-light" style="background-color: #F8F7FC; color: #1A162B;">Día</div>
+          <div class="reader-theme-chip" data-reader-theme="deep-twilight" style="background-color: #0B111E; color: #F0F4FC;">Azul</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Librerías Locales (100% Offline) -->
+  <script src="assets/libs/jszip.min.js"></script>
+  <script src="assets/libs/epub.min.js"></script>
+
+  <!-- Script Modular Principal -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

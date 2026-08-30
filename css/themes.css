@@ -1,0 +1,204 @@
+/* ==========================================================================
+   SISTEMA DE TEMAS DINÁMICOS - BIBLIOTECA ARCADIA
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. TEMA PREDETERMINADO: NOCTURNO MÍSTICO (mystic-night)
+   Fondo casi negro, acentos púrpura y azul eléctrico.
+   -------------------------------------------------------------------------- */
+:root,
+[data-theme="mystic-night"] {
+  --color-background: #111111;
+  --color-surface: #181818;
+  --color-surface-secondary: #1D1D1D;
+  --color-surface-elevated: #242424;
+  --color-surface-hover: rgba(255, 255, 255, 0.05);
+  --color-surface-active: rgba(255, 255, 255, 0.09);
+
+  /* Acentos de Color */
+  --color-primary-dark: #17113D;
+  --color-primary: #30256F;
+  --color-primary-light: #5B4CC4;
+  --color-primary-glow: rgba(91, 76, 196, 0.35);
+  --color-secondary: #368EDC;
+  --color-secondary-glow: rgba(54, 142, 220, 0.3);
+
+  /* Tipografía y Contraste */
+  --color-text: #F2F0F7;
+  --color-text-secondary: #AAA7B2;
+  --color-text-muted: #6E6B7B;
+  --color-text-inverse: #111111;
+
+  /* Bordes y Divisores */
+  --color-border: #303030;
+  --color-border-subtle: #222222;
+  --color-border-focus: #5B4CC4;
+
+  /* Badges y Estados */
+  --color-badge-bg: rgba(91, 76, 196, 0.2);
+  --color-badge-text: #C4B9FC;
+  --color-accent-gold: #E5A93C;
+
+  /* Banner Literario */
+  --banner-gradient: linear-gradient(135deg, #17113D 0%, #30256F 50%, #1e1b4b 100%);
+  --banner-border: rgba(91, 76, 196, 0.4);
+
+  /* Lector */
+  --reader-bg: #121214;
+  --reader-text: #E5E3EB;
+}
+
+/* --------------------------------------------------------------------------
+   2. TEMA: LAVANDA CLARO (lavender-light)
+   Fondo blanco/lavanda muy pálido, acentos púrpura-azul. Más legible en uso diario.
+   -------------------------------------------------------------------------- */
+[data-theme="lavender-light"] {
+  --color-background: #F8F7FC;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #F0EDF9;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-hover: rgba(91, 76, 196, 0.05);
+  --color-surface-active: rgba(91, 76, 196, 0.1);
+
+  /* Acentos de Color */
+  --color-primary-dark: #30256F;
+  --color-primary: #5B4CC4;
+  --color-primary-light: #6C5CE7;
+  --color-primary-glow: rgba(108, 92, 231, 0.25);
+  --color-secondary: #2B78C5;
+  --color-secondary-glow: rgba(43, 120, 197, 0.2);
+
+  /* Tipografía y Contraste */
+  --color-text: #1A162B;
+  --color-text-secondary: #5E5873;
+  --color-text-muted: #8E88A8;
+  --color-text-inverse: #FFFFFF;
+
+  /* Bordes y Divisores */
+  --color-border: #E2DEEE;
+  --color-border-subtle: #EDE9F5;
+  --color-border-focus: #5B4CC4;
+
+  /* Badges y Estados */
+  --color-badge-bg: rgba(91, 76, 196, 0.12);
+  --color-badge-text: #5B4CC4;
+  --color-accent-gold: #B87A18;
+
+  /* Banner Literario */
+  --banner-gradient: linear-gradient(135deg, #30256F 0%, #5B4CC4 60%, #368EDC 100%);
+  --banner-border: rgba(91, 76, 196, 0.3);
+
+  /* Lector */
+  --reader-bg: #FCFBFE;
+  --reader-text: #201C30;
+}
+
+/* --------------------------------------------------------------------------
+   3. TEMA: CREPÚSCULO PROFUNDO (deep-twilight)
+   Azul marino intenso con toques púrpura y un dorado tenue ("hora dorada").
+   -------------------------------------------------------------------------- */
+[data-theme="deep-twilight"] {
+  --color-background: #0B111E;
+  --color-surface: #111B2C;
+  --color-surface-secondary: #162238;
+  --color-surface-elevated: #1C2B47;
+  --color-surface-hover: rgba(255, 255, 255, 0.05);
+  --color-surface-active: rgba(255, 255, 255, 0.1);
+
+  /* Acentos de Color */
+  --color-primary-dark: #0F1A30;
+  --color-primary: #253358;
+  --color-primary-light: #4A5FA5;
+  --color-primary-glow: rgba(74, 95, 165, 0.35);
+  --color-secondary: #F5A623; /* Acento dorado / hora dorada */
+  --color-secondary-glow: rgba(245, 166, 35, 0.3);
+
+  /* Tipografía y Contraste */
+  --color-text: #F0F4FC;
+  --color-text-secondary: #97A8C8;
+  --color-text-muted: #617394;
+  --color-text-inverse: #0B111E;
+
+  /* Bordes y Divisores */
+  --color-border: #223455;
+  --color-border-subtle: #18263E;
+  --color-border-focus: #4A5FA5;
+
+  /* Badges y Estados */
+  --color-badge-bg: rgba(245, 166, 35, 0.15);
+  --color-badge-text: #F5C065;
+  --color-accent-gold: #F5A623;
+
+  /* Banner Literario */
+  --banner-gradient: linear-gradient(135deg, #0F1A30 0%, #162238 50%, #253358 100%);
+  --banner-border: rgba(245, 166, 35, 0.35);
+
+  /* Lector */
+  --reader-bg: #0E1524;
+  --reader-text: #E5ECF8;
+}
+
+/* --------------------------------------------------------------------------
+   4. TEMA DEL SISTEMA (Reglas fallback cuando data-theme="system")
+   -------------------------------------------------------------------------- */
+@media (prefers-color-scheme: light) {
+  [data-theme="system"] {
+    --color-background: #F8F7FC;
+    --color-surface: #FFFFFF;
+    --color-surface-secondary: #F0EDF9;
+    --color-surface-elevated: #FFFFFF;
+    --color-surface-hover: rgba(91, 76, 196, 0.05);
+    --color-surface-active: rgba(91, 76, 196, 0.1);
+    --color-primary-dark: #30256F;
+    --color-primary: #5B4CC4;
+    --color-primary-light: #6C5CE7;
+    --color-primary-glow: rgba(108, 92, 231, 0.25);
+    --color-secondary: #2B78C5;
+    --color-secondary-glow: rgba(43, 120, 197, 0.2);
+    --color-text: #1A162B;
+    --color-text-secondary: #5E5873;
+    --color-text-muted: #8E88A8;
+    --color-text-inverse: #FFFFFF;
+    --color-border: #E2DEEE;
+    --color-border-subtle: #EDE9F5;
+    --color-border-focus: #5B4CC4;
+    --color-badge-bg: rgba(91, 76, 196, 0.12);
+    --color-badge-text: #5B4CC4;
+    --color-accent-gold: #B87A18;
+    --banner-gradient: linear-gradient(135deg, #30256F 0%, #5B4CC4 60%, #368EDC 100%);
+    --banner-border: rgba(91, 76, 196, 0.3);
+    --reader-bg: #FCFBFE;
+    --reader-text: #201C30;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-theme="system"] {
+    --color-background: #111111;
+    --color-surface: #181818;
+    --color-surface-secondary: #1D1D1D;
+    --color-surface-elevated: #242424;
+    --color-surface-hover: rgba(255, 255, 255, 0.05);
+    --color-surface-active: rgba(255, 255, 255, 0.09);
+    --color-primary-dark: #17113D;
+    --color-primary: #30256F;
+    --color-primary-light: #5B4CC4;
+    --color-primary-glow: rgba(91, 76, 196, 0.35);
+    --color-secondary: #368EDC;
+    --color-secondary-glow: rgba(54, 142, 220, 0.3);
+    --color-text: #F2F0F7;
+    --color-text-secondary: #AAA7B2;
+    --color-text-muted: #6E6B7B;
+    --color-text-inverse: #111111;
+    --color-border: #303030;
+    --color-border-subtle: #222222;
+    --color-border-focus: #5B4CC4;
+    --color-badge-bg: rgba(91, 76, 196, 0.2);
+    --color-badge-text: #C4B9FC;
+    --color-accent-gold: #E5A93C;
+    --banner-gradient: linear-gradient(135deg, #17113D 0%, #30256F 50%, #1e1b4b 100%);
+    --banner-border: rgba(91, 76, 196, 0.4);
+    --reader-bg: #121214;
+    --reader-text: #E5E3EB;
+  }
+}

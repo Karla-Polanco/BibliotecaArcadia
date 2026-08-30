@@ -1,0 +1,245 @@
+/* ==========================================================================
+   ADAPTACIÓN RESPONSIVE (DESKTOP, TABLET, MÓVIL) - BIBLIOTECA ARCADIA
+   ========================================================================== */
+
+/* Topbar exclusivo para Móvil (Oculto en Desktop) */
+.mobile-topbar {
+  display: none;
+  height: var(--header-height);
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: var(--z-sticky);
+  padding: 0 var(--space-md);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mobile-nav-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+}
+
+.mobile-nav-toggle:active {
+  background-color: var(--color-surface-hover);
+}
+
+.mobile-logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Bottom Navigation Bar fija (Móvil) */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: var(--mobile-nav-height);
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  z-index: var(--z-mobile-nav);
+  padding: 0 var(--space-sm);
+  justify-content: space-around;
+  align-items: center;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.mobile-nav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+  font-weight: var(--weight-medium);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  position: relative;
+  transition: all var(--transition-fast);
+}
+
+.mobile-nav-link svg {
+  width: 20px;
+  height: 20px;
+}
+
+.mobile-nav-link.active {
+  color: var(--color-primary-light);
+  font-weight: var(--weight-semibold);
+}
+
+.mobile-nav-badge {
+  position: absolute;
+  top: 2px;
+  right: 8px;
+  background-color: var(--color-primary-light);
+  color: #FFFFFF;
+  font-size: 0.65rem;
+  font-weight: var(--weight-bold);
+  padding: 1px 5px;
+  border-radius: var(--radius-full);
+}
+
+/* --------------------------------------------------------------------------
+   BREAKPOINT: TABLET (768px - 1024px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 220px;
+  }
+
+  .main-content {
+    padding: var(--space-lg) var(--space-xl) calc(var(--reading-banner-height) + var(--space-xl));
+  }
+
+  .current-reading-bar {
+    right: var(--space-md);
+    left: calc(var(--sidebar-width) + var(--space-md));
+  }
+
+  .books-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--space-lg) var(--space-md);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   BREAKPOINT: MÓVIL (< 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .mobile-topbar {
+    display: flex;
+  }
+
+  .mobile-bottom-nav {
+    display: flex;
+  }
+
+  /* Sidebar transformado en Drawer lateral deslizable */
+  .app-sidebar {
+    transform: translateX(-100%);
+    width: 280px;
+    z-index: var(--z-drawer);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .app-sidebar.drawer-open {
+    transform: translateX(0);
+  }
+
+  /* Área principal en móvil */
+  .app-main {
+    margin-left: 0;
+    padding-top: var(--header-height);
+  }
+
+  .main-content {
+    padding: var(--space-md) var(--space-md) calc(var(--mobile-nav-height) + var(--reading-banner-height) + var(--space-lg));
+  }
+
+  /* Banner literario en móvil */
+  .quote-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-md);
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+  }
+
+  .quote-text {
+    font-size: var(--text-base);
+  }
+
+  .btn-quote-refresh {
+    align-self: flex-end;
+  }
+
+  /* Toolbar de Biblioteca en móvil */
+  .library-header-top {
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .library-title {
+    font-size: var(--text-lg);
+  }
+
+  .library-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-sm);
+  }
+
+  .search-box {
+    max-width: 100%;
+    min-width: unset;
+  }
+
+  .view-actions {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .sort-select-wrapper {
+    flex: 1;
+  }
+
+  .sort-select {
+    width: 100%;
+  }
+
+  /* Grid en Móvil: 2 columnas limpias */
+  .books-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md) var(--space-sm);
+  }
+
+  .book-title {
+    font-size: var(--text-xs);
+  }
+
+  /* Barra de lectura actual en móvil */
+  .current-reading-bar {
+    left: var(--space-sm);
+    right: var(--space-sm);
+    bottom: calc(var(--mobile-nav-height) + var(--space-xs));
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-md);
+  }
+
+  .current-reading-thumb {
+    width: 36px;
+    height: 48px;
+  }
+
+  .current-reading-title {
+    max-width: 130px;
+    font-size: var(--text-xs);
+  }
+
+  .btn-continue-reading {
+    padding: 8px 14px;
+    font-size: var(--text-xs);
+  }
+
+  /* Modal de temas en móvil */
+  .modal-card {
+    padding: var(--space-md);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .theme-options-grid {
+    grid-template-columns: 1fr;
+  }
+}
