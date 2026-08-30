@@ -30,43 +30,14 @@
   user-select: none;
 }
 
-/* Header del Sidebar (Branding Emblemático) */
+/* Header del Sidebar (Branding Tipográfico Puro) */
 .sidebar-header {
-  padding: 24px 18px 14px;
+  padding: 34px 20px 24px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.06));
-}
-
-.brand-block {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 10px;
-}
-
-.brand-logo-wrapper {
-  position: relative;
-  display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.brand-logo-img {
-  width: 106px;
-  height: auto;
-  max-height: 82px;
-  object-fit: contain;
-  filter: var(--logo-filter, none);
-  transition: filter 0.4s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  user-select: none;
-}
-
-.brand-logo-img:hover {
-  transform: scale(1.05) translateY(-2px);
+  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.06));
 }
 
 .brand-typography {
@@ -75,73 +46,79 @@
   align-items: center;
   width: 100%;
   max-width: 220px;
+  cursor: default;
+  user-select: none;
 }
 
 .brand-ornament-top {
-  font-size: 0.55rem;
+  font-size: 0.65rem;
   color: var(--brand-star-color, #E5A93C);
   line-height: 1;
-  margin-bottom: 2px;
-  opacity: 0.9;
-  transition: color 0.3s ease;
+  margin-bottom: 4px;
+  opacity: 0.95;
+  transition: color 0.35s ease, transform 0.3s ease;
 }
 
 .brand-eyebrow-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   width: 100%;
 }
 
 .brand-eyebrow {
-  font-family: 'Cinzel', serif;
-  font-size: 0.68rem;
-  letter-spacing: 0.30em;
-  text-indent: 0.30em;
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
   font-weight: 600;
   color: var(--brand-eyebrow-color, #D6D0F0);
   text-transform: uppercase;
   white-space: nowrap;
-  transition: color 0.3s ease;
+  transition: color 0.35s ease;
 }
 
 .brand-rule {
   flex: 1;
   height: 1px;
-  background: var(--brand-rule-color, rgba(157, 142, 248, 0.4));
-  max-width: 30px;
-  transition: background 0.3s ease;
+  background: var(--brand-rule-color, rgba(157, 142, 248, 0.45));
+  max-width: 32px;
+  transition: background 0.35s ease;
 }
 
 .brand-wordmark {
   font-family: 'Cinzel Decorative', 'Cinzel', 'Playfair Display', Georgia, serif;
-  font-size: 1.85rem;
+  font-size: 2.15rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-indent: 0.14em;
-  margin: 3px 0 6px 0;
+  margin: 4px 0 6px 0;
   line-height: 1.05;
-  background: var(--brand-title-gradient, linear-gradient(180deg, #FFFFFF 0%, #F5EFEB 50%, #DFD5C6 100%));
+  background: var(--brand-title-gradient, linear-gradient(180deg, #FFFFFF 0%, #E6E1F5 50%, #C4B9FC 100%));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 10px var(--brand-title-shadow, rgba(229, 169, 60, 0.25)));
-  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 12px var(--brand-title-shadow, rgba(91, 76, 196, 0.35)));
+  transition: all 0.35s ease;
+}
+
+.brand-typography:hover .brand-wordmark {
+  filter: drop-shadow(0 4px 18px var(--brand-title-shadow, rgba(91, 76, 196, 0.55)));
 }
 
 .brand-footer-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  width: 70%;
+  gap: 12px;
+  width: 72%;
 }
 
 .brand-star {
   font-size: 0.65rem;
   color: var(--brand-star-color, #E5A93C);
   line-height: 1;
-  transition: color 0.3s ease;
+  transition: color 0.35s ease;
 }
 
 /* Cuerpo con Scroll del Sidebar */

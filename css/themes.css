@@ -47,13 +47,12 @@
   --reader-bg: #121214;
   --reader-text: #E5E3EB;
 
-  /* Logotipo y Marca Emblemática */
-  --logo-filter: drop-shadow(0 4px 14px rgba(245, 166, 35, 0.35)) drop-shadow(0 2px 22px rgba(123, 107, 240, 0.45));
-  --brand-eyebrow-color: #D6D0F0;
-  --brand-rule-color: rgba(157, 142, 248, 0.45);
+  /* Marca Tipográfica Emblemática */
+  --brand-eyebrow-color: #C4B9FC;
+  --brand-rule-color: rgba(157, 142, 248, 0.4);
   --brand-star-color: #E5A93C;
-  --brand-title-gradient: linear-gradient(180deg, #FFFFFF 0%, #F5EFEB 50%, #DFD5C6 100%);
-  --brand-title-shadow: rgba(229, 169, 60, 0.3);
+  --brand-title-gradient: linear-gradient(180deg, #FFFFFF 0%, #DDD6FE 45%, #9061F9 100%);
+  --brand-title-shadow: rgba(144, 97, 249, 0.5);
 }
 
 /* --------------------------------------------------------------------------
@@ -100,13 +99,12 @@
   --reader-bg: #FCFBFE;
   --reader-text: #201C30;
 
-  /* Logotipo y Marca Emblemática */
-  --logo-filter: drop-shadow(0 3px 12px rgba(108, 92, 231, 0.25));
-  --brand-eyebrow-color: #5B4CC4;
-  --brand-rule-color: rgba(108, 92, 231, 0.35);
-  --brand-star-color: #B87A18;
-  --brand-title-gradient: linear-gradient(180deg, #1F1738 0%, #352663 60%, #5B4CC4 100%);
-  --brand-title-shadow: rgba(91, 76, 196, 0.15);
+  /* Marca Tipográfica Emblemática */
+  --brand-eyebrow-color: #2E1065;
+  --brand-rule-color: rgba(79, 70, 229, 0.4);
+  --brand-star-color: #D97706;
+  --brand-title-gradient: linear-gradient(180deg, #1E1B4B 0%, #3B0764 55%, #4C1D95 100%);
+  --brand-title-shadow: rgba(59, 7, 100, 0.2);
 }
 
 /* --------------------------------------------------------------------------
@@ -153,13 +151,12 @@
   --reader-bg: #0E1524;
   --reader-text: #E5ECF8;
 
-  /* Logotipo y Marca Emblemática */
-  --logo-filter: drop-shadow(0 4px 18px rgba(245, 166, 35, 0.5)) drop-shadow(0 2px 20px rgba(54, 142, 220, 0.4));
-  --brand-eyebrow-color: #F5C065;
-  --brand-rule-color: rgba(245, 166, 35, 0.5);
-  --brand-star-color: #F5A623;
-  --brand-title-gradient: linear-gradient(180deg, #FFFFFF 0%, #FFF5E0 45%, #F5A623 100%);
-  --brand-title-shadow: rgba(245, 166, 35, 0.4);
+  /* Marca Tipográfica Emblemática */
+  --brand-eyebrow-color: #FDE68A;
+  --brand-rule-color: rgba(245, 158, 11, 0.45);
+  --brand-star-color: #F59E0B;
+  --brand-title-gradient: linear-gradient(180deg, #FFFFFF 0%, #93C5FD 45%, #3B82F6 100%);
+  --brand-title-shadow: rgba(59, 130, 246, 0.45);
 }
 
 /* --------------------------------------------------------------------------
@@ -193,6 +190,11 @@
     --banner-border: rgba(91, 76, 196, 0.3);
     --reader-bg: #FCFBFE;
     --reader-text: #201C30;
+    --brand-eyebrow-color: #2E1065;
+    --brand-rule-color: rgba(79, 70, 229, 0.4);
+    --brand-star-color: #D97706;
+    --brand-title-gradient: linear-gradient(180deg, #1E1B4B 0%, #3B0764 55%, #4C1D95 100%);
+    --brand-title-shadow: rgba(59, 7, 100, 0.2);
   }
 }
 
@@ -224,5 +226,10 @@
     --banner-border: rgba(91, 76, 196, 0.4);
     --reader-bg: #121214;
     --reader-text: #E5E3EB;
+    --brand-eyebrow-color: #C4B9FC;
+    --brand-rule-color: rgba(157, 142, 248, 0.4);
+    --brand-star-color: #E5A93C;
+    --brand-title-gradient: linear-gradient(180deg, #FFFFFF 0%, #DDD6FE 45%, #9061F9 100%);
+    --brand-title-shadow: rgba(144, 97, 249, 0.5);
   }
 }
