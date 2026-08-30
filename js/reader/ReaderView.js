@@ -7,6 +7,7 @@
  */
 
 import { readerManager } from './ReaderManager.js';
+import { ReaderSettings } from './ReaderSettings.js';
 import { BookmarkManager } from './BookmarkManager.js';
 import { SearchManager } from './SearchManager.js';
 import { Toast } from '../ui/Toast.js';
@@ -497,6 +498,16 @@ export class ReaderView {
       btn.classList.toggle('active', btn.dataset.margin === settings.margins);
     });
 
+    if (this.contentEl) {
+      if (settings.margins === 'compact') {
+        this.contentEl.style.maxWidth = '1480px';
+      } else if (settings.margins === 'relaxed') {
+        this.contentEl.style.maxWidth = '940px';
+      } else {
+        this.contentEl.style.maxWidth = '1200px';
+      }
+    }
+
     // 6. Columnas
     document.querySelectorAll('#columns-options [data-col]').forEach(btn => {
       btn.classList.toggle('active', parseInt(btn.dataset.col) === settings.columns);
@@ -506,6 +517,14 @@ export class ReaderView {
     document.querySelectorAll('#reader-theme-options [data-reader-theme]').forEach(chip => {
       chip.classList.toggle('active', chip.dataset.readerTheme === (settings.theme || 'inherit'));
     });
+
+    // 8. Actualizar variables CSS del contenedor principal del lector para que coincida con el tema seleccionado
+    const effectiveTheme = settings.theme && settings.theme !== 'inherit' ? settings.theme : (document.documentElement.getAttribute('data-theme') || 'mystic-night');
+    const themeColors = ReaderSettings._getThemeColors(effectiveTheme);
+    if (this.container) {
+      this.container.style.setProperty('--reader-bg', themeColors.bg);
+      this.container.style.setProperty('--reader-text', themeColors.text);
+    }
   }
 
   /**

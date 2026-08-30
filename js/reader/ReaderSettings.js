@@ -17,7 +17,7 @@ export class ReaderSettings {
     margins: 'normal',   // 'compact', 'normal', 'relaxed'
     columns: 1,          // 1 o 2 columnas
     flowMode: 'paginated', // 'paginated' o 'scrolled-doc'
-    theme: 'inherit'     // 'inherit', 'mystic-night', 'lavender-light', 'deep-twilight', 'enchanted-forest', 'clear-sky'
+    theme: 'inherit'     // 'inherit', 'mystic-night', 'lavender-light', 'sepia', 'deep-twilight', 'enchanted-forest', 'clear-sky'
   };
 
   /**
@@ -59,17 +59,24 @@ export class ReaderSettings {
     const readerTheme = settings.theme && settings.theme !== 'inherit' ? settings.theme : effectiveTheme;
     const themeColors = this._getThemeColors(readerTheme);
 
-    // 2. Determinar padding lateral según márgenes
-    let paddingHoriz = '28px';
-    if (settings.margins === 'compact') paddingHoriz = '12px';
-    else if (settings.margins === 'relaxed') paddingHoriz = '48px';
+    // 2. Determinar padding lateral y ancho máximo según márgenes
+    let paddingHoriz = '38px';
+    let maxContentWidth = '88%';
+    if (settings.margins === 'compact') {
+      paddingHoriz = '10px';
+      maxContentWidth = '98%';
+    } else if (settings.margins === 'relaxed') {
+      paddingHoriz = '75px';
+      maxContentWidth = '74%';
+    }
 
     const fontStack = this._getFontStack(settings.fontFamily);
-    const fontWeightVal = settings.fontWeight === 'bold' ? '700' : (settings.fontWeight === 'medium' ? '500' : '400');
+    // Peso de fuente nítidamente diferenciado: Normal (400), Medio (600), Negrita (800)
+    const fontWeightVal = settings.fontWeight === 'bold' ? '800' : (settings.fontWeight === 'medium' ? '600' : '400');
 
-    // 3. Generar bloque CSS completo para inyección
+    // 3. Generar bloque CSS completo para inyección en el iframe del libro
     const customCss = `
-      @import url('https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Roboto:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;0,7..72,800;1,7..72,400&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap');
 
       @font-face {
         font-family: 'OpenDyslexic';
@@ -85,6 +92,7 @@ export class ReaderSettings {
 
       body {
         padding: 0 ${paddingHoriz} !important;
+        max-width: ${maxContentWidth} !important;
         margin: 0 auto !important;
         color: ${themeColors.text} !important;
         background: ${themeColors.bg} !important;
@@ -93,6 +101,7 @@ export class ReaderSettings {
         font-weight: ${fontWeightVal} !important;
         line-height: ${settings.lineHeight} !important;
         -webkit-font-smoothing: antialiased !important;
+        box-sizing: border-box !important;
       }
 
       *, p, span, div, li, em, strong, b, i, blockquote, a {
@@ -113,6 +122,7 @@ export class ReaderSettings {
       h1, h2, h3, h4, h5, h6 {
         color: ${themeColors.heading} !important;
         font-family: ${fontStack} !important;
+        font-weight: ${settings.fontWeight === 'bold' ? '900' : '700'} !important;
         margin-top: 1.4em !important;
         margin-bottom: 0.6em !important;
       }
@@ -140,14 +150,18 @@ export class ReaderSettings {
       rendition.themes.default({
         'body': {
           'padding': `0 ${paddingHoriz} !important`,
+          'max-width': `${maxContentWidth} !important`,
+          'margin': '0 auto !important',
           'color': `${themeColors.text} !important`,
           'background': `${themeColors.bg} !important`,
           'font-family': `${fontStack} !important`,
           'font-size': `${settings.fontSize}px !important`,
+          'font-weight': `${fontWeightVal} !important`,
           'line-height': `${settings.lineHeight} !important`
         },
         'p, span, div, li, em, strong, b, i, blockquote, a': {
-          'font-family': `${fontStack} !important`
+          'font-family': `${fontStack} !important`,
+          'font-weight': `${fontWeightVal} !important`
         }
       });
     } catch (_) {}
@@ -182,14 +196,26 @@ export class ReaderSettings {
   static _getFontStack(fontName) {
     switch (fontName) {
       case 'Literata':
-        return "'Literata', 'Merriweather', Georgia, 'Times New Roman', serif";
+        return "'Literata', Georgia, serif";
       case 'Merriweather':
-        return "'Merriweather', Georgia, 'Times New Roman', serif";
-      case 'Roboto':
-        return "'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+        return "'Merriweather', Georgia, serif";
+      case 'Lora':
+        return "'Lora', Georgia, serif";
+      case 'EB Garamond':
+      case 'EBGaramond':
+      case 'Garamond':
+        return "'EB Garamond', 'Garamond', Georgia, serif";
+      case 'Playfair':
+      case 'Playfair Display':
+        return "'Playfair Display', Georgia, serif";
+      case 'Poppins':
+        return "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
       case 'Inter':
         return "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+      case 'Roboto':
+        return "'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
       case 'OpenDyslexic':
+      case 'Dyslexic':
         return "'OpenDyslexic', 'Comic Sans MS', sans-serif";
       default:
         return "'Literata', Georgia, serif";
@@ -198,7 +224,6 @@ export class ReaderSettings {
 
   /**
    * Obtiene la paleta de colores para el lector.
-   * @private
    */
   static _getThemeColors(themeName) {
     if (themeName === 'lavender-light') {
@@ -207,6 +232,14 @@ export class ReaderSettings {
         text: '#201C30',
         heading: '#1A162B',
         accent: '#5B4CC4'
+      };
+    }
+    if (themeName === 'sepia') {
+      return {
+        bg: '#FBF0D9',
+        text: '#3D2F1D',
+        heading: '#2B1F11',
+        accent: '#8C5B23'
       };
     }
     if (themeName === 'deep-twilight') {
