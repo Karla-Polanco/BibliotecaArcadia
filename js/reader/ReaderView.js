@@ -251,9 +251,6 @@ export class ReaderView {
     try {
       localStorage.setItem('arcadia_active_view', 'reader');
       localStorage.setItem('arcadia_active_book_id', bookId);
-      try {
-        history.replaceState({ view: 'reader', bookId }, '', `#reader/${bookId}`);
-      } catch (_) {}
 
       const result = await readerManager.openBook(bookId, 'reader-content', initialCfi);
 
@@ -291,10 +288,6 @@ export class ReaderView {
     // Actualizar el estado global y limpiar persistencia del lector
     localStorage.setItem('arcadia_active_view', 'library');
     localStorage.removeItem('arcadia_active_book_id');
-    const activeFilter = appState.get('activeFilter') || 'all';
-    try {
-      history.replaceState({ view: 'library', filter: activeFilter }, '', activeFilter === 'all' ? '#' : `#${activeFilter}`);
-    } catch (_) {}
 
     appState.set('activeView', 'library');
   }

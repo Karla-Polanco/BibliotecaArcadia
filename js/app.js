@@ -15,6 +15,7 @@ import { AnnotationsView } from './annotations/AnnotationsView.js';
 import { VocabularyView } from './vocabulary/VocabularyView.js';
 import { VocabularyManager } from './vocabulary/VocabularyManager.js';
 import { PWAManager } from './pwa/PWAManager.js';
+import { Toast } from './ui/Toast.js';
 import { appState } from './state.js';
 
 class App {
@@ -52,10 +53,10 @@ class App {
     // Inicializar vocabulario predeterminado si el store está vacío
     await VocabularyManager.initPresets();
 
-    // 5. Inicializar Controlador del Lector EPUB
+    // 6. Inicializar Controlador del Lector EPUB
     this.readerView = new ReaderView();
 
-    // 6. Inicializar Vista Centralizada de Notas y Subrayados
+    // 7. Inicializar Vista Centralizada de Notas y Subrayados
     const booksContainer = document.getElementById('books-container');
     if (booksContainer) {
       this.annotationsView = new AnnotationsView(
@@ -63,10 +64,10 @@ class App {
         (bookId, cfi) => this.readerView.open(bookId, cfi)
       );
 
-      // 7. Inicializar Vista de Vocabulario y Fonética
+      // 8. Inicializar Vista de Vocabulario y Fonética
       this.vocabularyView = new VocabularyView(booksContainer);
 
-      // 8. Inicializar Vista de Biblioteca conectada a IndexedDB y al Lector
+      // 9. Inicializar Vista de Biblioteca conectada a IndexedDB y al Lector
       this.libraryView = new LibraryView(
         booksContainer,
         this.bookManager,
@@ -76,13 +77,13 @@ class App {
       );
     }
 
-    // 9. Vincular Botón "Continuar leyendo" de la barra inferior
+    // 10. Vincular Botón "Continuar leyendo" de la barra inferior
     const btnContinue = document.getElementById('btn-continue-reading');
     if (btnContinue) {
       btnContinue.addEventListener('click', () => {
         const books = this.bookManager.getAllBooks();
         if (books.length === 0) {
-          Toast.info('Tu biblioteca está vacía. Haz clic en "Subir libro (EPUB)" para agregar tus lecturas.');
+          Toast.info('Tu biblioteca está vacía. Sube un libro (EPUB) para comenzar.');
           document.getElementById('epub-file-input')?.click();
           return;
         }
@@ -94,19 +95,19 @@ class App {
       });
     }
 
-    // 8. Vincular Controles de Barra de Herramientas y Subida
+    // 11. Vincular Controles de Barra de Herramientas y Subida
     this.initToolbarControls();
 
-    // 9. Vincular Navegación del Sidebar y Móvil
+    // 12. Vincular Navegación del Sidebar y Móvil
     this.initNavigation();
 
-    // 10. Vincular Modal de Selector de Temas
+    // 13. Vincular Modal de Selector de Temas
     this.initThemeModal();
 
-    // 11. Restaurar última vista, libro o sección activa al recargar
+    // 14. Restaurar última vista, libro o sección activa al recargar
     await this.restoreLastState();
 
-    console.log('✦ Biblioteca Arcadia inicializada con éxito (Fase 3: Motor de Lectura EPUB con epub.js)');
+    console.log('✦ Biblioteca Arcadia inicializada con éxito');
   }
 
   /**
@@ -119,12 +120,12 @@ class App {
 
     if (!quoteTextEl || !quoteAuthorEl || !refreshBtn) return;
 
-    // Mostrar cita inicial
+    // Mostrar cita inicial persistida
     const initialQuote = this.quotesService.getCurrentQuote();
     quoteTextEl.textContent = initialQuote.text;
     quoteAuthorEl.textContent = `— ${initialQuote.author}`;
 
-    // Evento de refresco
+    // Rotar frase con transición fluida
     refreshBtn.addEventListener('click', () => {
       refreshBtn.classList.add('spinning');
       quoteTextEl.style.opacity = '0';
@@ -137,7 +138,7 @@ class App {
         quoteTextEl.style.opacity = '1';
         quoteAuthorEl.style.opacity = '1';
         refreshBtn.classList.remove('spinning');
-      }, 250);
+      }, 200);
     });
   }
 
@@ -254,6 +255,7 @@ class App {
       item.addEventListener('click', (e) => {
         e.preventDefault();
         const filter = item.dataset.navFilter;
+        if (!filter) return;
 
         // Actualizar clase activa en enlaces
         document.querySelectorAll('[data-nav-filter]').forEach(el => el.classList.remove('active'));
@@ -266,11 +268,6 @@ class App {
 
         appState.set('activeFilter', filter);
         localStorage.setItem('arcadia_active_filter', filter);
-        if (localStorage.getItem('arcadia_active_view') !== 'reader') {
-          try {
-            history.replaceState({ view: 'library', filter }, '', filter === 'all' ? '#' : `#${filter}`);
-          } catch (_) {}
-        }
         toggleDrawer(false);
       });
     });
@@ -278,6 +275,7 @@ class App {
     // Enlaces de la Bottom Navigation móvil
     document.querySelectorAll('.mobile-nav-link').forEach(link => {
       link.addEventListener('click', (e) => {
+        e.preventDefault();
         const filter = link.dataset.navFilter;
         const action = link.dataset.action;
 
@@ -296,11 +294,6 @@ class App {
 
           appState.set('activeFilter', filter);
           localStorage.setItem('arcadia_active_filter', filter);
-          if (localStorage.getItem('arcadia_active_view') !== 'reader') {
-            try {
-              history.replaceState({ view: 'library', filter }, '', filter === 'all' ? '#' : `#${filter}`);
-            } catch (_) {}
-          }
         }
       });
     });
@@ -365,58 +358,30 @@ class App {
   }
 
   /**
-   * Widget de Almacenamiento Local (Cálculo real si la Storage API está disponible).
-   */
-  async initStorageWidget() {
-    const storageTextEl = document.getElementById('storage-info-text');
-    const storageFillEl = document.getElementById('storage-progress-fill');
-
-    if (navigator.storage && navigator.storage.estimate) {
-      try {
-        const estimate = await navigator.storage.estimate();
-        const usedMB = (estimate.usage / (1024 * 1024)).toFixed(1);
-        const totalGB = (estimate.quota / (1024 * 1024 * 1024)).toFixed(1);
-        const percent = Math.min(100, Math.max(5, Math.round((estimate.usage / estimate.quota) * 100)));
-
-        if (storageTextEl) {
-          storageTextEl.textContent = `${usedMB} MB de ${totalGB} GB usados`;
-        }
-        if (storageFillEl) {
-          storageFillEl.style.width = `${percent}%`;
-        }
-        return;
-      } catch {
-        // Fallback a valores simulados de referencia
-      }
-    }
-
-  /**
    * Restaura la última vista activa (lector con el libro abierto en su página, o la sección/filtro activo).
    */
   async restoreLastState() {
-    const hash = window.location.hash || '';
+    // Si la URL tenía un hash antiguo, limpiarlo sin recargar
+    if (window.location.hash) {
+      try {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      } catch (_) {}
+    }
+
     const savedView = localStorage.getItem('arcadia_active_view');
     const savedBookId = localStorage.getItem('arcadia_active_book_id');
 
     // 1. Si estaba leyendo un libro, reabrir el lector en ese libro
-    if (hash.startsWith('#reader/') || (savedView === 'reader' && savedBookId)) {
-      const bookId = hash.startsWith('#reader/') ? hash.replace('#reader/', '') : savedBookId;
-      if (bookId && this.bookManager) {
-        const book = this.bookManager.getBookById(bookId);
-        if (book && this.readerView) {
-          await this.readerView.open(bookId);
-          return;
-        }
+    if (savedView === 'reader' && savedBookId && this.bookManager) {
+      const book = this.bookManager.getBookById(savedBookId);
+      if (book && this.readerView) {
+        await this.readerView.open(savedBookId);
+        return;
       }
     }
 
     // 2. Si estaba en una sección (Notas, Vocabulario, Favoritos, Leyendo, etc.), restaurar filtro
-    let targetFilter = 'all';
-    if (hash && hash.length > 1 && !hash.startsWith('#reader/')) {
-      targetFilter = hash.substring(1);
-    } else {
-      targetFilter = localStorage.getItem('arcadia_active_filter') || 'all';
-    }
+    const targetFilter = localStorage.getItem('arcadia_active_filter') || 'all';
 
     if (targetFilter && targetFilter !== 'all') {
       appState.set('activeFilter', targetFilter);
