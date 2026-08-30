@@ -20,63 +20,48 @@ export class CollectionManager {
   ];
 
   /**
-   * Inicializa las colecciones predeterminadas si el store está vacío.
+   * Limpia colecciones de prueba residuales y garantiza una biblioteca limpia.
    */
   static async initPresets(books = []) {
     try {
-      const existing = await dbManager.getAll('collections');
-      if (existing && existing.length > 0) return existing;
-
-      // Crear colecciones predefinidas iniciales
-      const presets = [
-        {
-          id: 'col-filosofia',
-          name: 'Filosofía y Pensamiento',
-          description: 'Reflexiones fundamentales, ética y cosmovisión.',
-          color: '#5B4CC4',
-          createdAt: Date.now() - 300000
-        },
-        {
-          id: 'col-ficcion',
-          name: 'Ciencia Ficción & Distopía',
-          description: 'Universos paralelos, futuro y literatura especulativa.',
-          color: '#368EDC',
-          createdAt: Date.now() - 200000
-        },
-        {
-          id: 'col-clasicos',
-          name: 'Clásicos Universales',
-          description: 'Obras maestras de la literatura inmortal.',
-          color: '#F59E0B',
-          createdAt: Date.now() - 100000
-        }
-      ];
-
-      for (const col of presets) {
-        await dbManager.put('collections', col);
+      // Purgar colecciones de prueba
+      const testIds = ['col-filosofia', 'col-ficcion', 'col-clasicos'];
+      for (const id of testIds) {
+        try {
+          await dbManager.delete('collections', id);
+        } catch (_) {}
       }
 
-      // Purgar cualquier relación residual de libros ficticios
-      const allRels = await dbManager.getAll('book_collections');
-      for (const rel of allRels) {
-        if (rel.bookId && rel.bookId.startsWith('book-')) {
-          await dbManager.delete('book_collections', rel.id);
+      // Purgar relaciones de libros de prueba o de colecciones de prueba
+      try {
+        const allRels = await dbManager.getAll('book_collections');
+        for (const rel of allRels) {
+          const isTestCol = testIds.includes(rel.collectionId);
+          const isTestBook = rel.bookId && String(rel.bookId).startsWith('book-');
+          if (isTestCol || isTestBook) {
+            try {
+              await dbManager.delete('book_collections', rel.id || [rel.bookId, rel.collectionId]);
+            } catch (_) {}
+          }
         }
-      }
+      } catch (_) {}
 
-      return await dbManager.getAll('collections');
+      return await this.getAllCollections();
     } catch (e) {
-      console.warn('Error al inicializar colecciones:', e);
+      console.warn('Aviso en initPresets de colecciones:', e);
       return [];
     }
   }
 
   /**
-   * Obtiene todas las colecciones.
+   * Obtiene todas las colecciones creadas por el usuario.
    */
   static async getAllCollections() {
     try {
-      return await dbManager.getAll('collections');
+      const all = await dbManager.getAll('collections');
+      // Filtrar cualquier residuo de prueba si existiese
+      const testIds = ['col-filosofia', 'col-ficcion', 'col-clasicos'];
+      return (all || []).filter(c => !testIds.includes(c.id));
     } catch (e) {
       return [];
     }
@@ -121,17 +106,27 @@ export class CollectionManager {
   }
 
   /**
-   * Elimina una colección y todas sus relaciones con libros en cascada.
+   * Elimina una colección y todas sus relaciones con libros en cascada de forma 100% segura.
    */
   static async deleteCollection(id) {
-    // 1. Eliminar relaciones en book_collections
-    const relations = await dbManager.getByIndex('book_collections', 'by_collectionId', id);
-    for (const rel of relations) {
-      await dbManager.delete('book_collections', rel.id);
+    // 1. Eliminar relaciones asociadas en book_collections
+    try {
+      const allRels = await dbManager.getAll('book_collections');
+      for (const rel of allRels) {
+        if (rel.collectionId === id) {
+          try {
+            await dbManager.delete('book_collections', rel.id || [rel.bookId, rel.collectionId]);
+          } catch (_) {}
+        }
+      }
+    } catch (err) {
+      console.warn('Aviso limpiando relaciones de colección:', err);
     }
 
-    // 2. Eliminar la colección
+    // 2. Eliminar la colección directamente del store 'collections'
     await dbManager.delete('collections', id);
+
+    // 3. Notificar a toda la aplicación
     appState.notify('collectionDeleted', id);
     return true;
   }
@@ -140,28 +135,37 @@ export class CollectionManager {
    * Asocia un libro a una colección (evita duplicados).
    */
   static async addBookToCollection(bookId, collectionId) {
-    const existingRels = await dbManager.getByIndex('book_collections', 'by_collectionId', collectionId);
-    const alreadyLinked = existingRels.some(r => r.bookId === bookId);
-    if (alreadyLinked) return;
+    try {
+      const allRels = await dbManager.getAll('book_collections');
+      const alreadyLinked = allRels.some(r => r.bookId === bookId && r.collectionId === collectionId);
+      if (alreadyLinked) return;
 
-    const rel = {
-      id: `${bookId}_${collectionId}`,
-      bookId,
-      collectionId,
-      addedAt: Date.now()
-    };
+      const rel = {
+        id: `${bookId}_${collectionId}`,
+        bookId,
+        collectionId,
+        addedAt: Date.now()
+      };
 
-    await dbManager.put('book_collections', rel);
-    appState.notify('bookCollectionChanged', { bookId, collectionId });
+      await dbManager.put('book_collections', rel);
+      appState.notify('bookCollectionChanged', { bookId, collectionId });
+    } catch (err) {
+      console.warn('Error al asociar libro a colección:', err);
+    }
   }
 
   /**
    * Desasocia un libro de una colección.
    */
   static async removeBookFromCollection(bookId, collectionId) {
-    const relId = `${bookId}_${collectionId}`;
-    await dbManager.delete('book_collections', relId);
-    appState.notify('bookCollectionChanged', { bookId, collectionId });
+    try {
+      const relId = `${bookId}_${collectionId}`;
+      try { await dbManager.delete('book_collections', relId); } catch (_) {}
+      try { await dbManager.delete('book_collections', [bookId, collectionId]); } catch (_) {}
+      appState.notify('bookCollectionChanged', { bookId, collectionId });
+    } catch (err) {
+      console.warn('Error al desasociar libro de colección:', err);
+    }
   }
 
   /**
@@ -169,8 +173,8 @@ export class CollectionManager {
    */
   static async getCollectionsForBook(bookId) {
     try {
-      const rels = await dbManager.getByIndex('book_collections', 'by_bookId', bookId);
-      const colIds = rels.map(r => r.collectionId);
+      const allRels = await dbManager.getAll('book_collections');
+      const colIds = allRels.filter(r => r.bookId === bookId).map(r => r.collectionId);
       const allCols = await this.getAllCollections();
       return allCols.filter(c => colIds.includes(c.id));
     } catch (e) {
@@ -183,8 +187,8 @@ export class CollectionManager {
    */
   static async getBooksInCollection(collectionId) {
     try {
-      const rels = await dbManager.getByIndex('book_collections', 'by_collectionId', collectionId);
-      const bookIds = rels.map(r => r.bookId);
+      const allRels = await dbManager.getAll('book_collections');
+      const bookIds = allRels.filter(r => r.collectionId === collectionId).map(r => r.bookId);
       const allBooks = await dbManager.getAll('books');
       return allBooks.filter(b => bookIds.includes(b.id));
     } catch (e) {

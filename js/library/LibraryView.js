@@ -69,12 +69,13 @@ export class LibraryView {
       this.updateBadges();
       this.applyFiltersAndRender();
     });
-    appState.subscribe('collectionDeleted', () => {
-      if (appState.get('activeFilter')?.startsWith('collection:')) {
+    appState.subscribe('collectionDeleted', async (deletedId) => {
+      const currentFilter = appState.get('activeFilter');
+      if (currentFilter === `collection:${deletedId}` || currentFilter?.startsWith('collection:')) {
         appState.set('activeFilter', 'all');
       }
-      this.updateBadges();
-      this.applyFiltersAndRender();
+      await this.updateBadges();
+      await this.applyFiltersAndRender();
     });
     appState.subscribe('bookCollectionChanged', () => {
       this.updateBadges();
