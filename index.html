@@ -351,12 +351,17 @@
           </div>
         </div>
 
-        <button class="btn-continue-reading" id="btn-continue-reading">
-          <span>Continuar leyendo</span>
-          <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-          </svg>
-        </button>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button class="btn-continue-reading" id="btn-continue-reading">
+            <span>Continuar leyendo</span>
+            <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button>
+          <button class="btn-dismiss-reading-bar" id="btn-dismiss-reading-bar" title="Ocultar barra de lectura actual (puedes reactivarla en Ajustes)" aria-label="Ocultar barra">
+            <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
       </aside>
     </main>
   </div>
@@ -487,6 +492,21 @@
           </div>
           <span class="theme-card-footer-note">Adaptación automática en tiempo real</span>
         </div>
+      </div>
+
+      <!-- Preferencias y Elementos de la Interfaz -->
+      <div class="settings-preferences-section" style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 12px;">
+        <h4 style="font-size: 0.8rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0;">Elementos de la Interfaz</h4>
+        
+        <label style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 18px; border-radius: var(--radius-md); background-color: var(--color-surface-secondary); border: 1px solid var(--color-border); cursor: pointer; transition: background-color var(--transition-fast);">
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <span style="font-size: var(--text-sm); font-weight: bold; color: var(--color-text);">Barra inferior de «Lectura Actual»</span>
+            <span style="font-size: 0.75rem; color: var(--color-text-muted);">Muestra la barra flotante con el libro en progreso y el botón «Continuar leyendo» en el catálogo.</span>
+          </div>
+          <div style="flex-shrink: 0; display: flex; align-items: center;">
+            <input type="checkbox" id="toggle-reading-bar" checked style="width: 20px; height: 20px; accent-color: var(--color-primary-light); cursor: pointer;">
+          </div>
+        </label>
       </div>
     </div>
   </div>

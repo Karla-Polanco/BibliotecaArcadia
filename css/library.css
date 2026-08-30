@@ -764,6 +764,30 @@
   transform: translateY(0);
 }
 
+.btn-dismiss-reading-bar {
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.btn-dismiss-reading-bar:hover {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.current-reading-bar.hidden-by-setting {
+  display: none !important;
+}
+
 /* --------------------------------------------------------------------------
    6. MODAL SELECTOR DE TEMAS (Fiel a la referencia visual)
    -------------------------------------------------------------------------- */

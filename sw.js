@@ -6,7 +6,7 @@
  * mediante caché Cache-First del App Shell y limpieza de versiones obsoletas.
  */
 
-const CACHE_NAME = 'arcadia-pwa-v17';
+const CACHE_NAME = 'arcadia-pwa-v26';
 
 // Recursos esenciales del App Shell a precachear
 const APP_SHELL_ASSETS = [
@@ -14,9 +14,13 @@ const APP_SHELL_ASSETS = [
   './index.html',
   './manifest.json',
   './assets/icons/favicon.svg',
-  './css/main.css',
+  './css/tokens.css',
   './css/themes.css',
+  './css/main.css',
+  './css/layout.css',
+  './css/library.css',
   './css/reader.css',
+  './css/responsive.css',
   './js/app.js',
   './js/db.js',
   './js/state.js',
@@ -26,7 +30,9 @@ const APP_SHELL_ASSETS = [
   './js/library/CollectionManager.js',
   './js/library/LibraryView.js',
   './js/library/StorageWidget.js',
+  './js/quotes/QuotesManager.js',
   './js/quotes/QuotesService.js',
+  './js/quotes/QuotesView.js',
   './js/reader/BookmarkManager.js',
   './js/reader/LocationsManager.js',
   './js/reader/ReaderManager.js',
@@ -41,6 +47,7 @@ const APP_SHELL_ASSETS = [
   './js/pwa/PWAManager.js',
   './js/ui/Modal.js',
   './js/ui/CollectionModal.js',
+  './js/ui/QuoteModal.js',
   './js/ui/FloatingMenu.js',
   './js/ui/ThemeManager.js',
   './js/ui/Toast.js',
@@ -58,86 +65,102 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(async (cache) => {
       // Usar cache.all con tolerancia a fallos individuales
-      const promises = APP_SHELL_ASSETS.map(async (url) => {
+      const cachePromises = APP_SHELL_ASSETS.map(async (asset) => {
         try {
-          const resp = await fetch(url, { cache: 'no-cache' });
-          if (resp.ok) {
-            await cache.put(url, resp);
+          const response = await fetch(asset, { cache: 'no-cache' });
+          if (response.ok) {
+            await cache.put(asset, response);
           }
         } catch (err) {
-          console.warn(`[SW] No se pudo precachear ${url}:`, err);
+          console.warn(`[SW] No se pudo precachear el recurso: ${asset}`, err);
         }
       });
-      await Promise.all(promises);
+      await Promise.all(cachePromises);
       return self.skipWaiting();
     })
   );
 });
 
-// 2. ACTIVACIÓN: Limpieza de versiones de caché antiguas
+// 2. ACTIVACIÓN: Limpieza rigurosa de cachés de versiones previas
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keys) => {
+    caches.keys().then((cacheNames) => {
       return Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) {
-            console.log(`[SW] Eliminando caché obsoleta: ${key}`);
-            return caches.delete(key);
-          }
-        })
+        cacheNames
+          .filter((name) => name.startsWith('arcadia-pwa-') && name !== CACHE_NAME)
+          .map((name) => {
+            console.log(`[SW] Eliminando caché obsoleta: ${name}`);
+            return caches.delete(name);
+          })
       );
     }).then(() => self.clients.claim())
   );
 });
 
-// 3. FETCH: Estrategia Cache-First para recursos locales con actualización en background
+// 3. INTERCEPTACIÓN DE FETCH: Estrategia híbrida Cache-First / Network-First
 self.addEventListener('fetch', (event) => {
-  const request = event.request;
+  const url = new URL(event.request.url);
 
-  // Ignorar métodos no GET o esquemas no soportados (ej. extensiones)
-  if (request.method !== 'GET' || !request.url.startsWith('http')) {
+  // Ignorar peticiones que no sean HTTP/HTTPS (por ejemplo esquemas chrome-extension o data:)
+  if (!url.protocol.startsWith('http')) return;
+
+  // Ignorar peticiones de Analytics o externas si existiesen
+  if (url.origin !== self.location.origin) {
+    // Para CDNs de fuentes (Google Fonts, unpkg, etc.) usar Stale-While-Revalidate
+    if (url.hostname.includes('fonts.googleapis.com') ||
+        url.hostname.includes('fonts.gstatic.com') ||
+        url.hostname.includes('jsdelivr.net') ||
+        url.hostname.includes('cdnjs.cloudflare.com')) {
+      event.respondWith(
+        caches.open(CACHE_NAME).then(async (cache) => {
+          const cached = await cache.match(event.request);
+          const networkPromise = fetch(event.request).then((networkResponse) => {
+            if (networkResponse.ok) {
+              cache.put(event.request, networkResponse.clone());
+            }
+            return networkResponse;
+          }).catch(() => null);
+
+          return cached || networkPromise;
+        })
+      );
+      return;
+    }
     return;
   }
 
-  // Las peticiones a APIs externas usan Network-First
-  if (request.url.includes('dictionaryapi.dev') || request.url.includes('googleapis.com')) {
-    event.respondWith(
-      fetch(request).catch(() => caches.match(request))
-    );
-    return;
-  }
-
-  // Para el App Shell y recursos estáticos: Cache-First con fallback a red
+  // Estrategia Cache-First para el App Shell local
   event.respondWith(
-    caches.match(request).then((cachedResponse) => {
+    caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
       if (cachedResponse) {
-        // En background actualizar la caché si hay red (Stale-While-Revalidate selectivo)
-        fetch(request).then((networkResponse) => {
-          if (networkResponse && networkResponse.ok && networkResponse.type === 'basic') {
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, networkResponse));
+        // En segundo plano revalidar recursos clave
+        fetch(event.request).then((networkResponse) => {
+          if (networkResponse && networkResponse.ok) {
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, networkResponse));
           }
-        }).catch(() => {/* Modo offline silencioso */});
+        }).catch(() => {});
 
         return cachedResponse;
       }
 
-      // Si no está en caché, buscar en la red y guardar copia
-      return fetch(request).then((networkResponse) => {
+      // Si no está en caché, buscar en la red y cachear
+      return fetch(event.request).then((networkResponse) => {
         if (!networkResponse || !networkResponse.ok || networkResponse.type !== 'basic') {
           return networkResponse;
         }
 
-        const responseClone = networkResponse.clone();
+        const responseToCache = networkResponse.clone();
         caches.open(CACHE_NAME).then((cache) => {
-          cache.put(request, responseClone);
+          cache.put(event.request, responseToCache);
         });
 
         return networkResponse;
-      }).catch(() => {
-        // Si es una petición de navegación HTML y no hay red, servir index.html precacheado
-        if (request.headers.get('accept')?.includes('text/html')) {
-          return caches.match('./index.html');
+      }).catch(async () => {
+        // Si no hay red ni caché y es una navegación HTML, retornar index.html precacheado
+        if (event.request.mode === 'navigate' || event.request.destination === 'document') {
+          return caches.match('./index.html') || caches.match('./');
         }
+        return new Response('Offline: Recurso no disponible', { status: 503, statusText: 'Offline' });
       });
     })
   );
