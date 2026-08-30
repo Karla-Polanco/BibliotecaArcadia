@@ -98,6 +98,8 @@ export class ReaderSettings {
         color: ${themeColors.text} !important;
         -webkit-font-smoothing: antialiased !important;
         text-rendering: optimizeLegibility !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
       }
 
       body {
@@ -108,6 +110,8 @@ export class ReaderSettings {
         font-weight: ${fontWeightVal} !important;
         line-height: ${settings.lineHeight} !important;
         box-sizing: border-box !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
       }
 
       *, p, span, div, li, em, strong, b, i, blockquote, a {
@@ -208,7 +212,9 @@ export class ReaderSettings {
 
     // 5. Configuración de columnas (spread)
     if (rendition.spread) {
-      rendition.spread(settings.columns === 2 ? 'always' : 'none');
+      const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+      const effectiveSpread = (!isMobile && settings.columns === 2) ? 'always' : 'none';
+      rendition.spread(effectiveSpread);
     }
   }
 

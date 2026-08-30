@@ -67,11 +67,14 @@ export class ReaderManager {
     const container = typeof targetElement === 'string' ? document.getElementById(targetElement) : targetElement;
     container.innerHTML = '';
 
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+    const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'always' : 'none';
+
     this.rendition = this.book.renderTo(container, {
       width: '100%',
       height: '100%',
       flow: this.currentSettings.flowMode === 'paginated' ? 'paginated' : 'scrolled-doc',
-      spread: this.currentSettings.columns === 2 ? 'always' : 'none',
+      spread: effectiveSpread,
       allowScriptedContent: false // Seguridad contra XSS en libros
     });
 
@@ -197,11 +200,14 @@ export class ReaderManager {
         this.rendition.destroy();
       } catch (_) {}
 
+      const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+      const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'always' : 'none';
+
       this.rendition = this.book.renderTo(container, {
         width: '100%',
         height: '100%',
         flow: flowMode === 'scrolled-doc' ? 'scrolled-doc' : 'paginated',
-        spread: this.currentSettings.columns === 2 ? 'always' : 'none',
+        spread: effectiveSpread,
         allowScriptedContent: false
       });
 

@@ -40,13 +40,14 @@
   z-index: 20;
   transition: transform var(--transition-normal);
   flex-shrink: 0;
+  gap: var(--space-sm);
 }
 
 .reader-header-left {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  min-width: 120px;
+  flex-shrink: 0;
 }
 
 .btn-reader-back {
@@ -66,13 +67,15 @@
 }
 
 .reader-header-center {
-  flex: 1;
+  flex: 1 1 0%;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 0 var(--space-md);
-  min-width: 0;
+  padding: 0 var(--space-xs);
+  overflow: hidden;
 }
 
 .reader-book-title {
@@ -82,7 +85,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 400px;
+  max-width: 100%;
+  width: 100%;
 }
 
 .reader-chapter-title {
@@ -91,14 +95,15 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 350px;
+  max-width: 100%;
+  width: 100%;
 }
 
 .reader-header-right {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
-  min-width: 120px;
+  gap: 4px;
+  flex-shrink: 0;
   justify-content: flex-end;
 }
 
@@ -812,14 +817,95 @@
 }
 
 @media (max-width: 768px) {
+  .reader-header {
+    padding: 0 8px;
+    height: 48px;
+    gap: 2px;
+  }
+
+  .reader-header-left {
+    min-width: unset;
+    gap: 0;
+  }
+
+  .btn-reader-back {
+    padding: 6px 8px;
+    gap: 0;
+  }
+
+  .btn-reader-back span {
+    display: none; /* Ocultar la palabra 'Biblioteca' en móviles */
+  }
+
+  .reader-header-center {
+    padding: 0 4px;
+    flex: 1 1 0%;
+    min-width: 0;
+  }
+
+  .reader-book-title {
+    font-size: 0.78rem;
+    max-width: 100%;
+  }
+
+  .reader-chapter-title {
+    font-size: 0.65rem;
+    max-width: 100%;
+  }
+
+  .reader-header-right {
+    min-width: unset;
+    gap: 2px;
+  }
+
+  .btn-reader-action {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+  }
+
+  .btn-reader-action svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  #btn-reader-fullscreen {
+    display: none !important; /* Pantalla completa no requerida en teléfonos */
+  }
+
+  .reader-viewport {
+    padding: 8px 12px; /* Margen cómodo sin desperdiciar pantalla */
+  }
+
+  .btn-reader-nav {
+    display: none !important; /* Ocultar flechas laterales en pantalla táctil */
+  }
+
   .reader-search-panel {
     top: auto;
     bottom: calc(var(--header-height) + 12px);
-    right: 16px;
-    left: 16px;
+    right: 12px;
+    left: 12px;
     width: auto;
-    max-width: none;
-    max-height: 75vh;
+    max-width: calc(100vw - 24px);
+    max-height: 70vh;
+  }
+
+  .search-input-wrapper {
+    padding: 0 8px 0 12px;
+    gap: 6px;
+    height: 38px;
+  }
+
+  .search-input-wrapper input {
+    font-size: 0.8rem !important;
+    min-width: 0 !important;
+    flex: 1 1 0% !important;
+  }
+
+  #btn-submit-reader-search {
+    padding: 4px 10px;
+    font-size: 0.72rem;
   }
 }
 
