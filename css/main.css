@@ -23,6 +23,11 @@ html {
 body {
   font-family: var(--font-sans);
   background-color: var(--color-background);
+  background-image: var(--theme-bg-pattern, none);
+  background-size: var(--theme-bg-size, auto);
+  background-position: center top;
+  background-attachment: fixed;
+  background-repeat: repeat;
   color: var(--color-text);
   min-height: 100vh;
   min-height: 100dvh;

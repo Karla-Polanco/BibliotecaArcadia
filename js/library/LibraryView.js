@@ -15,12 +15,13 @@ import { Modal } from '../ui/Modal.js';
 import { BookmarkManager } from '../reader/BookmarkManager.js';
 
 export class LibraryView {
-  constructor(containerElement, bookManager, onOpenBook = null, annotationsView = null, vocabularyView = null) {
+  constructor(containerElement, bookManager, onOpenBook = null, annotationsView = null, vocabularyView = null, quotesView = null) {
     this.container = containerElement;
     this.bookManager = bookManager;
     this.onOpenBook = onOpenBook;
     this.annotationsView = annotationsView;
     this.vocabularyView = vocabularyView;
+    this.quotesView = quotesView;
     this.filteredBooks = [];
     this.init();
   }
@@ -59,6 +60,11 @@ export class LibraryView {
     appState.subscribe('wordAdded', () => this.updateBadges());
     appState.subscribe('wordUpdated', () => this.updateBadges());
     appState.subscribe('wordRemoved', () => this.updateBadges());
+
+    // Suscripción a eventos de frases y citas para badges
+    appState.subscribe('quoteAdded', () => this.updateBadges());
+    appState.subscribe('quoteUpdated', () => this.updateBadges());
+    appState.subscribe('quoteDeleted', () => this.updateBadges());
 
     // Suscripción a eventos de colecciones
     appState.subscribe('collectionAdded', () => {
@@ -138,6 +144,16 @@ export class LibraryView {
         elVocab.textContent = wordsCount;
       } catch (e) {
         elVocab.textContent = '0';
+      }
+    }
+
+    const elQuotes = document.getElementById('badge-quotes');
+    if (elQuotes) {
+      try {
+        const quotesCount = await dbManager.count('quotes');
+        elQuotes.textContent = quotesCount;
+      } catch (e) {
+        elQuotes.textContent = '0';
       }
     }
 
@@ -264,6 +280,15 @@ export class LibraryView {
       if (libraryHeader) libraryHeader.style.display = 'none';
       if (this.vocabularyView) {
         this.vocabularyView.loadAndRender();
+      }
+      return;
+    }
+
+    // Si el filtro activo es "Frases y citas", ocultar el encabezado de biblioteca y delegar a QuotesView
+    if (filter === 'quotes') {
+      if (libraryHeader) libraryHeader.style.display = 'none';
+      if (this.quotesView) {
+        this.quotesView.loadAndRender();
       }
       return;
     }

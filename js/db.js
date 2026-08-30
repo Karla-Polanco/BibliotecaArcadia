@@ -8,7 +8,7 @@
 
 export class DatabaseManager {
   static DB_NAME = 'ArcadiaEpubDB';
-  static DB_VERSION = 1;
+  static DB_VERSION = 2;
 
   constructor() {
     this.db = null;
@@ -133,6 +133,14 @@ export class DatabaseManager {
       const posStore = db.createObjectStore('positionHistory', { keyPath: 'id' });
       posStore.createIndex('by_bookId', 'bookId', { unique: false });
       posStore.createIndex('by_timestamp', 'timestamp', { unique: false });
+    }
+
+    // 12. quotes (Banco y colección de frases y citas literarias del usuario)
+    if (!db.objectStoreNames.contains('quotes')) {
+      const quotesStore = db.createObjectStore('quotes', { keyPath: 'id' });
+      quotesStore.createIndex('by_author', 'author', { unique: false });
+      quotesStore.createIndex('by_favorite', 'favorite', { unique: false });
+      quotesStore.createIndex('by_createdAt', 'createdAt', { unique: false });
     }
   }
 

@@ -1,57 +1,63 @@
 /**
  * ============================================================================
- * QUOTES SERVICE - BANCO DE CITAS LITERARIAS
+ * QUOTES SERVICE - BANCO Y ROTACIÓN DE FRASES LITERARIAS
  * ============================================================================
- * Gestiona la selección, persistencia y rotación interactiva de frases literarias célebres.
+ * Sincroniza la frase del banner superior con las frases creadas por el usuario en IndexedDB.
  */
+
+import { QuotesManager } from './QuotesManager.js';
+import { appState } from '../state.js';
 
 export class QuotesService {
   constructor() {
-    this.quotes = [
-      {
-        text: "«Un lector vive mil vidas antes de morir. El que nunca lee solo vive una.»",
-        author: "George R. R. Martin"
-      },
-      {
-        text: "«De los diversos instrumentos inventados por el hombre, el más asombroso es el libro; todos los demás son extensiones de su cuerpo... Sólo el libro es una extensión de la imaginación y la memoria.»",
-        author: "Jorge Luis Borges"
-      },
-      {
-        text: "«El que lee mucho y anda mucho, ve mucho y sabe mucho.»",
-        author: "Miguel de Cervantes"
-      },
-      {
-        text: "«Leemos para saber que no estamos solos.»",
-        author: "C. S. Lewis"
-      },
-      {
-        text: "«No hay amigo tan leal como un libro.»",
-        author: "Ernest Hemingway"
-      },
-      {
-        text: "«Las palabras pueden ser como rayos X si se usan apropiadamente: lo atraviesan todo.»",
-        author: "Aldous Huxley"
-      },
-      {
-        text: "«Un libro debe ser el hacha que rompa el mar helado dentro de nosotros.»",
-        author: "Franz Kafka"
-      },
-      {
-        text: "«No todos los que vagan están perdidos.»",
-        author: "J. R. R. Tolkien"
-      },
-      {
-        text: "«La lectura de todos los buenos libros es como una conversación con las personas más selectas de los siglos pasados.»",
-        author: "René Descartes"
-      },
-      {
-        text: "«Para viajar lejos no hay mejor nave que un libro.»",
-        author: "Emily Dickinson"
-      }
-    ];
+    this.quotes = [];
+    this.currentIndex = 0;
+    this.isReady = false;
 
-    // Recuperar índice previamente visto para que no regrese a la primera al recargar
+    this.defaultPlaceholder = {
+      id: 'placeholder',
+      text: "«Aún no tienes frases guardadas. ¡Crea tu propia colección de citas literarias y pensamientos favoritos!»",
+      author: "Biblioteca Arcadia",
+      source: "",
+      isPlaceholder: true
+    };
+
+    this.initEvents();
+  }
+
+  initEvents() {
+    appState.subscribe('quoteAdded', async () => {
+      await this.reload();
+      this.updateBannerDOM();
+    });
+    appState.subscribe('quoteUpdated', async () => {
+      await this.reload();
+      this.updateBannerDOM();
+    });
+    appState.subscribe('quoteDeleted', async () => {
+      await this.reload();
+      this.updateBannerDOM();
+    });
+  }
+
+  /**
+   * Carga las frases del usuario desde IndexedDB.
+   */
+  async reload() {
+    this.quotes = await QuotesManager.getAllQuotes();
+    this.isReady = true;
+
+    // Recuperar índice previamente guardado o ajustar a los límites
     try {
+      const savedId = localStorage.getItem('arcadia_active_banner_quote_id');
+      if (savedId && this.quotes.length > 0) {
+        const foundIdx = this.quotes.findIndex(q => q.id === savedId);
+        if (foundIdx !== -1) {
+          this.currentIndex = foundIdx;
+          return;
+        }
+      }
+
       const saved = localStorage.getItem('arcadia_saved_quote_idx');
       if (saved !== null && !isNaN(parseInt(saved)) && parseInt(saved) >= 0 && parseInt(saved) < this.quotes.length) {
         this.currentIndex = parseInt(saved);
@@ -64,35 +70,76 @@ export class QuotesService {
   }
 
   /**
-   * Obtiene la cita actual guardada.
+   * Obtiene la cita actual para el banner.
    */
   getCurrentQuote() {
-    return this.quotes[this.currentIndex] || this.quotes[0];
+    if (this.quotes.length === 0) {
+      return this.defaultPlaceholder;
+    }
+    if (this.currentIndex >= this.quotes.length) {
+      this.currentIndex = 0;
+    }
+    return this.quotes[this.currentIndex];
   }
 
   /**
-   * Obtiene la siguiente cita de forma aleatoria persistiendo la elección.
+   * Obtiene la siguiente cita de forma aleatoria/secuencial persistiendo la elección.
    */
   getNextQuote() {
+    if (this.quotes.length <= 1) {
+      this.currentIndex = 0;
+      return this.getCurrentQuote();
+    }
+
     let nextIndex;
     do {
       nextIndex = Math.floor(Math.random() * this.quotes.length);
     } while (nextIndex === this.currentIndex && this.quotes.length > 1);
 
     this.currentIndex = nextIndex;
+    const current = this.quotes[this.currentIndex];
+
     try {
       localStorage.setItem('arcadia_saved_quote_idx', this.currentIndex.toString());
+      if (current && current.id) {
+        localStorage.setItem('arcadia_active_banner_quote_id', current.id);
+      }
     } catch (e) {}
 
-    return this.quotes[this.currentIndex];
+    return current;
   }
 
   /**
-   * Permite agregar nuevas citas dinámicamente.
+   * Fija una cita específica para mostrarse en el banner superior.
+   * @param {string} quoteId
    */
-  addQuote(text, author) {
-    if (text && author) {
-      this.quotes.push({ text, author });
+  setBannerQuote(quoteId) {
+    const idx = this.quotes.findIndex(q => q.id === quoteId);
+    if (idx !== -1) {
+      this.currentIndex = idx;
+      try {
+        localStorage.setItem('arcadia_saved_quote_idx', this.currentIndex.toString());
+        localStorage.setItem('arcadia_active_banner_quote_id', quoteId);
+      } catch (e) {}
+      this.updateBannerDOM();
+    }
+  }
+
+  /**
+   * Actualiza el DOM del banner superior inmediatamente.
+   */
+  updateBannerDOM() {
+    const quoteTextEl = document.getElementById('quote-text');
+    const quoteAuthorEl = document.getElementById('quote-author');
+    const quoteSourceEl = document.getElementById('quote-source');
+
+    if (!quoteTextEl || !quoteAuthorEl) return;
+
+    const current = this.getCurrentQuote();
+    quoteTextEl.textContent = current.text;
+    quoteAuthorEl.textContent = `— ${current.author}`;
+    if (quoteSourceEl) {
+      quoteSourceEl.textContent = current.source ? ` · ${current.source}` : '';
     }
   }
 }

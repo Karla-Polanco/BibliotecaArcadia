@@ -1,6 +1,14 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="mystic-night">
+<html lang="es">
 <head>
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('arcadia_theme') || 'mystic-night';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch (e) {}
+    })();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="description" content="Biblioteca Arcadia - Biblioteca virtual y lector EPUB personal local-first, inspirado en la experiencia Kindle.">
@@ -134,6 +142,16 @@
             <span class="nav-badge" id="badge-vocabulary">0</span>
           </a>
 
+          <a href="javascript:void(0)" class="nav-item" data-nav-filter="quotes">
+            <div class="nav-item-content">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              <span>Frases y citas</span>
+            </div>
+            <span class="nav-badge" id="badge-quotes">0</span>
+          </a>
+
           <a href="javascript:void(0)" class="nav-item" id="nav-settings">
             <div class="nav-item-content">
               <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -223,17 +241,38 @@
       <div class="main-content">
 
         <!-- 1. Banner Literario Superior -->
-        <section class="quote-banner" aria-label="Cita literaria">
+        <section class="quote-banner" id="quote-banner-section" aria-label="Cita literaria">
+          <div class="quote-watermark" aria-hidden="true">“</div>
           <div class="quote-content">
+            <div class="quote-tag-row">
+              <span class="quote-tag">✦ Pensamiento del día</span>
+            </div>
             <p class="quote-text" id="quote-text">«Un lector vive mil vidas antes de morir. El que nunca lee solo vive una.»</p>
-            <span class="quote-author" id="quote-author">— George R. R. Martin</span>
+            <div class="quote-meta-row">
+              <span class="quote-author" id="quote-author">— George R. R. Martin</span>
+              <span class="quote-source" id="quote-source"></span>
+            </div>
           </div>
-          <button class="btn-quote-refresh" id="btn-refresh-quote" aria-label="Cambiar frase literaria">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-            <span>Nueva frase</span>
-          </button>
+          <div class="quote-actions">
+            <button class="btn-quote-refresh" id="btn-refresh-quote" title="Ver otra frase" aria-label="Cambiar frase literaria">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <span>Siguiente</span>
+            </button>
+            <button class="btn-quote-add-trigger" id="btn-banner-add-quote" title="Escribir una nueva frase">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+              <span>Añadir</span>
+            </button>
+            <button class="btn-quote-manage-trigger" id="btn-banner-manage-quotes" title="Ver todas las frases">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
+              <span>Mis frases</span>
+            </button>
+          </div>
         </section>
 
         <!-- 2. Barra de Control de Biblioteca (Toolbar) -->
@@ -637,13 +676,12 @@
         </div>
       </div>
 
-      <!-- Márgenes Laterales -->
+      <!-- Modo de Lectura -->
       <div class="settings-group">
-        <span class="settings-group-label">Márgenes</span>
-        <div class="settings-btn-grid" id="margins-options">
-          <button class="setting-pill-btn" data-margin="compact">Estrecho</button>
-          <button class="setting-pill-btn active" data-margin="normal">Normal</button>
-          <button class="setting-pill-btn" data-margin="relaxed">Amplio</button>
+        <span class="settings-group-label">Modo de Lectura</span>
+        <div class="settings-btn-grid" id="flow-mode-options">
+          <button class="setting-pill-btn active" data-flow="paginated">Paginación</button>
+          <button class="setting-pill-btn" data-flow="scrolled-doc">Desplazamiento</button>
         </div>
       </div>
 

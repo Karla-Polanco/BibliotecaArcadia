@@ -503,20 +503,10 @@ export class ReaderView {
       btn.classList.toggle('active', parseFloat(btn.dataset.lh) === settings.lineHeight);
     });
 
-    // 5. Márgenes
-    document.querySelectorAll('#margins-options [data-margin]').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.margin === settings.margins);
+    // 5. Modo de Lectura (Paginación vs Desplazamiento)
+    document.querySelectorAll('#flow-mode-options [data-flow]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.flow === (settings.flowMode || 'paginated'));
     });
-
-    if (this.contentEl) {
-      if (settings.margins === 'compact') {
-        this.contentEl.style.maxWidth = '1480px';
-      } else if (settings.margins === 'relaxed') {
-        this.contentEl.style.maxWidth = '940px';
-      } else {
-        this.contentEl.style.maxWidth = '1200px';
-      }
-    }
 
     // 6. Columnas
     document.querySelectorAll('#columns-options [data-col]').forEach(btn => {
@@ -590,11 +580,12 @@ export class ReaderView {
       });
     });
 
-    // 5. Márgenes
-    document.querySelectorAll('#margins-options [data-margin]').forEach(btn => {
+    // 5. Modo de Lectura (Paginación / Desplazamiento)
+    document.querySelectorAll('#flow-mode-options [data-flow]').forEach(btn => {
       btn.addEventListener('click', async () => {
-        const margin = btn.dataset.margin;
-        const updated = await readerManager.updateSettings({ margins: margin });
+        const flow = btn.dataset.flow;
+        await readerManager.setFlowMode(flow);
+        const updated = readerManager.getSettings();
         this.syncSettingsUI(updated);
       });
     });

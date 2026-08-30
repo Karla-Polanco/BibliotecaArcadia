@@ -3,21 +3,21 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. BANNER LITERARIO SUPERIOR
+   1. BANNER LITERARIO SUPERIOR (QUOTE BANNER)
    -------------------------------------------------------------------------- */
 .quote-banner {
-  background: var(--banner-gradient);
-  border: 1px solid var(--banner-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg) var(--space-xl);
+  background: var(--banner-gradient, linear-gradient(135deg, #18132B 0%, #2A1F4D 100%));
+  border: 1px solid var(--banner-border, rgba(123, 107, 240, 0.25));
+  border-radius: var(--radius-lg, 16px);
+  padding: 24px 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-lg);
-  margin-bottom: var(--space-xl);
+  gap: 24px;
+  margin-bottom: 32px;
   position: relative;
   overflow: hidden;
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .quote-banner::before {
@@ -31,61 +31,126 @@
   pointer-events: none;
 }
 
+.quote-watermark {
+  position: absolute;
+  right: 220px;
+  top: -20px;
+  font-family: Georgia, serif;
+  font-size: 8rem;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+  user-select: none;
+}
+
 .quote-content {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2xs);
+  gap: 6px;
   z-index: 1;
+  flex: 1;
+  min-width: 0;
+}
+
+.quote-tag-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quote-tag {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--color-primary-light, #A78BFA);
+  opacity: 0.95;
 }
 
 .quote-text {
-  font-family: var(--font-serif);
-  font-size: var(--text-md);
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
   font-style: italic;
-  font-weight: var(--weight-medium);
+  font-weight: 500;
   color: #FFFFFF;
-  line-height: 1.4;
+  line-height: 1.55;
   letter-spacing: -0.01em;
   transition: opacity var(--transition-normal);
+  margin: 4px 0 6px 0;
+}
+
+.quote-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .quote-author {
-  font-size: var(--text-xs);
-  color: rgba(255, 255, 255, 0.75);
-  font-weight: var(--weight-medium);
-  letter-spacing: 0.03em;
+  font-size: var(--text-sm, 0.9rem);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   transition: opacity var(--transition-normal);
 }
 
-.btn-quote-refresh {
+.quote-source {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.65);
+  font-style: italic;
+}
+
+.quote-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   z-index: 1;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.btn-quote-refresh,
+.btn-quote-add-trigger,
+.btn-quote-manage-trigger {
   background-color: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #FFFFFF;
-  padding: 8px 16px;
-  border-radius: var(--radius-full);
-  font-size: var(--text-xs);
-  font-weight: var(--weight-medium);
+  padding: 8px 14px;
+  border-radius: var(--radius-full, 999px);
+  font-size: var(--text-xs, 0.78rem);
+  font-weight: 600;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   white-space: nowrap;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
-.btn-quote-refresh:hover {
+.btn-quote-add-trigger {
+  background-color: var(--color-primary-light, #7B6BF0);
+  border-color: var(--color-primary-light, #7B6BF0);
+  box-shadow: 0 2px 8px var(--color-primary-glow, rgba(123, 107, 240, 0.4));
+}
+
+.btn-quote-refresh:hover,
+.btn-quote-manage-trigger:hover {
   background-color: rgba(255, 255, 255, 0.22);
   border-color: rgba(255, 255, 255, 0.35);
   transform: translateY(-1px);
 }
 
-.btn-quote-refresh:active {
-  transform: translateY(0);
+.btn-quote-add-trigger:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
 }
 
-.btn-quote-refresh svg {
+.btn-quote-refresh svg,
+.btn-quote-add-trigger svg,
+.btn-quote-manage-trigger svg {
   width: 14px;
   height: 14px;
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);

@@ -167,11 +167,61 @@ export class ReaderManager {
    * @returns {Promise<Object>} Configuración actualizada
    */
   async updateSettings(partialSettings) {
-    if (!this.currentBookId || !this.rendition) return;
+    if (!this.currentBookId) return;
 
     this.currentSettings = await ReaderSettings.save(this.currentBookId, partialSettings);
-    const activeGlobalTheme = document.documentElement.getAttribute('data-theme') || 'mystic-night';
-    ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
+    if (this.rendition) {
+      const activeGlobalTheme = document.documentElement.getAttribute('data-theme') || 'mystic-night';
+      ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
+    }
+
+    return this.currentSettings;
+  }
+
+  /**
+   * Alterna el modo de lectura entre 'paginated' y 'scrolled-doc' preservando la ubicación.
+   * @param {string} flowMode - 'paginated' o 'scrolled-doc'
+   */
+  async setFlowMode(flowMode) {
+    if (!this.currentBookId || !this.book) return;
+    if (this.currentSettings && this.currentSettings.flowMode === flowMode) return;
+
+    this.currentSettings = await ReaderSettings.save(this.currentBookId, { flowMode });
+
+    const targetCfi = this.currentCfi || undefined;
+    const container = document.getElementById('reader-content');
+
+    if (container && this.rendition) {
+      try {
+        container.innerHTML = '';
+        this.rendition.destroy();
+      } catch (_) {}
+
+      this.rendition = this.book.renderTo(container, {
+        width: '100%',
+        height: '100%',
+        flow: flowMode === 'scrolled-doc' ? 'scrolled-doc' : 'paginated',
+        spread: this.currentSettings.columns === 2 ? 'always' : 'none',
+        allowScriptedContent: false
+      });
+
+      const activeGlobalTheme = document.documentElement.getAttribute('data-theme') || 'mystic-night';
+      if (this.rendition.hooks && this.rendition.hooks.content) {
+        this.rendition.hooks.content.register(() => {
+          ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
+        });
+      }
+      ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
+
+      await annotationManager.attach(this.rendition, this.currentBookId);
+      floatingMenu.attach(this.rendition);
+
+      await this.rendition.display(targetCfi);
+
+      this.rendition.on('relocated', (location) => {
+        this._handleRelocated(location);
+      });
+    }
 
     return this.currentSettings;
   }

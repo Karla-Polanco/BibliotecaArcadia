@@ -2,8 +2,8 @@
  * ============================================================================
  * READER SETTINGS - GESTIÓN DE CONFIGURACIÓN AVANZADA POR LIBRO
  * ============================================================================
- * Maneja fuentes, tamaños, grosor, interlineado, márgenes, columnas, flujo
- * y temas visuales con persistencia individual en IndexedDB e inyección directa en iframe.
+ * Maneja fuentes, tamaños, grosor, interlineado, modo de lectura (paginación vs scroll)
+ * y temas visuales con persistencia global e individual e inyección en iframes.
  */
 
 import { dbManager } from '../db.js';
@@ -12,37 +12,51 @@ export class ReaderSettings {
   static DEFAULT_SETTINGS = {
     fontFamily: 'Literata',
     fontSize: 18,
-    fontWeight: 'normal',
+    fontWeight: 'normal', // 'normal' (400), 'medium' (600), 'bold' (800)
     lineHeight: 1.6,
-    margins: 'normal',   // 'compact', 'normal', 'relaxed'
-    columns: 1,          // 1 o 2 columnas
+    columns: 1,           // 1 o 2 columnas
     flowMode: 'paginated', // 'paginated' o 'scrolled-doc'
-    theme: 'inherit'     // 'inherit', 'mystic-night', 'lavender-light', 'sepia', 'deep-twilight', 'enchanted-forest', 'clear-sky'
+    theme: 'inherit'      // 'inherit', 'mystic-night', 'lavender-light', 'sepia', 'deep-twilight', 'enchanted-forest', 'clear-sky', 'mystic-purple'
   };
 
   /**
-   * Obtiene la configuración guardada para un libro específico o los valores por defecto.
+   * Obtiene la configuración guardada para un libro o las preferencias globales guardadas.
    * @param {string} bookId - ID del libro
    * @returns {Promise<Object>} Ajustes del libro
    */
   static async get(bookId) {
+    let globalPref = {};
+    try {
+      const g = localStorage.getItem('arcadia_reader_prefs');
+      if (g) globalPref = JSON.parse(g);
+    } catch (_) {}
+
     try {
       const saved = await dbManager.get('readerSettings', bookId);
-      return { ...this.DEFAULT_SETTINGS, ...(saved || {}), bookId };
+      return { ...this.DEFAULT_SETTINGS, ...globalPref, ...(saved || {}), bookId };
     } catch (e) {
-      return { ...this.DEFAULT_SETTINGS, bookId };
+      return { ...this.DEFAULT_SETTINGS, ...globalPref, bookId };
     }
   }
 
   /**
-   * Guarda las preferencias personalizadas para un libro en IndexedDB.
+   * Guarda las preferencias personalizadas para un libro y como preferencia global.
    * @param {string} bookId - ID del libro
    * @param {Object} newSettings - Nuevos ajustes
    */
   static async save(bookId, newSettings) {
     const current = await this.get(bookId);
     const updated = { ...current, ...newSettings, bookId };
+    
+    // 1. Guardar en IndexedDB para este libro específico
     await dbManager.put('readerSettings', updated);
+
+    // 2. Guardar también como preferencia global para que persista al salir y entrar
+    try {
+      const { bookId: _, ...globalData } = updated;
+      localStorage.setItem('arcadia_reader_prefs', JSON.stringify(globalData));
+    } catch (_) {}
+
     return updated;
   }
 
@@ -59,22 +73,11 @@ export class ReaderSettings {
     const readerTheme = settings.theme && settings.theme !== 'inherit' ? settings.theme : effectiveTheme;
     const themeColors = this._getThemeColors(readerTheme);
 
-    // 2. Determinar padding lateral y ancho máximo según márgenes
-    let paddingHoriz = '38px';
-    let maxContentWidth = '88%';
-    if (settings.margins === 'compact') {
-      paddingHoriz = '10px';
-      maxContentWidth = '98%';
-    } else if (settings.margins === 'relaxed') {
-      paddingHoriz = '75px';
-      maxContentWidth = '74%';
-    }
-
     const fontStack = this._getFontStack(settings.fontFamily);
-    // Peso de fuente nítidamente diferenciado: Normal (400), Medio (600), Negrita (800)
+    // Peso de fuente: Normal (400), Medio (600), Negrita (800)
     const fontWeightVal = settings.fontWeight === 'bold' ? '800' : (settings.fontWeight === 'medium' ? '600' : '400');
 
-    // 3. Generar bloque CSS completo para inyección en el iframe del libro
+    // 2. Generar bloque CSS optimizado para el motor de paginación de epub.js
     const customCss = `
       @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;0,7..72,800;1,7..72,400&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap');
 
@@ -86,26 +89,30 @@ export class ReaderSettings {
       }
 
       html, body {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
         background-color: ${themeColors.bg} !important;
         color: ${themeColors.text} !important;
+        -webkit-font-smoothing: antialiased !important;
+        text-rendering: optimizeLegibility !important;
       }
 
       body {
-        padding: 0 ${paddingHoriz} !important;
-        max-width: ${maxContentWidth} !important;
-        margin: 0 auto !important;
-        color: ${themeColors.text} !important;
-        background: ${themeColors.bg} !important;
+        margin: 0 !important;
+        padding: 0 !important;
         font-family: ${fontStack} !important;
         font-size: ${settings.fontSize}px !important;
         font-weight: ${fontWeightVal} !important;
         line-height: ${settings.lineHeight} !important;
-        -webkit-font-smoothing: antialiased !important;
         box-sizing: border-box !important;
       }
 
       *, p, span, div, li, em, strong, b, i, blockquote, a {
         font-family: ${fontStack} !important;
+        box-sizing: border-box !important;
       }
 
       p, div, li, blockquote {
@@ -113,9 +120,7 @@ export class ReaderSettings {
         font-size: inherit !important;
         line-height: ${settings.lineHeight} !important;
         font-weight: ${fontWeightVal} !important;
-      }
-
-      p {
+        margin-top: 0 !important;
         margin-bottom: 1.15em !important;
       }
 
@@ -135,9 +140,14 @@ export class ReaderSettings {
       blockquote {
         border-left: 3px solid ${themeColors.accent} !important;
         padding-left: 16px !important;
-        margin-left: 0 !important;
+        margin: 1.2em 0 1.2em 0 !important;
         font-style: italic !important;
         opacity: 0.95 !important;
+      }
+
+      img, svg {
+        max-width: 100% !important;
+        height: auto !important;
       }
 
       ::selection {
@@ -145,32 +155,45 @@ export class ReaderSettings {
       }
     `;
 
-    // 4. Registrar en rendition.themes de epub.js
+    // 3. Registrar en rendition.themes de epub.js
     try {
       rendition.themes.default({
-        'body': {
-          'padding': `0 ${paddingHoriz} !important`,
-          'max-width': `${maxContentWidth} !important`,
-          'margin': '0 auto !important',
+        'html, body': {
+          'width': '100% !important',
+          'max-width': '100% !important',
+          'margin': '0 !important',
+          'padding': '0 !important',
           'color': `${themeColors.text} !important`,
           'background': `${themeColors.bg} !important`,
           'font-family': `${fontStack} !important`,
           'font-size': `${settings.fontSize}px !important`,
           'font-weight': `${fontWeightVal} !important`,
-          'line-height': `${settings.lineHeight} !important`
+          'line-height': `${settings.lineHeight} !important`,
+          'box-sizing': 'border-box !important'
         },
         'p, span, div, li, em, strong, b, i, blockquote, a': {
           'font-family': `${fontStack} !important`,
-          'font-weight': `${fontWeightVal} !important`
+          'font-weight': `${fontWeightVal} !important`,
+          'color': `${themeColors.text} !important`
         }
       });
     } catch (_) {}
 
-    // 5. Inyectar / Actualizar directamente en los iframes renderizados
+    // 4. Inyectar directamente en los iframes renderizados
     try {
       const contents = rendition.getContents ? rendition.getContents() : [];
       contents.forEach(content => {
         if (!content || !content.document) return;
+
+        // Inyectar enlace a Google Fonts en el head del iframe si no existe
+        if (!content.document.getElementById('arcadia-google-fonts')) {
+          const fontLink = content.document.createElement('link');
+          fontLink.id = 'arcadia-google-fonts';
+          fontLink.rel = 'stylesheet';
+          fontLink.href = 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;0,7..72,800;1,7..72,400&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap';
+          content.document.head.appendChild(fontLink);
+        }
+
         let styleTag = content.document.getElementById('arcadia-reader-custom-style');
         if (!styleTag) {
           styleTag = content.document.createElement('style');
@@ -183,7 +206,7 @@ export class ReaderSettings {
       console.warn('Aviso inyectando estilos en iframe:', e);
     }
 
-    // 6. Configuración de columnas (spread)
+    // 5. Configuración de columnas (spread)
     if (rendition.spread) {
       rendition.spread(settings.columns === 2 ? 'always' : 'none');
     }

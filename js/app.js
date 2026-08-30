@@ -7,6 +7,9 @@
 
 import { ThemeManager } from './ui/ThemeManager.js';
 import { QuotesService } from './quotes/QuotesService.js';
+import { QuotesView } from './quotes/QuotesView.js';
+import { QuotesManager } from './quotes/QuotesManager.js';
+import { QuoteModal } from './ui/QuoteModal.js';
 import { LibraryView } from './library/LibraryView.js';
 import { BookManager } from './library/BookManager.js';
 import { StorageWidget } from './library/StorageWidget.js';
@@ -28,6 +31,7 @@ class App {
     this.readerView = null;
     this.annotationsView = null;
     this.vocabularyView = null;
+    this.quotesView = null;
   }
 
   async init() {
@@ -37,7 +41,8 @@ class App {
     // 2. Inicializar Gestor de Temas
     this.themeManager.init();
 
-    // 3. Inicializar Cita Literaria en Banner
+    // 3. Cargar citas literarias del usuario y configurar Banner
+    await this.quotesService.reload();
     this.initQuoteBanner();
 
     // 4. Inicializar Widget de Almacenamiento Local
@@ -56,7 +61,7 @@ class App {
     // 6. Inicializar Controlador del Lector EPUB
     this.readerView = new ReaderView();
 
-    // 7. Inicializar Vista Centralizada de Notas y Subrayados
+    // 7. Inicializar Vistas de Anotaciones, Vocabulario, Frases y Biblioteca
     const booksContainer = document.getElementById('books-container');
     if (booksContainer) {
       this.annotationsView = new AnnotationsView(
@@ -64,20 +69,21 @@ class App {
         (bookId, cfi) => this.readerView.open(bookId, cfi)
       );
 
-      // 8. Inicializar Vista de Vocabulario y Fonética
       this.vocabularyView = new VocabularyView(booksContainer);
 
-      // 9. Inicializar Vista de Biblioteca conectada a IndexedDB y al Lector
+      this.quotesView = new QuotesView(booksContainer, this.quotesService);
+
       this.libraryView = new LibraryView(
         booksContainer,
         this.bookManager,
         (bookId) => this.readerView.open(bookId),
         this.annotationsView,
-        this.vocabularyView
+        this.vocabularyView,
+        this.quotesView
       );
     }
 
-    // 10. Vincular Botón "Continuar leyendo" de la barra inferior
+    // 8. Vincular Botón "Continuar leyendo" de la barra inferior
     const btnContinue = document.getElementById('btn-continue-reading');
     if (btnContinue) {
       btnContinue.addEventListener('click', () => {
@@ -95,16 +101,16 @@ class App {
       });
     }
 
-    // 11. Vincular Controles de Barra de Herramientas y Subida
+    // 9. Vincular Controles de Barra de Herramientas y Subida
     this.initToolbarControls();
 
-    // 12. Vincular Navegación del Sidebar y Móvil
+    // 10. Vincular Navegación del Sidebar y Móvil
     this.initNavigation();
 
-    // 13. Vincular Modal de Selector de Temas
+    // 11. Vincular Modal de Selector de Temas
     this.initThemeModal();
 
-    // 14. Restaurar última vista, libro o sección activa al recargar
+    // 12. Restaurar última vista, libro o sección activa al recargar
     await this.restoreLastState();
 
     console.log('✦ Biblioteca Arcadia inicializada con éxito');
@@ -116,30 +122,59 @@ class App {
   initQuoteBanner() {
     const quoteTextEl = document.getElementById('quote-text');
     const quoteAuthorEl = document.getElementById('quote-author');
+    const quoteSourceEl = document.getElementById('quote-source');
     const refreshBtn = document.getElementById('btn-refresh-quote');
+    const addQuoteBtn = document.getElementById('btn-banner-add-quote');
+    const manageQuotesBtn = document.getElementById('btn-banner-manage-quotes');
 
-    if (!quoteTextEl || !quoteAuthorEl || !refreshBtn) return;
+    if (!quoteTextEl || !quoteAuthorEl) return;
 
     // Mostrar cita inicial persistida
-    const initialQuote = this.quotesService.getCurrentQuote();
-    quoteTextEl.textContent = initialQuote.text;
-    quoteAuthorEl.textContent = `— ${initialQuote.author}`;
+    this.quotesService.updateBannerDOM();
 
-    // Rotar frase con transición fluida
-    refreshBtn.addEventListener('click', () => {
-      refreshBtn.classList.add('spinning');
-      quoteTextEl.style.opacity = '0';
-      quoteAuthorEl.style.opacity = '0';
+    // Rotar frase con animación fluida
+    if (refreshBtn) {
+      refreshBtn.addEventListener('click', () => {
+        refreshBtn.classList.add('spinning');
+        quoteTextEl.style.opacity = '0';
+        quoteAuthorEl.style.opacity = '0';
+        if (quoteSourceEl) quoteSourceEl.style.opacity = '0';
 
-      setTimeout(() => {
-        const nextQuote = this.quotesService.getNextQuote();
-        quoteTextEl.textContent = nextQuote.text;
-        quoteAuthorEl.textContent = `— ${nextQuote.author}`;
-        quoteTextEl.style.opacity = '1';
-        quoteAuthorEl.style.opacity = '1';
-        refreshBtn.classList.remove('spinning');
-      }, 200);
-    });
+        setTimeout(() => {
+          const nextQuote = this.quotesService.getNextQuote();
+          quoteTextEl.textContent = nextQuote.text;
+          quoteAuthorEl.textContent = `— ${nextQuote.author}`;
+          if (quoteSourceEl) {
+            quoteSourceEl.textContent = nextQuote.source ? ` · ${nextQuote.source}` : '';
+            quoteSourceEl.style.opacity = '1';
+          }
+          quoteTextEl.style.opacity = '1';
+          quoteAuthorEl.style.opacity = '1';
+          refreshBtn.classList.remove('spinning');
+        }, 200);
+      });
+    }
+
+    // Botón añadir frase desde el banner
+    if (addQuoteBtn) {
+      addQuoteBtn.addEventListener('click', () => {
+        QuoteModal.open(null, async () => {
+          await this.quotesService.reload();
+          this.quotesService.updateBannerDOM();
+        });
+      });
+    }
+
+    // Botón gestionar todas las frases
+    if (manageQuotesBtn) {
+      manageQuotesBtn.addEventListener('click', () => {
+        appState.set('activeFilter', 'quotes');
+        localStorage.setItem('arcadia_active_filter', 'quotes');
+        document.querySelectorAll('[data-nav-filter]').forEach(el => {
+          el.classList.toggle('active', el.dataset.navFilter === 'quotes');
+        });
+      });
+    }
   }
 
   /**
@@ -250,7 +285,7 @@ class App {
       backdrop.addEventListener('click', () => toggleDrawer(false));
     }
 
-    // Enlaces del Sidebar (Filtros de Colección)
+    // Enlaces del Sidebar (Filtros de Colección y Vistas)
     document.querySelectorAll('[data-nav-filter]').forEach(item => {
       item.addEventListener('click', (e) => {
         e.preventDefault();
@@ -361,7 +396,6 @@ class App {
    * Restaura la última vista activa (lector con el libro abierto en su página, o la sección/filtro activo).
    */
   async restoreLastState() {
-    // Si la URL tenía un hash antiguo, limpiarlo sin recargar
     if (window.location.hash) {
       try {
         history.replaceState(null, '', window.location.pathname + window.location.search);
@@ -380,7 +414,7 @@ class App {
       }
     }
 
-    // 2. Si estaba en una sección (Notas, Vocabulario, Favoritos, Leyendo, etc.), restaurar filtro
+    // 2. Si estaba en una sección (Notas, Vocabulario, Frases, Favoritos, etc.), restaurar filtro
     const targetFilter = localStorage.getItem('arcadia_active_filter') || 'all';
 
     if (targetFilter && targetFilter !== 'all') {
