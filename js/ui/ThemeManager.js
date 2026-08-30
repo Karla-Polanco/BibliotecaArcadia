@@ -40,9 +40,10 @@ export class ThemeManager {
    * @param {string} themeName - Nombre del tema
    */
   applyTheme(themeName) {
-    if (!Object.values(ThemeManager.THEMES).includes(themeName)) {
+    if (!themeName || typeof themeName !== 'string') {
       themeName = ThemeManager.THEMES.MYSTIC_NIGHT;
     }
+    themeName = themeName.trim();
 
     this.currentTheme = themeName;
     localStorage.setItem(ThemeManager.STORAGE_KEY, themeName);
