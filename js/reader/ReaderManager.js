@@ -80,6 +80,37 @@ export class ReaderManager {
     if (this.rendition.hooks && this.rendition.hooks.content) {
       this.rendition.hooks.content.register((contents) => {
         ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
+
+        if (contents.document) {
+          // Atajos de teclado dentro del iframe
+          contents.document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+              e.preventDefault();
+              this.nextPage();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+              e.preventDefault();
+              this.prevPage();
+            }
+          });
+
+          // Clics laterales dentro del iframe para pasar de página
+          contents.document.addEventListener('click', (e) => {
+            const sel = contents.window ? contents.window.getSelection() : null;
+            if (sel && sel.toString().trim().length > 0) return;
+            if (e.target.closest('a, button, input')) return;
+
+            const width = contents.window.innerWidth;
+            const clickX = e.clientX;
+            if (clickX < width * 0.25) {
+              this.prevPage();
+            } else if (clickX > width * 0.75) {
+              this.nextPage();
+            } else {
+              const readerEl = document.getElementById('reader-view');
+              if (readerEl) readerEl.classList.toggle('immersive');
+            }
+          });
+        }
       });
     }
     ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
@@ -122,7 +153,11 @@ export class ReaderManager {
    */
   nextPage() {
     if (this.rendition) {
-      this.rendition.next();
+      try {
+        this.rendition.next();
+      } catch (e) {
+        console.warn('Aviso en nextPage:', e);
+      }
     }
   }
 
@@ -131,7 +166,11 @@ export class ReaderManager {
    */
   prevPage() {
     if (this.rendition) {
-      this.rendition.prev();
+      try {
+        this.rendition.prev();
+      } catch (e) {
+        console.warn('Aviso en prevPage:', e);
+      }
     }
   }
 

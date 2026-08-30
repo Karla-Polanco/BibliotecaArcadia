@@ -59,15 +59,12 @@ export class ReaderSettings {
     const readerTheme = settings.theme && settings.theme !== 'inherit' ? settings.theme : effectiveTheme;
     const themeColors = this._getThemeColors(readerTheme);
 
-    // 2. Determinar padding lateral y ancho máximo según márgenes
-    let paddingHoriz = '38px';
-    let maxContentWidth = '88%';
+    // 2. Determinar padding lateral según márgenes
+    let paddingHoriz = '36px';
     if (settings.margins === 'compact') {
-      paddingHoriz = '10px';
-      maxContentWidth = '98%';
+      paddingHoriz = '12px';
     } else if (settings.margins === 'relaxed') {
-      paddingHoriz = '75px';
-      maxContentWidth = '74%';
+      paddingHoriz = '64px';
     }
 
     const fontStack = this._getFontStack(settings.fontFamily);
@@ -92,8 +89,8 @@ export class ReaderSettings {
 
       body {
         padding: 0 ${paddingHoriz} !important;
-        max-width: ${maxContentWidth} !important;
-        margin: 0 auto !important;
+        margin: 0 !important;
+        width: 100% !important;
         color: ${themeColors.text} !important;
         background: ${themeColors.bg} !important;
         font-family: ${fontStack} !important;
@@ -150,8 +147,8 @@ export class ReaderSettings {
       rendition.themes.default({
         'body': {
           'padding': `0 ${paddingHoriz} !important`,
-          'max-width': `${maxContentWidth} !important`,
-          'margin': '0 auto !important',
+          'margin': '0 !important',
+          'width': '100% !important',
           'color': `${themeColors.text} !important`,
           'background': `${themeColors.bg} !important`,
           'font-family': `${fontStack} !important`,
@@ -184,8 +181,10 @@ export class ReaderSettings {
     }
 
     // 6. Configuración de columnas (spread)
-    if (rendition.spread) {
-      rendition.spread(settings.columns === 2 ? 'always' : 'none');
+    if (typeof rendition.spread === 'function') {
+      try {
+        rendition.spread(settings.columns === 2 ? 'always' : 'none');
+      } catch (_) {}
     }
   }
 

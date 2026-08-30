@@ -420,12 +420,12 @@ class App {
       const currentHash = window.location.hash;
       if (currentHash.startsWith('#reader/')) {
         const bId = currentHash.replace('#reader/', '');
-        if (bId && this.readerView && !this.readerView.isOpen) {
+        if (bId && this.readerView && (!this.readerView.isOpen || this.readerView.currentBookId !== bId)) {
           this.readerView.open(bId);
         }
-      } else if (this.readerView && this.readerView.isOpen) {
+      } else if (!currentHash.startsWith('#reader/') && this.readerView && this.readerView.isOpen) {
         this.readerView.close();
-      } else {
+      } else if (!currentHash.startsWith('#reader/')) {
         const f = currentHash.replace('#', '') || 'all';
         appState.set('activeFilter', f);
       }

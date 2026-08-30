@@ -504,14 +504,8 @@ export class ReaderView {
       btn.classList.toggle('active', btn.dataset.margin === settings.margins);
     });
 
-    if (this.contentEl) {
-      if (settings.margins === 'compact') {
-        this.contentEl.style.maxWidth = '1480px';
-      } else if (settings.margins === 'relaxed') {
-        this.contentEl.style.maxWidth = '940px';
-      } else {
-        this.contentEl.style.maxWidth = '1200px';
-      }
+    if (readerManager.rendition && typeof readerManager.rendition.resize === 'function') {
+      try { readerManager.rendition.resize(); } catch (_) {}
     }
 
     // 6. Columnas
