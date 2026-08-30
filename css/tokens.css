@@ -3,19 +3,19 @@
    ========================================================================== */
 
 :root {
-  /* Tipografía */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  /* Tipografía General */
+  --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-serif: 'Literata', 'Merriweather', Georgia, 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
 
-  /* Escala Tipográfica */
-  --text-xs: 0.75rem;    /* 12px */
-  --text-sm: 0.844rem;   /* 13.5px */
-  --text-base: 0.938rem; /* 15px */
-  --text-md: 1.063rem;   /* 17px */
-  --text-lg: 1.25rem;    /* 20px */
-  --text-xl: 1.5rem;     /* 24px */
-  --text-2xl: 1.875rem;  /* 30px */
+  /* Escala Tipográfica (Más grande y legible) */
+  --text-xs: 0.82rem;    /* ~13.5px */
+  --text-sm: 0.92rem;    /* ~15px */
+  --text-base: 1.02rem;  /* ~16.5px */
+  --text-md: 1.15rem;    /* ~18.5px */
+  --text-lg: 1.35rem;    /* ~22px */
+  --text-xl: 1.65rem;    /* ~26.5px */
+  --text-2xl: 2.05rem;   /* ~33px */
 
   /* Pesos de Fuente */
   --weight-regular: 400;

@@ -8,6 +8,7 @@
 
 import { CollectionManager } from '../library/CollectionManager.js';
 import { Toast } from './Toast.js';
+import { Modal } from './Modal.js';
 
 export class CollectionModal {
   /**
@@ -99,7 +100,21 @@ export class CollectionModal {
             </div>
           </div>
 
-          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">
+          <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-top: 12px;">
+            ${isEdit ? `
+              <button type="button" id="btn-col-delete" style="
+                padding: 8px 14px;
+                border-radius: var(--radius-sm);
+                font-size: var(--text-xs);
+                font-weight: 600;
+                background-color: rgba(220, 38, 38, 0.12);
+                color: #EF4444;
+                border: 1px solid rgba(220, 38, 38, 0.25);
+                cursor: pointer;
+                margin-right: auto;
+                transition: all 0.15s ease;
+              ">Eliminar colección</button>
+            ` : ''}
             <button type="button" id="btn-col-cancel" style="padding: 8px 16px; border-radius: var(--radius-sm); font-size: var(--text-xs); color: var(--color-text-secondary); cursor: pointer;">Cancelar</button>
             <button type="submit" style="padding: 8px 20px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: bold; background-color: var(--color-primary-light); color: #FFFFFF; cursor: pointer;">Guardar</button>
           </div>
@@ -126,6 +141,28 @@ export class CollectionModal {
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) closeModal();
     });
+
+    // Eliminar Colección (si está en modo edición)
+    if (isEdit) {
+      const btnDelete = overlay.querySelector('#btn-col-delete');
+      if (btnDelete) {
+        btnDelete.addEventListener('click', async () => {
+          const confirmed = await Modal.confirm({
+            title: 'Eliminar colección',
+            message: `¿Estás seguro de que deseas eliminar la colección «${collectionToEdit.name}»?\n\nLos libros continuarán intactos en tu biblioteca.`,
+            danger: true,
+            confirmText: 'Eliminar colección'
+          });
+
+          if (confirmed) {
+            await CollectionManager.deleteCollection(collectionToEdit.id);
+            closeModal();
+            Toast.success('Colección eliminada con éxito.');
+            if (onSaved) onSaved();
+          }
+        });
+      }
+    }
 
     // Guardar
     overlay.querySelector('#col-form').addEventListener('submit', async (e) => {

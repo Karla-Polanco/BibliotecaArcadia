@@ -231,7 +231,11 @@ export class LibraryView {
           if (confirmed) {
             await CollectionManager.deleteCollection(col.id);
             Toast.success('Colección eliminada.');
-            this.updateBadges();
+            if (appState.get('activeFilter') === `collection:${col.id}`) {
+              appState.set('activeFilter', 'all');
+            }
+            await this.updateBadges();
+            await this.applyFiltersAndRender();
           }
         }
       });
@@ -243,21 +247,38 @@ export class LibraryView {
    */
   async applyFiltersAndRender() {
     const filter = appState.get('activeFilter') || 'all';
+    const libraryHeader = document.querySelector('.library-header');
 
-    // Si el filtro activo es "Notas y subrayados", delegar a AnnotationsView
+    // Si el filtro activo es "Notas y subrayados", ocultar el encabezado de biblioteca y delegar a AnnotationsView
     if (filter === 'annotations') {
+      if (libraryHeader) libraryHeader.style.display = 'none';
       if (this.annotationsView) {
         this.annotationsView.loadAndRender();
       }
       return;
     }
 
-    // Si el filtro activo es "Vocabulario", delegar a VocabularyView
+    // Si el filtro activo es "Vocabulario", ocultar el encabezado de biblioteca y delegar a VocabularyView
     if (filter === 'vocabulary') {
+      if (libraryHeader) libraryHeader.style.display = 'none';
       if (this.vocabularyView) {
         this.vocabularyView.loadAndRender();
       }
       return;
+    }
+
+    // En vistas de catálogo o colección, mostrar siempre el encabezado de biblioteca
+    if (libraryHeader) libraryHeader.style.display = 'block';
+
+    const libraryTitleEl = document.querySelector('.library-title');
+    if (libraryTitleEl) {
+      if (filter === 'all') libraryTitleEl.textContent = 'Tu biblioteca';
+      else if (filter === 'reading') libraryTitleEl.textContent = 'Leyendo actualmente';
+      else if (filter === 'to_read') libraryTitleEl.textContent = 'Por leer';
+      else if (filter === 'completed') libraryTitleEl.textContent = 'Libros leídos';
+      else if (filter === 'favorites') libraryTitleEl.textContent = 'Mis favoritos';
+      else if (filter.startsWith('collection:')) libraryTitleEl.textContent = 'Colección';
+      else libraryTitleEl.textContent = 'Tu biblioteca';
     }
 
     let books = [];
@@ -320,13 +341,16 @@ export class LibraryView {
     if (!this.activeCollectionData) return '';
     const col = this.activeCollectionData;
     return `
-      <div class="collection-header-banner" style="grid-column: 1 / -1; width: 100%; margin-bottom: 20px; padding: 18px 24px; border-radius: var(--radius-md); background-color: var(--color-surface); border: 1px solid var(--color-border); border-left: 5px solid ${col.color || 'var(--color-primary-light)'}; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+      <div class="collection-header-banner" style="grid-column: 1 / -1; width: 100%; margin-bottom: 20px; padding: 18px 24px; border-radius: var(--radius-md); background-color: var(--color-surface); border: 1px solid var(--color-border); border-left: 5px solid ${col.color || 'var(--color-primary-light)'}; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
         <div>
-          <span style="font-size: 0.7rem; text-transform: uppercase; font-weight: bold; color: ${col.color || 'var(--color-primary-light)'};">Colección personalizada</span>
+          <span style="font-size: 0.75rem; text-transform: uppercase; font-weight: bold; color: ${col.color || 'var(--color-primary-light)'};">Colección personalizada</span>
           <h2 style="font-size: var(--text-lg); font-weight: bold; color: var(--color-text); margin: 4px 0;">${this.escapeHtml(col.name)}</h2>
           ${col.description ? `<p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin: 0;">${this.escapeHtml(col.description)}</p>` : ''}
         </div>
-        <button id="btn-edit-active-col" style="padding: 8px 16px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: bold; background-color: var(--color-surface-hover); color: var(--color-text); cursor: pointer;">Editar colección</button>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <button id="btn-edit-active-col" style="padding: 8px 16px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: bold; background-color: var(--color-surface-hover); color: var(--color-text); cursor: pointer;">Editar</button>
+          <button id="btn-delete-active-col" style="padding: 8px 16px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: bold; background-color: rgba(220, 38, 38, 0.12); color: #EF4444; border: 1px solid rgba(220, 38, 38, 0.25); cursor: pointer;">Eliminar colección</button>
+        </div>
       </div>
     `;
   }
@@ -496,6 +520,28 @@ export class LibraryView {
     if (btnEditCol && this.activeCollectionData) {
       btnEditCol.addEventListener('click', () => {
         CollectionModal.openEditModal(this.activeCollectionData, () => this.updateBadges());
+      });
+    }
+
+    // Botón de eliminar colección activa en el banner
+    const btnDeleteCol = this.container.querySelector('#btn-delete-active-col');
+    if (btnDeleteCol && this.activeCollectionData) {
+      btnDeleteCol.addEventListener('click', async () => {
+        const col = this.activeCollectionData;
+        const confirmed = await Modal.confirm({
+          title: 'Eliminar colección',
+          message: `¿Estás seguro de que deseas eliminar la colección «${col.name}»?\n\nLos libros continuarán intactos en tu biblioteca.`,
+          danger: true,
+          confirmText: 'Eliminar colección'
+        });
+
+        if (confirmed) {
+          await CollectionManager.deleteCollection(col.id);
+          Toast.success('Colección eliminada.');
+          appState.set('activeFilter', 'all');
+          await this.updateBadges();
+          await this.applyFiltersAndRender();
+        }
       });
     }
     // Favoritos
