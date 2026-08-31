@@ -183,7 +183,9 @@
   .search-box {
     max-width: 100%;
     min-width: unset;
-    height: 48px;
+    height: 56px !important;
+    min-height: 56px !important;
+    padding: 0 18px !important;
   }
 
   .view-actions {

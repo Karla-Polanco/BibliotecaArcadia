@@ -640,32 +640,27 @@ export class ReaderView {
     if (!doc || !doc.body) return;
     if (doc.getElementById('arcadia-chapter-end-card')) return;
 
-    const currentLoc = readerManager.rendition ? readerManager.rendition.currentLocation() : null;
-    const chapterHref = currentLoc?.start?.href;
-    const chapterTitle = readerManager._findChapterTitle ? readerManager._findChapterTitle(chapterHref) : 'este capítulo';
-
     const card = doc.createElement('div');
     card.id = 'arcadia-chapter-end-card';
     card.className = 'arcadia-chapter-nav-card';
     card.style.cssText = `
-      margin: 60px auto 90px auto !important;
-      padding: 26px 20px !important;
-      border-radius: 16px !important;
-      background: rgba(125, 125, 125, 0.08) !important;
-      border: 1px solid rgba(125, 125, 125, 0.2) !important;
+      margin: 20px auto 32px auto !important;
+      padding: 12px 14px !important;
+      border-radius: 10px !important;
+      background: rgba(125, 125, 125, 0.07) !important;
+      border: 1px solid rgba(125, 125, 125, 0.16) !important;
       text-align: center !important;
-      max-width: 480px !important;
-      width: 90% !important;
+      max-width: 320px !important;
+      width: 85% !important;
       box-sizing: border-box !important;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
     `;
 
     card.innerHTML = `
-      <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.7; margin-bottom: 6px;">✦ Fin del capítulo ✦</div>
-      <div style="font-size: 1rem; font-weight: 700; margin-bottom: 18px; opacity: 0.92; line-height: 1.35;">${chapterTitle}</div>
-      <div style="display: flex; gap: 12px; justify-content: center; align-items: center; flex-wrap: wrap;">
-        <button id="btn-card-prev-chapter" style="padding: 10px 20px; border-radius: 999px; background: rgba(125,125,125,0.15); border: 1px solid rgba(125,125,125,0.3); color: inherit; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s;">← Cap. anterior</button>
-        <button id="btn-card-next-chapter" style="padding: 10px 24px; border-radius: 999px; background: #5B4CC4; border: none; color: #FFFFFF; font-size: 0.84rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 14px rgba(91, 76, 196, 0.4); transition: transform 0.2s;">Siguiente capítulo →</button>
+      <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.65; margin-bottom: 8px;">✦ Fin del capítulo ✦</div>
+      <div style="display: flex; gap: 8px; justify-content: center; align-items: center; flex-wrap: wrap;">
+        <button id="btn-card-prev-chapter" style="padding: 6px 12px; border-radius: 999px; background: rgba(125,125,125,0.12); border: 1px solid rgba(125,125,125,0.25); color: inherit; font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: all 0.2s;">← Cap. ant.</button>
+        <button id="btn-card-next-chapter" style="padding: 6px 16px; border-radius: 999px; background: #5B4CC4; border: none; color: #FFFFFF; font-size: 0.75rem; font-weight: bold; cursor: pointer; box-shadow: 0 2px 8px rgba(91, 76, 196, 0.35); transition: transform 0.2s;">Siguiente cap. →</button>
       </div>
     `;
 
@@ -689,6 +684,19 @@ export class ReaderView {
     }
 
     doc.body.appendChild(card);
+  }
+
+  /**
+   * Conmuta clases de modo de lectura en el viewport para controlar la visibilidad
+   * de los botones de cambio de hoja según sea Paginación o Desplazamiento.
+   */
+  updateFlowModeClasses(flowMode) {
+    const viewport = document.getElementById('reader-viewport');
+    if (viewport) {
+      const isPaginated = flowMode !== 'scrolled-doc';
+      viewport.classList.toggle('mode-paginated', isPaginated);
+      viewport.classList.toggle('mode-scrolled', !isPaginated);
+    }
   }
 
   /**
@@ -740,6 +748,7 @@ export class ReaderView {
     document.querySelectorAll('#flow-mode-options [data-flow]').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.flow === (settings.flowMode || 'paginated'));
     });
+    this.updateFlowModeClasses(settings.flowMode || 'paginated');
 
     // 6. Columnas
     document.querySelectorAll('#columns-options [data-col]').forEach(btn => {

@@ -185,6 +185,12 @@
   right: 10px;
 }
 
+/* Ocultar botones laterales de cambio de página en modo Desplazamiento (scrolled-doc) */
+.reader-viewport.mode-scrolled .btn-reader-nav,
+.reader-container.mode-scrolled .btn-reader-nav {
+  display: none !important;
+}
+
 /* Spinner de Carga del Lector */
 .reader-loading-spinner {
   position: absolute;
@@ -904,8 +910,48 @@
     padding: 4px 6px;
   }
 
+  /* Flechas centradas laterales para cambiar de hoja en móvil (Modo Paginación) */
   .btn-reader-nav {
-    display: none !important; /* Ocultar flechas laterales en pantalla táctil */
+    display: flex !important;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-surface);
+    border: 1.5px solid var(--color-border);
+    color: var(--color-text);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 25;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+    opacity: 0.85;
+    transition: transform var(--transition-fast), opacity var(--transition-fast);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn-reader-nav:active {
+    transform: translateY(-50%) scale(0.92);
+    opacity: 1;
+  }
+
+  .btn-reader-nav.nav-prev {
+    left: 8px;
+  }
+
+  .btn-reader-nav.nav-next {
+    right: 8px;
+  }
+
+  .btn-reader-nav svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .reader-viewport.mode-scrolled .btn-reader-nav {
+    display: none !important;
   }
 
   .reader-footer {
