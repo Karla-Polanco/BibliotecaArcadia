@@ -94,6 +94,7 @@ export class ReaderSettings {
         margin: 0 !important;
         padding: 0 !important;
         box-sizing: border-box !important;
+        overflow-x: hidden !important;
         background-color: ${themeColors.bg} !important;
         color: ${themeColors.text} !important;
         -webkit-font-smoothing: antialiased !important;
@@ -108,6 +109,7 @@ export class ReaderSettings {
         font-weight: ${fontWeightVal} !important;
         line-height: ${settings.lineHeight} !important;
         box-sizing: border-box !important;
+        overflow-x: hidden !important;
         word-break: normal !important;
         overflow-wrap: break-word !important;
       }
@@ -166,7 +168,8 @@ export class ReaderSettings {
           'margin': '0 !important',
           'padding': '0 !important',
           'background': `${themeColors.bg} !important`,
-          'box-sizing': 'border-box !important'
+          'box-sizing': 'border-box !important',
+          'overflow-x': 'hidden !important'
         },
         'body': {
           'margin': '0 !important',
@@ -178,6 +181,7 @@ export class ReaderSettings {
           'font-weight': `${fontWeightVal} !important`,
           'line-height': `${settings.lineHeight} !important`,
           'box-sizing': 'border-box !important',
+          'overflow-x': 'hidden !important',
           'word-break': 'normal !important',
           'overflow-wrap': 'break-word !important'
         },
