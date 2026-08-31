@@ -150,6 +150,12 @@
   overflow: hidden;
 }
 
+/* Prevenir scroll horizontal en epub.js (modo scrolled-doc) */
+#reader-content .epub-container,
+#reader-content .epub-view {
+  overflow-x: hidden !important;
+}
+
 /* Flechas de Navegación Lateral (Desktop) */
 .btn-reader-nav {
   position: absolute;
