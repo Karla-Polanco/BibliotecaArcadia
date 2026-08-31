@@ -122,29 +122,124 @@ export class ReaderManager {
   }
 
   /**
-   * Navega a la siguiente página.
+   * Navega a la siguiente página con bloqueo contra pulsaciones múltiples.
    */
   async nextPage() {
-    if (this.rendition) {
-      try {
-        await this.rendition.next();
-      } catch (err) {
-        console.warn('[ReaderManager] nextPage:', err);
+    if (!this.rendition || this.isNavigating) return;
+    this.isNavigating = true;
+    try {
+      await this.rendition.next();
+      if (this.currentSettings && this.currentSettings.flowMode === 'scrolled-doc') {
+        this._resetScrollTop();
       }
+    } catch (err) {
+      console.warn('[ReaderManager] nextPage:', err);
+    } finally {
+      setTimeout(() => {
+        this.isNavigating = false;
+      }, 200);
     }
   }
 
   /**
-   * Navega a la página anterior.
+   * Navega a la página anterior con bloqueo contra pulsaciones múltiples.
    */
   async prevPage() {
-    if (this.rendition) {
-      try {
-        await this.rendition.prev();
-      } catch (err) {
-        console.warn('[ReaderManager] prevPage:', err);
+    if (!this.rendition || this.isNavigating) return;
+    this.isNavigating = true;
+    try {
+      await this.rendition.prev();
+      if (this.currentSettings && this.currentSettings.flowMode === 'scrolled-doc') {
+        this._resetScrollTop();
       }
+    } catch (err) {
+      console.warn('[ReaderManager] prevPage:', err);
+    } finally {
+      setTimeout(() => {
+        this.isNavigating = false;
+      }, 200);
     }
+  }
+
+  /**
+   * Salta al capítulo siguiente de forma fluida (ideal para Desplazamiento).
+   */
+  async nextChapter() {
+    if (!this.book || !this.rendition || this.isNavigating) return;
+    this.isNavigating = true;
+    try {
+      const currentLoc = this.rendition.currentLocation();
+      const currentHref = currentLoc?.start?.href;
+      if (currentHref && this.book.spine && this.book.spine.items) {
+        const items = this.book.spine.items;
+        const currentIndex = items.findIndex(item => item.href === currentHref || item.url === currentHref || currentHref.includes(item.href));
+        if (currentIndex !== -1 && currentIndex < items.length - 1) {
+          const nextItem = items[currentIndex + 1];
+          await this.rendition.display(nextItem.href);
+          this._resetScrollTop();
+          return;
+        }
+      }
+      await this.rendition.next();
+      this._resetScrollTop();
+    } catch (err) {
+      console.warn('[ReaderManager] nextChapter:', err);
+    } finally {
+      setTimeout(() => {
+        this.isNavigating = false;
+      }, 250);
+    }
+  }
+
+  /**
+   * Salta al capítulo anterior de forma fluida (ideal para Desplazamiento).
+   */
+  async prevChapter() {
+    if (!this.book || !this.rendition || this.isNavigating) return;
+    this.isNavigating = true;
+    try {
+      const currentLoc = this.rendition.currentLocation();
+      const currentHref = currentLoc?.start?.href;
+      if (currentHref && this.book.spine && this.book.spine.items) {
+        const items = this.book.spine.items;
+        const currentIndex = items.findIndex(item => item.href === currentHref || item.url === currentHref || currentHref.includes(item.href));
+        if (currentIndex > 0) {
+          const prevItem = items[currentIndex - 1];
+          await this.rendition.display(prevItem.href);
+          this._resetScrollTop();
+          return;
+        }
+      }
+      await this.rendition.prev();
+      this._resetScrollTop();
+    } catch (err) {
+      console.warn('[ReaderManager] prevChapter:', err);
+    } finally {
+      setTimeout(() => {
+        this.isNavigating = false;
+      }, 250);
+    }
+  }
+
+  /**
+   * Resetea el scroll vertical al inicio del documento.
+   * @private
+   */
+  _resetScrollTop() {
+    try {
+      const contents = this.rendition.getContents ? this.rendition.getContents() : [];
+      contents.forEach(content => {
+        if (content && content.window) {
+          content.window.scrollTo(0, 0);
+        }
+        if (content && content.document && content.document.documentElement) {
+          content.document.documentElement.scrollTop = 0;
+        }
+        if (content && content.document && content.document.body) {
+          content.document.body.scrollTop = 0;
+        }
+      });
+    } catch (_) {}
   }
 
   /**

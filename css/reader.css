@@ -256,6 +256,33 @@
   text-align: right;
 }
 
+.btn-footer-chapter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 5px 12px;
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.btn-footer-chapter:hover {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text);
+  border-color: var(--color-primary-light);
+}
+
+.btn-footer-chapter:active {
+  transform: scale(0.96);
+}
+
 /* --------------------------------------------------------------------------
    4. DRAWER DE TABLA DE CONTENIDOS (TOC)
    -------------------------------------------------------------------------- */
@@ -732,9 +759,9 @@
   background-color: var(--color-surface);
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-full, 999px);
-  padding: 0 14px;
+  padding: 0 16px;
   gap: 10px;
-  height: 42px;
+  height: 48px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -881,6 +908,21 @@
     display: none !important; /* Ocultar flechas laterales en pantalla táctil */
   }
 
+  .reader-footer {
+    height: 44px;
+    padding: 0 10px;
+    gap: 8px;
+  }
+
+  .btn-footer-chapter {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
+
+  .btn-footer-chapter .btn-chapter-label {
+    display: none;
+  }
+
   .reader-search-panel {
     top: auto;
     bottom: calc(var(--header-height) + 12px);
@@ -892,20 +934,20 @@
   }
 
   .search-input-wrapper {
-    padding: 0 8px 0 12px;
-    gap: 6px;
-    height: 38px;
+    padding: 0 12px 0 16px;
+    gap: 8px;
+    height: 46px;
   }
 
   .search-input-wrapper input {
-    font-size: 0.8rem !important;
+    font-size: 0.9rem !important;
     min-width: 0 !important;
     flex: 1 1 0% !important;
   }
 
   #btn-submit-reader-search {
-    padding: 4px 10px;
-    font-size: 0.72rem;
+    padding: 6px 14px;
+    font-size: 0.78rem;
   }
 }
 

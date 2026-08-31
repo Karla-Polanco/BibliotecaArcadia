@@ -47,6 +47,7 @@ export class ReaderView {
 
     this.isOpen = false;
     this.currentBookId = null;
+    this.lastTouchTimestamp = 0;
 
     this.initEvents();
   }
@@ -66,6 +67,12 @@ export class ReaderView {
     const nextBtn = document.getElementById('btn-reader-next');
     if (prevBtn) prevBtn.addEventListener('click', () => readerManager.prevPage());
     if (nextBtn) nextBtn.addEventListener('click', () => readerManager.nextPage());
+
+    // Botones de navegación de capítulo en la barra inferior
+    const prevChapterBtn = document.getElementById('btn-footer-prev-chapter');
+    const nextChapterBtn = document.getElementById('btn-footer-next-chapter');
+    if (prevChapterBtn) prevChapterBtn.addEventListener('click', () => readerManager.prevChapter());
+    if (nextChapterBtn) nextChapterBtn.addEventListener('click', () => readerManager.nextChapter());
 
     // 3. Atajos de Teclado
     window.addEventListener('keydown', (e) => {
@@ -426,11 +433,12 @@ export class ReaderView {
 
     viewport.addEventListener('touchend', (e) => {
       if (e.changedTouches && e.changedTouches.length === 1) {
+        this.lastTouchTimestamp = Date.now();
         const deltaX = e.changedTouches[0].clientX - touchStartX;
         const deltaY = e.changedTouches[0].clientY - touchStartY;
 
-        // Deslizamiento horizontal (Swipe > 35px)
-        if (Math.abs(deltaX) > 35 && Math.abs(deltaX) > Math.abs(deltaY)) {
+        // Deslizamiento horizontal (Swipe > 30px)
+        if (Math.abs(deltaX) > 30 && Math.abs(deltaX) > Math.abs(deltaY)) {
           if (deltaX < 0) {
             readerManager.nextPage();
           } else {
@@ -440,16 +448,17 @@ export class ReaderView {
       }
     }, { passive: true });
 
-    // Alternar barras (Header y Footer) al pulsar en el tercio central
+    // Alternar barras (Header y Footer) al pulsar en el viewport
     viewport.addEventListener('click', (e) => {
-      if (e.target.closest('button, a, .btn-reader-nav')) return;
+      if (Date.now() - this.lastTouchTimestamp < 650) return;
+      if (e.target.closest('button, a, .btn-reader-nav, .btn-footer-chapter')) return;
 
       const width = window.innerWidth;
       const clickX = e.clientX;
 
-      if (clickX < width * 0.28) {
+      if (clickX < width * 0.35) {
         readerManager.prevPage();
-      } else if (clickX > width * 0.72) {
+      } else if (clickX > width * 0.65) {
         readerManager.nextPage();
       } else {
         if (this.container) {
@@ -468,6 +477,18 @@ export class ReaderView {
     if (!contents || !contents.document) return;
     const doc = contents.document;
     const win = contents.window || window;
+
+    // Evitar adjuntar múltiples escuchadores repetidos sobre el mismo documento
+    if (doc._arcadiaEventsAttached) return;
+    doc._arcadiaEventsAttached = true;
+
+    const settings = readerManager.getSettings();
+    const isScrolledMode = settings && settings.flowMode === 'scrolled-doc';
+
+    // Inyectar tarjeta al final del capítulo si estamos en modo Desplazamiento
+    if (isScrolledMode) {
+      this.injectChapterEndCard(doc, win);
+    }
 
     let touchStartX = 0;
     let touchStartY = 0;
@@ -490,49 +511,86 @@ export class ReaderView {
         const deltaY = touchEndY - touchStartY;
         const deltaTime = Date.now() - touchStartTime;
 
-        // Deslizamiento horizontal rápido (Swipe > 30px)
-        if (Math.abs(deltaX) > 30 && Math.abs(deltaX) > Math.abs(deltaY) && deltaTime < 800) {
-          if (deltaX < 0) {
-            readerManager.nextPage();
-          } else {
-            readerManager.prevPage();
+        // Registrar timestamp para suprimir clics sintéticos del navegador móvil
+        this.lastTouchTimestamp = Date.now();
+
+        if (!isScrolledMode) {
+          // --- MODO PAGINACIÓN ---
+          // A) Deslizamiento horizontal rápido (Swipe > 25px)
+          if (Math.abs(deltaX) > 25 && Math.abs(deltaX) > Math.abs(deltaY) && deltaTime < 700) {
+            if (deltaX < 0) {
+              readerManager.nextPage();
+            } else {
+              readerManager.prevPage();
+            }
+            return;
           }
-          return;
-        }
 
-        // Toque simple sin desplazamiento
-        if (Math.abs(deltaX) < 18 && Math.abs(deltaY) < 18 && deltaTime < 450) {
-          let selection = '';
-          try {
-            selection = (win.getSelection ? win.getSelection().toString() : '') ||
-                        (window.getSelection ? window.getSelection().toString() : '');
-          } catch (_) {}
+          // B) Toque directo sin arrastre (Tap Zones precisas tipo Kindle)
+          if (Math.abs(deltaX) < 16 && Math.abs(deltaY) < 16 && deltaTime < 450) {
+            let selection = '';
+            try {
+              selection = (win.getSelection ? win.getSelection().toString() : '') ||
+                          (window.getSelection ? window.getSelection().toString() : '');
+            } catch (_) {}
 
-          if (selection && selection.trim().length > 0) return;
+            if (selection && selection.trim().length > 0) return;
 
-          const screenWidth = win.innerWidth || window.innerWidth;
+            const screenWidth = win.innerWidth || window.innerWidth;
 
-          // Tercio izquierdo: página anterior
-          if (touchEndX < screenWidth * 0.30) {
-            readerManager.prevPage();
+            // 35% Izquierdo: página anterior
+            if (touchEndX < screenWidth * 0.35) {
+              readerManager.prevPage();
+            }
+            // 35% Derecho: página siguiente
+            else if (touchEndX > screenWidth * 0.65) {
+              readerManager.nextPage();
+            }
+            // 30% Central: alternar barras de lectura inmersiva
+            else {
+              if (this.container) {
+                this.container.classList.toggle('bars-hidden');
+              }
+            }
           }
-          // Tercio derecho: página siguiente
-          else if (touchEndX > screenWidth * 0.70) {
-            readerManager.nextPage();
+        } else {
+          // --- MODO DESPLAZAMIENTO (SCROLLED-DOC) ---
+          // Deslizamiento horizontal explícito para saltar capítulos
+          if (Math.abs(deltaX) > 50 && Math.abs(deltaY) < 35 && deltaTime < 600) {
+            if (deltaX < 0) {
+              readerManager.nextChapter();
+            } else {
+              readerManager.prevChapter();
+            }
+            return;
           }
-          // Tercio central: alternar barras de herramientas
-          else {
-            if (this.container) {
-              this.container.classList.toggle('bars-hidden');
+
+          // Toque en el tercio central para mostrar/ocultar barras
+          if (Math.abs(deltaX) < 16 && Math.abs(deltaY) < 16 && deltaTime < 450) {
+            let selection = '';
+            try {
+              selection = (win.getSelection ? win.getSelection().toString() : '');
+            } catch (_) {}
+
+            if (!selection || selection.trim().length === 0) {
+              const screenWidth = win.innerWidth || window.innerWidth;
+              if (touchEndX > screenWidth * 0.25 && touchEndX < screenWidth * 0.75) {
+                if (this.container) {
+                  this.container.classList.toggle('bars-hidden');
+                }
+              }
             }
           }
         }
       }
     }, { passive: true });
 
-    // 2. Detección de clics de ratón dentro del iframe
+    // 2. Detección de clics de ratón (Escritorio)
     doc.addEventListener('click', (e) => {
-      if (e.target.closest('a')) return;
+      // Ignorar clics sintéticos disparados inmediatamente después de un toque táctil
+      if (Date.now() - this.lastTouchTimestamp < 650) return;
+
+      if (e.target.closest('a, button, input, .arcadia-chapter-nav-card')) return;
 
       let selection = '';
       try {
@@ -545,13 +603,21 @@ export class ReaderView {
       const screenWidth = win.innerWidth || window.innerWidth;
       const clickX = e.clientX;
 
-      if (clickX < screenWidth * 0.30) {
-        readerManager.prevPage();
-      } else if (clickX > screenWidth * 0.70) {
-        readerManager.nextPage();
+      if (!isScrolledMode) {
+        if (clickX < screenWidth * 0.35) {
+          readerManager.prevPage();
+        } else if (clickX > screenWidth * 0.65) {
+          readerManager.nextPage();
+        } else {
+          if (this.container) {
+            this.container.classList.toggle('bars-hidden');
+          }
+        }
       } else {
-        if (this.container) {
-          this.container.classList.toggle('bars-hidden');
+        if (clickX > screenWidth * 0.25 && clickX < screenWidth * 0.75) {
+          if (this.container) {
+            this.container.classList.toggle('bars-hidden');
+          }
         }
       }
     });
@@ -564,6 +630,65 @@ export class ReaderView {
         readerManager.prevPage();
       }
     });
+  }
+
+  /**
+   * Inyecta una tarjeta visual al final del capítulo en modo Desplazamiento
+   * permitiendo continuar al siguiente capítulo con un toque cómodo.
+   */
+  injectChapterEndCard(doc, win) {
+    if (!doc || !doc.body) return;
+    if (doc.getElementById('arcadia-chapter-end-card')) return;
+
+    const currentLoc = readerManager.rendition ? readerManager.rendition.currentLocation() : null;
+    const chapterHref = currentLoc?.start?.href;
+    const chapterTitle = readerManager._findChapterTitle ? readerManager._findChapterTitle(chapterHref) : 'este capítulo';
+
+    const card = doc.createElement('div');
+    card.id = 'arcadia-chapter-end-card';
+    card.className = 'arcadia-chapter-nav-card';
+    card.style.cssText = `
+      margin: 60px auto 90px auto !important;
+      padding: 26px 20px !important;
+      border-radius: 16px !important;
+      background: rgba(125, 125, 125, 0.08) !important;
+      border: 1px solid rgba(125, 125, 125, 0.2) !important;
+      text-align: center !important;
+      max-width: 480px !important;
+      width: 90% !important;
+      box-sizing: border-box !important;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    `;
+
+    card.innerHTML = `
+      <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.7; margin-bottom: 6px;">✦ Fin del capítulo ✦</div>
+      <div style="font-size: 1rem; font-weight: 700; margin-bottom: 18px; opacity: 0.92; line-height: 1.35;">${chapterTitle}</div>
+      <div style="display: flex; gap: 12px; justify-content: center; align-items: center; flex-wrap: wrap;">
+        <button id="btn-card-prev-chapter" style="padding: 10px 20px; border-radius: 999px; background: rgba(125,125,125,0.15); border: 1px solid rgba(125,125,125,0.3); color: inherit; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s;">← Cap. anterior</button>
+        <button id="btn-card-next-chapter" style="padding: 10px 24px; border-radius: 999px; background: #5B4CC4; border: none; color: #FFFFFF; font-size: 0.84rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 14px rgba(91, 76, 196, 0.4); transition: transform 0.2s;">Siguiente capítulo →</button>
+      </div>
+    `;
+
+    const btnPrev = card.querySelector('#btn-card-prev-chapter');
+    const btnNext = card.querySelector('#btn-card-next-chapter');
+
+    if (btnPrev) {
+      btnPrev.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        readerManager.prevChapter();
+      });
+    }
+
+    if (btnNext) {
+      btnNext.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        readerManager.nextChapter();
+      });
+    }
+
+    doc.body.appendChild(card);
   }
 
   /**
