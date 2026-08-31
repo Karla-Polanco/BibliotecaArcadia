@@ -407,16 +407,14 @@
 }
 
 .reader-view.bars-hidden .btn-reader-nav {
-  opacity: 0;
-  pointer-events: none;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  transform: translateY(-50%) scale(0.8) !important;
 }
 
 /* Adaptación Móvil */
 @media (max-width: 768px) {
-  .btn-reader-nav {
-    display: none; /* En móvil se navega con swipe o toques laterales */
-  }
-
   .reader-header {
     padding: 0 var(--space-sm);
   }
