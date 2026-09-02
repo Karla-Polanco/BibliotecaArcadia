@@ -271,37 +271,153 @@ export class VocabularyView {
   }
 
   async promptAddWord() {
-    const rawWord = await Modal.prompt({
-      title: 'Añadir palabra al vocabulario',
-      message: 'Introduce la palabra o expresión que deseas incorporar:',
-      placeholder: 'Ej. Catarsis, Epifanía...'
+    // Crear modal personalizado con los 4 campos
+    const overlay = document.createElement('div');
+    overlay.className = 'theme-modal-overlay active';
+    overlay.style.cssText = `
+      position: fixed; inset: 0; top: 0; left: 0;
+      width: 100vw; height: 100vh; height: 100dvh;
+      z-index: 99999;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px; box-sizing: border-box;
+    `;
+
+    const fieldStyle = `
+      width: 100%; background: var(--color-surface-elevated, #161625);
+      border: 1px solid var(--color-border, #333); border-radius: var(--radius-sm, 6px);
+      color: var(--color-text, #fff); padding: 10px; font-size: var(--text-sm, 0.875rem);
+      box-sizing: border-box; font-family: inherit; line-height: 1.4;
+    `;
+
+    const labelStyle = `
+      font-size: 0.7rem; text-transform: uppercase; font-weight: bold;
+      color: var(--color-primary-light); display: block; margin-bottom: 6px;
+      letter-spacing: 0.03em;
+    `;
+
+    overlay.innerHTML = `
+      <div class="theme-modal-dialog" style="max-width: 460px; padding: 24px;">
+        <div class="theme-modal-header" style="margin-bottom: 18px;">
+          <div>
+            <h2 class="theme-modal-title" style="font-size: 1.2rem;">Añadir palabra al vocabulario</h2>
+            <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin: 4px 0 0;">Completa los campos para agregar un nuevo término.</p>
+          </div>
+          <button class="theme-modal-close" id="btn-close-add-word">
+            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 18px;">
+          <!-- Palabra -->
+          <div>
+            <label style="${labelStyle}">Palabra</label>
+            <input type="text" id="add-word-input" placeholder="Ej. Ataraxia, Epifanía..." style="${fieldStyle}">
+            <span id="add-word-lookup-status" style="font-size: 0.7rem; color: var(--color-text-muted); margin-top: 4px; display: none;">Buscando definición...</span>
+          </div>
+
+          <!-- Fonética -->
+          <div>
+            <label style="${labelStyle}">Fonética</label>
+            <input type="text" id="add-word-phonetic" placeholder="Ej. /a.taˈɾak.sja/" style="${fieldStyle}">
+          </div>
+
+          <!-- Definición -->
+          <div>
+            <label style="${labelStyle}">Definición</label>
+            <textarea id="add-word-definition" placeholder="Significado del término..." style="${fieldStyle} min-height: 70px; resize: vertical;"></textarea>
+          </div>
+
+          <!-- Oración de contexto -->
+          <div>
+            <label style="${labelStyle}">Oración de contexto</label>
+            <textarea id="add-word-context" placeholder="Ej. Buscaba la ataraxia a través de la lectura sosegada." style="${fieldStyle} min-height: 50px; resize: vertical; font-style: italic;"></textarea>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+          <button id="btn-cancel-add-word" style="padding: 8px 16px; border-radius: var(--radius-sm); font-size: var(--text-xs); color: var(--color-text-secondary); cursor: pointer; background: none; border: none;">Cancelar</button>
+          <button id="btn-save-add-word" style="padding: 10px 20px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: bold; background-color: var(--color-primary-light); color: #FFFFFF; cursor: pointer; display: flex; align-items: center; gap: 6px; border: none;">
+            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            <span>Guardar</span>
+          </button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const wordInput = overlay.querySelector('#add-word-input');
+    const phoneticInput = overlay.querySelector('#add-word-phonetic');
+    const definitionInput = overlay.querySelector('#add-word-definition');
+    const contextInput = overlay.querySelector('#add-word-context');
+    const lookupStatus = overlay.querySelector('#add-word-lookup-status');
+
+    // Auto-buscar definición al salir del campo de palabra
+    let lookupTimeout = null;
+    const autoLookup = async () => {
+      const rawWord = wordInput.value.trim();
+      if (!rawWord || rawWord.length < 2) return;
+
+      lookupStatus.style.display = 'block';
+      lookupStatus.textContent = `Buscando «${rawWord}»...`;
+
+      try {
+        const defData = await VocabularyManager.lookupDefinition(rawWord);
+        // Solo pre-rellenar si el campo está vacío
+        if (!phoneticInput.value.trim()) {
+          phoneticInput.value = defData.phonetic || '';
+        }
+        if (!definitionInput.value.trim()) {
+          definitionInput.value = defData.definition || '';
+        }
+        lookupStatus.textContent = `Definición encontrada (${defData.source === 'local' ? 'diccionario local' : defData.source === 'api' ? 'API externa' : 'estimación'}).`;
+      } catch (err) {
+        lookupStatus.textContent = 'No se encontró definición automática.';
+      }
+    };
+
+    wordInput.addEventListener('blur', () => {
+      clearTimeout(lookupTimeout);
+      lookupTimeout = setTimeout(autoLookup, 200);
     });
-    if (!rawWord || !rawWord.trim()) return;
 
-    Toast.info(`Buscando definición para «${rawWord.trim()}»...`);
-    const defData = await VocabularyManager.lookupDefinition(rawWord.trim());
-
-    const def = await Modal.prompt({
-      title: `Definición de «${defData.word}»`,
-      message: 'Confirma o personaliza el significado del término:',
-      defaultValue: defData.definition,
-      multiline: true
+    // Cerrar modal
+    const closeModal = () => overlay.remove();
+    overlay.querySelector('#btn-close-add-word').addEventListener('click', closeModal);
+    overlay.querySelector('#btn-cancel-add-word').addEventListener('click', closeModal);
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeModal();
     });
-    if (def === null) return;
 
-    try {
-      await VocabularyManager.addWord({
-        word: defData.word,
-        definition: def.trim() || defData.definition,
-        phonetic: defData.phonetic,
-        bookId: 'general',
-        contextSentence: ''
-      });
-      Toast.success(`«${defData.word}» agregada al vocabulario.`);
-      this.loadAndRender();
-    } catch (err) {
-      Toast.error('No se pudo guardar la palabra.');
-    }
+    // Guardar
+    overlay.querySelector('#btn-save-add-word').addEventListener('click', async () => {
+      const word = wordInput.value.trim();
+      if (!word) {
+        Toast.error('Escribe al menos una palabra.');
+        wordInput.focus();
+        return;
+      }
+
+      try {
+        await VocabularyManager.addWord({
+          word: word,
+          phonetic: phoneticInput.value.trim(),
+          definition: definitionInput.value.trim() || 'Definición pendiente de personalizar.',
+          contextSentence: contextInput.value.trim(),
+          bookId: 'general'
+        });
+        Toast.success(`«${word}» agregada al vocabulario.`);
+        closeModal();
+        this.loadAndRender();
+      } catch (err) {
+        Toast.error('No se pudo guardar la palabra.');
+      }
+    });
+
+    // Enfocar el campo de palabra al abrir
+    setTimeout(() => wordInput.focus(), 150);
   }
 
   escapeHtml(text) {

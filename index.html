@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <script>
-    (function() {
+    (function () {
       try {
         var savedTheme = localStorage.getItem('arcadia_theme') || 'mystic-night';
         document.documentElement.setAttribute('data-theme', savedTheme);
@@ -11,12 +12,13 @@
           var scale = parseInt(savedScale);
           document.documentElement.style.fontSize = (16.5 * (scale / 100)) + 'px';
         }
-      } catch (e) {}
+      } catch (e) { }
     })();
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="description" content="Biblioteca Arcadia - Biblioteca virtual y lector EPUB personal local-first, inspirado en la experiencia Kindle.">
+  <meta name="description"
+    content="Biblioteca Arcadia - Biblioteca virtual y lector EPUB personal local-first, inspirado en la experiencia Kindle.">
   <meta name="theme-color" content="#17113D">
   <title>Biblioteca Arcadia · App de lectura</title>
 
@@ -31,7 +33,9 @@
   <!-- Fuentes Tipográficas Literarias y de Marca (Poppins, Literata, Merriweather, Lora, EB Garamond, Playfair, Inter, Roboto, Cinzel) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;0,7..72,800;1,7..72,400&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;0,7..72,800;1,7..72,400&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
 
   <!-- Hojas de Estilo Modulares -->
   <link rel="stylesheet" href="css/tokens.css">
@@ -42,6 +46,7 @@
   <link rel="stylesheet" href="css/reader.css">
   <link rel="stylesheet" href="css/responsive.css">
 </head>
+
 <body>
 
   <!-- ========================================================================
@@ -58,9 +63,11 @@
       <span class="brand-wordmark" style="font-size: 1.35rem; margin: 0; line-height: 1;">ARCADIA</span>
       <span class="brand-star" style="font-size: 0.75rem; color: var(--brand-star-color, #E5A93C);">✦</span>
     </div>
-    <button class="btn-upload-epub" id="mobile-upload-trigger" style="padding: 6px 12px; font-size: var(--text-xs);" aria-label="Subir libro">
+    <button class="btn-upload-epub" id="mobile-upload-trigger" style="padding: 6px 12px; font-size: var(--text-xs);"
+      aria-label="Subir libro">
       <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
       </svg>
       <span>Subir</span>
     </button>
@@ -101,7 +108,8 @@
           <a href="javascript:void(0)" class="nav-item active" data-nav-filter="all">
             <div class="nav-item-content">
               <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
               <span>Biblioteca</span>
             </div>
@@ -120,7 +128,8 @@
           <a href="javascript:void(0)" class="nav-item" data-nav-filter="favorites">
             <div class="nav-item-content">
               <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
               </svg>
               <span>Favoritos</span>
             </div>
@@ -130,7 +139,8 @@
           <a href="javascript:void(0)" class="nav-item" data-nav-filter="annotations">
             <div class="nav-item-content">
               <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
               </svg>
               <span>Notas y subrayados</span>
             </div>
@@ -140,7 +150,8 @@
           <a href="javascript:void(0)" class="nav-item" data-nav-filter="vocabulary">
             <div class="nav-item-content">
               <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
               </svg>
               <span>Vocabulario</span>
             </div>
@@ -150,7 +161,8 @@
           <a href="javascript:void(0)" class="nav-item" data-nav-filter="quotes">
             <div class="nav-item-content">
               <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
               <span>Frases y citas</span>
             </div>
@@ -160,7 +172,8 @@
           <a href="javascript:void(0)" class="nav-item" id="nav-settings">
             <div class="nav-item-content">
               <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
               <span>Ajustes</span>
@@ -168,14 +181,17 @@
           </a>
 
           <!-- Botón Instalar App PWA -->
-          <button class="nav-item" id="btn-pwa-install" style="width: 100%; border: none; background: transparent; cursor: pointer; text-align: left;">
+          <button class="nav-item" id="btn-pwa-install"
+            style="width: 100%; border: none; background: transparent; cursor: pointer; text-align: left;">
             <div class="nav-item-content">
               <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
               <span>Descargar app</span>
             </div>
-            <span class="nav-badge" style="background-color: var(--color-primary-light); color: #FFF; font-size: 0.65rem;">PWA</span>
+            <span class="nav-badge"
+              style="background-color: var(--color-primary-light); color: #FFF; font-size: 0.65rem;">PWA</span>
           </button>
         </nav>
 
@@ -207,12 +223,15 @@
 
         <!-- Colecciones Personalizadas -->
         <div class="nav-group" aria-label="Colecciones personalizadas">
-          <div style="display: flex; align-items: center; justify-content: space-between; padding-right: 8px; margin-bottom: 6px;">
+          <div
+            style="display: flex; align-items: center; justify-content: space-between; padding-right: 8px; margin-bottom: 6px;">
             <span class="nav-group-title" style="margin-bottom: 0;">Colecciones</span>
             <button id="btn-create-collection" title="Nueva colección" style="
               width: 22px; height: 22px; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--color-text-muted); cursor: pointer;
             ">
-              <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
             </button>
           </div>
 
@@ -225,8 +244,10 @@
         <div class="storage-widget">
           <div class="storage-header">
             <div class="storage-icon-title">
-              <svg style="width: 14px; height: 14px; color: var(--color-primary-light);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+              <svg style="width: 14px; height: 14px; color: var(--color-primary-light);" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
               </svg>
               <span>Almacenamiento local</span>
             </div>
@@ -252,16 +273,19 @@
             <div class="quote-tag-row">
               <span class="quote-tag">✦ Pensamiento del día</span>
             </div>
-            <p class="quote-text" id="quote-text">«Un lector vive mil vidas antes de morir. El que nunca lee solo vive una.»</p>
+            <p class="quote-text" id="quote-text">«Un lector vive mil vidas antes de morir. El que nunca lee solo vive
+              una.»</p>
             <div class="quote-meta-row">
               <span class="quote-author" id="quote-author">— George R. R. Martin</span>
               <span class="quote-source" id="quote-source"></span>
             </div>
           </div>
           <div class="quote-actions">
-            <button class="btn-quote-refresh" id="btn-refresh-quote" title="Ver otra frase" aria-label="Cambiar frase literaria">
+            <button class="btn-quote-refresh" id="btn-refresh-quote" title="Ver otra frase"
+              aria-label="Cambiar frase literaria">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
               <span>Siguiente</span>
             </button>
@@ -273,7 +297,8 @@
             </button>
             <button class="btn-quote-manage-trigger" id="btn-banner-manage-quotes" title="Ver todas las frases">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
               </svg>
               <span>Mis frases</span>
             </button>
@@ -286,7 +311,8 @@
             <h2 class="library-title">Tu biblioteca</h2>
             <button class="btn-upload-epub" id="btn-upload-trigger">
               <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
               </svg>
               <span>Subir libro (EPUB)</span>
             </button>
@@ -296,10 +322,13 @@
           <div class="library-controls">
             <!-- Buscador en tiempo real -->
             <div class="search-box" style="height: 56px; min-height: 56px;">
-              <svg class="search-icon" style="width: 22px; height: 22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              <svg class="search-icon" style="width: 22px; height: 22px;" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-              <input type="text" id="library-search" class="search-input" style="font-size: 1.05rem;" placeholder="Buscar un libro o autor..." autocomplete="off">
+              <input type="text" id="library-search" class="search-input" style="font-size: 1.05rem;"
+                placeholder="Buscar un libro o autor..." autocomplete="off">
             </div>
 
             <div class="view-actions">
@@ -320,13 +349,15 @@
               <div class="view-mode-toggle" role="group" aria-label="Modo de vista">
                 <button class="toggle-btn active" id="btn-view-grid" aria-label="Vista Cuadrícula">
                   <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                   </svg>
                   <span>Grid</span>
                 </button>
                 <button class="toggle-btn" id="btn-view-list" aria-label="Vista Lista">
                   <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                   </svg>
                   <span>Lista</span>
                 </button>
@@ -346,7 +377,8 @@
         <div class="current-reading-info">
           <div class="current-reading-thumb" id="current-reading-thumb">
             <svg style="width: 22px; height: 22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
           </div>
           <div class="current-reading-details">
@@ -363,8 +395,11 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </button>
-          <button class="btn-dismiss-reading-bar" id="btn-dismiss-reading-bar" title="Ocultar barra de lectura actual (puedes reactivarla en Ajustes)" aria-label="Ocultar barra">
-            <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          <button class="btn-dismiss-reading-bar" id="btn-dismiss-reading-bar"
+            title="Ocultar barra de lectura actual (puedes reactivarla en Ajustes)" aria-label="Ocultar barra">
+            <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
         </div>
       </aside>
@@ -377,7 +412,8 @@
   <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Navegación móvil">
     <a href="javascript:void(0)" class="mobile-nav-link active" data-nav-filter="all">
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
       </svg>
       <span>Biblioteca</span>
       <span class="mobile-nav-badge">0</span>
@@ -385,21 +421,24 @@
 
     <a href="javascript:void(0)" class="mobile-nav-link" data-nav-filter="reading">
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
       <span>Lectura</span>
     </a>
 
     <a href="javascript:void(0)" class="mobile-nav-link" data-nav-filter="favorites">
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+          d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
       </svg>
       <span>Favoritos</span>
     </a>
 
     <button class="mobile-nav-link" data-action="open-settings">
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+          d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
       <span>Temas</span>
@@ -438,7 +477,8 @@
         <div class="theme-option-card" data-theme-value="lavender-light">
           <span class="theme-card-badge">Recomendado</span>
           <div class="theme-card-name">Lavanda claro</div>
-          <p class="theme-card-desc">Fondo blanco/lavanda muy pálido, acentos púrpura-azul. Más legible en uso diario, se ve premium.</p>
+          <p class="theme-card-desc">Fondo blanco/lavanda muy pálido, acentos púrpura-azul. Más legible en uso diario,
+            se ve premium.</p>
           <div class="theme-swatches">
             <div class="color-swatch" style="background-color: #FFFFFF; border: 1px solid #ddd;" title="Blanco"></div>
             <div class="color-swatch" style="background-color: #F0EDF9;" title="Lavanda"></div>
@@ -451,7 +491,8 @@
         <!-- 3. Crepúsculo Profundo -->
         <div class="theme-option-card" data-theme-value="deep-twilight">
           <div class="theme-card-name">Crepúsculo profundo</div>
-          <p class="theme-card-desc">Azul marino intenso con toques púrpura y un dorado tenue para acentos, tipo "hora dorada".</p>
+          <p class="theme-card-desc">Azul marino intenso con toques púrpura y un dorado tenue para acentos, tipo "hora
+            dorada".</p>
           <div class="theme-swatches">
             <div class="color-swatch" style="background-color: #0B111E;" title="Azul marino"></div>
             <div class="color-swatch" style="background-color: #253358;" title="Púrpura marino"></div>
@@ -464,9 +505,11 @@
         <!-- 4. Bosque Encantado -->
         <div class="theme-option-card" data-theme-value="enchanted-forest">
           <div class="theme-card-name">Bosque encantado</div>
-          <p class="theme-card-desc">Fondo beige cálido tipo pergamino, acentos verde musgo y dorado tenue. Evoca una biblioteca entre árboles.</p>
+          <p class="theme-card-desc">Fondo beige cálido tipo pergamino, acentos verde musgo y dorado tenue. Evoca una
+            biblioteca entre árboles.</p>
           <div class="theme-swatches">
-            <div class="color-swatch" style="background-color: #F5F0E6; border: 1px solid #ddd;" title="Beige pergamino"></div>
+            <div class="color-swatch" style="background-color: #F5F0E6; border: 1px solid #ddd;"
+              title="Beige pergamino"></div>
             <div class="color-swatch" style="background-color: #E3EBDC;" title="Menta salvia"></div>
             <div class="color-swatch" style="background-color: #6C8B5E;" title="Verde musgo"></div>
             <div class="color-swatch" style="background-color: #B38E5D;" title="Dorado tenue"></div>
@@ -477,9 +520,11 @@
         <!-- 5. Cielo Claro -->
         <div class="theme-option-card" data-theme-value="clear-sky">
           <div class="theme-card-name">Cielo claro</div>
-          <p class="theme-card-desc">Fondo celeste muy pálido, acentos azul cielo y azul marino profundo. Ligero, fresco, ideal para lectura de día.</p>
+          <p class="theme-card-desc">Fondo celeste muy pálido, acentos azul cielo y azul marino profundo. Ligero,
+            fresco, ideal para lectura de día.</p>
           <div class="theme-swatches">
-            <div class="color-swatch" style="background-color: #EBF4FA; border: 1px solid #c9e2f5;" title="Celeste pálido"></div>
+            <div class="color-swatch" style="background-color: #EBF4FA; border: 1px solid #c9e2f5;"
+              title="Celeste pálido"></div>
             <div class="color-swatch" style="background-color: #D4E9F7;" title="Celeste suave"></div>
             <div class="color-swatch" style="background-color: #4299E1;" title="Azul cielo"></div>
             <div class="color-swatch" style="background-color: #2B6CB0;" title="Azul marino"></div>
@@ -490,9 +535,12 @@
         <!-- 6. Tema del Sistema -->
         <div class="theme-option-card" data-theme-value="system">
           <div class="theme-card-name">Tema del sistema</div>
-          <p class="theme-card-desc">Sincroniza automáticamente la apariencia con las preferencias de tu sistema operativo.</p>
+          <p class="theme-card-desc">Sincroniza automáticamente la apariencia con las preferencias de tu sistema
+            operativo.</p>
           <div class="theme-swatches">
-            <div class="color-swatch" style="background: linear-gradient(135deg, #F8F7FC 50%, #111111 50%); border: 1px solid #555;" title="Auto"></div>
+            <div class="color-swatch"
+              style="background: linear-gradient(135deg, #F8F7FC 50%, #111111 50%); border: 1px solid #555;"
+              title="Auto"></div>
             <div class="color-swatch" style="background-color: #5B4CC4;" title="Acento"></div>
           </div>
           <span class="theme-card-footer-note">Adaptación automática en tiempo real</span>
@@ -500,40 +548,64 @@
       </div>
 
       <!-- Preferencias y Elementos de la Interfaz -->
-      <div class="settings-preferences-section" style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 16px;">
+      <div class="settings-preferences-section"
+        style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 16px;">
         <!-- 1. Tamaño de Letras y Zoom de la App -->
         <div style="display: flex; flex-direction: column; gap: 10px;">
           <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
             <div>
-              <h4 style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0;">Tamaño de Letras y Zoom de la App</h4>
-              <p style="font-size: 0.75rem; color: var(--color-text-muted); margin: 2px 0 0 0;">Ajusta la escala visual y la tipografía general de la aplicación.</p>
+              <h4
+                style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0;">
+                Tamaño de Letras y Zoom de la App</h4>
+              <p style="font-size: 0.75rem; color: var(--color-text-muted); margin: 2px 0 0 0;">Ajusta la escala visual
+                y la tipografía general de la aplicación.</p>
             </div>
-            <div style="display: flex; align-items: center; gap: 8px; background-color: var(--color-surface-secondary); padding: 4px 8px; border-radius: var(--radius-sm); border: 1px solid var(--color-border);">
-              <button id="btn-scale-decrease" style="width: 28px; height: 28px; border-radius: 4px; background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: 1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;" title="Reducir tamaño">−</button>
-              <span id="label-scale-percent" style="font-size: var(--text-sm); font-weight: bold; color: var(--color-primary-light); min-width: 48px; text-align: center;">100%</span>
-              <button id="btn-scale-increase" style="width: 28px; height: 28px; border-radius: 4px; background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: 1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;" title="Aumentar tamaño">+</button>
+            <div
+              style="display: flex; align-items: center; gap: 8px; background-color: var(--color-surface-secondary); padding: 4px 8px; border-radius: var(--radius-sm); border: 1px solid var(--color-border);">
+              <button id="btn-scale-decrease"
+                style="width: 28px; height: 28px; border-radius: 4px; background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: 1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;"
+                title="Reducir tamaño">−</button>
+              <span id="label-scale-percent"
+                style="font-size: var(--text-sm); font-weight: bold; color: var(--color-primary-light); min-width: 48px; text-align: center;">100%</span>
+              <button id="btn-scale-increase"
+                style="width: 28px; height: 28px; border-radius: 4px; background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: 1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;"
+                title="Aumentar tamaño">+</button>
             </div>
           </div>
 
           <!-- Presets de Escala -->
           <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
-            <button class="btn-ui-scale-preset" data-scale="90" style="padding: 8px 10px; border-radius: var(--radius-sm); background: var(--color-surface-secondary); border: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center; transition: all var(--transition-fast);">Compacto (90%)</button>
-            <button class="btn-ui-scale-preset active" data-scale="100" style="padding: 8px 10px; border-radius: var(--radius-sm); background: var(--color-surface-secondary); border: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center; transition: all var(--transition-fast);">Normal (100%)</button>
-            <button class="btn-ui-scale-preset" data-scale="115" style="padding: 8px 10px; border-radius: var(--radius-sm); background: var(--color-surface-secondary); border: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center; transition: all var(--transition-fast);">Grande (115%)</button>
-            <button class="btn-ui-scale-preset" data-scale="130" style="padding: 8px 10px; border-radius: var(--radius-sm); background: var(--color-surface-secondary); border: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center; transition: all var(--transition-fast);">Muy Grande (130%)</button>
+            <button class="btn-ui-scale-preset" data-scale="90"
+              style="padding: 8px 10px; border-radius: var(--radius-sm); background: var(--color-surface-secondary); border: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center; transition: all var(--transition-fast);">Compacto
+              (90%)</button>
+            <button class="btn-ui-scale-preset active" data-scale="100"
+              style="padding: 8px 10px; border-radius: var(--radius-sm); background: var(--color-surface-secondary); border: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center; transition: all var(--transition-fast);">Normal
+              (100%)</button>
+            <button class="btn-ui-scale-preset" data-scale="115"
+              style="padding: 8px 10px; border-radius: var(--radius-sm); background: var(--color-surface-secondary); border: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center; transition: all var(--transition-fast);">Grande
+              (115%)</button>
+            <button class="btn-ui-scale-preset" data-scale="130"
+              style="padding: 8px 10px; border-radius: var(--radius-sm); background: var(--color-surface-secondary); border: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center; transition: all var(--transition-fast);">Muy
+              Grande (130%)</button>
           </div>
         </div>
 
         <!-- 2. Visibilidad de Barra de Lectura Actual -->
         <div style="display: flex; flex-direction: column; gap: 6px;">
-          <h4 style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0;">Elementos de la Biblioteca</h4>
-          <label style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 16px; border-radius: var(--radius-md); background-color: var(--color-surface-secondary); border: 1px solid var(--color-border); cursor: pointer; transition: background-color var(--transition-fast);">
+          <h4
+            style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0;">
+            Elementos de la Biblioteca</h4>
+          <label
+            style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 16px; border-radius: var(--radius-md); background-color: var(--color-surface-secondary); border: 1px solid var(--color-border); cursor: pointer; transition: background-color var(--transition-fast);">
             <div style="display: flex; flex-direction: column; gap: 2px;">
-              <span style="font-size: var(--text-sm); font-weight: bold; color: var(--color-text);">Barra inferior de «Lectura Actual»</span>
-              <span style="font-size: 0.75rem; color: var(--color-text-muted);">Muestra la barra flotante con el libro en progreso y el botón «Continuar leyendo».</span>
+              <span style="font-size: var(--text-sm); font-weight: bold; color: var(--color-text);">Barra inferior de
+                «Lectura Actual»</span>
+              <span style="font-size: 0.75rem; color: var(--color-text-muted);">Muestra la barra flotante con el libro
+                en progreso y el botón «Continuar leyendo».</span>
             </div>
             <div style="flex-shrink: 0; display: flex; align-items: center;">
-              <input type="checkbox" id="toggle-reading-bar" checked style="width: 20px; height: 20px; accent-color: var(--color-primary-light); cursor: pointer;">
+              <input type="checkbox" id="toggle-reading-bar" checked
+                style="width: 20px; height: 20px; accent-color: var(--color-primary-light); cursor: pointer;">
             </div>
           </label>
         </div>
@@ -563,37 +635,46 @@
 
       <div class="reader-header-right">
         <!-- Búsqueda Intra-Libro -->
-        <button class="btn-reader-action" id="btn-reader-search" title="Buscar en este libro" aria-label="Buscar en el libro">
+        <button class="btn-reader-action" id="btn-reader-search" title="Buscar en este libro"
+          aria-label="Buscar en el libro">
           <svg style="width: 19px; height: 19px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </button>
 
         <!-- Marcador de Posición -->
-        <button class="btn-reader-action" id="btn-reader-bookmark" title="Marcar página actual" aria-label="Marcar página">
+        <button class="btn-reader-action" id="btn-reader-bookmark" title="Marcar página actual"
+          aria-label="Marcar página">
           <svg style="width: 19px; height: 19px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
           </svg>
         </button>
 
         <!-- Tabla de Contenidos -->
-        <button class="btn-reader-action" id="btn-reader-toc" title="Tabla de Contenidos y Marcadores" aria-label="Tabla de Contenidos">
+        <button class="btn-reader-action" id="btn-reader-toc" title="Tabla de Contenidos y Marcadores"
+          aria-label="Tabla de Contenidos">
           <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
           </svg>
         </button>
 
         <!-- Ajustes de Lectura (Fuentes, Márgenes, etc.) -->
-        <button class="btn-reader-action" id="btn-reader-settings" title="Ajustes de lectura y tipografía" aria-label="Ajustes de lectura">
+        <button class="btn-reader-action" id="btn-reader-settings" title="Ajustes de lectura y tipografía"
+          aria-label="Ajustes de lectura">
           <svg style="width: 19px; height: 19px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
           </svg>
         </button>
 
         <!-- Pantalla Completa -->
-        <button class="btn-reader-action" id="btn-reader-fullscreen" title="Pantalla Completa" aria-label="Alternar pantalla completa">
+        <button class="btn-reader-action" id="btn-reader-fullscreen" title="Pantalla Completa"
+          aria-label="Alternar pantalla completa">
           <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
           </svg>
         </button>
       </div>
@@ -627,7 +708,8 @@
 
     <!-- Barra Inferior del Lector -->
     <footer class="reader-footer">
-      <button class="btn-footer-chapter" id="btn-footer-prev-chapter" title="Capítulo anterior" aria-label="Capítulo anterior">
+      <button class="btn-footer-chapter" id="btn-footer-prev-chapter" title="Capítulo anterior"
+        aria-label="Capítulo anterior">
         <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 19l-7-7 7-7" />
         </svg>
@@ -639,7 +721,8 @@
       </div>
       <span class="reader-progress-text" id="reader-progress-text">0%</span>
 
-      <button class="btn-footer-chapter" id="btn-footer-next-chapter" title="Capítulo siguiente" aria-label="Capítulo siguiente">
+      <button class="btn-footer-chapter" id="btn-footer-next-chapter" title="Capítulo siguiente"
+        aria-label="Capítulo siguiente">
         <span class="btn-chapter-label">Cap. siguiente</span>
         <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7" />
@@ -672,20 +755,28 @@
     <div class="reader-search-panel" id="reader-search-panel" role="dialog" aria-label="Búsqueda en el libro">
       <div class="search-panel-header">
         <div class="search-input-wrapper">
-          <svg style="width: 18px; height: 18px; color: var(--color-text-muted); flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          <svg style="width: 18px; height: 18px; color: var(--color-text-muted); flex-shrink: 0;" fill="none"
+            stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input type="text" id="input-reader-search" placeholder="Buscar texto en este libro..." autocomplete="off">
-          <button id="btn-clear-reader-search" title="Borrar búsqueda" style="color: var(--color-text-muted); cursor: pointer; padding: 4px; display: none; background: transparent; border: none;">
-            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          <button id="btn-clear-reader-search" title="Borrar búsqueda"
+            style="color: var(--color-text-muted); cursor: pointer; padding: 4px; display: none; background: transparent; border: none;">
+            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
-          <button id="btn-submit-reader-search" style="padding: 5px 12px; border-radius: var(--radius-full, 999px); background: var(--color-primary-light); color: #FFF; font-size: 0.75rem; font-weight: 600; cursor: pointer; border: none; flex-shrink: 0;">
+          <button id="btn-submit-reader-search"
+            style="padding: 5px 12px; border-radius: var(--radius-full, 999px); background: var(--color-primary-light); color: #FFF; font-size: 0.75rem; font-weight: 600; cursor: pointer; border: none; flex-shrink: 0;">
             Buscar
           </button>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 4px;">
-          <span id="search-status-text" style="font-size: var(--text-xs); color: var(--color-text-muted);">Escribe y pulsa Buscar o Enter</span>
-          <button id="btn-close-reader-search" style="font-size: var(--text-xs); color: var(--color-primary-light); cursor: pointer; font-weight: bold;">Cerrar</button>
+          <span id="search-status-text" style="font-size: var(--text-xs); color: var(--color-text-muted);">Escribe y
+            pulsa Buscar o Enter</span>
+          <button id="btn-close-reader-search"
+            style="font-size: var(--text-xs); color: var(--color-primary-light); cursor: pointer; font-weight: bold;">Cerrar</button>
         </div>
       </div>
       <div class="search-results-list" id="search-results-list"></div>
@@ -698,15 +789,21 @@
       <div class="settings-group">
         <span class="settings-group-label">Tipografía</span>
         <div class="settings-btn-grid" id="font-family-options">
-          <button class="setting-pill-btn active" data-font="Literata" style="font-family: 'Literata', Georgia, serif;">Literata</button>
-          <button class="setting-pill-btn" data-font="Merriweather" style="font-family: 'Merriweather', serif;">Merriweather</button>
+          <button class="setting-pill-btn active" data-font="Literata"
+            style="font-family: 'Literata', Georgia, serif;">Literata</button>
+          <button class="setting-pill-btn" data-font="Merriweather"
+            style="font-family: 'Merriweather', serif;">Merriweather</button>
           <button class="setting-pill-btn" data-font="Lora" style="font-family: 'Lora', Georgia, serif;">Lora</button>
-          <button class="setting-pill-btn" data-font="EB Garamond" style="font-family: 'EB Garamond', Garamond, serif;">Garamond</button>
-          <button class="setting-pill-btn" data-font="Playfair" style="font-family: 'Playfair Display', Georgia, serif;">Playfair</button>
-          <button class="setting-pill-btn" data-font="Poppins" style="font-family: 'Poppins', sans-serif;">Poppins</button>
+          <button class="setting-pill-btn" data-font="EB Garamond"
+            style="font-family: 'EB Garamond', Garamond, serif;">Garamond</button>
+          <button class="setting-pill-btn" data-font="Playfair"
+            style="font-family: 'Playfair Display', Georgia, serif;">Playfair</button>
+          <button class="setting-pill-btn" data-font="Poppins"
+            style="font-family: 'Poppins', sans-serif;">Poppins</button>
           <button class="setting-pill-btn" data-font="Inter" style="font-family: 'Inter', sans-serif;">Inter</button>
           <button class="setting-pill-btn" data-font="Roboto" style="font-family: 'Roboto', sans-serif;">Roboto</button>
-          <button class="setting-pill-btn" data-font="OpenDyslexic" style="font-family: 'OpenDyslexic', sans-serif;">Dyslexic</button>
+          <button class="setting-pill-btn" data-font="OpenDyslexic"
+            style="font-family: 'OpenDyslexic', sans-serif;">Dyslexic</button>
         </div>
       </div>
 
@@ -763,13 +860,20 @@
         <span class="settings-group-label">Tema de Lectura</span>
         <div class="reader-theme-swatches" id="reader-theme-options">
           <div class="reader-theme-chip active" data-reader-theme="inherit" title="Heredar tema global">Auto</div>
-          <div class="reader-theme-chip" data-reader-theme="mystic-night" style="background-color: #111111; color: #F2F0F7;">Noche</div>
-          <div class="reader-theme-chip" data-reader-theme="lavender-light" style="background-color: #FCFBFE; color: #201C30;">Día</div>
-          <div class="reader-theme-chip" data-reader-theme="sepia" style="background-color: #FBF0D9; color: #3D2F1D;">Sepia</div>
-          <div class="reader-theme-chip" data-reader-theme="deep-twilight" style="background-color: #0B111E; color: #F0F4FC;">Azul</div>
-          <div class="reader-theme-chip" data-reader-theme="enchanted-forest" style="background-color: #F5F0E6; color: #262922;">Bosque</div>
-          <div class="reader-theme-chip" data-reader-theme="clear-sky" style="background-color: #EBF4FA; color: #132D48;">Cielo</div>
-          <div class="reader-theme-chip" data-reader-theme="mystic-purple" style="background-color: #18132B; color: #F2EFFC;">Místico</div>
+          <div class="reader-theme-chip" data-reader-theme="mystic-night"
+            style="background-color: #111111; color: #F2F0F7;">Noche</div>
+          <div class="reader-theme-chip" data-reader-theme="lavender-light"
+            style="background-color: #FCFBFE; color: #201C30;">Día</div>
+          <div class="reader-theme-chip" data-reader-theme="sepia" style="background-color: #FBF0D9; color: #3D2F1D;">
+            Sepia</div>
+          <div class="reader-theme-chip" data-reader-theme="deep-twilight"
+            style="background-color: #0B111E; color: #F0F4FC;">Azul</div>
+          <div class="reader-theme-chip" data-reader-theme="enchanted-forest"
+            style="background-color: #F5F0E6; color: #262922;">Bosque</div>
+          <div class="reader-theme-chip" data-reader-theme="clear-sky"
+            style="background-color: #EBF4FA; color: #132D48;">Cielo</div>
+          <div class="reader-theme-chip" data-reader-theme="mystic-purple"
+            style="background-color: #18132B; color: #F2EFFC;">Místico</div>
         </div>
       </div>
     </div>
@@ -782,4 +886,5 @@
   <!-- Script Modular Principal -->
   <script type="module" src="js/app.js"></script>
 </body>
+
 </html>

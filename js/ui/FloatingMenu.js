@@ -215,7 +215,23 @@ export class FloatingMenu {
 
   showAt(x, y) {
     if (!this.menuEl) return;
-    this.menuEl.style.left = `${x}px`;
+
+    // Hacer visible brevemente para medir el ancho real
+    this.menuEl.style.opacity = '0';
+    this.menuEl.style.transform = 'translate(-50%, -100%) scale(1)';
+    this.menuEl.style.pointerEvents = 'none';
+    this.menuEl.style.display = 'flex';
+
+    const menuWidth = this.menuEl.offsetWidth;
+    const viewportWidth = window.innerWidth;
+    const margin = 8;
+
+    // Clampear X para que la barra no se salga de la pantalla
+    const minX = menuWidth / 2 + margin;
+    const maxX = viewportWidth - menuWidth / 2 - margin;
+    const clampedX = Math.max(minX, Math.min(maxX, x));
+
+    this.menuEl.style.left = `${clampedX}px`;
     this.menuEl.style.top = `${y}px`;
     this.menuEl.style.opacity = '1';
     this.menuEl.style.pointerEvents = 'auto';
@@ -280,7 +296,7 @@ export class FloatingMenu {
   }
 
   /**
-   * Abre modal de definición léxica y pronunciación fonética.
+   * Abre modal de definición léxica y pronunciación fonética con campos editables.
    */
   async openDefinitionModal(selection) {
     const rawWord = selection.text.trim();
@@ -330,17 +346,28 @@ export class FloatingMenu {
         </div>
 
         <div style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 12px;">
+          <!-- Definición editable -->
           <div style="padding: 12px; border-radius: var(--radius-sm); background-color: var(--color-surface); border: 1px solid var(--color-border);">
-            <span style="font-size: 0.7rem; text-transform: uppercase; font-weight: bold; color: var(--color-text-muted); display: block; margin-bottom: 4px;">Definición</span>
-            <p style="font-size: var(--text-sm); line-height: 1.5; color: var(--color-text); margin: 0;">${this.escapeHtml(defData.definition)}</p>
+            <span style="font-size: 0.7rem; text-transform: uppercase; font-weight: bold; color: var(--color-primary-light); display: block; margin-bottom: 6px;">Definición</span>
+            <textarea id="def-modal-definition" style="
+              width: 100%; min-height: 70px; background: var(--color-surface-elevated, #161625);
+              border: 1px solid var(--color-border, #333); border-radius: var(--radius-sm, 6px);
+              color: var(--color-text, #fff); padding: 10px; font-size: var(--text-sm, 0.875rem);
+              line-height: 1.5; resize: vertical; box-sizing: border-box; font-family: inherit;
+            ">${this.escapeHtml(defData.definition)}</textarea>
           </div>
 
-          ${selection.text.length > rawWord.length ? `
-            <div style="padding: 10px 12px; border-radius: var(--radius-sm); background-color: var(--color-surface); border: 1px solid var(--color-border);">
-              <span style="font-size: 0.7rem; text-transform: uppercase; font-weight: bold; color: var(--color-text-muted); display: block; margin-bottom: 4px;">Contexto en el libro</span>
-              <p style="font-size: var(--text-xs); font-style: italic; color: var(--color-text-secondary); margin: 0;">«${this.escapeHtml(selection.text)}»</p>
-            </div>
-          ` : ''}
+          <!-- Contexto en el libro (siempre visible y editable) -->
+          <div style="padding: 12px; border-radius: var(--radius-sm); background-color: var(--color-surface); border: 1px solid var(--color-border);">
+            <span style="font-size: 0.7rem; text-transform: uppercase; font-weight: bold; color: var(--color-text-muted); display: block; margin-bottom: 6px;">Contexto en el libro</span>
+            <textarea id="def-modal-context" style="
+              width: 100%; min-height: 50px; background: var(--color-surface-elevated, #161625);
+              border: 1px solid var(--color-border, #333); border-radius: var(--radius-sm, 6px);
+              color: var(--color-text-secondary, #aaa); padding: 10px; font-size: var(--text-xs, 0.8rem);
+              line-height: 1.4; resize: vertical; box-sizing: border-box; font-family: inherit;
+              font-style: italic;
+            ">${this.escapeHtml(selection.text)}</textarea>
+          </div>
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 10px;">
@@ -368,13 +395,16 @@ export class FloatingMenu {
       VocabularyManager.speakWord(defData.word);
     });
 
-    // Guardar en vocabulario
+    // Guardar en vocabulario (usando valores editados de los textareas)
     overlay.querySelector('#btn-save-vocab').addEventListener('click', async () => {
+      const editedDefinition = overlay.querySelector('#def-modal-definition').value.trim();
+      const editedContext = overlay.querySelector('#def-modal-context').value.trim();
+
       try {
         await VocabularyManager.addWord({
           word: defData.word,
-          contextSentence: selection.text,
-          definition: defData.definition,
+          contextSentence: editedContext || selection.text,
+          definition: editedDefinition || defData.definition,
           phonetic: defData.phonetic,
           bookId: annotationManager.currentBookId || 'general'
         });
