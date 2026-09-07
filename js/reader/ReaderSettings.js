@@ -16,7 +16,7 @@ export class ReaderSettings {
     lineHeight: 1.6,
     columns: 1,           // 1 o 2 columnas
     flowMode: 'paginated', // 'paginated' o 'scrolled-doc'
-    theme: 'inherit'      // 'inherit', 'mystic-night', 'lavender-light', 'sepia', 'deep-twilight', 'enchanted-forest', 'clear-sky', 'mystic-purple'
+    theme: 'inherit'      // 'inherit', 'mystic-night', 'lavender-light', 'paper', 'neutral', 'enchanted-forest', 'clear-sky', 'wine'
   };
 
   /**
@@ -157,6 +157,14 @@ export class ReaderSettings {
       ::selection {
         background: rgba(123, 107, 240, 0.35) !important;
       }
+
+      ::-webkit-scrollbar {
+        display: none !important;
+      }
+
+      html, body {
+        scrollbar-width: none !important;
+      }
     `;
 
     // 3. Registrar en rendition.themes de epub.js
@@ -273,20 +281,20 @@ export class ReaderSettings {
         accent: '#5B4CC4'
       };
     }
-    if (themeName === 'sepia') {
+    if (themeName === 'paper') {
       return {
-        bg: '#FBF0D9',
-        text: '#3D2F1D',
-        heading: '#2B1F11',
-        accent: '#8C5B23'
+        bg: '#F4F1EA',
+        text: '#292824',
+        heading: '#1A1714',
+        accent: '#8B6914'
       };
     }
-    if (themeName === 'deep-twilight') {
+    if (themeName === 'neutral') {
       return {
-        bg: '#0B111E',
-        text: '#E5ECF8',
-        heading: '#F0F4FC',
-        accent: '#F5A623'
+        bg: '#252525',
+        text: '#F2F2F2',
+        heading: '#FFFFFF',
+        accent: '#A0A0A0'
       };
     }
     if (themeName === 'enchanted-forest') {
@@ -305,12 +313,12 @@ export class ReaderSettings {
         accent: '#3182CE'
       };
     }
-    if (themeName === 'mystic-purple') {
+    if (themeName === 'wine') {
       return {
-        bg: '#18132B',
-        text: '#EFEBFB',
-        heading: '#F7F5FE',
-        accent: '#8B5CF6'
+        bg: '#170B12',
+        text: '#F5E9EC',
+        heading: '#DDA5B7',
+        accent: '#C47791'
       };
     }
     // mystic-night por defecto

@@ -180,6 +180,18 @@
             </div>
           </a>
 
+          <!-- Botón de Estados -->
+          <button id="btn-open-states-modal" class="nav-item"
+            style="width: 100%; border: none; background: transparent; cursor: pointer; text-align: left; font-family: inherit;">
+            <div class="nav-item-content">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+              <span>Estados</span>
+            </div>
+          </button>
+
           <!-- Botón Instalar App PWA -->
           <button class="nav-item" id="btn-pwa-install"
             style="width: 100%; border: none; background: transparent; cursor: pointer; text-align: left;">
@@ -194,32 +206,6 @@
               style="background-color: var(--color-primary-light); color: #FFF; font-size: 0.65rem;">PWA</span>
           </button>
         </nav>
-
-        <!-- Estados de Lectura -->
-        <div class="nav-group" aria-label="Estados de lectura">
-          <span class="nav-group-title">Estado</span>
-
-          <a href="#to_read" class="nav-item" data-nav-filter="to_read">
-            <div class="nav-item-content">
-              <span>Por leer</span>
-            </div>
-            <span class="nav-badge" id="badge-to-read">0</span>
-          </a>
-
-          <a href="#reading" class="nav-item" data-nav-filter="reading">
-            <div class="nav-item-content">
-              <span>En lectura</span>
-            </div>
-            <span class="nav-badge" id="badge-reading">0</span>
-          </a>
-
-          <a href="#completed" class="nav-item" data-nav-filter="completed">
-            <div class="nav-item-content">
-              <span>Completados</span>
-            </div>
-            <span class="nav-badge" id="badge-completed">0</span>
-          </a>
-        </div>
 
         <!-- Colecciones Personalizadas -->
         <div class="nav-group" aria-label="Colecciones personalizadas">
@@ -249,7 +235,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
               </svg>
-              <span>Almacenamiento local</span>
+              <span>Almacenamiento</span>
             </div>
           </div>
           <div class="storage-progress-bar">
@@ -308,13 +294,13 @@
         <!-- 2. Barra de Control de Biblioteca (Toolbar) -->
         <section class="library-header">
           <div class="library-header-top">
-            <h2 class="library-title">Tu biblioteca</h2>
+            <h2 class="library-title">Biblioteca</h2>
             <button class="btn-upload-epub" id="btn-upload-trigger">
               <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
               </svg>
-              <span>Subir libro (EPUB)</span>
+              <span>Subir libro</span>
             </button>
             <input type="file" id="epub-file-input" accept=".epub,application/epub+zip" style="display: none;">
           </div>
@@ -384,7 +370,7 @@
           <div class="current-reading-details">
             <span class="current-reading-label">Lectura actual</span>
             <h3 class="current-reading-title" id="current-reading-title">Sin lectura en curso</h3>
-            <span class="current-reading-meta" id="current-reading-meta">Sube un libro (EPUB) para comenzar</span>
+            <span class="current-reading-meta" id="current-reading-meta">Sube un libro para comenzar</span>
           </div>
         </div>
 
@@ -445,13 +431,49 @@
     </button>
   </nav>
 
+  <!-- ==============================
+       MODAL DE ESTADOS DE LECTURA
+       ============================== -->
+  <div class="modal-overlay" id="states-modal" role="dialog" aria-modal="true" aria-labelledby="modal-states-title">
+    <div class="modal-card" style="max-width: 320px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-states-title">Estado de lectura</h3>
+        <button class="modal-close-btn" id="modal-states-close-btn" aria-label="Cerrar modal">
+          <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body" style="padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+        <a href="#to_read" class="nav-item" data-nav-filter="to_read"
+          style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: var(--radius-md); background: var(--color-surface-secondary); text-decoration: none; color: var(--color-text);">
+          <span>Por leer</span>
+          <span class="nav-badge" id="badge-to-read"
+            style="background: var(--color-primary-light); color: #fff; padding: 2px 8px; border-radius: 999px; font-size: 0.75rem;">0</span>
+        </a>
+        <a href="#reading" class="nav-item" data-nav-filter="reading"
+          style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: var(--radius-md); background: var(--color-surface-secondary); text-decoration: none; color: var(--color-text);">
+          <span>En lectura</span>
+          <span class="nav-badge" id="badge-reading"
+            style="background: var(--color-primary-light); color: #fff; padding: 2px 8px; border-radius: 999px; font-size: 0.75rem;">0</span>
+        </a>
+        <a href="#completed" class="nav-item" data-nav-filter="completed"
+          style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: var(--radius-md); background: var(--color-surface-secondary); text-decoration: none; color: var(--color-text);">
+          <span>Completados</span>
+          <span class="nav-badge" id="badge-completed"
+            style="background: var(--color-primary-light); color: #fff; padding: 2px 8px; border-radius: 999px; font-size: 0.75rem;">0</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- ========================================================================
        MODAL DE SELECCIÓN DE TEMAS (FIEL A LA REFERENCIA VISUAL)
        ======================================================================== -->
   <div class="modal-overlay" id="theme-modal" role="dialog" aria-modal="true" aria-labelledby="modal-theme-title">
     <div class="modal-card">
       <div class="modal-header">
-        <h3 class="modal-title" id="modal-theme-title">Apariencia y Sistema de Temas</h3>
+        <h3 class="modal-title" id="modal-theme-title">Ajustes</h3>
         <button class="modal-close-btn" id="modal-close-btn" aria-label="Cerrar modal">
           <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -459,122 +481,131 @@
         </button>
       </div>
 
-      <div class="theme-options-grid">
-        <!-- 1. Nocturno Místico -->
-        <div class="theme-option-card" data-theme-value="mystic-night">
-          <div class="theme-card-name">Nocturno místico</div>
-          <p class="theme-card-desc">Fondo casi negro, acentos púrpura y azul eléctrico. Fiel a la visión original.</p>
-          <div class="theme-swatches">
-            <div class="color-swatch" style="background-color: #111111;" title="Fondo"></div>
-            <div class="color-swatch" style="background-color: #17113D;" title="Púrpura oscuro"></div>
-            <div class="color-swatch" style="background-color: #5B4CC4;" title="Púrpura principal"></div>
-            <div class="color-swatch" style="background-color: #368EDC;" title="Azul"></div>
-          </div>
-          <span class="theme-card-footer-note">Mejor con tema oscuro por defecto</span>
-        </div>
+      <!-- Seccion: Apariencia y Sistema de Temas -->
+      <div class="settings-subsection" style="padding: 0 16px;">
+        <h4 class="settings-section-subtitle"
+          style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0 0 4px 0;">
+          Apariencia y Sistema de Temas</h4>
+        <p class="settings-section-desc"
+          style="font-size: 0.75rem; color: var(--color-text-muted); margin: 0 0 16px 0;">Selecciona la paleta visual
+          para la interfaz general
+          de la biblioteca.</p>
+        <div class="theme-options-grid">
 
-        <!-- 2. Lavanda Claro -->
-        <div class="theme-option-card" data-theme-value="lavender-light">
-          <span class="theme-card-badge">Recomendado</span>
-          <div class="theme-card-name">Lavanda claro</div>
-          <p class="theme-card-desc">Fondo blanco/lavanda muy pálido, acentos púrpura-azul. Más legible en uso diario,
-            se ve premium.</p>
-          <div class="theme-swatches">
-            <div class="color-swatch" style="background-color: #FFFFFF; border: 1px solid #ddd;" title="Blanco"></div>
-            <div class="color-swatch" style="background-color: #F0EDF9;" title="Lavanda"></div>
-            <div class="color-swatch" style="background-color: #6C5CE7;" title="Púrpura suave"></div>
-            <div class="color-swatch" style="background-color: #2B78C5;" title="Azul"></div>
+          <!-- 1. Nocturno Mistico -->
+          <div class="theme-option-card" data-theme-value="mystic-night">
+            <div class="theme-card-name">Nocturno místico</div>
+            <p class="theme-card-desc">Un fondo oscuro y profundo con acentos azul y violeta.
+              Elegante, inmersivo y cómodo para usar de noche.</p>
+            <div class="theme-swatches">
+              <div class="color-swatch swatch-mn-1" title="Fondo Nocturno"></div>
+              <div class="color-swatch swatch-mn-2" title="Azul Oscuro"></div>
+              <div class="color-swatch swatch-mn-3" title="Violeta"></div>
+              <div class="color-swatch swatch-mn-4" title="Azul Principal"></div>
+            </div>
+            <span class="theme-card-footer-note">Ideal para ambientes oscuros y lectura nocturna</span>
           </div>
-          <span class="theme-card-footer-note">Funciona bien con modo claro y diurno</span>
-        </div>
 
-        <!-- 3. Crepúsculo Profundo -->
-        <div class="theme-option-card" data-theme-value="deep-twilight">
-          <div class="theme-card-name">Crepúsculo profundo</div>
-          <p class="theme-card-desc">Azul marino intenso con toques púrpura y un dorado tenue para acentos, tipo "hora
-            dorada".</p>
-          <div class="theme-swatches">
-            <div class="color-swatch" style="background-color: #0B111E;" title="Azul marino"></div>
-            <div class="color-swatch" style="background-color: #253358;" title="Púrpura marino"></div>
-            <div class="color-swatch" style="background-color: #4A5FA5;" title="Lavanda nocturno"></div>
-            <div class="color-swatch" style="background-color: #F5A623;" title="Hora dorada"></div>
+          <!-- 2. Lavanda Claro -->
+          <div class="theme-option-card" data-theme-value="lavender-light">
+            <span class="theme-card-badge">Recomendado</span>
+            <div class="theme-card-name">Lavanda claro</div>
+            <p class="theme-card-desc">Una combinación suave de blanco, lavanda y violeta. Limpio, delicado
+              y pensado para el uso diario.</p>
+            <div class="theme-swatches">
+              <div class="color-swatch swatch-ll-1" title="Blanco"></div>
+              <div class="color-swatch swatch-ll-2" title="Lavanda"></div>
+              <div class="color-swatch swatch-ll-3" title="Violeta Principal"></div>
+              <div class="color-swatch swatch-ll-4" title="Violeta Secundario"></div>
+            </div>
+            <span class="theme-card-footer-note">Una opción clara, suave y equilibrada</span>
           </div>
-          <span class="theme-card-footer-note">El dorado como acento ocasional, no dominante</span>
-        </div>
 
-        <!-- 4. Bosque Encantado -->
-        <div class="theme-option-card" data-theme-value="enchanted-forest">
-          <div class="theme-card-name">Bosque encantado</div>
-          <p class="theme-card-desc">Fondo beige cálido tipo pergamino, acentos verde musgo y dorado tenue. Evoca una
-            biblioteca entre árboles.</p>
-          <div class="theme-swatches">
-            <div class="color-swatch" style="background-color: #F5F0E6; border: 1px solid #ddd;"
-              title="Beige pergamino"></div>
-            <div class="color-swatch" style="background-color: #E3EBDC;" title="Menta salvia"></div>
-            <div class="color-swatch" style="background-color: #6C8B5E;" title="Verde musgo"></div>
-            <div class="color-swatch" style="background-color: #B38E5D;" title="Dorado tenue"></div>
+          <!-- 3. Vino & Poesia -->
+          <div class="theme-option-card" data-theme-value="wine-poetry">
+            <div class="theme-card-name">Vino &amp; Poesía</div>
+            <p class="theme-card-desc">Un ambiente profundo en tonos vino y borgoña con detalles
+              rosados y dorados. Cálido, elegante y literario.</p>
+            <div class="theme-swatches">
+              <div class="color-swatch swatch-wp-1" title="Vino Profundo"></div>
+              <div class="color-swatch swatch-wp-2" title="Borgoña"></div>
+              <div class="color-swatch swatch-wp-3" title="Rosa Apagado"></div>
+              <div class="color-swatch swatch-wp-4" title="Dorado"></div>
+            </div>
+            <span class="theme-card-footer-note">Elegante y cálido, inspirado en la poesía</span>
           </div>
-          <span class="theme-card-footer-note">Cálido y natural, buena opción diurna</span>
-        </div>
 
-        <!-- 5. Cielo Claro -->
-        <div class="theme-option-card" data-theme-value="clear-sky">
-          <div class="theme-card-name">Cielo claro</div>
-          <p class="theme-card-desc">Fondo celeste muy pálido, acentos azul cielo y azul marino profundo. Ligero,
-            fresco, ideal para lectura de día.</p>
-          <div class="theme-swatches">
-            <div class="color-swatch" style="background-color: #EBF4FA; border: 1px solid #c9e2f5;"
-              title="Celeste pálido"></div>
-            <div class="color-swatch" style="background-color: #D4E9F7;" title="Celeste suave"></div>
-            <div class="color-swatch" style="background-color: #4299E1;" title="Azul cielo"></div>
-            <div class="color-swatch" style="background-color: #2B6CB0;" title="Azul marino"></div>
+          <!-- 4. Bosque Encantado -->
+          <div class="theme-option-card" data-theme-value="enchanted-forest">
+            <div class="theme-card-name">Bosque encantado</div>
+            <p class="theme-card-desc">Tonos frescos de eucalipto y verde esmeralda con detalles
+              naturales. Tranquilo, orgánico y acogedor.</p>
+            <div class="theme-swatches">
+              <div class="color-swatch swatch-ef-1" title="Fondo Natural"></div>
+              <div class="color-swatch swatch-ef-2" title="Verde Suave"></div>
+              <div class="color-swatch swatch-ef-3" title="Verde Principal"></div>
+              <div class="color-swatch swatch-ef-4" title="Dorado"></div>
+            </div>
+            <span class="theme-card-footer-note">Fresco, natural y relajante</span>
           </div>
-          <span class="theme-card-footer-note">Contraste alto y muy legible</span>
-        </div>
 
-        <!-- 6. Tema del Sistema -->
-        <div class="theme-option-card" data-theme-value="system">
-          <div class="theme-card-name">Tema del sistema</div>
-          <p class="theme-card-desc">Sincroniza automáticamente la apariencia con las preferencias de tu sistema
-            operativo.</p>
-          <div class="theme-swatches">
-            <div class="color-swatch"
-              style="background: linear-gradient(135deg, #F8F7FC 50%, #111111 50%); border: 1px solid #555;"
-              title="Auto"></div>
-            <div class="color-swatch" style="background-color: #5B4CC4;" title="Acento"></div>
+          <!-- 5. Cielo Claro -->
+          <div class="theme-option-card" data-theme-value="clear-sky">
+            <div class="theme-card-name">Cielo claro</div>
+            <p class="theme-card-desc">Una paleta luminosa de celeste y azul profundo. Fresca,
+              ligera y especialmente agradable durante el día.</p>
+            <div class="theme-swatches">
+              <div class="color-swatch swatch-cs-1" title="Celeste Pálido"></div>
+              <div class="color-swatch swatch-cs-2" title="Celeste Suave"></div>
+              <div class="color-swatch swatch-cs-3" title="Azul Principal"></div>
+              <div class="color-swatch swatch-cs-4" title="Azul Profundo"></div>
+            </div>
+            <span class="theme-card-footer-note">Claro, fresco y de alta legibilidad</span>
           </div>
-          <span class="theme-card-footer-note">Adaptación automática en tiempo real</span>
+
+          <!-- 6. Tema del Sistema -->
+          <div class="theme-option-card" data-theme-value="system">
+            <div class="theme-card-name">Tema del sistema</div>
+            <p class="theme-card-desc">Adapta automáticamente la apariencia de la aplicación
+              según el modo claro u oscuro de tu dispositivo.</p>
+            <div class="theme-swatches">
+              <div class="color-swatch swatch-sys-auto" title="AutomáticO"></div>
+              <div class="color-swatch swatch-sys-accent" title="Acento"></div>
+            </div>
+            <span class="theme-card-footer-note">Cambia automáticamente según tu dispositivo</span>
+          </div>
         </div>
       </div>
 
       <!-- Preferencias y Elementos de la Interfaz -->
-      <div class="settings-preferences-section"
-        style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 16px;">
+      <div class="settings-preferences-section settings-section-divider"
+        style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 16px; padding: 0 16px 16px 16px;">
         <!-- 1. Tamaño de Letras y Zoom de la App -->
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+        <div class="settings-block">
+          <div class="settings-row-space"
+            style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
             <div>
-              <h4
-                style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0;">
+              <h4 class="settings-section-subtitle"
+                style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0 0 4px 0;">
                 Tamaño de Letras y Zoom de la App</h4>
-              <p style="font-size: 0.75rem; color: var(--color-text-muted); margin: 2px 0 0 0;">Ajusta la escala visual
-                y la tipografía general de la aplicación.</p>
+              <p class="settings-section-desc" style="font-size: 0.75rem; color: var(--color-text-muted); margin: 0;">
+                Ajusta la escala visual y la tipografía general de la aplicación.</p>
             </div>
-            <div
+            <div class="scale-stepper-wrapper"
               style="display: flex; align-items: center; gap: 8px; background-color: var(--color-surface-secondary); padding: 4px 8px; border-radius: var(--radius-sm); border: 1px solid var(--color-border);">
-              <button id="btn-scale-decrease"
+              <button id="btn-scale-decrease" class="btn-scale-step"
                 style="width: 28px; height: 28px; border-radius: 4px; background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: 1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;"
                 title="Reducir tamaño">−</button>
-              <span id="label-scale-percent"
+              <span id="label-scale-percent" class="label-scale-value"
                 style="font-size: var(--text-sm); font-weight: bold; color: var(--color-primary-light); min-width: 48px; text-align: center;">100%</span>
-              <button id="btn-scale-increase"
+              <button id="btn-scale-increase" class="btn-scale-step"
                 style="width: 28px; height: 28px; border-radius: 4px; background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: 1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;"
                 title="Aumentar tamaño">+</button>
             </div>
           </div>
 
           <!-- Presets de Escala -->
-          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+          <div class="scale-presets-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
             <button class="btn-ui-scale-preset" data-scale="90"
               style="padding: 8px 10px; border-radius: var(--radius-sm); background: var(--color-surface-secondary); border: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center; transition: all var(--transition-fast);">Compacto
               (90%)</button>
@@ -591,20 +622,21 @@
         </div>
 
         <!-- 2. Visibilidad de Barra de Lectura Actual -->
-        <div style="display: flex; flex-direction: column; gap: 6px;">
-          <h4
+        <div class="settings-block-compact" style="display: flex; flex-direction: column; gap: 6px;">
+          <h4 class="settings-section-subtitle"
             style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0;">
             Elementos de la Biblioteca</h4>
-          <label
+          <label class="setting-toggle-card"
             style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 16px; border-radius: var(--radius-md); background-color: var(--color-surface-secondary); border: 1px solid var(--color-border); cursor: pointer; transition: background-color var(--transition-fast);">
-            <div style="display: flex; flex-direction: column; gap: 2px;">
-              <span style="font-size: var(--text-sm); font-weight: bold; color: var(--color-text);">Barra inferior de
+            <div class="setting-toggle-info" style="display: flex; flex-direction: column; gap: 2px;">
+              <span class="setting-toggle-title"
+                style="font-size: var(--text-sm); font-weight: bold; color: var(--color-text);">Barra inferior de
                 «Lectura Actual»</span>
-              <span style="font-size: 0.75rem; color: var(--color-text-muted);">Muestra la barra flotante con el libro
-                en progreso y el botón «Continuar leyendo».</span>
+              <span class="setting-toggle-desc" style="font-size: 0.75rem; color: var(--color-text-muted);">Muestra la
+                barra flotante con el libro en progreso y el botón «Continuar leyendo».</span>
             </div>
-            <div style="flex-shrink: 0; display: flex; align-items: center;">
-              <input type="checkbox" id="toggle-reading-bar" checked
+            <div class="setting-toggle-action" style="flex-shrink: 0; display: flex; align-items: center;">
+              <input type="checkbox" id="toggle-reading-bar" class="checkbox-reading-bar" checked
                 style="width: 20px; height: 20px; accent-color: var(--color-primary-light); cursor: pointer;">
             </div>
           </label>
@@ -653,7 +685,7 @@
         </button>
 
         <!-- Tabla de Contenidos -->
-        <button class="btn-reader-action" id="btn-reader-toc" title="Tabla de Contenidos y Marcadores"
+        <button class="btn-reader-action" id="btn-reader-toc" title="Capítulos"
           aria-label="Tabla de Contenidos">
           <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
@@ -704,6 +736,13 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
         </svg>
       </button>
+
+      <!-- Overlay persistente para modo paginación -->
+      <div class="reader-paginated-info" id="reader-paginated-info">
+        <span class="info-title" id="reader-info-title"></span>
+        <span class="info-chapter" id="reader-info-chapter"></span>
+        <span class="info-progress" id="reader-info-progress"></span>
+      </div>
     </div>
 
     <!-- Barra Inferior del Lector -->
@@ -730,13 +769,12 @@
       </button>
     </footer>
 
-    <!-- Drawer de Tabla de Contenidos y Marcadores -->
+    <!-- Drawer de Capítulos -->
     <div class="reader-toc-backdrop" id="reader-toc-backdrop"></div>
     <aside class="reader-toc-drawer" id="reader-toc-drawer" aria-label="Navegación del libro">
       <div class="toc-header">
         <div class="drawer-tab-nav">
           <button class="drawer-tab-btn active" id="tab-toc-chapters">Capítulos</button>
-          <button class="drawer-tab-btn" id="tab-toc-bookmarks">Marcadores</button>
         </div>
         <button class="toc-close-btn" id="toc-close-btn" aria-label="Cerrar panel">
           <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -746,8 +784,6 @@
       </div>
       <!-- Lista de Capítulos -->
       <nav class="toc-content-list" id="toc-content-list"></nav>
-      <!-- Lista de Marcadores -->
-      <div class="toc-content-list" id="bookmarks-content-list" style="display: none;"></div>
     </aside>
 
     <!-- Panel de Búsqueda Intra-Libro -->
@@ -847,7 +883,7 @@
       </div>
 
       <!-- Columnas -->
-      <div class="settings-group">
+      <div class="settings-group" id="columns-settings-group">
         <span class="settings-group-label">Columnas</span>
         <div class="settings-btn-grid" id="columns-options">
           <button class="setting-pill-btn active" data-col="1">1 Columna</button>
@@ -864,16 +900,15 @@
             style="background-color: #111111; color: #F2F0F7;">Noche</div>
           <div class="reader-theme-chip" data-reader-theme="lavender-light"
             style="background-color: #FCFBFE; color: #201C30;">Día</div>
-          <div class="reader-theme-chip" data-reader-theme="sepia" style="background-color: #FBF0D9; color: #3D2F1D;">
-            Sepia</div>
-          <div class="reader-theme-chip" data-reader-theme="deep-twilight"
-            style="background-color: #0B111E; color: #F0F4FC;">Azul</div>
+          <div class="reader-theme-chip" data-reader-theme="paper" style="background-color: #F4F1EA; color: #292824;">Papel</div>
+          <div class="reader-theme-chip" data-reader-theme="neutral"
+            style="background-color: #252525; color: #F2F2F2;">Neutro</div>
           <div class="reader-theme-chip" data-reader-theme="enchanted-forest"
             style="background-color: #F5F0E6; color: #262922;">Bosque</div>
           <div class="reader-theme-chip" data-reader-theme="clear-sky"
             style="background-color: #EBF4FA; color: #132D48;">Cielo</div>
-          <div class="reader-theme-chip" data-reader-theme="mystic-purple"
-            style="background-color: #18132B; color: #F2EFFC;">Místico</div>
+          <div class="reader-theme-chip" data-reader-theme="wine"
+            style="background-color: #170B12; color: #F5E9EC;">Vino</div>
         </div>
       </div>
     </div>

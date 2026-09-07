@@ -150,10 +150,16 @@
   overflow: hidden;
 }
 
-/* Prevenir scroll horizontal en epub.js (modo scrolled-doc) */
+/* Prevenir scroll horizontal en epub.js (modo scrolled-doc) y ocultar barra de desplazamiento */
 #reader-content .epub-container,
 #reader-content .epub-view {
   overflow-x: hidden !important;
+  scrollbar-width: none !important;
+}
+
+#reader-content .epub-container::-webkit-scrollbar,
+#reader-content .epub-view::-webkit-scrollbar {
+  display: none !important;
 }
 
 /* Flechas de Navegación Lateral (Desktop) */
@@ -419,8 +425,46 @@
   transform: translateY(-50%) scale(0.8) !important;
 }
 
-/* Adaptación Móvil */
+/* Overlay persistente de datos del libro (solo visible cuando las barras están ocultas y en modo paginado) */
+.reader-paginated-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 6px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.65rem;
+  color: var(--color-text-muted);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-normal);
+  pointer-events: none !important;
+  z-index: 10;
+  box-sizing: border-box;
+}
+
+.reader-paginated-info .info-chapter {
+  flex: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 10px;
+}
+
+.reader-view.bars-hidden .reader-viewport.mode-paginated .reader-paginated-info {
+  opacity: 0.65;
+  visibility: visible;
+}
+
+
+/* Adaptación Móvil y Modo App */
 @media (max-width: 768px) {
+  #columns-settings-group {
+    display: none !important;
+  }
   .reader-header {
     padding: 0 var(--space-sm);
   }
@@ -730,7 +774,9 @@
 .reader-search-panel {
   position: fixed;
   top: calc(var(--header-height) + 8px);
-  right: var(--space-lg, 20px);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   width: 420px;
   max-width: calc(100vw - 28px);
   max-height: calc(100vh - var(--header-height) - 20px);
@@ -997,6 +1043,13 @@
   #btn-submit-reader-search {
     padding: 6px 14px;
     font-size: 0.78rem;
+  }
+}
+
+/* Ocultar ajuste de columnas en modo App (Standalone) sin importar la resolución */
+@media (display-mode: standalone) {
+  #columns-settings-group {
+    display: none !important;
   }
 }
 

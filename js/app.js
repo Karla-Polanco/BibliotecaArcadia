@@ -336,6 +336,32 @@ class App {
       });
     });
 
+    // Botón de estados
+    const btnStates = document.getElementById('btn-open-states-modal');
+    if (btnStates) {
+      btnStates.addEventListener('click', (e) => {
+        e.preventDefault();
+        const modal = document.getElementById('states-modal');
+        if (modal) modal.classList.add('active');
+        toggleDrawer(false); // Cierra el menú lateral en móviles si está abierto
+      });
+    }
+
+    // Cerrar modal de estados
+    const closeStatesBtn = document.getElementById('modal-states-close-btn');
+    const statesModal = document.getElementById('states-modal');
+    if (closeStatesBtn && statesModal) {
+      closeStatesBtn.addEventListener('click', () => statesModal.classList.remove('active'));
+      statesModal.addEventListener('click', (e) => {
+        if (e.target === statesModal) statesModal.classList.remove('active');
+      });
+      
+      // Cerrar al seleccionar una opción (el evento de data-nav-filter ya está asignado)
+      statesModal.querySelectorAll('[data-nav-filter]').forEach(item => {
+        item.addEventListener('click', () => statesModal.classList.remove('active'));
+      });
+    }
+
     // Ajustes en el Sidebar abre el modal de temas
     const settingsNavItem = document.getElementById('nav-settings');
     if (settingsNavItem) {
@@ -407,6 +433,9 @@ class App {
 
     if (readingBar) {
       readingBar.classList.toggle('hidden-by-setting', !isVisible);
+      if (isVisible) {
+        readingBar.classList.add('bar-visible');
+      }
     }
     if (toggleInput) {
       toggleInput.checked = isVisible;

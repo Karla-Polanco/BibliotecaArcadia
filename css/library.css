@@ -7,6 +7,10 @@
    -------------------------------------------------------------------------- */
 .quote-banner {
   background: var(--banner-gradient, linear-gradient(135deg, #18132B 0%, #2A1F4D 100%));
+  background-image: var(--banner-bg-pattern), var(--banner-gradient, linear-gradient(135deg, #18132B 0%, #2A1F4D 100%));
+  background-size: var(--banner-bg-size, auto), auto;
+  background-position: center center, center center;
+  background-repeat: no-repeat, no-repeat;
   border: 1px solid var(--banner-border, rgba(123, 107, 240, 0.25));
   border-radius: var(--radius-lg, 16px);
   padding: 24px 30px;
@@ -690,7 +694,12 @@
   z-index: var(--z-sticky);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  transition: left var(--transition-normal), transform var(--transition-normal), background-color var(--transition-normal);
+  opacity: 0;
+  transition: left var(--transition-normal), transform var(--transition-normal), background-color var(--transition-normal), opacity 0.25s ease;
+}
+
+.current-reading-bar.bar-visible {
+  opacity: 1;
 }
 
 .current-reading-info {

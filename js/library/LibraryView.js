@@ -298,13 +298,13 @@ export class LibraryView {
 
     const libraryTitleEl = document.querySelector('.library-title');
     if (libraryTitleEl) {
-      if (filter === 'all') libraryTitleEl.textContent = 'Tu biblioteca';
+      if (filter === 'all') libraryTitleEl.textContent = 'Biblioteca';
       else if (filter === 'reading') libraryTitleEl.textContent = 'Leyendo actualmente';
       else if (filter === 'to_read') libraryTitleEl.textContent = 'Por leer';
       else if (filter === 'completed') libraryTitleEl.textContent = 'Libros leídos';
       else if (filter === 'favorites') libraryTitleEl.textContent = 'Mis favoritos';
       else if (filter.startsWith('collection:')) libraryTitleEl.textContent = 'Colección';
-      else libraryTitleEl.textContent = 'Tu biblioteca';
+      else libraryTitleEl.textContent = 'Biblioteca';
     }
 
     let books = [];
@@ -715,10 +715,6 @@ export class LibraryView {
         <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
         <span>Colecciones...</span>
       </button>
-      <button class="menu-action-btn" data-opt="bookmarks" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; border-radius: 6px; font-size: var(--text-xs); color: var(--color-text); cursor: pointer;">
-        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-        <span>Marcadores...</span>
-      </button>
       <button class="menu-action-btn" data-opt="delete" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; border-radius: 6px; font-size: var(--text-xs); color: #EF4444; cursor: pointer;">
         <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
         <span>Eliminar libro</span>
@@ -973,6 +969,8 @@ export class LibraryView {
         thumbEl.style.background = book.coverGradient || 'var(--banner-gradient)';
       }
     }
+    const readingBar = document.getElementById('current-reading-bar');
+    if (readingBar) readingBar.classList.add('bar-visible');
   }
 
   getStatusLabel(status) {

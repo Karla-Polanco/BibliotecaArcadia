@@ -117,11 +117,11 @@ export class VocabularyView {
           </div>
 
           <!-- Buscador de Vocabulario -->
-          <div style="position: relative; width: 220px;">
+          <div style="position: relative; width: 220px; display: flex; align-items: center;">
+            <svg style="position: absolute; left: 9px; width: 14px; height: 14px; color: var(--color-text-muted); pointer-events: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             <input type="text" id="input-vocab-search" value="${this.escapeHtml(this.searchQuery)}" placeholder="Buscar término..." style="
-              width: 100%; padding: 6px 12px 6px 30px; border-radius: var(--radius-sm); background-color: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: var(--text-xs); outline: none;
+              width: 100%; padding: 7px 12px 7px 30px; border-radius: var(--radius-sm); background-color: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: var(--text-xs); outline: none; box-sizing: border-box;
             ">
-            <svg style="position: absolute; left: 9px; top: 7px; width: 14px; height: 14px; color: var(--color-text-muted);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           </div>
         </div>
       </div>

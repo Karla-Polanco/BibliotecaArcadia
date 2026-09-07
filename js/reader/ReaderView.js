@@ -23,12 +23,13 @@ export class ReaderView {
     this.chapterEl = document.getElementById('reader-chapter-title');
     this.progressFillEl = document.getElementById('reader-progress-fill');
     this.progressTextEl = document.getElementById('reader-progress-text');
+    this.infoTitleEl = document.getElementById('reader-info-title');
+    this.infoChapterEl = document.getElementById('reader-info-chapter');
+    this.infoProgressEl = document.getElementById('reader-info-progress');
     this.tocDrawerEl = document.getElementById('reader-toc-drawer');
     this.tocBackdropEl = document.getElementById('reader-toc-backdrop');
     this.tocListEl = document.getElementById('toc-content-list');
-    this.bookmarksListEl = document.getElementById('bookmarks-content-list');
     this.tabChaptersBtn = document.getElementById('tab-toc-chapters');
-    this.tabBookmarksBtn = document.getElementById('tab-toc-bookmarks');
     this.spinnerEl = document.getElementById('reader-loading-spinner');
     this.settingsPanelEl = document.getElementById('reader-settings-panel');
     this.settingsBackdropEl = document.getElementById('reader-settings-backdrop');
@@ -114,26 +115,6 @@ export class ReaderView {
     }
     if (this.tocBackdropEl) {
       this.tocBackdropEl.addEventListener('click', () => this.toggleToc(false));
-    }
-
-    // Pestañas del Drawer: Capítulos vs Marcadores
-    if (this.tabChaptersBtn && this.tabBookmarksBtn) {
-      this.tabChaptersBtn.addEventListener('click', () => {
-        this.tabChaptersBtn.classList.add('active');
-        this.tabBookmarksBtn.classList.remove('active');
-        if (this.tocListEl) this.tocListEl.style.display = 'flex';
-        if (this.bookmarksListEl) this.bookmarksListEl.style.display = 'none';
-      });
-
-      this.tabBookmarksBtn.addEventListener('click', () => {
-        this.tabBookmarksBtn.classList.add('active');
-        this.tabChaptersBtn.classList.remove('active');
-        if (this.tocListEl) this.tocListEl.style.display = 'none';
-        if (this.bookmarksListEl) {
-          this.bookmarksListEl.style.display = 'flex';
-          this.renderBookmarks();
-        }
-      });
     }
 
     // 5. Botón de Marcador de Posición
@@ -310,14 +291,20 @@ export class ReaderView {
    * Actualiza los datos de cabecera y barra de progreso.
    */
   updateLocationInfo(data) {
+    if (this.titleEl && data.title) {
+      this.titleEl.textContent = data.title;
+      if (this.infoTitleEl) this.infoTitleEl.textContent = data.title;
+    }
     if (this.chapterEl && data.chapterTitle) {
       this.chapterEl.textContent = data.chapterTitle;
+      if (this.infoChapterEl) this.infoChapterEl.textContent = data.chapterTitle;
     }
     if (this.progressFillEl) {
       this.progressFillEl.style.width = `${data.percentage}%`;
     }
     if (this.progressTextEl) {
       this.progressTextEl.textContent = `${data.percentage}%`;
+      if (this.infoProgressEl) this.infoProgressEl.textContent = `${data.percentage}%`;
     }
 
     // Actualizar capítulo activo en el drawer TOC
@@ -452,7 +439,7 @@ export class ReaderView {
 
     // Inyectar tarjeta al final del capítulo si estamos en modo Desplazamiento
     if (isScrolledMode) {
-      this.injectChapterEndCard(doc, win);
+      // this.injectChapterEndCard(doc, win); // Solicitado por el usuario: quitar el cuadro final
     }
 
     let touchStartX = 0;
