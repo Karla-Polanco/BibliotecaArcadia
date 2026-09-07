@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Gradiente azul oscuro profundo y elegante -->
+    <linearGradient id="darkBlueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A8A"/>
+      <stop offset="45%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </linearGradient>
+    <!-- Brillo sutil interno azul real -->
+    <linearGradient id="innerSparkle" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+    <filter id="subtleGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Estrella principal de cuatro puntas (curvas cóncavas armónicas) -->
+  <path d="M 256,16 C 256,156 356,256 496,256 C 356,256 256,356 256,496 C 256,356 156,256 16,256 C 156,256 256,156 256,16 Z" 
+        fill="url(#darkBlueGradient)" 
+        filter="url(#subtleGlow)" />
+
+  <!-- Estrella interior con brillo sutil -->
+  <path d="M 256,96 C 256,192 320,256 416,256 C 320,256 256,320 256,416 C 256,320 192,256 96,256 C 192,256 256,192 256,96 Z" 
+        fill="url(#innerSparkle)" 
+        opacity="0.32" />
+
+  <!-- Núcleo central luminoso -->
+  <circle cx="256" cy="256" r="16" fill="#60A5FA" opacity="0.4" />
+</svg>

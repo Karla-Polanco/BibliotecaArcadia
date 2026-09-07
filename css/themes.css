@@ -1,0 +1,299 @@
+/* ==========================================================================
+   SISTEMA DE TEMAS DINÁMICOS Y PATRONES ATMOSFÉRICOS - BIBLIOTECA ARCADIA
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. TEMA PREDETERMINADO: NOCTURNO MÍSTICO (mystic-night)
+   Fondo obsidiana cósmica con constelaciones de estrellas centelleantes y resplandores violeta.
+   -------------------------------------------------------------------------- */
+:root,
+[data-theme="mystic-night"] {
+  --color-background: #0E0D14;
+  --color-surface: #171522;
+  --color-surface-secondary: #1F1C2E;
+  --color-surface-elevated: #27233B;
+  --color-surface-hover: rgba(255, 255, 255, 0.06);
+  --color-surface-active: rgba(255, 255, 255, 0.1);
+
+  /* Acentos de Color */
+  --color-primary-dark: #191438;
+  --color-primary: #372A80;
+  --color-primary-light: #6C5CE7;
+  --color-primary-glow: rgba(108, 92, 231, 0.4);
+  --color-secondary: #38BDF8;
+  --color-secondary-glow: rgba(56, 189, 248, 0.35);
+
+  /* Tipografía y Contraste */
+  --color-text: #F3F1FA;
+  --color-text-secondary: #ADA9BD;
+  --color-text-muted: #726E82;
+  --color-text-inverse: #0E0D14;
+
+  /* Bordes y Divisores */
+  --color-border: #2B2740;
+  --color-border-subtle: #1D1A2B;
+  --color-border-focus: #6C5CE7;
+
+  /* Badges y Estados */
+  --color-badge-bg: rgba(108, 92, 231, 0.22);
+  --color-badge-text: #C7BAFC;
+  --color-accent-gold: #F59E0B;
+
+  /* Banner Literario */
+  --banner-gradient: linear-gradient(135deg, #181335 0%, #2A1F52 50%, #171B38 100%);
+  --banner-border: rgba(108, 92, 231, 0.4);
+
+  /* Lector */
+  --reader-bg: #121019;
+  --reader-text: #E8E5F0;
+
+  /* Marca Tipográfica Emblemática */
+  --brand-eyebrow-color: #C7BAFC;
+  --brand-rule-color: rgba(167, 139, 250, 0.45);
+  --brand-star-color: #F59E0B;
+  --brand-title-gradient: linear-gradient(180deg, #FFFFFF 0%, #E0E7FF 45%, #818CF8 100%);
+  --brand-title-shadow: rgba(129, 140, 248, 0.5);
+
+  /* Patrón Atmosférico: Cielo Estrellado y Nebulosa */
+  --theme-bg-pattern: 
+    radial-gradient(circle at 15% 15%, rgba(108, 92, 231, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 85% 75%, rgba(56, 189, 248, 0.09) 0%, transparent 45%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 320 320'%3E%3Cg fill='%23A78BFA' opacity='0.35'%3E%3Cpath d='M40 50 L42 60 L52 62 L42 64 L40 74 L38 64 L28 62 L38 60 Z'/%3E%3Ccircle cx='110' cy='30' r='1.2'/%3E%3Ccircle cx='270' cy='80' r='1.8'/%3E%3Cpath d='M220 180 L221.5 188 L229.5 189.5 L221.5 191 L220 199 L218.5 191 L210.5 189.5 L218.5 188 Z'/%3E%3Ccircle cx='60' cy='220' r='1.5'/%3E%3Ccircle cx='180' cy='120' r='1.2'/%3E%3Ccircle cx='300' cy='240' r='1.5'/%3E%3C/g%3E%3Cg fill='%23F59E0B' opacity='0.3'%3E%3Cpath d='M150 250 L151.5 257 L158.5 258.5 L151.5 260 L150 267 L148.5 260 L141.5 258.5 L148.5 257 Z'/%3E%3Ccircle cx='20' cy='140' r='1.2'/%3E%3Ccircle cx='240' cy='20' r='1.2'/%3E%3C/g%3E%3Cg fill='%2338BDF8' opacity='0.25'%3E%3Ccircle cx='130' cy='170' r='1.5'/%3E%3Ccircle cx='80' cy='300' r='1.2'/%3E%3Ccircle cx='280' cy='300' r='1.2'/%3E%3C/g%3E%3C/svg%3E");
+  --theme-bg-size: 100% 100%, 100% 100%, 320px 320px;
+}
+
+/* --------------------------------------------------------------------------
+   2. TEMA: CIELO CLARO (clear-sky)
+   Fondo celeste fresco con nubes esponjosas flotantes, brisa y cielo radiante.
+   -------------------------------------------------------------------------- */
+[data-theme="clear-sky"] {
+  --color-background: #F0F6FD;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #E3EFF9;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-hover: rgba(59, 130, 246, 0.07);
+  --color-surface-active: rgba(59, 130, 246, 0.13);
+
+  /* Acentos de Color */
+  --color-primary-dark: #123359;
+  --color-primary: #1D5C96;
+  --color-primary-light: #2563EB;
+  --color-primary-glow: rgba(37, 99, 235, 0.28);
+  --color-secondary: #0284C7;
+  --color-secondary-glow: rgba(2, 132, 199, 0.22);
+
+  /* Tipografía y Contraste */
+  --color-text: #0F2338;
+  --color-text-secondary: #3D5A7A;
+  --color-text-muted: #6E88A6;
+  --color-text-inverse: #FFFFFF;
+
+  /* Bordes y Divisores */
+  --color-border: #CFE0F2;
+  --color-border-subtle: #E2EDF8;
+  --color-border-focus: #2563EB;
+
+  /* Badges y Estados */
+  --color-badge-bg: rgba(37, 99, 235, 0.12);
+  --color-badge-text: #1D5C96;
+  --color-accent-gold: #0284C7;
+
+  /* Banner Literario */
+  --banner-gradient: linear-gradient(135deg, #103862 0%, #1D5C96 55%, #3B82F6 100%);
+  --banner-border: rgba(37, 99, 235, 0.35);
+
+  /* Lector */
+  --reader-bg: #F4F8FD;
+  --reader-text: #112840;
+
+  /* Marca Tipográfica Emblemática */
+  --brand-eyebrow-color: #123359;
+  --brand-rule-color: rgba(37, 99, 235, 0.35);
+  --brand-star-color: #0284C7;
+  --brand-title-gradient: linear-gradient(180deg, #0A1B2E 0%, #123359 50%, #2563EB 100%);
+  --brand-title-shadow: rgba(37, 99, 235, 0.25);
+
+  /* Patrón Atmosférico: Nubes claras flotantes y destellos de cielo */
+  --theme-bg-pattern: 
+    radial-gradient(circle at 80% 12%, rgba(147, 197, 253, 0.25) 0%, transparent 45%),
+    radial-gradient(circle at 15% 85%, rgba(191, 219, 254, 0.3) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='440' height='320' viewBox='0 0 440 320'%3E%3Cg fill='%2360A5FA' opacity='0.22'%3E%3Cpath d='M60 80 A20 20 0 0 1 95 65 A30 30 0 0 1 145 70 A20 20 0 0 1 165 85 A15 15 0 0 1 155 105 L55 105 A15 15 0 0 1 60 80 Z'/%3E%3Ccircle cx='340' cy='50' r='1.5'/%3E%3Ccircle cx='380' cy='90' r='2'/%3E%3C/g%3E%3Cg fill='%2338BDF8' opacity='0.16'%3E%3Cpath d='M250 220 A24 24 0 0 1 292 205 A36 36 0 0 1 352 210 A24 24 0 0 1 376 226 A18 18 0 0 1 364 250 L244 250 A18 18 0 0 1 250 220 Z'/%3E%3Ccircle cx='120' cy='260' r='1.5'/%3E%3Ccircle cx='200' cy='160' r='2'/%3E%3C/g%3E%3Cg fill='%2393C5FD' opacity='0.28'%3E%3Cpath d='M30 20 L31.5 26 L37.5 27.5 L31.5 29 L30 35 L28.5 29 L22.5 27.5 L28.5 26 Z'/%3E%3Cpath d='M390 180 L391.5 186 L397.5 187.5 L391.5 189 L390 195 L388.5 189 L382.5 187.5 L388.5 186 Z'/%3E%3C/g%3E%3C/svg%3E");
+  --theme-bg-size: 100% 100%, 100% 100%, 440px 320px;
+}
+
+/* --------------------------------------------------------------------------
+   3. TEMA: BOSQUE ENCANTADO (enchanted-forest)
+   Fondo fresco eucalipto y esmeralda con hojas botánicas, flores delicadas y rocío mágico.
+   -------------------------------------------------------------------------- */
+[data-theme="enchanted-forest"] {
+  --color-background: #F2F7F4;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #E5EFE8;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-hover: rgba(30, 107, 65, 0.07);
+  --color-surface-active: rgba(30, 107, 65, 0.14);
+
+  /* Acentos de Color Botánicos Puros */
+  --color-primary-dark: #0D2818;
+  --color-primary: #174E2E;
+  --color-primary-light: #227D48;
+  --color-primary-glow: rgba(34, 125, 72, 0.3);
+  --color-secondary: #38A169;
+  --color-secondary-glow: rgba(56, 161, 105, 0.25);
+
+  /* Tipografía y Contraste */
+  --color-text: #102418;
+  --color-text-secondary: #395743;
+  --color-text-muted: #668772;
+  --color-text-inverse: #FFFFFF;
+
+  /* Bordes y Divisores */
+  --color-border: #CFE2D5;
+  --color-border-subtle: #E2ECE5;
+  --color-border-focus: #227D48;
+
+  /* Badges y Estados */
+  --color-badge-bg: rgba(34, 125, 72, 0.12);
+  --color-badge-text: #174E2E;
+  --color-accent-gold: #D97706;
+
+  /* Banner Literario Botánico */
+  --banner-gradient: linear-gradient(135deg, #0D2818 0%, #174E2E 50%, #227D48 100%);
+  --banner-border: rgba(34, 125, 72, 0.4);
+
+  /* Lector */
+  --reader-bg: #F4F8F5;
+  --reader-text: #12261A;
+
+  /* Marca Tipográfica Emblemática */
+  --brand-eyebrow-color: #0D2818;
+  --brand-rule-color: rgba(34, 125, 72, 0.4);
+  --brand-star-color: #D97706;
+  --brand-title-gradient: linear-gradient(180deg, #091C11 0%, #174E2E 50%, #227D48 100%);
+  --brand-title-shadow: rgba(34, 125, 72, 0.25);
+
+  /* Patrón Atmosférico: Hojas botánicas, ramitas y flores delicadas */
+  --theme-bg-pattern: 
+    radial-gradient(circle at 10% 20%, rgba(34, 125, 72, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 90% 75%, rgba(56, 161, 105, 0.1) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='380' height='380' viewBox='0 0 380 380'%3E%3Cg fill='%23227D48' opacity='0.18'%3E%3Cpath d='M50 60 C50 60 75 45 95 65 C115 85 100 110 100 110 C100 110 75 125 55 105 C35 85 50 60 50 60 Z M50 60 L100 110'/%3E%3Cpath d='M260 220 C260 220 285 205 305 225 C325 245 310 270 310 270 C310 270 285 285 265 265 C245 245 260 220 260 220 Z M260 220 L310 270'/%3E%3Cpath d='M180 80 Q195 100 210 120 M190 90 Q175 85 180 75 M200 105 Q215 100 210 90' stroke='%23227D48' stroke-width='1.5' fill='none'/%3E%3C/g%3E%3Cg fill='%2338A169' opacity='0.22'%3E%3Ccircle cx='310' cy='80' r='3.5'/%3E%3Ccircle cx='310' cy='72' r='2.5'/%3E%3Ccircle cx='318' cy='80' r='2.5'/%3E%3Ccircle cx='310' cy='88' r='2.5'/%3E%3Ccircle cx='302' cy='80' r='2.5'/%3E%3Ccircle cx='90' cy='280' r='3.5'/%3E%3Ccircle cx='90' cy='272' r='2.5'/%3E%3Ccircle cx='98' cy='280' r='2.5'/%3E%3Ccircle cx='90' cy='288' r='2.5'/%3E%3Ccircle cx='82' cy='280' r='2.5'/%3E%3Cpath d='M160 290 C160 290 180 275 195 290 C210 305 195 325 195 325 C195 325 175 340 160 325 C145 310 160 290 160 290 Z'/%3E%3C/g%3E%3Cg fill='%23D97706' opacity='0.16'%3E%3Ccircle cx='230' cy='40' r='1.5'/%3E%3Ccircle cx='40' cy='180' r='1.8'/%3E%3Ccircle cx='340' cy='330' r='1.5'/%3E%3Ccircle cx='150' cy='190' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
+  --theme-bg-size: 100% 100%, 100% 100%, 380px 380px;
+}
+
+/* --------------------------------------------------------------------------
+   4. TEMA: LAVANDA CLARO (lavender-light)
+   Fondo perla lavanda con pétalos sutiles, polvo estelar y destellos violetas.
+   -------------------------------------------------------------------------- */
+[data-theme="lavender-light"] {
+  --color-background: #F8F6FD;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #EFEAF9;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-hover: rgba(123, 107, 240, 0.06);
+  --color-surface-active: rgba(123, 107, 240, 0.12);
+
+  /* Acentos de Color */
+  --color-primary-dark: #271E56;
+  --color-primary: #5241B0;
+  --color-primary-light: #6C5CE7;
+  --color-primary-glow: rgba(108, 92, 231, 0.25);
+  --color-secondary: #8B5CF6;
+  --color-secondary-glow: rgba(139, 92, 246, 0.2);
+
+  /* Tipografía y Contraste */
+  --color-text: #19142B;
+  --color-text-secondary: #4E466B;
+  --color-text-muted: #7E779A;
+  --color-text-inverse: #FFFFFF;
+
+  /* Bordes y Divisores */
+  --color-border: #DFD8F0;
+  --color-border-subtle: #EDE7F8;
+  --color-border-focus: #6C5CE7;
+
+  /* Badges y Estados */
+  --color-badge-bg: rgba(108, 92, 231, 0.12);
+  --color-badge-text: #5241B0;
+  --color-accent-gold: #B45309;
+
+  /* Banner Literario */
+  --banner-gradient: linear-gradient(135deg, #271E56 0%, #5241B0 55%, #6C5CE7 100%);
+  --banner-border: rgba(108, 92, 231, 0.35);
+
+  /* Lector */
+  --reader-bg: #FAF8FE;
+  --reader-text: #1C1630;
+
+  /* Marca Tipográfica Emblemática */
+  --brand-eyebrow-color: #271E56;
+  --brand-rule-color: rgba(108, 92, 231, 0.35);
+  --brand-star-color: #D97706;
+  --brand-title-gradient: linear-gradient(180deg, #171135 0%, #271E56 50%, #6C5CE7 100%);
+  --brand-title-shadow: rgba(108, 92, 231, 0.25);
+
+  /* Patrón Atmosférico: Pétalos de lavanda y estrellas suaves */
+  --theme-bg-pattern: 
+    radial-gradient(circle at 18% 15%, rgba(167, 139, 250, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 82% 80%, rgba(196, 181, 253, 0.22) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360' viewBox='0 0 360 360'%3E%3Cg fill='%236C5CE7' opacity='0.16'%3E%3Cpath d='M60 80 C70 65 90 70 85 85 C80 100 65 95 60 80 Z'/%3E%3Cpath d='M68 95 C78 80 98 85 93 100 C88 115 73 110 68 95 Z'/%3E%3Cpath d='M240 230 C250 215 270 220 265 235 C260 250 245 245 240 230 Z'/%3E%3Ccircle cx='160' cy='60' r='1.5'/%3E%3Ccircle cx='300' cy='120' r='1.8'/%3E%3C/g%3E%3Cg fill='%23A78BFA' opacity='0.22'%3E%3Cpath d='M180 170 L181.5 176 L187.5 177.5 L181.5 179 L180 185 L178.5 179 L172.5 177.5 L178.5 176 Z'/%3E%3Cpath d='M290 40 L291 44 L295 45 L291 46 L290 50 L289 46 L285 45 L289 44 Z'/%3E%3Ccircle cx='80' cy='270' r='1.5'/%3E%3Ccircle cx='310' cy='310' r='1.8'/%3E%3C/g%3E%3C/svg%3E");
+  --theme-bg-size: 100% 100%, 100% 100%, 360px 360px;
+}
+
+/* --------------------------------------------------------------------------
+   5. TEMA: CREPÚSCULO PROFUNDO (deep-twilight)
+   Azul marino abisal con destellos de estrellas doradas y polvo cósmico.
+   -------------------------------------------------------------------------- */
+[data-theme="deep-twilight"] {
+  --color-background: #090E17;
+  --color-surface: #101928;
+  --color-surface-secondary: #162338;
+  --color-surface-elevated: #1E2E48;
+  --color-surface-hover: rgba(255, 255, 255, 0.06);
+  --color-surface-active: rgba(255, 255, 255, 0.1);
+
+  /* Acentos de Color */
+  --color-primary-dark: #0E1A2F;
+  --color-primary: #233A63;
+  --color-primary-light: #486BB0;
+  --color-primary-glow: rgba(72, 107, 176, 0.35);
+  --color-secondary: #F59E0B;
+  --color-secondary-glow: rgba(245, 158, 11, 0.3);
+
+  /* Tipografía y Contraste */
+  --color-text: #F0F4FC;
+  --color-text-secondary: #94A6C5;
+  --color-text-muted: #5D7293;
+  --color-text-inverse: #090E17;
+
+  /* Bordes y Divisores */
+  --color-border: #1E314D;
+  --color-border-subtle: #142236;
+  --color-border-focus: #486BB0;
+
+  /* Badges y Estados */
+  --color-badge-bg: rgba(245, 158, 11, 0.16);
+  --color-badge-text: #FBBF24;
+  --color-accent-gold: #F59E0B;
+
+  /* Banner Literario */
+  --banner-gradient: linear-gradient(135deg, #0E1A2F 0%, #162846 50%, #233A63 100%);
+  --banner-border: rgba(245, 158, 11, 0.35);
+
+  /* Lector */
+  --reader-bg: #0C1320;
+  --reader-text: #E5ECF8;
+
+  /* Marca Tipográfica Emblemática */
+  --brand-eyebrow-color: #FDE68A;
+  --brand-rule-color: rgba(245, 158, 11, 0.45);
+  --brand-star-color: #F59E0B;
+  --brand-title-gradient: linear-gradient(180deg, #FFFFFF 0%, #93C5FD 45%, #3B82F6 100%);
+  --brand-title-shadow: rgba(59, 130, 246, 0.45);
+
+  /* Patrón Atmosférico: Polvo cósmico dorado y estrellas de crepúsculo */
+  --theme-bg-pattern: 
+    radial-gradient(circle at 25% 20%, rgba(72, 107, 176, 0.2) 0%, transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 40%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='340' viewBox='0 0 340 340'%3E%3Cg fill='%23F59E0B' opacity='0.35'%3E%3Cpath d='M70 70 L72 80 L82 82 L72 84 L70 94 L68 84 L58 82 L68 80 Z'/%3E%3Ccircle cx='180' cy='50' r='1.5'/%3E%3Ccircle cx='280' cy='160' r='1.8'/%3E%3C/g%3E%3Cg fill='%2360A5FA' opacity='0.3'%3E%3Cpath d='M220 230 L221.5 237 L228.5 238.5 L221.5 240 L220 247 L218.5 240 L211.5 238.5 L218.5 237 Z'/%3E%3Ccircle cx='50' cy='220' r='1.8'/%3E%3Ccircle cx='140' cy='150' r='1.2'/%3E%3Ccircle cx='310' cy='60' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
+  --theme-bg-size: 100% 100%, 100% 100%, 340px 340px;
+}

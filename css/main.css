@@ -1,0 +1,271 @@
+/* ==========================================================================
+   ESTILOS GENERALES, RESET Y TIPOGRAFÍA BASE - BIBLIOTECA ARCADIA
+   ========================================================================== */
+
+@import './tokens.css';
+@import './themes.css';
+
+/* Reset Moderno */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16.5px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  background-image: var(--theme-bg-pattern, none);
+  background-size: var(--theme-bg-size, auto);
+  background-position: center top;
+  background-attachment: fixed;
+  background-repeat: repeat;
+  color: var(--color-text);
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+/* Enlaces y Botones */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--color-primary-light);
+  outline-offset: 2px;
+}
+
+/* Inputs, Selects y Textareas Estilizados Globalmente */
+input, select, textarea {
+  font-family: inherit;
+  font-size: var(--text-sm, 0.92rem);
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md, 8px);
+  padding: 9px 13px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+input:hover, select:hover, textarea:hover {
+  border-color: var(--color-text-secondary);
+}
+
+input:focus, input:focus-visible,
+select:focus, select:focus-visible,
+textarea:focus, textarea:focus-visible {
+  outline: none !important;
+  border-color: var(--color-primary-light) !important;
+  box-shadow: 0 0 0 3px var(--color-primary-glow) !important;
+}
+
+/* Excepciones para inputs integrados en cajas compuestas */
+.search-box input,
+.search-box input:focus,
+.search-box input:focus-visible,
+.search-input,
+.search-input:focus,
+.search-input:focus-visible {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+/* Select Estilizado con Flecha SVG Elegante */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  padding-right: 32px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238E88A8' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 14px 14px;
+}
+
+select option {
+  background-color: var(--color-surface-elevated, var(--color-surface, #1E1C2E));
+  color: var(--color-text, #FFFFFF);
+  padding: 10px 14px;
+  font-size: 0.9rem;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* Scrollbar Personalizado */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Accesibilidad y Selección */
+::selection {
+  background-color: var(--color-primary-light);
+  color: #FFFFFF;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* --------------------------------------------------------------------------
+   SISTEMA UNIVERSAL DE VENTANAS MODALES (CENTRADO Y ALTO Z-INDEX)
+   -------------------------------------------------------------------------- */
+.theme-modal-overlay,
+.modal-overlay,
+.arcadia-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  background: rgba(0, 0, 0, 0.76) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  z-index: 99999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+  box-sizing: border-box !important;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.theme-modal-overlay.active,
+.modal-overlay.active,
+.arcadia-modal-overlay.active {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.theme-modal-dialog,
+.modal-card,
+.arcadia-modal-card {
+  background-color: var(--color-surface, #1E1C2E) !important;
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.14)) !important;
+  border-radius: var(--radius-lg, 16px) !important;
+  box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.8) !important;
+  color: var(--color-text, #FFFFFF) !important;
+  position: relative !important;
+  width: 100% !important;
+  max-width: 500px;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  margin: auto !important;
+  transform: scale(0.95);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Modales amplios (Formato Horizontal / Landscape) */
+#theme-modal .modal-card,
+.modal-card.modal-wide,
+.theme-modal-dialog.wide {
+  max-width: 960px !important;
+  width: 92vw !important;
+}
+
+.theme-modal-overlay.active .theme-modal-dialog,
+.modal-overlay.active .modal-card,
+.arcadia-modal-overlay.active .arcadia-modal-card {
+  transform: scale(1) !important;
+}
+
+.theme-modal-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  margin-bottom: 16px !important;
+}
+
+.theme-modal-title {
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  color: var(--color-text) !important;
+  margin: 0 !important;
+}
+
+.theme-modal-close {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  background: var(--color-surface-hover, rgba(255, 255, 255, 0.05)) !important;
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1)) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--color-text-secondary) !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.theme-modal-close:hover {
+  background: var(--color-border) !important;
+  color: var(--color-text) !important;
+}
