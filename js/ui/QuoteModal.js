@@ -67,7 +67,7 @@ export class QuoteModal {
             </div>
             <div>
               <h2 style="margin: 0; font-size: 1.1rem; font-weight: bold; color: var(--color-text, #FFF);">${isEdit ? 'Editar Frase' : 'Nueva Frase Literaria'}</h2>
-              <span style="font-size: 0.72rem; color: var(--color-text-muted);">Escribe una cita memorable o reflexión personal</span>
+              <span style="font-size: 0.72rem; color: var(--color-text-muted);">Escribe una cita memorable</span>
             </div>
           </div>
           <button id="btn-modal-close" style="background: none; border: none; color: var(--color-text-muted); cursor: pointer; padding: 4px; border-radius: 4px;">
@@ -115,7 +115,7 @@ export class QuoteModal {
             </div>
 
             <div>
-              <label style="display: block; font-size: 0.72rem; font-weight: bold; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Libro o Fuente (Opcional)</label>
+              <label style="display: block; font-size: 0.72rem; font-weight: bold; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Libro o Fuente</label>
               <input type="text" id="modal-quote-source" value="${initialSource}" placeholder="Ej: Cien años de soledad" style="
                 width: 100%;
                 box-sizing: border-box;
@@ -133,7 +133,7 @@ export class QuoteModal {
           <!-- Checkbox Favorita -->
           <label style="display: inline-flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--color-text-secondary); cursor: pointer;">
             <input type="checkbox" id="modal-quote-favorite" ${initialFavorite ? 'checked' : ''} style="accent-color: var(--color-primary-light); width: 16px; height: 16px; cursor: pointer;">
-            <span>Marcar como frase destacada / favorita ⭐</span>
+            <span>Marcar como frase favorita ⭐</span>
           </label>
 
           <!-- Footer Actions -->

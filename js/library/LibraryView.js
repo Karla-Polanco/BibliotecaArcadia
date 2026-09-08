@@ -731,10 +731,13 @@ export class LibraryView {
       CollectionModal.openAssignModal(book, () => this.updateBadges());
     });
 
-    menu.querySelector('[data-opt="bookmarks"]').addEventListener('click', () => {
-      menu.remove();
-      this.showBookBookmarks(book);
-    });
+    const bmBtn = menu.querySelector('[data-opt="bookmarks"]');
+    if (bmBtn) {
+      bmBtn.addEventListener('click', () => {
+        menu.remove();
+        this.showBookBookmarks(book);
+      });
+    }
 
     menu.querySelector('[data-opt="delete"]').addEventListener('click', () => {
       menu.remove();

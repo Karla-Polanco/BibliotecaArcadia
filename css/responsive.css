@@ -155,8 +155,25 @@
     font-size: var(--text-base);
   }
 
-  .btn-quote-refresh {
-    align-self: flex-end;
+  .quote-actions {
+    gap: 6px;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .btn-quote-refresh,
+  .btn-quote-add-trigger,
+  .btn-quote-manage-trigger {
+    padding: 6px 10px;
+    font-size: 0.70rem;
+    gap: 4px;
+  }
+
+  .btn-quote-refresh svg,
+  .btn-quote-add-trigger svg,
+  .btn-quote-manage-trigger svg {
+    width: 12px;
+    height: 12px;
   }
 
   /* Toolbar de Biblioteca en móvil */
