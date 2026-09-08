@@ -69,6 +69,7 @@
   font-weight: 700;
   color: var(--color-primary-light, #A78BFA);
   opacity: 0.95;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 .quote-text {
@@ -81,6 +82,7 @@
   letter-spacing: -0.01em;
   transition: opacity var(--transition-normal);
   margin: 4px 0 6px 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65), 0 0 14px rgba(0, 0, 0, 0.45);
 }
 
 .quote-meta-row {
@@ -97,12 +99,14 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
   transition: opacity var(--transition-normal);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 .quote-source {
   font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.65);
   font-style: italic;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 .quote-actions {
