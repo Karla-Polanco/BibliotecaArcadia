@@ -67,16 +67,20 @@ export class ReaderManager {
     const container = typeof targetElement === 'string' ? document.getElementById(targetElement) : targetElement;
     container.innerHTML = '';
 
-    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
-    const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'always' : 'none';
+const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'always' : 'auto';
 
-    this.rendition = this.book.renderTo(container, {
-      width: '100%',
-      height: '100%',
-      flow: this.currentSettings.flowMode === 'paginated' ? 'paginated' : 'scrolled-doc',
-      spread: effectiveSpread,
-      allowScriptedContent: false // Seguridad contra XSS en libros
-    });
+const readerViewport = document.getElementById('reader-viewport');
+const vpWidth = readerViewport ? readerViewport.clientWidth : window.innerWidth;
+const vpHeight = readerViewport ? readerViewport.clientHeight : window.innerHeight;
+
+this.rendition = this.book.renderTo(container, {
+  width: vpWidth + 'px',
+  height: vpHeight + 'px',
+  flow: 'scrolled-doc',
+  spread: effectiveSpread,
+  allowScriptedContent: false
+});
 
     // 5. Inyectar estilos y temas en el iframe (inicial y en cada nuevo capítulo cargado)
     const activeGlobalTheme = document.documentElement.getAttribute('data-theme') || 'mystic-night';
@@ -129,9 +133,7 @@ export class ReaderManager {
     this.isNavigating = true;
     try {
       await this.rendition.next();
-      if (this.currentSettings && this.currentSettings.flowMode === 'scrolled-doc') {
         this._resetScrollTop();
-      }
     } catch (err) {
       console.warn('[ReaderManager] nextPage:', err);
     } finally {
@@ -149,9 +151,7 @@ export class ReaderManager {
     this.isNavigating = true;
     try {
       await this.rendition.prev();
-      if (this.currentSettings && this.currentSettings.flowMode === 'scrolled-doc') {
         this._resetScrollTop();
-      }
     } catch (err) {
       console.warn('[ReaderManager] prevPage:', err);
     } finally {
@@ -285,55 +285,10 @@ export class ReaderManager {
     return this.currentSettings;
   }
 
-  /**
-   * Alterna el modo de lectura entre 'paginated' y 'scrolled-doc' preservando la ubicación.
-   * @param {string} flowMode - 'paginated' o 'scrolled-doc'
-   */
-  async setFlowMode(flowMode) {
-    if (!this.currentBookId || !this.book) return;
-    if (this.currentSettings && this.currentSettings.flowMode === flowMode) return;
-
-    this.currentSettings = await ReaderSettings.save(this.currentBookId, { flowMode });
-
-    const targetCfi = this.currentCfi || undefined;
-    const container = document.getElementById('reader-content');
-
-    if (container && this.rendition) {
-      try {
-        container.innerHTML = '';
-        this.rendition.destroy();
-      } catch (_) {}
-
-      const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
-      const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'always' : 'none';
-
-      this.rendition = this.book.renderTo(container, {
-        width: '100%',
-        height: '100%',
-        flow: flowMode === 'scrolled-doc' ? 'scrolled-doc' : 'paginated',
-        spread: effectiveSpread,
-        allowScriptedContent: false
-      });
-
-      const activeGlobalTheme = document.documentElement.getAttribute('data-theme') || 'mystic-night';
-      if (this.rendition.hooks && this.rendition.hooks.content) {
-        this.rendition.hooks.content.register((contents) => {
-          ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
-          window.dispatchEvent(new CustomEvent('arcadia:reader-content-loaded', { detail: { contents } }));
-        });
-      }
-      ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
-
-      await annotationManager.attach(this.rendition, this.currentBookId);
-      floatingMenu.attach(this.rendition);
-
-      await this.rendition.display(targetCfi);
-
-      this.rendition.on('relocated', (location) => {
-        this._handleRelocated(location);
-      });
-    }
-
+/**
+    * Modo de lectura fijo en Desplazamiento (scroll continuo).
+    */
+  async setFlowMode() {
     return this.currentSettings;
   }
 

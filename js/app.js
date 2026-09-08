@@ -406,6 +406,7 @@ class App {
     const modal = document.getElementById('theme-modal');
     if (modal) {
       this.updateThemeModalActiveCard(this.themeManager.getTheme());
+      ScaleManager.initControls();
       modal.classList.add('active');
     }
   }

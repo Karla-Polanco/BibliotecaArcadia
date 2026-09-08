@@ -101,7 +101,7 @@ export class BookManager {
       margins: 'normal',
       contentWidth: 800,
       columns: 1,
-      flowMode: 'paginated',
+      flowMode: 'scrolled-doc',
       theme: 'system'
     });
 

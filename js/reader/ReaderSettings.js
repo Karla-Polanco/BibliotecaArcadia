@@ -2,8 +2,7 @@
  * ============================================================================
  * READER SETTINGS - GESTIÓN DE CONFIGURACIÓN AVANZADA POR LIBRO
  * ============================================================================
- * Maneja fuentes, tamaños, grosor, interlineado, modo de lectura (paginación vs scroll)
- * y temas visuales con persistencia global e individual e inyección en iframes.
+* Maneja fuentes, tamaños, grosor, interlineado y temas visuales con persistencia global e individual e inyección en iframes.
  */
 
 import { dbManager } from '../db.js';
@@ -15,7 +14,7 @@ export class ReaderSettings {
     fontWeight: 'normal', // 'normal' (400), 'medium' (600), 'bold' (800)
     lineHeight: 1.6,
     columns: 1,           // 1 o 2 columnas
-    flowMode: 'paginated', // 'paginated' o 'scrolled-doc'
+    flowMode: 'scrolled-doc', // Desplazamiento continuo (scroll)
     theme: 'inherit'      // 'inherit', 'mystic-night', 'lavender-light', 'paper', 'neutral', 'enchanted-forest', 'clear-sky', 'wine'
   };
 
@@ -33,9 +32,9 @@ export class ReaderSettings {
 
     try {
       const saved = await dbManager.get('readerSettings', bookId);
-      return { ...this.DEFAULT_SETTINGS, ...globalPref, ...(saved || {}), bookId };
+      return { ...this.DEFAULT_SETTINGS, ...globalPref, ...(saved || {}), bookId, flowMode: 'scrolled-doc' };
     } catch (e) {
-      return { ...this.DEFAULT_SETTINGS, ...globalPref, bookId };
+      return { ...this.DEFAULT_SETTINGS, ...globalPref, bookId, flowMode: 'scrolled-doc' };
     }
   }
 
@@ -79,8 +78,6 @@ export class ReaderSettings {
 
     // 2. Generar bloque CSS optimizado para el motor de paginación de epub.js
     const customCss = `
-      @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;0,7..72,800;1,7..72,400&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap');
-
       @font-face {
         font-family: 'OpenDyslexic';
         src: url('https://cdn.jsdelivr.net/npm/opendyslexic@1.0.3/dist/OpenDyslexic-Regular.otf') format('opentype');
@@ -171,32 +168,32 @@ export class ReaderSettings {
     try {
       rendition.themes.default({
         'html': {
-          'width': '100% !important',
-          'max-width': '100% !important',
-          'margin': '0 !important',
-          'padding': '0 !important',
-          'background': `${themeColors.bg} !important`,
-          'box-sizing': 'border-box !important',
-          'overflow-x': 'hidden !important'
+          'width': '100%',
+          'max-width': '100%',
+          'margin': '0',
+          'padding': '0',
+          'background': themeColors.bg,
+          'box-sizing': 'border-box',
+          'overflow-x': 'hidden'
         },
         'body': {
-          'margin': '0 !important',
-          'padding': '0 22px !important',
-          'color': `${themeColors.text} !important`,
-          'background': `${themeColors.bg} !important`,
-          'font-family': `${fontStack} !important`,
-          'font-size': `${settings.fontSize}px !important`,
-          'font-weight': `${fontWeightVal} !important`,
-          'line-height': `${settings.lineHeight} !important`,
-          'box-sizing': 'border-box !important',
-          'overflow-x': 'hidden !important',
-          'word-break': 'normal !important',
-          'overflow-wrap': 'break-word !important'
+          'margin': '0',
+          'padding': '0 22px',
+          'color': themeColors.text,
+          'background': themeColors.bg,
+          'font-family': fontStack,
+          'font-size': `${settings.fontSize}px`,
+          'font-weight': fontWeightVal,
+          'line-height': settings.lineHeight,
+          'box-sizing': 'border-box',
+          'overflow-x': 'hidden',
+          'word-break': 'normal',
+          'overflow-wrap': 'break-word'
         },
         'p, span, div, li, em, strong, b, i, blockquote, a': {
-          'font-family': `${fontStack} !important`,
-          'font-weight': `${fontWeightVal} !important`,
-          'color': `${themeColors.text} !important`
+          'font-family': fontStack,
+          'font-weight': fontWeightVal,
+          'color': themeColors.text
         }
       });
     } catch (_) {}
@@ -230,9 +227,9 @@ export class ReaderSettings {
 
     // 5. Configuración de columnas (spread)
     if (rendition.spread) {
-      const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
-      const effectiveSpread = (!isMobile && settings.columns === 2) ? 'always' : 'none';
-      rendition.spread(effectiveSpread);
+const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+const effectiveSpread = (!isMobile && settings.columns === 2) ? 'always' : 'auto';
+       rendition.spread(effectiveSpread);
     }
   }
 
@@ -313,7 +310,7 @@ export class ReaderSettings {
         accent: '#3182CE'
       };
     }
-    if (themeName === 'wine') {
+    if (themeName === 'wine' || themeName === 'wine-poetry') {
       return {
         bg: '#170B12',
         text: '#F5E9EC',

@@ -56,49 +56,34 @@ export class ScaleManager {
     this.updateControlsUI();
   }
 
-  /**
-   * Sincroniza los controles del modal de Ajustes con la escala activa.
-   */
+/**
+    * Sincroniza los controles del modal de Ajustes con la escala activa.
+    */
   static updateControlsUI() {
     const labelEl = document.getElementById('label-scale-percent');
     if (labelEl) {
       labelEl.textContent = `${this.currentScale}%`;
     }
-
-    document.querySelectorAll('.btn-ui-scale-preset').forEach(btn => {
-      const presetScale = parseInt(btn.dataset.scale);
-      btn.classList.toggle('active', presetScale === this.currentScale);
-    });
   }
 
   /**
-   * Vincula los botones de incremento, decremento y presets de escala.
-   */
+    * Vincula los controles de escala.
+    */
   static initControls() {
+    this.updateControlsUI();
     const btnDecrease = document.getElementById('btn-scale-decrease');
     const btnIncrease = document.getElementById('btn-scale-increase');
-
-    if (btnDecrease) {
+    if (btnDecrease && !btnDecrease.dataset.bound) {
+      btnDecrease.dataset.bound = '1';
       btnDecrease.addEventListener('click', () => {
         this.applyScale(this.currentScale - this.STEP);
       });
     }
-
-    if (btnIncrease) {
+    if (btnIncrease && !btnIncrease.dataset.bound) {
+      btnIncrease.dataset.bound = '1';
       btnIncrease.addEventListener('click', () => {
         this.applyScale(this.currentScale + this.STEP);
       });
     }
-
-    document.querySelectorAll('.btn-ui-scale-preset').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const val = parseInt(btn.dataset.scale);
-        if (!isNaN(val)) {
-          this.applyScale(val);
-        }
-      });
-    });
-
-    this.updateControlsUI();
   }
 }

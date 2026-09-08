@@ -133,10 +133,8 @@
 .reader-viewport {
   flex: 1;
   position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 16px 48px;
   box-sizing: border-box;
   background-color: var(--reader-bg, var(--color-background));
@@ -144,17 +142,16 @@
 
 #reader-content {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   position: relative;
   box-sizing: border-box;
-  overflow: hidden;
 }
 
 /* Prevenir scroll horizontal en epub.js (modo scrolled-doc) y ocultar barra de desplazamiento */
 #reader-content .epub-container,
 #reader-content .epub-view {
-  overflow-x: hidden !important;
-  scrollbar-width: none !important;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 #reader-content .epub-container::-webkit-scrollbar,
@@ -197,9 +194,8 @@
   right: 10px;
 }
 
-/* Ocultar botones laterales de cambio de página en modo Desplazamiento (scrolled-doc) */
-.reader-viewport.mode-scrolled .btn-reader-nav,
-.reader-container.mode-scrolled .btn-reader-nav {
+/* Ocultar botones laterales de cambio de página en modo Desplazamiento */
+.btn-reader-nav {
   display: none !important;
 }
 
@@ -454,7 +450,7 @@
   padding: 0 10px;
 }
 
-.reader-view.bars-hidden .reader-viewport.mode-paginated .reader-paginated-info {
+.reader-view.bars-hidden .reader-paginated-info {
   opacity: 0.65;
   visibility: visible;
 }
@@ -489,8 +485,9 @@
   max-width: calc(100vw - 28px);
   max-height: calc(100vh - var(--header-height) - 20px);
   max-height: calc(100dvh - var(--header-height) - 20px);
-  overflow-y: auto;
-  overscroll-behavior: contain;
+   overflow-y: auto;
+   overscroll-behavior: contain;
+   overflow-x: hidden;
   background-color: var(--color-surface-elevated, #1E1C2E);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg, 16px);
@@ -543,8 +540,7 @@
   gap: 8px;
 }
 
-#columns-options,
-#flow-mode-options {
+#columns-options, {
   grid-template-columns: repeat(2, 1fr);
 }
 
@@ -960,46 +956,8 @@
     padding: 4px 6px;
   }
 
-  /* Flechas centradas laterales para cambiar de hoja en móvil (Modo Paginación) */
+  /* Botones laterales eliminados - solo desplazamiento */
   .btn-reader-nav {
-    display: flex !important;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 30px;
-    height: 30px;
-    border-radius: var(--radius-full);
-    background-color: rgba(255, 255, 255, 0.2);
-    color: var(--color-text);
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 25;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-    opacity: 0.65;
-    transition: transform var(--transition-fast), opacity var(--transition-fast);
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .btn-reader-nav:active {
-    transform: translateY(-50%) scale(0.92);
-    opacity: 0.9;
-  }
-
-  .btn-reader-nav.nav-prev {
-    left: 8px;
-  }
-
-  .btn-reader-nav.nav-next {
-    right: 8px;
-  }
-
-  .btn-reader-nav svg {
-    width: 22px;
-    height: 22px;
-  }
-
-  .reader-viewport.mode-scrolled .btn-reader-nav {
     display: none !important;
   }
 

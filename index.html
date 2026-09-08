@@ -427,7 +427,7 @@
           d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
-      <span>Temas</span>
+      <span>Ajustes</span>
     </button>
   </nav>
 
@@ -508,7 +508,6 @@
 
           <!-- 2. Lavanda Claro -->
           <div class="theme-option-card" data-theme-value="lavender-light">
-            <span class="theme-card-badge">Recomendado</span>
             <div class="theme-card-name">Lavanda claro</div>
             <p class="theme-card-desc">Una combinación suave de blanco, lavanda y violeta. Limpio, delicado
               y pensado para el uso diario.</p>
@@ -579,45 +578,23 @@
 
       <!-- Preferencias y Elementos de la Interfaz -->
       <div class="settings-preferences-section settings-section-divider"
-        style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 16px; padding: 0 16px 16px 16px;">
-        <!-- 1. Tamaño de Letras y Zoom de la App -->
+        style="margin-top: 24px; padding: 28px 16px 16px 16px; border-top: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 16px;">
+        <!-- 1. Tamaño de Letras de la App -->
         <div class="settings-block">
           <div class="settings-row-space"
-            style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
+            style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
             <div>
               <h4 class="settings-section-subtitle"
                 style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0 0 4px 0;">
-                Tamaño de Letras y Zoom de la App</h4>
+                Tamaño de Letras de la App</h4>
               <p class="settings-section-desc" style="font-size: 0.75rem; color: var(--color-text-muted); margin: 0;">
                 Ajusta la escala visual y la tipografía general de la aplicación.</p>
             </div>
-            <div class="scale-stepper-wrapper"
-              style="display: flex; align-items: center; gap: 8px; background-color: var(--color-surface-secondary); padding: 4px 8px; border-radius: var(--radius-sm); border: 1px solid var(--color-border);">
-              <button id="btn-scale-decrease" class="btn-scale-step"
-                style="width: 28px; height: 28px; border-radius: 4px; background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: 1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;"
-                title="Reducir tamaño">−</button>
-              <span id="label-scale-percent" class="label-scale-value"
-                style="font-size: var(--text-sm); font-weight: bold; color: var(--color-primary-light); min-width: 48px; text-align: center;">100%</span>
-              <button id="btn-scale-increase" class="btn-scale-step"
-                style="width: 28px; height: 28px; border-radius: 4px; background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: 1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;"
-                title="Aumentar tamaño">+</button>
+            <div class="scale-stepper-wrapper">
+              <button id="btn-scale-decrease" class="btn-scale-step" title="Reducir tamaño" aria-label="Reducir tamaño">−</button>
+              <span id="label-scale-percent" class="label-scale-value">100%</span>
+              <button id="btn-scale-increase" class="btn-scale-step" title="Aumentar tamaño" aria-label="Aumentar tamaño">+</button>
             </div>
-          </div>
-
-          <!-- Presets de Escala -->
-          <div class="scale-presets-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
-            <button class="btn-ui-scale-preset" data-scale="90"
-              style="padding: 8px 10px; border-radius: var(--radius-sm); background: var(--color-surface-secondary); border: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center; transition: all var(--transition-fast);">Compacto
-              (90%)</button>
-            <button class="btn-ui-scale-preset active" data-scale="100"
-              style="padding: 8px 10px; border-radius: var(--radius-sm); background: var(--color-surface-secondary); border: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center; transition: all var(--transition-fast);">Normal
-              (100%)</button>
-            <button class="btn-ui-scale-preset" data-scale="115"
-              style="padding: 8px 10px; border-radius: var(--radius-sm); background: var(--color-surface-secondary); border: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center; transition: all var(--transition-fast);">Grande
-              (115%)</button>
-            <button class="btn-ui-scale-preset" data-scale="130"
-              style="padding: 8px 10px; border-radius: var(--radius-sm); background: var(--color-surface-secondary); border: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center; transition: all var(--transition-fast);">Muy
-              Grande (130%)</button>
           </div>
         </div>
 
@@ -685,8 +662,7 @@
         </button>
 
         <!-- Tabla de Contenidos -->
-        <button class="btn-reader-action" id="btn-reader-toc" title="Capítulos"
-          aria-label="Tabla de Contenidos">
+        <button class="btn-reader-action" id="btn-reader-toc" title="Capítulos" aria-label="Tabla de Contenidos">
           <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
           </svg>
@@ -714,13 +690,6 @@
 
     <!-- Lienzo de Lectura Central -->
     <div class="reader-viewport" id="reader-viewport">
-      <!-- Flecha Anterior -->
-      <button class="btn-reader-nav nav-prev" id="btn-reader-prev" aria-label="Página anterior">
-        <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-
       <!-- Contenedor del Libro Renderizado por epub.js -->
       <div id="reader-content"></div>
 
@@ -729,13 +698,6 @@
         <div class="loading-ring"></div>
         <span>Abriendo libro...</span>
       </div>
-
-      <!-- Flecha Siguiente -->
-      <button class="btn-reader-nav nav-next" id="btn-reader-next" aria-label="Página siguiente">
-        <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
 
       <!-- Overlay persistente para modo paginación -->
       <div class="reader-paginated-info" id="reader-paginated-info">
@@ -873,16 +835,7 @@
         </div>
       </div>
 
-      <!-- Modo de Lectura -->
-      <div class="settings-group">
-        <span class="settings-group-label">Modo de Lectura</span>
-        <div class="settings-btn-grid" id="flow-mode-options">
-          <button class="setting-pill-btn active" data-flow="paginated">Paginación</button>
-          <button class="setting-pill-btn" data-flow="scrolled-doc">Desplazamiento</button>
-        </div>
-      </div>
-
-      <!-- Columnas -->
+            <!-- Columnas -->
       <div class="settings-group" id="columns-settings-group">
         <span class="settings-group-label">Columnas</span>
         <div class="settings-btn-grid" id="columns-options">
@@ -900,15 +853,16 @@
             style="background-color: #111111; color: #F2F0F7;">Noche</div>
           <div class="reader-theme-chip" data-reader-theme="lavender-light"
             style="background-color: #FCFBFE; color: #201C30;">Día</div>
-          <div class="reader-theme-chip" data-reader-theme="paper" style="background-color: #F4F1EA; color: #292824;">Papel</div>
-          <div class="reader-theme-chip" data-reader-theme="neutral"
-            style="background-color: #252525; color: #F2F2F2;">Neutro</div>
+          <div class="reader-theme-chip" data-reader-theme="paper" style="background-color: #F4F1EA; color: #292824;">
+            Papel</div>
+          <div class="reader-theme-chip" data-reader-theme="neutral" style="background-color: #252525; color: #F2F2F2;">
+            Neutro</div>
           <div class="reader-theme-chip" data-reader-theme="enchanted-forest"
             style="background-color: #F5F0E6; color: #262922;">Bosque</div>
           <div class="reader-theme-chip" data-reader-theme="clear-sky"
             style="background-color: #EBF4FA; color: #132D48;">Cielo</div>
-          <div class="reader-theme-chip" data-reader-theme="wine"
-            style="background-color: #170B12; color: #F5E9EC;">Vino</div>
+          <div class="reader-theme-chip" data-reader-theme="wine" style="background-color: #170B12; color: #F5E9EC;">
+            Vino</div>
         </div>
       </div>
     </div>

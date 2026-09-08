@@ -24,7 +24,7 @@ body {
   font-family: var(--font-sans);
   background-color: var(--color-background);
   background-image: var(--theme-bg-pattern, none);
-  background-size: var(--theme-bg-size, auto);
+  background-size: var(--theme-bg-size, 200px 200px);
   background-position: center top;
   background-attachment: fixed;
   background-repeat: repeat;
@@ -216,8 +216,9 @@ ul, ol {
   width: 100% !important;
   max-width: 500px;
   max-height: 90vh !important;
-  overflow-y: auto !important;
-  margin: auto !important;
+   overflow-y: auto !important;
+   overflow-x: hidden !important;
+   margin: auto !important;
   transform: scale(0.95);
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }

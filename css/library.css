@@ -10,7 +10,7 @@
   background-image: var(--banner-bg-pattern), var(--banner-gradient, linear-gradient(135deg, #18132B 0%, #2A1F4D 100%));
   background-size: var(--banner-bg-size, auto), auto;
   background-position: center center, center center;
-  background-repeat: no-repeat, no-repeat;
+  background-repeat: no-repeat, repeat, no-repeat;
   border: 1px solid var(--banner-border, rgba(123, 107, 240, 0.25));
   border-radius: var(--radius-lg, 16px);
   padding: 24px 30px;
@@ -800,17 +800,54 @@
   display: none !important;
 }
 
-/* Presets de Escala y Zoom */
-.btn-ui-scale-preset:hover {
-  background-color: var(--color-surface-hover) !important;
-  color: var(--color-text) !important;
+/* Stepper de escala (− / +) */
+.scale-stepper-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--color-surface-secondary);
+  padding: 6px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
 }
 
-.btn-ui-scale-preset.active {
-  background-color: var(--color-primary-light) !important;
-  color: #FFFFFF !important;
-  border-color: var(--color-primary-light) !important;
-  box-shadow: 0 2px 8px var(--color-primary-glow);
+.btn-scale-step {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-size: 1.15rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  box-shadow: none;
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.btn-scale-step:hover {
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-primary-light);
+  color: var(--color-primary-light);
+}
+
+.btn-scale-step:focus,
+.btn-scale-step:focus-visible,
+.btn-scale-step:active {
+  outline: none;
+  box-shadow: none;
+}
+
+.scale-stepper-wrapper .label-scale-value {
+  font-size: var(--text-md);
+  font-weight: bold;
+  color: var(--color-primary-light);
+  min-width: 56px;
+  text-align: center;
 }
 
 /* Ocultar botón de descargar si la app ya está instalada o en standalone */
@@ -921,18 +958,6 @@
 .theme-option-card.selected {
   border-color: var(--color-primary-light);
   box-shadow: 0 0 0 3px var(--color-primary-glow);
-}
-
-.theme-card-badge {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  font-size: 0.7rem;
-  padding: 3px 8px;
-  border-radius: var(--radius-full);
-  background-color: var(--color-badge-bg);
-  color: var(--color-badge-text);
-  font-weight: var(--weight-bold);
 }
 
 .theme-card-name {

@@ -10,6 +10,7 @@ import { readerManager } from './ReaderManager.js';
 import { ReaderSettings } from './ReaderSettings.js';
 import { BookmarkManager } from './BookmarkManager.js';
 import { SearchManager } from './SearchManager.js';
+import { ScaleManager } from '../ui/ScaleManager.js';
 import { Toast } from '../ui/Toast.js';
 import { appState } from '../state.js';
 
@@ -62,12 +63,6 @@ export class ReaderView {
     if (backBtn) {
       backBtn.addEventListener('click', () => this.close());
     }
-
-    // 2. Botones de Navegación Lateral (Prev / Next)
-    const prevBtn = document.getElementById('btn-reader-prev');
-    const nextBtn = document.getElementById('btn-reader-next');
-    if (prevBtn) prevBtn.addEventListener('click', () => readerManager.prevPage());
-    if (nextBtn) nextBtn.addEventListener('click', () => readerManager.nextPage());
 
     // Botones de navegación de capítulo en la barra inferior
     const prevChapterBtn = document.getElementById('btn-footer-prev-chapter');
@@ -411,7 +406,7 @@ export class ReaderView {
     // Alternar barras y botones al pulsar en el fondo del visor
     viewport.addEventListener('click', (e) => {
       if (Date.now() - this.lastTouchTimestamp < 650) return;
-      if (e.target.closest('button, a, .btn-reader-nav, .btn-footer-chapter')) return;
+      if (e.target.closest('button, a, .btn-footer-chapter')) return;
 
       if (this.container) {
         this.container.classList.toggle('bars-hidden');
@@ -434,11 +429,8 @@ export class ReaderView {
     if (doc._arcadiaEventsAttached) return;
     doc._arcadiaEventsAttached = true;
 
-    const settings = readerManager.getSettings();
-    const isScrolledMode = settings && settings.flowMode === 'scrolled-doc';
-
     // Inyectar tarjeta al final del capítulo si estamos en modo Desplazamiento
-    if (isScrolledMode) {
+    if (false) {
       // this.injectChapterEndCard(doc, win); // Solicitado por el usuario: quitar el cuadro final
     }
 
@@ -568,29 +560,17 @@ export class ReaderView {
     doc.body.appendChild(card);
   }
 
-  /**
-   * Conmuta clases de modo de lectura en el viewport para controlar la visibilidad
-   * de los botones de cambio de hoja según sea Paginación o Desplazamiento.
-   */
-  updateFlowModeClasses(flowMode) {
-    const viewport = document.getElementById('reader-viewport');
-    if (viewport) {
-      const isPaginated = flowMode !== 'scrolled-doc';
-      viewport.classList.toggle('mode-paginated', isPaginated);
-      viewport.classList.toggle('mode-scrolled', !isPaginated);
-    }
-  }
-
-  /**
-   * Abre o cierra el panel de configuración del lector.
-   */
+/**
+    * Abre o cierra el panel de configuración del lector.
+    */
   toggleSettings(show) {
     if (!this.settingsPanelEl || !this.settingsBackdropEl) return;
 
-    const isOpen = show !== undefined ? show : !this.settingsPanelEl.classList.contains('open');
+const isOpen = show !== undefined ? show : !this.settingsPanelEl.classList.contains('open');
     if (isOpen) {
-      this.toggleToc(false); // Cerrar TOC si está abierto
+      this.toggleToc(false);
       this.syncSettingsUI(readerManager.getSettings());
+      ScaleManager.initControls();
       this.settingsPanelEl.classList.add('open');
       this.settingsBackdropEl.classList.add('open');
     } else {
@@ -626,23 +606,17 @@ export class ReaderView {
       btn.classList.toggle('active', parseFloat(btn.dataset.lh) === settings.lineHeight);
     });
 
-    // 5. Modo de Lectura (Paginación vs Desplazamiento)
-    document.querySelectorAll('#flow-mode-options [data-flow]').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.flow === (settings.flowMode || 'paginated'));
-    });
-    this.updateFlowModeClasses(settings.flowMode || 'paginated');
-
-    // 6. Columnas
+    // 4. Columnas
     document.querySelectorAll('#columns-options [data-col]').forEach(btn => {
       btn.classList.toggle('active', parseInt(btn.dataset.col) === settings.columns);
     });
 
-    // 7. Tema del lector
+    // 5. Tema del lector
     document.querySelectorAll('#reader-theme-options [data-reader-theme]').forEach(chip => {
       chip.classList.toggle('active', chip.dataset.readerTheme === (settings.theme || 'inherit'));
     });
 
-    // 8. Actualizar variables CSS del contenedor principal del lector para que coincida con el tema seleccionado
+    // 6. Actualizar variables CSS del contenedor principal del lector para que coincida con el tema seleccionado
     const effectiveTheme = settings.theme && settings.theme !== 'inherit' ? settings.theme : (document.documentElement.getAttribute('data-theme') || 'mystic-night');
     const themeColors = ReaderSettings._getThemeColors(effectiveTheme);
     if (this.container) {
@@ -704,17 +678,7 @@ export class ReaderView {
       });
     });
 
-    // 5. Modo de Lectura (Paginación / Desplazamiento)
-    document.querySelectorAll('#flow-mode-options [data-flow]').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const flow = btn.dataset.flow;
-        await readerManager.setFlowMode(flow);
-        const updated = readerManager.getSettings();
-        this.syncSettingsUI(updated);
-      });
-    });
-
-    // 6. Columnas
+    // 4. Columnas
     document.querySelectorAll('#columns-options [data-col]').forEach(btn => {
       btn.addEventListener('click', async () => {
         const cols = parseInt(btn.dataset.col);
@@ -723,7 +687,7 @@ export class ReaderView {
       });
     });
 
-    // 7. Tema del Lector
+    // 5. Tema del Lector
     document.querySelectorAll('#reader-theme-options [data-reader-theme]').forEach(chip => {
       chip.addEventListener('click', async () => {
         const theme = chip.dataset.readerTheme;
