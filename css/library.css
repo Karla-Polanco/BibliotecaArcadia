@@ -13,12 +13,12 @@
   background-repeat: no-repeat, repeat, no-repeat;
   border: 1px solid var(--banner-border, rgba(123, 107, 240, 0.25));
   border-radius: var(--radius-lg, 16px);
-  padding: 24px 30px;
+  padding: 16px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  margin-bottom: 32px;
+  gap: 16px;
+  margin-bottom: 20px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
@@ -58,7 +58,7 @@
 
 .quote-text {
   font-family: var(--font-serif, Georgia, serif);
-  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
   font-style: italic;
   font-weight: 500;
   color: #FFFFFF;
@@ -369,8 +369,8 @@
 .books-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: var(--space-xl) var(--space-lg);
-  margin-bottom: var(--space-2xl);
+  gap: 20px var(--space-lg);
+  margin-bottom: var(--space-lg);
 }
 
 .book-card {
@@ -660,132 +660,6 @@
 .list-status-badge.reading {
   background-color: var(--color-badge-bg);
   color: var(--color-badge-text);
-}
-
-/* --------------------------------------------------------------------------
-   5. BARRA ANCLADA / FLOTANTE DE LECTURA ACTUAL
-   -------------------------------------------------------------------------- */
-.current-reading-bar {
-  position: fixed;
-  bottom: var(--space-md);
-  right: var(--space-xl);
-  left: calc(var(--sidebar-width) + var(--space-xl));
-  background-color: var(--color-surface-elevated);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-sm) var(--space-lg);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-md);
-  box-shadow: var(--shadow-card);
-  z-index: var(--z-sticky);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  opacity: 0;
-  transition: left var(--transition-normal), transform var(--transition-normal), background-color var(--transition-normal), opacity 0.25s ease;
-}
-
-.current-reading-bar.bar-visible {
-  opacity: 1;
-}
-
-.current-reading-info {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  min-width: 0;
-}
-
-.current-reading-thumb {
-  width: 42px;
-  height: 58px;
-  border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #FFFFFF;
-  flex-shrink: 0;
-  box-shadow: 0 4px 10px var(--color-primary-glow);
-}
-
-.current-reading-details {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.current-reading-label {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--color-badge-text);
-  font-weight: var(--weight-bold);
-}
-
-.current-reading-title {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
-  color: var(--color-text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.current-reading-meta {
-  font-size: var(--text-xs);
-  color: var(--color-text-secondary);
-}
-
-.btn-continue-reading {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
-  color: #FFFFFF;
-  padding: 10px 22px;
-  border-radius: var(--radius-full);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-semibold);
-  white-space: nowrap;
-  box-shadow: 0 4px 14px var(--color-primary-glow);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.btn-continue-reading:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px var(--color-primary-glow);
-}
-
-.btn-continue-reading:active {
-  transform: translateY(0);
-}
-
-.btn-dismiss-reading-bar {
-  background: transparent;
-  border: none;
-  color: var(--color-text-muted);
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-sm);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  flex-shrink: 0;
-}
-
-.btn-dismiss-reading-bar:hover {
-  background-color: var(--color-surface-hover);
-  color: var(--color-text);
-}
-
-.current-reading-bar.hidden-by-setting {
-  display: none !important;
 }
 
 /* Stepper de escala (− / +) */

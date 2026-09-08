@@ -67,15 +67,15 @@ export class VocabularyView {
     const masteredCount = this.words.filter(w => w.mastered).length;
 
     this.container.innerHTML = `
-      <div class="vocab-header-panel" style="width: 100%; margin-bottom: 24px; padding: 24px; border-radius: var(--radius-md); background: linear-gradient(135deg, var(--color-surface), var(--color-surface-secondary)); border: 1px solid var(--color-border); border-left: 5px solid var(--color-primary-light);">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-bottom: 18px;">
+      <div class="vocab-header-panel" style="width: 100%; margin-bottom: 16px; padding: 16px; border-radius: var(--radius-md); background: linear-gradient(135deg, var(--color-surface), var(--color-surface-secondary)); border: 1px solid var(--color-border); border-left: 5px solid var(--color-primary-light);">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
           <div>
             <span style="font-size: 0.7rem; text-transform: uppercase; font-weight: bold; color: var(--color-primary-light); letter-spacing: 0.05em;">Cuaderno Léxico</span>
-            <h1 style="font-size: var(--text-xl); font-weight: bold; color: var(--color-text); margin: 4px 0;">Vocabulario y Fonética</h1>
+            <h1 style="font-size: var(--text-lg); font-weight: bold; color: var(--color-text); margin: 4px 0;">Vocabulario y Fonética</h1>
             <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin: 0;">Palabras descubiertas durante tus sesiones de lectura con pronunciación en voz alta.</p>
           </div>
           <button id="btn-add-word-manual" style="
-            padding: 8px 18px;
+            padding: 6px 14px;
             border-radius: var(--radius-sm);
             font-size: var(--text-xs);
             font-weight: bold;
@@ -93,23 +93,23 @@ export class VocabularyView {
 
         <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
           <!-- Filtros de Pestaña -->
-          <div style="display: flex; gap: 8px;">
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <button class="vocab-tab-btn ${this.activeTab === 'all' ? 'active' : ''}" data-tab="all" style="
-              padding: 6px 14px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
+              padding: 4px 10px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
               background-color: ${this.activeTab === 'all' ? 'var(--color-primary-light)' : 'var(--color-surface)'};
               color: ${this.activeTab === 'all' ? '#FFF' : 'var(--color-text-secondary)'};
               font-weight: bold;
             ">Todas (${totalCount})</button>
 
             <button class="vocab-tab-btn ${this.activeTab === 'learning' ? 'active' : ''}" data-tab="learning" style="
-              padding: 6px 14px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
+              padding: 4px 10px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
               background-color: ${this.activeTab === 'learning' ? 'var(--color-primary-light)' : 'var(--color-surface)'};
               color: ${this.activeTab === 'learning' ? '#FFF' : 'var(--color-text-secondary)'};
               font-weight: bold;
             ">Por aprender (${learningCount})</button>
 
             <button class="vocab-tab-btn ${this.activeTab === 'mastered' ? 'active' : ''}" data-tab="mastered" style="
-              padding: 6px 14px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
+              padding: 4px 10px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
               background-color: ${this.activeTab === 'mastered' ? 'var(--color-primary-light)' : 'var(--color-surface)'};
               color: ${this.activeTab === 'mastered' ? '#FFF' : 'var(--color-text-secondary)'};
               font-weight: bold;
@@ -117,10 +117,10 @@ export class VocabularyView {
           </div>
 
           <!-- Buscador de Vocabulario -->
-          <div style="position: relative; width: 220px; display: flex; align-items: center;">
+          <div style="position: relative; flex: 1 1 180px; min-width: 150px; max-width: 240px; display: flex; align-items: center;">
             <svg style="position: absolute; left: 9px; width: 14px; height: 14px; color: var(--color-text-muted); pointer-events: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             <input type="text" id="input-vocab-search" value="${this.escapeHtml(this.searchQuery)}" placeholder="Buscar término..." style="
-              width: 100%; padding: 7px 12px 7px 30px; border-radius: var(--radius-sm); background-color: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: var(--text-xs); outline: none; box-sizing: border-box;
+              width: 100%; padding: 5px 10px 5px 28px; border-radius: var(--radius-sm); background-color: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: var(--text-xs); outline: none; box-sizing: border-box;
             ">
           </div>
         </div>

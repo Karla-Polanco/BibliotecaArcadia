@@ -99,12 +99,7 @@
   }
 
   .main-content {
-    padding: var(--space-lg) var(--space-xl) calc(var(--reading-banner-height) + var(--space-xl));
-  }
-
-  .current-reading-bar {
-    right: var(--space-md);
-    left: calc(var(--sidebar-width) + var(--space-md));
+    padding: var(--space-lg) var(--space-xl) var(--space-xl);
   }
 
   .books-grid {
@@ -144,16 +139,16 @@
   }
 
   .main-content {
-    padding: var(--space-md) var(--space-md) calc(var(--mobile-nav-height) + var(--reading-banner-height) + var(--space-lg));
+    padding: var(--space-md) var(--space-md) calc(var(--mobile-nav-height) + var(--space-lg));
   }
 
   /* Banner literario en móvil */
   .quote-banner {
     flex-direction: column;
     align-items: flex-start;
-    padding: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
     gap: var(--space-sm);
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
   }
 
   .quote-text {
@@ -288,30 +283,6 @@
     width: 28px !important;
     height: 28px !important;
     padding: 0 !important;
-  }
-
-  /* Barra de lectura actual en móvil */
-  .current-reading-bar {
-    left: var(--space-sm);
-    right: var(--space-sm);
-    bottom: calc(var(--mobile-nav-height) + var(--space-xs));
-    padding: var(--space-xs) var(--space-sm);
-    border-radius: var(--radius-md);
-  }
-
-  .current-reading-thumb {
-    width: 36px;
-    height: 48px;
-  }
-
-  .current-reading-title {
-    max-width: 130px;
-    font-size: var(--text-xs);
-  }
-
-  .btn-continue-reading {
-    padding: 8px 14px;
-    font-size: var(--text-xs);
   }
 
   /* Modal de temas en móvil */

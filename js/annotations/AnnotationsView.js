@@ -125,18 +125,18 @@ export class AnnotationsView {
     this.container.className = 'annotations-feed-view';
     this.container.innerHTML = `
       <!-- Panel de Encabezado Superior (Igual al Cuaderno de Vocabulario) -->
-      <div class="annotations-header-panel" style="width: 100%; margin-bottom: 24px; padding: 24px; border-radius: var(--radius-md); background: linear-gradient(135deg, var(--color-surface), var(--color-surface-secondary)); border: 1px solid var(--color-border); border-left: 5px solid var(--color-primary-light);">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-bottom: 18px;">
+      <div class="annotations-header-panel" style="width: 100%; margin-bottom: 16px; padding: 16px; border-radius: var(--radius-md); background: linear-gradient(135deg, var(--color-surface), var(--color-surface-secondary)); border: 1px solid var(--color-border); border-left: 5px solid var(--color-primary-light);">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
           <div>
             <span style="font-size: 0.7rem; text-transform: uppercase; font-weight: bold; color: var(--color-primary-light); letter-spacing: 0.05em;">Cuaderno de Lectura</span>
-            <h1 style="font-size: var(--text-xl); font-weight: bold; color: var(--color-text); margin: 4px 0;">Notas y Subrayados</h1>
+            <h1 style="font-size: var(--text-lg); font-weight: bold; color: var(--color-text); margin: 4px 0;">Notas y Subrayados</h1>
             <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin: 0;">Citas destacadas, pasajes subrayados y anotaciones personales recopiladas durante tus lecturas.</p>
           </div>
 
           <!-- Filtro por Libro -->
-          <div style="display: flex; align-items: center; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px; min-width: 0; max-width: 100%;">
             <select id="select-filter-book" style="
-              padding: 7px 14px;
+              padding: 5px 10px;
               border-radius: var(--radius-sm);
               background-color: var(--color-surface);
               border: 1px solid var(--color-border);
@@ -145,6 +145,8 @@ export class AnnotationsView {
               font-weight: 500;
               outline: none;
               cursor: pointer;
+              min-width: 0;
+              max-width: 100%;
             ">
               <option value="all">Todos los libros</option>
               ${this.books.map(b => `<option value="${b.id}" ${b.id === this.selectedBookId ? 'selected' : ''}>${this.escapeHtml(b.title)}</option>`).join('')}
@@ -156,7 +158,7 @@ export class AnnotationsView {
           <!-- Filtros de Pestaña Horizontales -->
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <button class="annot-tab-btn ${this.activeType === 'all' ? 'active' : ''}" data-type-filter="all" style="
-              padding: 6px 14px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
+              padding: 4px 10px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
               background-color: ${this.activeType === 'all' ? 'var(--color-primary-light)' : 'var(--color-surface)'};
               color: ${this.activeType === 'all' ? '#FFF' : 'var(--color-text-secondary)'};
               font-weight: bold;
@@ -164,7 +166,7 @@ export class AnnotationsView {
             ">Todos (${totalCount})</button>
 
             <button class="annot-tab-btn ${this.activeType === 'highlight' ? 'active' : ''}" data-type-filter="highlight" style="
-              padding: 6px 14px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
+              padding: 4px 10px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
               background-color: ${this.activeType === 'highlight' ? 'var(--color-primary-light)' : 'var(--color-surface)'};
               color: ${this.activeType === 'highlight' ? '#FFF' : 'var(--color-text-secondary)'};
               font-weight: bold;
@@ -172,7 +174,7 @@ export class AnnotationsView {
             ">Resaltados (${highlightCount})</button>
 
             <button class="annot-tab-btn ${this.activeType === 'underline' ? 'active' : ''}" data-type-filter="underline" style="
-              padding: 6px 14px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
+              padding: 4px 10px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
               background-color: ${this.activeType === 'underline' ? 'var(--color-primary-light)' : 'var(--color-surface)'};
               color: ${this.activeType === 'underline' ? '#FFF' : 'var(--color-text-secondary)'};
               font-weight: bold;
@@ -180,7 +182,7 @@ export class AnnotationsView {
             ">Subrayados (${underlineCount})</button>
 
             <button class="annot-tab-btn ${this.activeType === 'note' ? 'active' : ''}" data-type-filter="note" style="
-              padding: 6px 14px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
+              padding: 4px 10px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
               background-color: ${this.activeType === 'note' ? 'var(--color-primary-light)' : 'var(--color-surface)'};
               color: ${this.activeType === 'note' ? '#FFF' : 'var(--color-text-secondary)'};
               font-weight: bold;
@@ -189,10 +191,10 @@ export class AnnotationsView {
           </div>
 
           <!-- Buscador de Notas y Citas -->
-          <div style="position: relative; width: 220px; display: flex; align-items: center;">
+          <div style="position: relative; flex: 1 1 180px; min-width: 150px; max-width: 240px; display: flex; align-items: center;">
             <svg style="position: absolute; left: 9px; width: 14px; height: 14px; color: var(--color-text-muted); pointer-events: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             <input type="text" id="input-annot-search" value="${this.escapeHtml(this.searchQuery)}" placeholder="Buscar en notas y citas..." style="
-              width: 100%; padding: 7px 12px 7px 30px; border-radius: var(--radius-sm); background-color: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: var(--text-xs); outline: none; box-sizing: border-box;
+              width: 100%; padding: 5px 10px 5px 28px; border-radius: var(--radius-sm); background-color: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: var(--text-xs); outline: none; box-sizing: border-box;
             ">
           </div>
         </div>

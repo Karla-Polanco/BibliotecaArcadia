@@ -70,16 +70,16 @@ export class QuotesView {
 
     this.container.innerHTML = `
       <!-- Panel de Encabezado Superior (Estilo Cuaderno Arcadia) -->
-      <div class="quotes-header-panel" style="width: 100%; margin-bottom: 24px; padding: 24px; border-radius: var(--radius-md); background: linear-gradient(135deg, var(--color-surface), var(--color-surface-secondary)); border: 1px solid var(--color-border); border-left: 5px solid var(--color-primary-light);">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-bottom: 18px;">
+      <div class="quotes-header-panel" style="width: 100%; margin-bottom: 16px; padding: 16px; border-radius: var(--radius-md); background: linear-gradient(135deg, var(--color-surface), var(--color-surface-secondary)); border: 1px solid var(--color-border); border-left: 5px solid var(--color-primary-light);">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
           <div>
             <span style="font-size: 0.7rem; text-transform: uppercase; font-weight: bold; color: var(--color-primary-light); letter-spacing: 0.05em;">Cuaderno Literario</span>
-            <h1 style="font-size: var(--text-xl); font-weight: bold; color: var(--color-text); margin: 4px 0;">Frases y Citas Literarias</h1>
+            <h1 style="font-size: var(--text-lg); font-weight: bold; color: var(--color-text); margin: 4px 0;">Frases y Citas Literarias</h1>
             <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin: 0;">Tu colección personal de reflexiones, citas célebres y pensamientos memorables.</p>
           </div>
 
           <button id="btn-add-quote-trigger" style="
-            padding: 8px 18px;
+            padding: 6px 14px;
             border-radius: var(--radius-sm);
             font-size: var(--text-xs);
             font-weight: bold;
@@ -101,7 +101,7 @@ export class QuotesView {
           <!-- Filtros de Pestaña -->
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <button class="quote-tab-btn ${this.activeTab === 'all' ? 'active' : ''}" data-tab="all" style="
-              padding: 6px 14px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
+              padding: 4px 10px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
               background-color: ${this.activeTab === 'all' ? 'var(--color-primary-light)' : 'var(--color-surface)'};
               color: ${this.activeTab === 'all' ? '#FFF' : 'var(--color-text-secondary)'};
               font-weight: bold;
@@ -109,7 +109,7 @@ export class QuotesView {
             ">Todas (${totalCount})</button>
 
             <button class="quote-tab-btn ${this.activeTab === 'favorites' ? 'active' : ''}" data-tab="favorites" style="
-              padding: 6px 14px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
+              padding: 4px 10px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
               background-color: ${this.activeTab === 'favorites' ? 'var(--color-primary-light)' : 'var(--color-surface)'};
               color: ${this.activeTab === 'favorites' ? '#FFF' : 'var(--color-text-secondary)'};
               font-weight: bold;
@@ -118,10 +118,10 @@ export class QuotesView {
           </div>
 
           <!-- Buscador de Frases -->
-          <div style="position: relative; width: 240px; display: flex; align-items: center;">
+          <div style="position: relative; flex: 1 1 180px; min-width: 150px; max-width: 260px; display: flex; align-items: center;">
             <svg style="position: absolute; left: 9px; width: 14px; height: 14px; color: var(--color-text-muted); pointer-events: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             <input type="text" id="input-quotes-search" value="${this.escapeHtml(this.searchQuery)}" placeholder="Buscar frase, autor o libro..." style="
-              width: 100%; padding: 7px 12px 7px 30px; border-radius: var(--radius-sm); background-color: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: var(--text-xs); outline: none; box-sizing: border-box;
+              width: 100%; padding: 5px 10px 5px 28px; border-radius: var(--radius-sm); background-color: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: var(--text-xs); outline: none; box-sizing: border-box;
             ">
           </div>
         </div>

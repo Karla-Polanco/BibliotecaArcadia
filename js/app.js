@@ -85,24 +85,6 @@ class App {
       );
     }
 
-    // 8. Vincular Botón "Continuar leyendo" de la barra inferior
-    const btnContinue = document.getElementById('btn-continue-reading');
-    if (btnContinue) {
-      btnContinue.addEventListener('click', () => {
-        const books = this.bookManager.getAllBooks();
-        if (books.length === 0) {
-          Toast.info('Tu biblioteca está vacía. Sube un libro (EPUB) para comenzar.');
-          document.getElementById('epub-file-input')?.click();
-          return;
-        }
-
-        const currentId = appState.get('currentReadingId') || books[0].id;
-        if (currentId && this.readerView) {
-          this.readerView.open(currentId);
-        }
-      });
-    }
-
     // 9. Vincular Controles de Barra de Herramientas y Subida
     this.initToolbarControls();
 
@@ -111,7 +93,6 @@ class App {
 
     // 11. Vincular Modal de Selector de Temas y Ajustes
     this.initThemeModal();
-    this.initReadingBarPreferences();
 
     // 12. Restaurar última vista, libro o sección activa al recargar
     await this.restoreLastState();
@@ -420,52 +401,6 @@ class App {
     document.querySelectorAll('.theme-option-card').forEach(card => {
       card.classList.toggle('selected', card.dataset.themeValue === activeTheme);
     });
-  }
-
-  /**
-   * Inicializa la preferencia de visibilidad para la barra inferior de "Lectura Actual".
-   */
-  initReadingBarPreferences() {
-    const readingBar = document.getElementById('current-reading-bar');
-    const toggleInput = document.getElementById('toggle-reading-bar');
-    const dismissBtn = document.getElementById('btn-dismiss-reading-bar');
-
-    const isVisible = localStorage.getItem('arcadia_show_reading_bar') !== 'false';
-
-    if (readingBar) {
-      readingBar.classList.toggle('hidden-by-setting', !isVisible);
-      if (isVisible) {
-        readingBar.classList.add('bar-visible');
-      }
-    }
-    if (toggleInput) {
-      toggleInput.checked = isVisible;
-      toggleInput.addEventListener('change', (e) => {
-        const show = e.target.checked;
-        localStorage.setItem('arcadia_show_reading_bar', show ? 'true' : 'false');
-        if (readingBar) {
-          readingBar.classList.toggle('hidden-by-setting', !show);
-        }
-        if (show) {
-          Toast.success('Barra de lectura actual activada.');
-        } else {
-          Toast.info('Barra de lectura actual oculta.');
-        }
-      });
-    }
-
-    if (dismissBtn) {
-      dismissBtn.addEventListener('click', () => {
-        localStorage.setItem('arcadia_show_reading_bar', 'false');
-        if (readingBar) {
-          readingBar.classList.add('hidden-by-setting');
-        }
-        if (toggleInput) {
-          toggleInput.checked = false;
-        }
-        Toast.info('Barra de lectura oculta. Puedes volver a activarla en Ajustes.');
-      });
-    }
   }
 
   /**

@@ -49,6 +49,7 @@
   width: 100%;
   max-width: 220px;
   cursor: default;
+  container-type: inline-size;
   user-select: none;
 }
 
@@ -91,12 +92,16 @@
 
 .brand-wordmark {
   font-family: 'Cinzel Decorative', 'Cinzel', 'Playfair Display', Georgia, serif;
-  font-size: 2.15rem;
+  font-size: 1.85rem;
+  font-size: 12.5cqw;
   font-weight: 700;
-  letter-spacing: 0.14em;
-  text-indent: 0.14em;
+  letter-spacing: 0.08em;
+  text-indent: 0.08em;
   margin: 4px 0 6px 0;
   line-height: 1.05;
+  max-width: 100%;
+  text-align: center;
+  white-space: nowrap;
   background: var(--brand-title-gradient, linear-gradient(180deg, #FFFFFF 0%, #E6E1F5 50%, #C4B9FC 100%));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -282,7 +287,7 @@
 
 .main-content {
   flex: 1;
-  padding: var(--space-xl) var(--space-2xl) calc(var(--reading-banner-height) + var(--space-2xl));
+  padding: var(--space-xl) var(--space-2xl) var(--space-xl);
   max-width: 1540px;
   width: 100%;
   margin: 0 auto;

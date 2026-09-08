@@ -353,39 +353,6 @@
         <section id="books-container" class="books-grid" aria-label="Catálogo de libros"></section>
       </div>
 
-      <!-- ====================================================================
-           4. BARRA ANCLADA DE LECTURA ACTUAL
-           ==================================================================== -->
-      <aside class="current-reading-bar" id="current-reading-bar" aria-label="Lectura en curso">
-        <div class="current-reading-info">
-          <div class="current-reading-thumb" id="current-reading-thumb">
-            <svg style="width: 22px; height: 22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
-          </div>
-          <div class="current-reading-details">
-            <span class="current-reading-label">Lectura actual</span>
-            <h3 class="current-reading-title" id="current-reading-title">Sin lectura en curso</h3>
-            <span class="current-reading-meta" id="current-reading-meta">Sube un libro para comenzar</span>
-          </div>
-        </div>
-
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <button class="btn-continue-reading" id="btn-continue-reading">
-            <span>Continuar leyendo</span>
-            <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
-          <button class="btn-dismiss-reading-bar" id="btn-dismiss-reading-bar"
-            title="Ocultar barra de lectura actual (puedes reactivarla en Ajustes)" aria-label="Ocultar barra">
-            <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-      </aside>
     </main>
   </div>
 
@@ -595,26 +562,6 @@
           </div>
         </div>
 
-        <!-- 2. Visibilidad de Barra de Lectura Actual -->
-        <div class="settings-block-compact" style="display: flex; flex-direction: column; gap: 6px;">
-          <h4 class="settings-section-subtitle"
-            style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0;">
-            Elementos de la Biblioteca</h4>
-          <label class="setting-toggle-card"
-            style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 16px; border-radius: var(--radius-md); background-color: var(--color-surface-secondary); border: 1px solid var(--color-border); cursor: pointer; transition: background-color var(--transition-fast);">
-            <div class="setting-toggle-info" style="display: flex; flex-direction: column; gap: 2px;">
-              <span class="setting-toggle-title"
-                style="font-size: var(--text-sm); font-weight: bold; color: var(--color-text);">Barra inferior de
-                «Lectura Actual»</span>
-              <span class="setting-toggle-desc" style="font-size: 0.75rem; color: var(--color-text-muted);">Muestra la
-                barra flotante con el libro en progreso y el botón «Continuar leyendo».</span>
-            </div>
-            <div class="setting-toggle-action" style="flex-shrink: 0; display: flex; align-items: center;">
-              <input type="checkbox" id="toggle-reading-bar" class="checkbox-reading-bar" checked
-                style="width: 20px; height: 20px; accent-color: var(--color-primary-light); cursor: pointer;">
-            </div>
-          </label>
-        </div>
       </div>
     </div>
   </div>

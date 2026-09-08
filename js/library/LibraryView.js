@@ -157,23 +157,7 @@ export class LibraryView {
       }
     }
 
-    // Actualizar barra inferior de lectura en curso
-    const titleEl = document.getElementById('current-reading-title');
-    const metaEl = document.getElementById('current-reading-meta');
-    const thumbEl = document.getElementById('current-reading-thumb');
-
-    if (totalCount === 0) {
-      if (titleEl) titleEl.textContent = 'Sin lectura en curso';
-      if (metaEl) metaEl.textContent = 'Sube un libro (EPUB) para comenzar';
-      if (thumbEl) {
-        thumbEl.innerHTML = `
-          <svg style="width: 22px; height: 22px; opacity: 0.5;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-          </svg>
-        `;
-        thumbEl.style.background = 'var(--color-surface)';
-      }
-    } else {
+    if (totalCount > 0) {
       const currentId = appState.get('currentReadingId');
       const readingBook = books.find(b => b.id === currentId) || books[0];
       if (readingBook) {
@@ -947,30 +931,10 @@ export class LibraryView {
   }
 
   /**
-   * Actualiza el libro activo en la barra inferior de lectura actual.
+   * Registra el libro activo como lectura en curso.
    */
   selectCurrentBook(book) {
     appState.set('currentReadingId', book.id);
-    const titleEl = document.getElementById('current-reading-title');
-    const metaEl = document.getElementById('current-reading-meta');
-    const thumbEl = document.getElementById('current-reading-thumb');
-
-    if (titleEl) titleEl.textContent = book.title;
-    if (metaEl) metaEl.textContent = `${book.author} · ${book.progress || 0}% leído`;
-    if (thumbEl) {
-      if (book.coverDataUrl) {
-        thumbEl.innerHTML = `<img src="${book.coverDataUrl}" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">`;
-      } else {
-        thumbEl.innerHTML = `
-          <svg style="width: 22px; height: 22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-          </svg>
-        `;
-        thumbEl.style.background = book.coverGradient || 'var(--banner-gradient)';
-      }
-    }
-    const readingBar = document.getElementById('current-reading-bar');
-    if (readingBar) readingBar.classList.add('bar-visible');
   }
 
   getStatusLabel(status) {
