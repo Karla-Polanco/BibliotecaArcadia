@@ -99,8 +99,9 @@ export class ReaderSettings {
       }
 
       body {
-        margin: 0 !important;
-        padding: 0 22px !important;
+        margin: 0 auto !important;
+        max-width: 760px !important;
+        padding: 0 24px !important;
         font-family: ${fontStack} !important;
         font-size: ${settings.fontSize}px !important;
         font-weight: ${fontWeightVal} !important;

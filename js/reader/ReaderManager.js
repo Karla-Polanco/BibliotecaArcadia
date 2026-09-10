@@ -70,17 +70,16 @@ export class ReaderManager {
 const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
 const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'always' : 'auto';
 
-const readerViewport = document.getElementById('reader-viewport');
-const vpWidth = readerViewport ? readerViewport.clientWidth : window.innerWidth;
-const vpHeight = readerViewport ? readerViewport.clientHeight : window.innerHeight;
+    const vpWidth = container.clientWidth || (document.getElementById('reader-viewport')?.clientWidth || window.innerWidth) - 48;
+    const vpHeight = (document.getElementById('reader-viewport')?.clientHeight || window.innerHeight) - 48;
 
-this.rendition = this.book.renderTo(container, {
-  width: vpWidth + 'px',
-  height: vpHeight + 'px',
-  flow: 'scrolled-doc',
-  spread: effectiveSpread,
-  allowScriptedContent: false
-});
+    this.rendition = this.book.renderTo(container, {
+      width: Math.min(vpWidth, 760) + 'px',
+      height: vpHeight + 'px',
+      flow: 'scrolled-doc',
+      spread: effectiveSpread,
+      allowScriptedContent: false
+    });
 
     // 5. Inyectar estilos y temas en el iframe (inicial y en cada nuevo capítulo cargado)
     const activeGlobalTheme = document.documentElement.getAttribute('data-theme') || 'mystic-night';

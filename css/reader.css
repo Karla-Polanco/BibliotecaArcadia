@@ -135,16 +135,21 @@
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 16px 48px;
+  padding: 24px 24px;
   box-sizing: border-box;
   background-color: var(--reader-bg, var(--color-background));
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 #reader-content {
   width: 100%;
+  max-width: 760px;
   min-height: 100%;
   position: relative;
   box-sizing: border-box;
+  margin: 0 auto;
 }
 
 /* Prevenir scroll horizontal en epub.js (modo scrolled-doc) y ocultar barra de desplazamiento */
