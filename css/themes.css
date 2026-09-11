@@ -47,7 +47,9 @@
     /* Marca Tipográfica Emblemática */
     --brand-eyebrow-color: #AEBEFF;
     --brand-rule-color: rgba(113, 140, 255, 0.32);
-    --brand-star-color: #E8B96A;
+    --brand-star-color: #718CFF;
+    --brand-icon-color: #718CFF;
+    --brand-icon-ribbon: #AEBEFF;
 
     --brand-title-gradient: linear-gradient(180deg, #FFFFFF 0%, #DCE7FF 45%, #9AAEFF 78%, #7768D8 100%);
     --brand-title-shadow: rgba(87, 107, 255, 0.42);
@@ -105,7 +107,9 @@
     /* Marca Tipográfica Emblemática */
     --brand-eyebrow-color: #1D5C96;
     --brand-rule-color: rgba(37, 99, 235, 0.35);
-    --brand-star-color: #D79B32;
+    --brand-star-color: #1D5C96;
+    --brand-icon-color: #1D5C96;
+    --brand-icon-ribbon: #2563EB;
 
     --brand-title-gradient: linear-gradient(180deg, #123359 0%, #1D5C96 55%, #2563EB 100%);
     --brand-title-shadow: rgba(37, 99, 235, 0.25);
@@ -162,7 +166,9 @@
     /* Marca Tipográfica Emblemática */
     --brand-eyebrow-color: #0D2818;
     --brand-rule-color: rgba(34, 125, 72, 0.4);
-    --brand-star-color: #D97706;
+    --brand-star-color: #227D48;
+    --brand-icon-color: #1B5634;
+    --brand-icon-ribbon: #38A169;
     --brand-title-gradient: linear-gradient(180deg, #091C11 0%, #174E2E 50%, #227D48 100%);
     --brand-title-shadow: rgba(34, 125, 72, 0.25);
 
@@ -218,7 +224,9 @@
     /* Marca Tipográfica Emblemática */
     --brand-eyebrow-color: #271E56;
     --brand-rule-color: rgba(108, 92, 231, 0.35);
-    --brand-star-color: #D97706;
+    --brand-star-color: #6C5CE7;
+    --brand-icon-color: #5241B0;
+    --brand-icon-ribbon: #8B5CF6;
     --brand-title-gradient: linear-gradient(180deg, #171135 0%, #271E56 50%, #6C5CE7 100%);
     --brand-title-shadow: rgba(108, 92, 231, 0.25);
 
@@ -272,7 +280,9 @@
     /* Marca Tipográfica Emblemática */
     --brand-eyebrow-color: #D5A15D;
     --brand-rule-color: rgba(213, 161, 93, 0.34);
-    --brand-star-color: #D5A15D;
+    --brand-star-color: #C47791;
+    --brand-icon-color: #A94A68;
+    --brand-icon-ribbon: #C47791;
 
     --brand-title-gradient: linear-gradient(180deg, #FFF7F3 0%, #F0DCE1 48%, #D39AAE 78%, #C47791 100%);
     --brand-title-shadow: rgba(169, 74, 104, 0.30);

@@ -1,31 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 20 20" width="100%" height="100%">
   <defs>
-    <!-- Gradiente azul oscuro profundo y elegante -->
-    <linearGradient id="darkBlueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1E3A8A"/>
-      <stop offset="45%" stop-color="#0F172A"/>
-      <stop offset="100%" stop-color="#030712"/>
+    <!-- Gradiente de estrellas luminosas (con más detalle) -->
+    <linearGradient id="starGrad" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#E2E8F0"/>
+      <stop offset="30%" stop-color="#93C5FD"/>
+      <stop offset="60%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1E3A8A"/>
     </linearGradient>
-    <!-- Brillo sutil interno azul real -->
-    <linearGradient id="innerSparkle" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#3B82F6"/>
-      <stop offset="100%" stop-color="#1D4ED8"/>
+
+    <!-- Gradiente para el borde (efecto de volumen/brillo metálico) -->
+    <linearGradient id="starStrokeGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#60A5FA"/>
+      <stop offset="50%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#93C5FD"/>
     </linearGradient>
-    <filter id="subtleGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.5"/>
-    </filter>
   </defs>
 
-  <!-- Estrella principal de cuatro puntas (curvas cóncavas armónicas) -->
-  <path d="M 256,16 C 256,156 356,256 496,256 C 356,256 256,356 256,496 C 256,356 156,256 16,256 C 156,256 256,156 256,16 Z" 
-        fill="url(#darkBlueGradient)" 
-        filter="url(#subtleGlow)" />
-
-  <!-- Estrella interior con brillo sutil -->
-  <path d="M 256,96 C 256,192 320,256 416,256 C 320,256 256,320 256,416 C 256,320 192,256 96,256 C 192,256 256,192 256,96 Z" 
-        fill="url(#innerSparkle)" 
-        opacity="0.32" />
-
-  <!-- Núcleo central luminoso -->
-  <circle cx="256" cy="256" r="16" fill="#60A5FA" opacity="0.4" />
+  <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.73 1.73 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.73 1.73 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.73 1.73 0 0 0 3.407 2.31zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z" 
+        fill="url(#starGrad)" stroke="url(#starStrokeGrad)" stroke-width="0.3" stroke-linejoin="round"/>
 </svg>

@@ -24,8 +24,8 @@
 
   <!-- PWA Web App Manifest e Iconos -->
   <link rel="manifest" href="manifest.json">
-  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
-  <link rel="apple-touch-icon" href="assets/icons/favicon.svg">
+  <link rel="icon" id="app-favicon" type="image/svg+xml" href="assets/icons/favicon.svg?v=6">
+  <link rel="apple-touch-icon" href="assets/icons/favicon.svg?v=6">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Arcadia">
@@ -48,7 +48,6 @@
 </head>
 
 <body>
-
   <!-- ========================================================================
        TOPBAR EXCLUSIVA PARA MÓVIL
        ======================================================================== -->
@@ -59,9 +58,20 @@
       </svg>
     </button>
     <div class="mobile-logo-wrap" style="display: flex; align-items: center; gap: 8px;">
-      <span class="brand-star" style="font-size: 0.75rem; color: var(--brand-star-color, #E5A93C);">✦</span>
+      <span class="brand-ornament-top" style="margin: 0; color: var(--brand-icon-color, var(--brand-star-color, #718CFF));">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" class="bi bi-stars brand-icon-svg" viewBox="0 0 16 16" aria-hidden="true">
+          <defs>
+            <linearGradient id="logoStarGrad" x1="10%" y1="0%" x2="90%" y2="100%">
+              <stop offset="0%" stop-color="var(--color-primary-light)"/>
+              <stop offset="50%" stop-color="var(--color-secondary)"/>
+              <stop offset="100%" stop-color="var(--color-primary)"/>
+            </linearGradient>
+          </defs>
+          <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.73 1.73 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.73 1.73 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.73 1.73 0 0 0 3.407 2.31zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z" 
+            fill="url(#logoStarGrad)"/>
+        </svg>
+      </span>
       <span class="brand-wordmark" style="font-size: 1.35rem; margin: 0; line-height: 1;">ARCADIA</span>
-      <span class="brand-star" style="font-size: 0.75rem; color: var(--brand-star-color, #E5A93C);">✦</span>
     </div>
     <button class="btn-upload-epub" id="mobile-upload-trigger" style="padding: 6px 12px; font-size: var(--text-xs);"
       aria-label="Subir libro">
@@ -85,7 +95,17 @@
       <div class="sidebar-header">
         <div class="brand-typography">
           <div class="brand-ornament-top">
-            <span class="brand-star">✦</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" class="bi bi-stars brand-icon-svg" viewBox="0 0 16 16" aria-hidden="true">
+              <defs>
+                <linearGradient id="logoStarGradSide" x1="10%" y1="0%" x2="90%" y2="100%">
+                  <stop offset="0%" stop-color="var(--color-primary-light)"/>
+                  <stop offset="50%" stop-color="var(--color-secondary)"/>
+                  <stop offset="100%" stop-color="var(--color-primary)"/>
+                </linearGradient>
+              </defs>
+              <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.73 1.73 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.73 1.73 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.73 1.73 0 0 0 3.407 2.31zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z" 
+                fill="url(#logoStarGradSide)"/>
+            </svg>
           </div>
           <div class="brand-eyebrow-row">
             <span class="brand-rule"></span>
@@ -93,11 +113,6 @@
             <span class="brand-rule"></span>
           </div>
           <h1 class="brand-wordmark">ARCADIA</h1>
-          <div class="brand-footer-row">
-            <span class="brand-rule"></span>
-            <span class="brand-star">✦</span>
-            <span class="brand-rule"></span>
-          </div>
         </div>
       </div>
 
@@ -396,48 +411,106 @@
   </nav>
 
   <!-- ==============================
-       MODAL DE ESTADOS DE LECTURA
+       MODAL DE ESTADOS DE LECTURA RENOVADO
        ============================== -->
   <div class="modal-overlay" id="states-modal" role="dialog" aria-modal="true" aria-labelledby="modal-states-title">
-    <div class="modal-card" style="max-width: 320px;">
+    <div class="modal-card">
       <div class="modal-header">
-        <h3 class="modal-title" id="modal-states-title">Estado de lectura</h3>
+        <div class="states-header-group">
+          <div class="states-header-icon">
+            <svg style="width: 22px; height: 22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          </div>
+          <div class="states-header-titles">
+            <h3 class="modal-title" id="modal-states-title">Estado de lectura</h3>
+            <span class="modal-subtitle">Filtra tus libros según tu progreso</span>
+          </div>
+        </div>
         <button class="modal-close-btn" id="modal-states-close-btn" aria-label="Cerrar modal">
           <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
-      <div class="modal-body" style="padding: 16px; display: flex; flex-direction: column; gap: 8px;">
-        <a href="#to_read" class="nav-item" data-nav-filter="to_read"
-          style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: var(--radius-md); background: var(--color-surface-secondary); text-decoration: none; color: var(--color-text);">
-          <span>Por leer</span>
-          <span class="nav-badge" id="badge-to-read"
-            style="background: var(--color-primary-light); color: #fff; padding: 2px 8px; border-radius: 999px; font-size: 0.75rem;">0</span>
+      <div class="states-modal-body">
+        <!-- 1. Por leer -->
+        <a href="#to_read" class="state-option-card" data-nav-filter="to_read">
+          <div class="state-option-left">
+            <div class="state-icon-badge state-badge-to-read">
+              <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div class="state-option-info">
+              <span class="state-option-name">Por leer</span>
+              <span class="state-option-desc">Libros pendientes en tu lista</span>
+            </div>
+          </div>
+          <div class="state-option-right">
+            <span class="state-count-pill" id="badge-to-read">0</span>
+            <svg class="state-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
         </a>
-        <a href="#reading" class="nav-item" data-nav-filter="reading"
-          style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: var(--radius-md); background: var(--color-surface-secondary); text-decoration: none; color: var(--color-text);">
-          <span>En lectura</span>
-          <span class="nav-badge" id="badge-reading"
-            style="background: var(--color-primary-light); color: #fff; padding: 2px 8px; border-radius: 999px; font-size: 0.75rem;">0</span>
+
+        <!-- 2. En lectura -->
+        <a href="#reading" class="state-option-card" data-nav-filter="reading">
+          <div class="state-option-left">
+            <div class="state-icon-badge state-badge-reading">
+              <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <div class="state-option-info">
+              <span class="state-option-name">En lectura</span>
+              <span class="state-option-desc">Libros que estás leyendo actualmente</span>
+            </div>
+          </div>
+          <div class="state-option-right">
+            <span class="state-count-pill" id="badge-reading">0</span>
+            <svg class="state-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
         </a>
-        <a href="#completed" class="nav-item" data-nav-filter="completed"
-          style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: var(--radius-md); background: var(--color-surface-secondary); text-decoration: none; color: var(--color-text);">
-          <span>Completados</span>
-          <span class="nav-badge" id="badge-completed"
-            style="background: var(--color-primary-light); color: #fff; padding: 2px 8px; border-radius: 999px; font-size: 0.75rem;">0</span>
+
+        <!-- 3. Completados -->
+        <a href="#completed" class="state-option-card" data-nav-filter="completed">
+          <div class="state-option-left">
+            <div class="state-icon-badge state-badge-completed">
+              <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div class="state-option-info">
+              <span class="state-option-name">Completados</span>
+              <span class="state-option-desc">Lecturas finalizadas con éxito</span>
+            </div>
+          </div>
+          <div class="state-option-right">
+            <span class="state-count-pill" id="badge-completed">0</span>
+            <svg class="state-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
         </a>
       </div>
     </div>
   </div>
 
   <!-- ========================================================================
-       MODAL DE SELECCIÓN DE TEMAS (FIEL A LA REFERENCIA VISUAL)
+       MODAL DE SELECCIÓN DE TEMAS (RENOVADO Y VISUALMENTE ENRIQUECIDO)
        ======================================================================== -->
   <div class="modal-overlay" id="theme-modal" role="dialog" aria-modal="true" aria-labelledby="modal-theme-title">
     <div class="modal-card">
       <div class="modal-header">
-        <h3 class="modal-title" id="modal-theme-title">Ajustes</h3>
+        <div>
+          <h3 class="modal-title" id="modal-theme-title">Ajustes de Apariencia</h3>
+          <p style="font-size: 0.78rem; color: var(--color-text-secondary); margin: 3px 0 0 0;">Personaliza los temas y la escala visual de la biblioteca</p>
+        </div>
         <button class="modal-close-btn" id="modal-close-btn" aria-label="Cerrar modal">
           <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -446,96 +519,129 @@
       </div>
 
       <!-- Seccion: Apariencia y Sistema de Temas -->
-      <div class="settings-subsection" style="padding: 0 16px;">
-        <h4 class="settings-section-subtitle"
-          style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0 0 4px 0;">
-          Apariencia y Sistema de Temas</h4>
-        <p class="settings-section-desc"
-          style="font-size: 0.75rem; color: var(--color-text-muted); margin: 0 0 16px 0;">Selecciona la paleta visual
-          para la interfaz general
-          de la biblioteca.</p>
+      <div class="settings-subsection" style="padding: 0 4px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+          <div>
+            <h4 class="settings-section-subtitle"
+              style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0 0 2px 0;">
+              Paleta y Sistema de Temas</h4>
+            <p class="settings-section-desc" style="font-size: 0.75rem; color: var(--color-text-muted); margin: 0;">
+              Selecciona el ambiente estético que mejor se adapte a tu momento de lectura.</p>
+          </div>
+        </div>
+
         <div class="theme-options-grid">
 
-          <!-- 1. Nocturno Mistico -->
+          <!-- 1. Nocturno Místico -->
           <div class="theme-option-card" data-theme-value="mystic-night">
-            <div class="theme-card-name">Nocturno místico</div>
-            <p class="theme-card-desc">Un fondo oscuro y profundo con acentos azul y violeta.
-              Elegante, inmersivo y cómodo para usar de noche.</p>
-            <div class="theme-swatches">
-              <div class="color-swatch swatch-mn-1" title="Fondo Nocturno"></div>
-              <div class="color-swatch swatch-mn-2" title="Azul Oscuro"></div>
-              <div class="color-swatch swatch-mn-3" title="Violeta"></div>
-              <div class="color-swatch swatch-mn-4" title="Azul Principal"></div>
+            <div class="theme-card-body">
+              <div class="theme-card-header">
+                <span class="theme-badge-tag tag-mn">✦ Nocturno místico</span>
+                <span class="theme-active-pill">✓ Activo</span>
+              </div>
+              <p class="theme-card-desc">Fondo oscuro y profundo con acentos azul y violeta. Elegante, inmersivo y cómodo para leer de noche.</p>
+              <div class="theme-swatches-wrap">
+                <div class="theme-swatches">
+                  <div class="color-swatch swatch-mn-1" title="Fondo Oscuro (#02040B)"></div>
+                  <div class="color-swatch swatch-mn-2" title="Azul Profundo (#101A45)"></div>
+                  <div class="color-swatch swatch-mn-3" title="Violeta Místico (#7356D8)"></div>
+                  <div class="color-swatch swatch-mn-4" title="Azul Acento (#3156C9)"></div>
+                </div>
+              </div>
             </div>
-            <span class="theme-card-footer-note">Ideal para ambientes oscuros y lectura nocturna</span>
           </div>
 
           <!-- 2. Lavanda Claro -->
           <div class="theme-option-card" data-theme-value="lavender-light">
-            <div class="theme-card-name">Lavanda claro</div>
-            <p class="theme-card-desc">Una combinación suave de blanco, lavanda y violeta. Limpio, delicado
-              y pensado para el uso diario.</p>
-            <div class="theme-swatches">
-              <div class="color-swatch swatch-ll-1" title="Blanco"></div>
-              <div class="color-swatch swatch-ll-2" title="Lavanda"></div>
-              <div class="color-swatch swatch-ll-3" title="Violeta Principal"></div>
-              <div class="color-swatch swatch-ll-4" title="Violeta Secundario"></div>
+            <div class="theme-card-body">
+              <div class="theme-card-header">
+                <span class="theme-badge-tag tag-ll">✦ Lavanda claro</span>
+                <span class="theme-active-pill">✓ Activo</span>
+              </div>
+              <p class="theme-card-desc">Combinación suave de blanco, lavanda y violeta. Limpio, delicado y agradable para el día a día.</p>
+              <div class="theme-swatches-wrap">
+                <div class="theme-swatches">
+                  <div class="color-swatch swatch-ll-1" title="Blanco Puro (#FFFFFF)"></div>
+                  <div class="color-swatch swatch-ll-2" title="Lavanda Suave (#F0ECF9)"></div>
+                  <div class="color-swatch swatch-ll-3" title="Violeta Principal (#6C5CE7)"></div>
+                  <div class="color-swatch swatch-ll-4" title="Acento (#8B5CF6)"></div>
+                </div>
+              </div>
             </div>
-            <span class="theme-card-footer-note">Una opción clara, suave y equilibrada</span>
           </div>
 
-          <!-- 3. Vino & Poesia -->
+          <!-- 3. Vino & Poesía -->
           <div class="theme-option-card" data-theme-value="wine-poetry">
-            <div class="theme-card-name">Vino &amp; Poesía</div>
-            <p class="theme-card-desc">Un ambiente profundo en tonos vino y borgoña con detalles
-              rosados y dorados. Cálido, elegante y literario.</p>
-            <div class="theme-swatches">
-              <div class="color-swatch swatch-wp-1" title="Vino Profundo"></div>
-              <div class="color-swatch swatch-wp-2" title="Borgoña"></div>
-              <div class="color-swatch swatch-wp-3" title="Rosa Apagado"></div>
-              <div class="color-swatch swatch-wp-4" title="Dorado"></div>
+            <div class="theme-card-body">
+              <div class="theme-card-header">
+                <span class="theme-badge-tag tag-wp">✦ Vino &amp; Poesía</span>
+                <span class="theme-active-pill">✓ Activo</span>
+              </div>
+              <p class="theme-card-desc">Ambiente profundo en tonos vino y borgoña con detalles rosados y dorados. Cálido, elegante y literario.</p>
+              <div class="theme-swatches-wrap">
+                <div class="theme-swatches">
+                  <div class="color-swatch swatch-wp-1" title="Vino Profundo (#170B12)"></div>
+                  <div class="color-swatch swatch-wp-2" title="Borgoña (#762B43)"></div>
+                  <div class="color-swatch swatch-wp-3" title="Rosa Terciopelo (#C47791)"></div>
+                  <div class="color-swatch swatch-wp-4" title="Dorado (#D5A15D)"></div>
+                </div>
+              </div>
             </div>
-            <span class="theme-card-footer-note">Elegante y cálido, inspirado en la poesía</span>
           </div>
 
           <!-- 4. Bosque Encantado -->
           <div class="theme-option-card" data-theme-value="enchanted-forest">
-            <div class="theme-card-name">Bosque encantado</div>
-            <p class="theme-card-desc">Tonos frescos de eucalipto y verde esmeralda con detalles
-              naturales. Tranquilo, orgánico y acogedor.</p>
-            <div class="theme-swatches">
-              <div class="color-swatch swatch-ef-1" title="Fondo Natural"></div>
-              <div class="color-swatch swatch-ef-2" title="Verde Suave"></div>
-              <div class="color-swatch swatch-ef-3" title="Verde Principal"></div>
-              <div class="color-swatch swatch-ef-4" title="Dorado"></div>
+            <div class="theme-card-body">
+              <div class="theme-card-header">
+                <span class="theme-badge-tag tag-ef">✦ Bosque encantado</span>
+                <span class="theme-active-pill">✓ Activo</span>
+              </div>
+              <p class="theme-card-desc">Tonos frescos de eucalipto y verde esmeralda con toques dorados. Tranquilo, orgánico y relajante.</p>
+              <div class="theme-swatches-wrap">
+                <div class="theme-swatches">
+                  <div class="color-swatch swatch-ef-1" title="Fondo Eucalipto (#F2F7F4)"></div>
+                  <div class="color-swatch swatch-ef-2" title="Verde Suave (#E7F0EA)"></div>
+                  <div class="color-swatch swatch-ef-3" title="Verde Botánico (#227D48)"></div>
+                  <div class="color-swatch swatch-ef-4" title="Dorado (#C58A3A)"></div>
+                </div>
+              </div>
             </div>
-            <span class="theme-card-footer-note">Fresco, natural y relajante</span>
           </div>
 
           <!-- 5. Cielo Claro -->
           <div class="theme-option-card" data-theme-value="clear-sky">
-            <div class="theme-card-name">Cielo claro</div>
-            <p class="theme-card-desc">Una paleta luminosa de celeste y azul profundo. Fresca,
-              ligera y especialmente agradable durante el día.</p>
-            <div class="theme-swatches">
-              <div class="color-swatch swatch-cs-1" title="Celeste Pálido"></div>
-              <div class="color-swatch swatch-cs-2" title="Celeste Suave"></div>
-              <div class="color-swatch swatch-cs-3" title="Azul Principal"></div>
-              <div class="color-swatch swatch-cs-4" title="Azul Profundo"></div>
+            <div class="theme-card-body">
+              <div class="theme-card-header">
+                <span class="theme-badge-tag tag-cs">✦ Cielo claro</span>
+                <span class="theme-active-pill">✓ Activo</span>
+              </div>
+              <p class="theme-card-desc">Paleta luminosa de celeste y azul ultramar. Fresca, ligera y con óptima legibilidad durante el día.</p>
+              <div class="theme-swatches-wrap">
+                <div class="theme-swatches">
+                  <div class="color-swatch swatch-cs-1" title="Celeste Pálido (#F0F6FD)"></div>
+                  <div class="color-swatch swatch-cs-2" title="Celeste Suave (#E7F0F8)"></div>
+                  <div class="color-swatch swatch-cs-3" title="Azul Real (#2563EB)"></div>
+                  <div class="color-swatch swatch-cs-4" title="Azul Marino (#1D5C96)"></div>
+                </div>
+              </div>
             </div>
-            <span class="theme-card-footer-note">Claro, fresco y de alta legibilidad</span>
           </div>
 
           <!-- 6. Tema del Sistema -->
           <div class="theme-option-card" data-theme-value="system">
-            <div class="theme-card-name">Tema del sistema</div>
-            <p class="theme-card-desc">Adapta automáticamente la apariencia de la aplicación
-              según el modo claro u oscuro de tu dispositivo.</p>
-            <div class="theme-swatches">
-              <div class="color-swatch swatch-sys-auto" title="AutomáticO"></div>
-              <div class="color-swatch swatch-sys-accent" title="Acento"></div>
+            <div class="theme-card-body">
+              <div class="theme-card-header">
+                <span class="theme-badge-tag tag-sys">✦ Tema del sistema</span>
+                <span class="theme-active-pill">✓ Activo</span>
+              </div>
+              <p class="theme-card-desc">Adapta automáticamente la apariencia de la biblioteca según la preferencia clara u oscura de tu dispositivo.</p>
+              <div class="theme-swatches-wrap">
+                <div class="theme-swatches">
+                  <div class="color-swatch swatch-sys-auto" title="Automático (Claro / Oscuro)"></div>
+                  <div class="color-swatch swatch-sys-accent" title="Acento Inteligente"></div>
+                </div>
+              </div>
             </div>
-            <span class="theme-card-footer-note">Cambia automáticamente según tu dispositivo</span>
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@
  * mediante caché Cache-First del App Shell y limpieza de versiones obsoletas.
  */
 
-const CACHE_NAME = 'arcadia-pwa-v58';
+const CACHE_NAME = 'arcadia-pwa-v61';
 
 // Recursos esenciales del App Shell a precachear
 const APP_SHELL_ASSETS = [
@@ -14,6 +14,7 @@ const APP_SHELL_ASSETS = [
   './index.html',
   './manifest.json',
   './assets/icons/favicon.svg',
+  './assets/icons/icon.svg',
   './css/tokens.css',
   './css/themes.css',
   './css/main.css',
@@ -53,12 +54,7 @@ const APP_SHELL_ASSETS = [
   './js/ui/ThemeManager.js',
   './js/ui/Toast.js',
   './assets/libs/jszip.min.js',
-  './assets/libs/epub.min.js',
-  './assets/sample/sample_book.epub',
-  './assets/icons/logo.png',
-  './assets/icons/icon.svg',
-  './assets/icons/icon-192.png',
-  './assets/icons/icon-512.png'
+  './assets/libs/epub.min.js'
 ];
 
 // 1. INSTALACIÓN: Precarga en caché de todos los archivos del App Shell

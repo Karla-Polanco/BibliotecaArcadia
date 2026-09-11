@@ -317,13 +317,27 @@ class App {
       });
     });
 
+    // Sincronización del modal de estados
+    const updateStatesModalActive = () => {
+      const currentFilter = appState.get('activeFilter') || 'all';
+      const statesModal = document.getElementById('states-modal');
+      if (statesModal) {
+        statesModal.querySelectorAll('[data-nav-filter]').forEach(card => {
+          card.classList.toggle('active', card.dataset.navFilter === currentFilter);
+        });
+      }
+    };
+
     // Botón de estados
     const btnStates = document.getElementById('btn-open-states-modal');
     if (btnStates) {
       btnStates.addEventListener('click', (e) => {
         e.preventDefault();
         const modal = document.getElementById('states-modal');
-        if (modal) modal.classList.add('active');
+        if (modal) {
+          updateStatesModalActive();
+          modal.classList.add('active');
+        }
         toggleDrawer(false); // Cierra el menú lateral en móviles si está abierto
       });
     }
@@ -337,9 +351,12 @@ class App {
         if (e.target === statesModal) statesModal.classList.remove('active');
       });
       
-      // Cerrar al seleccionar una opción (el evento de data-nav-filter ya está asignado)
+      // Cerrar al seleccionar una opción y actualizar activo
       statesModal.querySelectorAll('[data-nav-filter]').forEach(item => {
-        item.addEventListener('click', () => statesModal.classList.remove('active'));
+        item.addEventListener('click', () => {
+          updateStatesModalActive();
+          statesModal.classList.remove('active');
+        });
       });
     }
 
