@@ -25,6 +25,7 @@ export class ReaderManager {
     this.toc = [];
     this.saveProgressTimeout = null;
     this.onRelocatedCallbacks = new Set();
+    this.isNavigating = false;
   }
 
   /**
@@ -70,12 +71,11 @@ export class ReaderManager {
 const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
 const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'always' : 'auto';
 
-    const vpWidth = container.clientWidth || (document.getElementById('reader-viewport')?.clientWidth || window.innerWidth) - 48;
-    const vpHeight = (document.getElementById('reader-viewport')?.clientHeight || window.innerHeight) - 48;
+    const { width: rendWidth, height: rendHeight } = this.computeRenditionSize();
 
     this.rendition = this.book.renderTo(container, {
-      width: Math.min(vpWidth, 760) + 'px',
-      height: vpHeight + 'px',
+      width: rendWidth + 'px',
+      height: rendHeight + 'px',
       flow: 'scrolled-doc',
       spread: effectiveSpread,
       allowScriptedContent: false
@@ -95,9 +95,9 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
     await this.book.loaded.navigation;
     this.toc = this.book.navigation.toc || [];
 
-    // 7. Inicializar Gestor de Ubicaciones
+    // 7. Inicializar Gestor de Ubicaciones (en segundo plano, sin bloquear la apertura)
     this.locationsManager = new LocationsManager(this.book, bookId);
-    this.locationsManager.init(); // En segundo plano
+    this.locationsManager.init().catch(() => {});
 
     // 8. Recuperar posición de lectura (priorizar initialCfi si viene de una nota)
     let targetCfi = initialCfi;
@@ -245,18 +245,46 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
    * Salta a una posición CFI o href de capítulo.
    */
   async goTo(target) {
-    if (this.rendition && target) {
+    if (!this.rendition || !target) return;
+    try {
       await this.rendition.display(target);
+    } catch (err) {
+      console.warn('[ReaderManager] goTo falló:', err);
+      // Reintentar sin fragmento (#...) si el CFI/href incluye ancla
+      try {
+        const clean = String(target).split('#')[0];
+        if (clean && clean !== target) {
+          await this.rendition.display(clean);
+          return;
+        }
+      } catch (_) {}
+      throw err;
     }
   }
 
   /**
    * Salta a un porcentaje aproximado (0 a 100).
+   * Retorna false si las ubicaciones aún no están listas.
    */
   async goToPercentage(pct) {
-    if (this.locationsManager) {
+    if (!this.locationsManager) return false;
+    if (!this.locationsManager.isReady) {
+      console.info('[ReaderManager] Ubicaciones aún generándose, reintentando...');
+      // Esperar hasta 3s a que estén listas sin bloquear la UI
+      for (let i = 0; i < 6; i++) {
+        await new Promise(r => setTimeout(r, 500));
+        if (this.locationsManager?.isReady) break;
+      }
+      if (!this.locationsManager?.isReady) return false;
+    }
+    try {
       const cfi = this.locationsManager.getCfiFromPercentage(pct);
-      if (cfi) await this.goTo(cfi);
+      if (!cfi) return false;
+      await this.goTo(cfi);
+      return true;
+    } catch (err) {
+      console.warn('[ReaderManager] goToPercentage falló:', err);
+      return false;
     }
   }
 
@@ -265,6 +293,40 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
    */
   getSettings() {
     return this.currentSettings || ReaderSettings.DEFAULT_SETTINGS;
+  }
+
+  /**
+   * Calcula el tamaño del rendition según el viewport visible actual.
+   * Se mide el contenedor del viewport (no el contenido) para no crecer
+   * sin límite cuando el libro ya está renderizado.
+   */
+  computeRenditionSize() {
+    const viewportEl = document.getElementById('reader-viewport');
+    const vw = (viewportEl?.clientWidth || window.innerWidth || 800);
+    const vh = (viewportEl?.clientHeight || window.innerHeight || 600);
+    return {
+      width: Math.min(Math.max(280, vw - 24), 880),
+      height: Math.max(320, vh - 32)
+    };
+  }
+
+  /**
+   * Reajusta el rendition al tamaño visible actual (tras ocultar/mostrar
+   * las barras inmersivas, rotar o redimensionar la ventana).
+   * Sin esto el iframe conserva su tamaño viejo y deja franjas negras.
+   */
+  resizeToViewport() {
+    if (!this.rendition || !this.book) return false;
+    try {
+      if (typeof this.rendition.resize === 'function') {
+        const { width, height } = this.computeRenditionSize();
+        this.rendition.resize(width, height);
+        return true;
+      }
+    } catch (err) {
+      console.warn('[ReaderManager] resizeToViewport falló:', err);
+    }
+    return false;
   }
 
   /**
@@ -334,6 +396,7 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
 
   /**
    * Guarda el avance en IndexedDB y actualiza el estado general del libro.
+   * Además registra el salto en positionHistory (máx. 50 por libro).
    * @private
    */
   async _saveReadingProgress(cfi, chapterHref, chapterTitle, percentage) {
@@ -349,6 +412,28 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
         percentage: percentage,
         updatedAt: Date.now()
       });
+
+      // 1b. Registrar en positionHistory (útil para "volver atrás")
+      try {
+        const now = Date.now();
+        await dbManager.put('positionHistory', {
+          id: `pos-${this.currentBookId}-${now}`,
+          bookId: this.currentBookId,
+          cfi,
+          chapterHref: chapterHref || '',
+          percentage,
+          timestamp: now
+        });
+        // Poda: conservar solo las 50 más recientes
+        const allPos = await dbManager.getByIndex('positionHistory', 'by_bookId', this.currentBookId).catch(() => []);
+        if ((allPos || []).length > 50) {
+          const sorted = [...allPos].sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+          const extras = sorted.slice(0, sorted.length - 50);
+          for (const old of extras) {
+            try { await dbManager.delete('positionHistory', old.id); } catch (_) {}
+          }
+        }
+      } catch (_) {}
 
       // 2. Actualizar metadatos del libro en books
       const book = await dbManager.get('books', this.currentBookId);
@@ -393,27 +478,27 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
   }
 
   /**
-   * Carga el EPUB de muestra local como fallback seguro.
+   * Carga el EPUB de muestra local como fallback seguro (solo datos legacy sin Blob).
+   * Los libros normales siempre tienen fileBlob (EPUBParser.parse).
    * @private
    */
   async _loadFallbackEpub() {
-    try {
-      const resp = await fetch('assets/sample/sample_book.epub');
-      if (resp.ok) {
-        return await resp.arrayBuffer();
+    const candidates = [
+      'assets/sample/sample_book.epub',
+      './assets/sample/sample_book.epub'
+    ];
+    for (const url of candidates) {
+      try {
+        const resp = await fetch(url);
+        if (resp && resp.ok) {
+          return await resp.arrayBuffer();
+        }
+      } catch (_) {
+        // probar siguiente candidato
       }
-    } catch (e) {
-      // Intentar ruta alternativa
     }
 
-    try {
-      const resp2 = await fetch('scratch/test_book.epub');
-      if (resp2.ok) {
-        return await resp2.arrayBuffer();
-      }
-    } catch (e2) {}
-
-    throw new Error('No se encontraron datos binarios EPUB para este libro.');
+    throw new Error('Este libro no tiene archivo EPUB válido (registro antiguo sin datos). Elimínalo y vuelve a importarlo.');
   }
 
   /**

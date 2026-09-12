@@ -11,12 +11,12 @@ import { appState } from '../state.js';
 
 export class CollectionManager {
   static PRESET_COLORS = [
-    { name: 'Púrpura Místico', value: '#5B4CC4' },
-    { name: 'Azul Océano', value: '#368EDC' },
-    { name: 'Esmeralda', value: '#10B981' },
-    { name: 'Ámbar', value: '#F59E0B' },
-    { name: 'Rosa Coral', value: '#F43F5E' },
-    { name: 'Índigo', value: '#6366F1' }
+    { name: 'Amatista', value: '#8B5CF6' },
+    { name: 'Zafiro', value: '#2563EB' },
+    { name: 'Esmeralda', value: '#059669' },
+    { name: 'Ámbar', value: '#D97706' },
+    { name: 'Rubí', value: '#E11D48' },
+    { name: 'Turquesa', value: '#0D9488' }
   ];
 
   /**
@@ -33,17 +33,30 @@ export class CollectionManager {
       }
 
       // Purgar relaciones de libros de prueba o de colecciones de prueba
+      // Usa el índice by_collection / by_book cuando está disponible.
       try {
-        const allRels = await dbManager.getAll('book_collections');
-        for (const rel of allRels) {
-          const isTestCol = testIds.includes(rel.collectionId);
-          const isTestBook = rel.bookId && String(rel.bookId).startsWith('book-');
-          if (isTestCol || isTestBook) {
-            try {
-              await dbManager.delete('book_collections', rel.id || [rel.bookId, rel.collectionId]);
-            } catch (_) {}
-          }
+        for (const testColId of testIds) {
+          try {
+            const rels = await dbManager.getByIndex('book_collections', 'by_collection', testColId);
+            for (const rel of rels || []) {
+              try {
+                await dbManager.delete('book_collections', [rel.bookId, rel.collectionId]);
+              } catch (_) {}
+            }
+          } catch (_) {}
         }
+        // Limpieza de respaldo: relaciones con bookId legacy "book-*"
+        try {
+          const allRels = await dbManager.getAll('book_collections');
+          for (const rel of allRels || []) {
+            const isTestBook = rel.bookId && String(rel.bookId).startsWith('book-');
+            if (isTestBook) {
+              try {
+                await dbManager.delete('book_collections', [rel.bookId, rel.collectionId]);
+              } catch (_) {}
+            }
+          }
+        } catch (_) {}
       } catch (_) {}
 
       return await this.getAllCollections();
@@ -107,17 +120,22 @@ export class CollectionManager {
 
   /**
    * Elimina una colección y todas sus relaciones con libros en cascada de forma 100% segura.
+   * El store usa keyPath compuesto [bookId, collectionId]: se borra por clave compuesta.
    */
   static async deleteCollection(id) {
-    // 1. Eliminar relaciones asociadas en book_collections
+    // 1. Eliminar relaciones asociadas en book_collections vía índice
     try {
-      const allRels = await dbManager.getAll('book_collections');
-      for (const rel of allRels) {
-        if (rel.collectionId === id) {
-          try {
-            await dbManager.delete('book_collections', rel.id || [rel.bookId, rel.collectionId]);
-          } catch (_) {}
-        }
+      let rels = [];
+      try {
+        rels = await dbManager.getByIndex('book_collections', 'by_collection', id);
+      } catch (_) {
+        rels = await dbManager.getAll('book_collections');
+        rels = (rels || []).filter(r => r.collectionId === id);
+      }
+      for (const rel of rels || []) {
+        try {
+          await dbManager.delete('book_collections', [rel.bookId, rel.collectionId]);
+        } catch (_) {}
       }
     } catch (err) {
       console.warn('Aviso limpiando relaciones de colección:', err);
@@ -133,15 +151,23 @@ export class CollectionManager {
 
   /**
    * Asocia un libro a una colección (evita duplicados).
+   * No usa campo `id`: la clave es [bookId, collectionId].
    */
   static async addBookToCollection(bookId, collectionId) {
+    if (!bookId || !collectionId) return;
     try {
-      const allRels = await dbManager.getAll('book_collections');
-      const alreadyLinked = allRels.some(r => r.bookId === bookId && r.collectionId === collectionId);
-      if (alreadyLinked) return;
+      // Comprobación rápida por índice
+      let exists = false;
+      try {
+        const byBook = await dbManager.getByIndex('book_collections', 'by_book', bookId);
+        exists = (byBook || []).some(r => r.collectionId === collectionId);
+      } catch (_) {
+        const allRels = await dbManager.getAll('book_collections');
+        exists = (allRels || []).some(r => r.bookId === bookId && r.collectionId === collectionId);
+      }
+      if (exists) return;
 
       const rel = {
-        id: `${bookId}_${collectionId}`,
         bookId,
         collectionId,
         addedAt: Date.now()
@@ -158,10 +184,9 @@ export class CollectionManager {
    * Desasocia un libro de una colección.
    */
   static async removeBookFromCollection(bookId, collectionId) {
+    if (!bookId || !collectionId) return;
     try {
-      const relId = `${bookId}_${collectionId}`;
-      try { await dbManager.delete('book_collections', relId); } catch (_) {}
-      try { await dbManager.delete('book_collections', [bookId, collectionId]); } catch (_) {}
+      await dbManager.delete('book_collections', [bookId, collectionId]);
       appState.notify('bookCollectionChanged', { bookId, collectionId });
     } catch (err) {
       console.warn('Error al desasociar libro de colección:', err);
@@ -169,12 +194,18 @@ export class CollectionManager {
   }
 
   /**
-   * Obtiene las colecciones a las que pertenece un libro.
+   * Obtiene las colecciones a las que pertenece un libro (vía índice).
    */
   static async getCollectionsForBook(bookId) {
     try {
-      const allRels = await dbManager.getAll('book_collections');
-      const colIds = allRels.filter(r => r.bookId === bookId).map(r => r.collectionId);
+      let rels = [];
+      try {
+        rels = await dbManager.getByIndex('book_collections', 'by_book', bookId);
+      } catch (_) {
+        const allRels = await dbManager.getAll('book_collections');
+        rels = (allRels || []).filter(r => r.bookId === bookId);
+      }
+      const colIds = rels.map(r => r.collectionId);
       const allCols = await this.getAllCollections();
       return allCols.filter(c => colIds.includes(c.id));
     } catch (e) {
@@ -183,14 +214,20 @@ export class CollectionManager {
   }
 
   /**
-   * Obtiene todos los libros asignados a una colección.
+   * Obtiene todos los libros asignados a una colección (vía índice).
    */
   static async getBooksInCollection(collectionId) {
     try {
-      const allRels = await dbManager.getAll('book_collections');
-      const bookIds = allRels.filter(r => r.collectionId === collectionId).map(r => r.bookId);
+      let rels = [];
+      try {
+        rels = await dbManager.getByIndex('book_collections', 'by_collection', collectionId);
+      } catch (_) {
+        const allRels = await dbManager.getAll('book_collections');
+        rels = (allRels || []).filter(r => r.collectionId === collectionId);
+      }
+      const bookIds = new Set(rels.map(r => r.bookId));
       const allBooks = await dbManager.getAll('books');
-      return allBooks.filter(b => bookIds.includes(b.id));
+      return (allBooks || []).filter(b => bookIds.has(b.id));
     } catch (e) {
       return [];
     }

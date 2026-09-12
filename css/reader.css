@@ -12,7 +12,7 @@
   height: 100dvh;
   background-color: var(--reader-bg, var(--color-background));
   color: var(--reader-text, var(--color-text));
-  z-index: 150;
+  z-index: var(--z-reader, 150);
   display: flex;
   flex-direction: column;
   opacity: 0;
@@ -27,16 +27,23 @@
 }
 
 /* --------------------------------------------------------------------------
-   1. CABECERA DEL LECTOR (READER HEADER)
+   1. CABECERA DEL LECTOR (READER HEADER) — glass unificado
    -------------------------------------------------------------------------- */
 .reader-header {
-  height: var(--header-height);
-  background-color: var(--color-surface);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: var(--header-height);
+  background-color: color-mix(in srgb, var(--color-surface) 82%, transparent);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
   border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--space-lg);
+  padding: 8px var(--space-lg);
   z-index: 20;
   transition: transform var(--transition-normal);
   flex-shrink: 0;
@@ -99,6 +106,10 @@
   width: 100%;
 }
 
+.reader-chapter-title:empty {
+  display: none;
+}
+
 .reader-header-right {
   display: flex;
   align-items: center;
@@ -108,8 +119,10 @@
 }
 
 .btn-reader-action {
-  width: 38px;
-  height: 38px;
+  min-width: 44px;
+  min-height: 44px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-sm);
   color: var(--color-text-secondary);
   display: inline-flex;
@@ -122,9 +135,15 @@
   color: var(--color-text);
 }
 
-.btn-reader-action.active {
+.btn-reader-action.active,
+.btn-reader-action[aria-expanded="true"] {
   color: var(--color-primary-light);
   background-color: var(--color-surface-secondary);
+}
+
+.btn-reader-action:focus-visible {
+  outline: 3px solid var(--color-primary-light);
+  outline-offset: 2px;
 }
 
 /* --------------------------------------------------------------------------
@@ -135,7 +154,34 @@
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 24px 24px;
+  padding: 16px 12px;
+  scroll-padding-top: 72px;
+  scroll-padding-bottom: 68px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.reader-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+/* La barra visible era la de la página de fondo: se bloquea con el lector abierto.
+   Refuerzo extra por si algún contenedor intermedio genera la suya. */
+body.reader-open,
+html.reader-open {
+  overflow: hidden !important;
+}
+
+.reader-view,
+#reader-content {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.reader-view::-webkit-scrollbar,
+#reader-content::-webkit-scrollbar {
+  display: none;
+}
   box-sizing: border-box;
   background-color: var(--reader-bg, var(--color-background));
   display: flex;
@@ -145,7 +191,7 @@
 
 #reader-content {
   width: 100%;
-  max-width: 760px;
+  max-width: 880px;
   min-height: 100%;
   position: relative;
   box-sizing: border-box;
@@ -164,7 +210,14 @@
   display: none !important;
 }
 
-/* Flechas de Navegación Lateral (Desktop) */
+#reader-content .epub-container,
+#reader-content .epub-view {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Flechas de Navegación Lateral (Desktop) — reservadas para modo paginado futuro.
+   En modo desplazamiento continuo (scrolled-doc) permanecen ocultas a propósito. */
 .btn-reader-nav {
   position: absolute;
   top: 50%;
@@ -176,7 +229,7 @@
   color: var(--color-text-muted);
   border-radius: var(--radius-md);
   z-index: 10;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   opacity: 0.25;
@@ -197,11 +250,6 @@
 
 .btn-reader-nav.nav-next {
   right: 10px;
-}
-
-/* Ocultar botones laterales de cambio de página en modo Desplazamiento */
-.btn-reader-nav {
-  display: none !important;
 }
 
 /* Spinner de Carga del Lector */
@@ -233,16 +281,23 @@
 }
 
 /* --------------------------------------------------------------------------
-   3. BARRA INFERIOR DEL LECTOR (READER FOOTER)
+   3. BARRA INFERIOR DEL LECTOR (READER FOOTER) — glass
    -------------------------------------------------------------------------- */
 .reader-footer {
-  height: 48px;
-  background-color: var(--color-surface);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  min-height: 56px;
+  background-color: color-mix(in srgb, var(--color-surface) 84%, transparent);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
   border-top: 1px solid var(--color-border);
+  box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.22);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--space-xl);
+  padding: 8px var(--space-xl);
   z-index: 20;
   transition: transform var(--transition-normal);
   flex-shrink: 0;
@@ -409,14 +464,15 @@
 }
 
 /* --------------------------------------------------------------------------
-   5. MODO INMERSIVO (OCULTAR BARRAS)
+   5. MODO INMERSIVO (OCULTAR BARRAS) — solo se deslizan fuera; como siempre
+      flotan sobre el texto, no hay cambios de layout, flashes ni franjas.
    -------------------------------------------------------------------------- */
 .reader-view.bars-hidden .reader-header {
-  transform: translateY(-100%);
+  transform: translateY(-110%);
 }
 
 .reader-view.bars-hidden .reader-footer {
-  transform: translateY(100%);
+  transform: translateY(110%);
 }
 
 .reader-view.bars-hidden .btn-reader-nav {
@@ -545,7 +601,7 @@
   gap: 8px;
 }
 
-#columns-options, {
+#columns-options {
   grid-template-columns: repeat(2, 1fr);
 }
 
@@ -556,7 +612,7 @@
 .setting-pill-btn {
   width: 100%;
   box-sizing: border-box;
-  padding: 10px 4px;
+  padding: 8px 10px;
   background-color: var(--color-surface);
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-md, 10px);
@@ -570,6 +626,11 @@
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   transition: all var(--transition-fast);
+}
+
+#font-family-options .setting-pill-btn {
+  padding: 10px 14px;
+  font-size: 0.8rem;
 }
 
 .setting-pill-btn:hover {
@@ -630,7 +691,7 @@
 
 .reader-theme-chip {
   width: 100%;
-  height: 42px;
+  min-height: 44px;
   box-sizing: border-box;
   padding: 0 4px;
   border-radius: var(--radius-md, 10px);
@@ -645,6 +706,7 @@
   text-overflow: ellipsis;
   cursor: pointer;
   transition: all var(--transition-fast);
+  font-family: inherit;
 }
 
 .reader-theme-chip:hover {
@@ -657,13 +719,18 @@
   box-shadow: 0 0 0 2px var(--color-primary-glow);
 }
 
+.reader-theme-chip:focus-visible {
+  outline: 3px solid var(--color-primary-light);
+  outline-offset: 2px;
+}
+
 .reader-settings-backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 219;
+  z-index: var(--z-search, 190);
   opacity: 0;
   pointer-events: none;
 }
@@ -686,16 +753,8 @@
 }
 
 /* --------------------------------------------------------------------------
-   7. MARCADORES DE PÁGINA (BOOKMARKS)
+   7. DRAWER LATERAL (TOC)
    -------------------------------------------------------------------------- */
-.btn-reader-action.bookmark-active {
-  color: #F59E0B !important; /* Dorado cálido */
-}
-
-.btn-reader-action.bookmark-active svg path {
-  fill: #F59E0B;
-}
-
 .drawer-tab-nav {
   display: flex;
   background-color: var(--color-surface-hover);
@@ -725,48 +784,6 @@
   color: var(--color-primary-light);
   font-weight: var(--weight-bold);
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
-
-.bookmark-item {
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.bookmark-item:hover {
-  background-color: var(--color-surface-hover);
-  border-color: var(--color-primary-light);
-}
-
-.bookmark-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.bookmark-chapter {
-  font-size: var(--text-xs);
-  font-weight: var(--weight-bold);
-  color: var(--color-text);
-}
-
-.bookmark-percentage {
-  font-size: 0.7rem;
-  color: var(--color-primary-light);
-  font-weight: var(--weight-bold);
-}
-
-.bookmark-snippet {
-  font-size: var(--text-xs);
-  color: var(--color-text-secondary);
-  line-height: 1.4;
-  font-style: italic;
 }
 
 /* --------------------------------------------------------------------------

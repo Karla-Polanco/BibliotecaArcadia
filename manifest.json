@@ -1,27 +1,37 @@
 {
+  "id": "./index.html",
   "name": "Biblioteca Arcadia",
   "short_name": "Arcadia",
-  "description": "Biblioteca virtual personal para lectura de libros electrónicos EPUB, inspirada en la experiencia Kindle.",
+  "description": "Biblioteca virtual personal para lectura de libros electrónicos EPUB, inspirada en la experiencia Kindle. 100% local-first y offline.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "orientation": "any",
-  "background_color": "#141414",
-  "theme_color": "#1E1E1E",
+  "background_color": "#06101F",
+  "theme_color": "#0B1D3A",
   "lang": "es",
+  "dir": "ltr",
   "categories": ["books", "education", "productivity"],
   "icons": [
     {
       "src": "assets/icons/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "assets/icons/icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Abrir biblioteca",
+      "url": "./index.html",
+      "description": "Ver todos los libros"
     }
   ]
 }

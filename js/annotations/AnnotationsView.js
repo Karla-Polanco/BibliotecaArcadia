@@ -12,6 +12,7 @@ import { appState } from '../state.js';
 import { Toast } from '../ui/Toast.js';
 import { AnnotationManager } from './AnnotationManager.js';
 import { Modal } from '../ui/Modal.js';
+import { CustomSelect } from '../ui/CustomSelect.js';
 
 export class AnnotationsView {
   constructor(containerElement, onOpenBookCfi) {
@@ -32,6 +33,7 @@ export class AnnotationsView {
     appState.subscribe('annotationRemoved', () => this.refresh());
     appState.subscribe('noteAdded', () => this.refresh());
     appState.subscribe('noteDeleted', () => this.refresh());
+    appState.subscribe('noteUpdated', () => this.refresh());
   }
 
   /**
@@ -133,8 +135,8 @@ export class AnnotationsView {
             <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin: 0;">Citas destacadas, pasajes subrayados y anotaciones personales recopiladas durante tus lecturas.</p>
           </div>
 
-          <!-- Filtro por Libro -->
-          <div style="display: flex; align-items: center; gap: 8px; min-width: 0; max-width: 100%;">
+          <!-- Filtros junto al título (como el botón Añadir de los cuadernos) -->
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-width: 0; max-width: 100%;">
             <select id="select-filter-book" style="
               padding: 5px 10px;
               border-radius: var(--radius-sm);
@@ -151,47 +153,30 @@ export class AnnotationsView {
               <option value="all">Todos los libros</option>
               ${this.books.map(b => `<option value="${b.id}" ${b.id === this.selectedBookId ? 'selected' : ''}>${this.escapeHtml(b.title)}</option>`).join('')}
             </select>
+
+            <!-- Filtro de Tipo por Select -->
+            <select id="select-filter-type" style="
+              padding: 5px 10px;
+              border-radius: var(--radius-sm);
+              background-color: var(--color-surface);
+              border: 1px solid var(--color-border);
+              color: var(--color-text);
+              font-size: var(--text-xs);
+              font-weight: 500;
+              outline: none;
+              cursor: pointer;
+            ">
+              <option value="all" ${this.activeType === 'all' ? 'selected' : ''}>Todos (${totalCount})</option>
+              <option value="highlight" ${this.activeType === 'highlight' ? 'selected' : ''}>Resaltados (${highlightCount})</option>
+              <option value="underline" ${this.activeType === 'underline' ? 'selected' : ''}>Subrayados (${underlineCount})</option>
+              <option value="note" ${this.activeType === 'note' ? 'selected' : ''}>Notas (${noteCount})</option>
+            </select>
           </div>
         </div>
 
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-          <!-- Filtros de Pestaña Horizontales -->
-          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <button class="annot-tab-btn ${this.activeType === 'all' ? 'active' : ''}" data-type-filter="all" style="
-              padding: 4px 10px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
-              background-color: ${this.activeType === 'all' ? 'var(--color-primary-light)' : 'var(--color-surface)'};
-              color: ${this.activeType === 'all' ? '#FFF' : 'var(--color-text-secondary)'};
-              font-weight: bold;
-              transition: all 0.15s ease;
-            ">Todos (${totalCount})</button>
-
-            <button class="annot-tab-btn ${this.activeType === 'highlight' ? 'active' : ''}" data-type-filter="highlight" style="
-              padding: 4px 10px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
-              background-color: ${this.activeType === 'highlight' ? 'var(--color-primary-light)' : 'var(--color-surface)'};
-              color: ${this.activeType === 'highlight' ? '#FFF' : 'var(--color-text-secondary)'};
-              font-weight: bold;
-              transition: all 0.15s ease;
-            ">Resaltados (${highlightCount})</button>
-
-            <button class="annot-tab-btn ${this.activeType === 'underline' ? 'active' : ''}" data-type-filter="underline" style="
-              padding: 4px 10px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
-              background-color: ${this.activeType === 'underline' ? 'var(--color-primary-light)' : 'var(--color-surface)'};
-              color: ${this.activeType === 'underline' ? '#FFF' : 'var(--color-text-secondary)'};
-              font-weight: bold;
-              transition: all 0.15s ease;
-            ">Subrayados (${underlineCount})</button>
-
-            <button class="annot-tab-btn ${this.activeType === 'note' ? 'active' : ''}" data-type-filter="note" style="
-              padding: 4px 10px; border-radius: var(--radius-sm); font-size: var(--text-xs); cursor: pointer; border: 1px solid var(--color-border);
-              background-color: ${this.activeType === 'note' ? 'var(--color-primary-light)' : 'var(--color-surface)'};
-              color: ${this.activeType === 'note' ? '#FFF' : 'var(--color-text-secondary)'};
-              font-weight: bold;
-              transition: all 0.15s ease;
-            ">Notas (${noteCount})</button>
-          </div>
-
+        <div style="display: flex; align-items: center; gap: 12px;">
           <!-- Buscador de Notas y Citas -->
-          <div style="position: relative; flex: 1 1 180px; min-width: 150px; max-width: 240px; display: flex; align-items: center;">
+          <div style="position: relative; flex: 1 1 100%; min-width: 0; display: flex; align-items: center;">
             <svg style="position: absolute; left: 9px; width: 14px; height: 14px; color: var(--color-text-muted); pointer-events: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             <input type="text" id="input-annot-search" value="${this.escapeHtml(this.searchQuery)}" placeholder="Buscar en notas y citas..." style="
               width: 100%; padding: 5px 10px 5px 28px; border-radius: var(--radius-sm); background-color: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: var(--text-xs); outline: none; box-sizing: border-box;
@@ -321,12 +306,14 @@ export class AnnotationsView {
 
   attachEvents() {
     // 1. Selector de tipo
-    this.container.querySelectorAll('[data-type-filter]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        this.activeType = btn.dataset.typeFilter;
+    const selectType = this.container.querySelector('#select-filter-type');
+    if (selectType) {
+      selectType.addEventListener('change', (e) => {
+        this.activeType = e.target.value;
         this.render();
       });
-    });
+      CustomSelect.enhance(selectType);
+    }
 
     // 2. Selector de libro
     const selectBook = this.container.querySelector('#select-filter-book');
@@ -335,6 +322,7 @@ export class AnnotationsView {
         this.selectedBookId = e.target.value;
         this.render();
       });
+      CustomSelect.enhance(selectBook);
     }
 
     // 3. Buscador en vivo
@@ -375,12 +363,19 @@ export class AnnotationsView {
         });
 
         if (confirmed) {
-          if (kind === 'note') {
-            await dbManager.delete('notes', id);
-          } else {
-            await dbManager.delete('annotations', id);
+          try {
+            if (kind === 'note') {
+              await dbManager.delete('notes', id);
+              appState.notify('noteDeleted', id);
+            } else {
+              await dbManager.delete('annotations', id);
+              appState.notify('annotationRemoved', id);
+            }
+            Toast.success('Elemento eliminado.');
+          } catch (err) {
+            console.warn('Error al eliminar anotación:', err);
+            Toast.error('No se pudo eliminar el elemento.');
           }
-          Toast.success('Elemento eliminado.');
           this.loadAndRender();
         }
       });

@@ -8,7 +8,7 @@
 
 export class DatabaseManager {
   static DB_NAME = 'ArcadiaEpubDB';
-  static DB_VERSION = 2;
+  static DB_VERSION = 3;
 
   constructor() {
     this.db = null;
@@ -92,11 +92,10 @@ export class DatabaseManager {
       notesStore.createIndex('by_createdAt', 'createdAt', { unique: false });
     }
 
-    // 6. bookmarks (Marcadores manuales rápidos)
-    if (!db.objectStoreNames.contains('bookmarks')) {
-      const bookmarksStore = db.createObjectStore('bookmarks', { keyPath: 'id' });
-      bookmarksStore.createIndex('by_bookId', 'bookId', { unique: false });
-      bookmarksStore.createIndex('by_createdAt', 'createdAt', { unique: false });
+    // 6. bookmarks (ELIMINADO: la función de marcar páginas se retiró).
+    // Se borra el store heredado si existe de versiones anteriores.
+    if (db.objectStoreNames.contains('bookmarks')) {
+      db.deleteObjectStore('bookmarks');
     }
 
     // 7. collections (Colecciones y carpetas)

@@ -9,7 +9,6 @@ import { ThemeManager } from './ui/ThemeManager.js';
 import { ScaleManager } from './ui/ScaleManager.js';
 import { QuotesService } from './quotes/QuotesService.js';
 import { QuotesView } from './quotes/QuotesView.js';
-import { QuotesManager } from './quotes/QuotesManager.js';
 import { QuoteModal } from './ui/QuoteModal.js';
 import { LibraryView } from './library/LibraryView.js';
 import { BookManager } from './library/BookManager.js';
@@ -20,6 +19,7 @@ import { VocabularyView } from './vocabulary/VocabularyView.js';
 import { VocabularyManager } from './vocabulary/VocabularyManager.js';
 import { PWAManager } from './pwa/PWAManager.js';
 import { Toast } from './ui/Toast.js';
+import { CustomSelect } from './ui/CustomSelect.js';
 import { appState } from './state.js';
 
 class App {
@@ -36,6 +36,7 @@ class App {
   }
 
   async init() {
+    try {
     // 1. Inicializar PWA (Service Worker, Offline y Prompt de Instalación)
     PWAManager.init();
 
@@ -51,14 +52,22 @@ class App {
     const storageFillEl = document.getElementById('storage-progress-fill');
     const storageTextEl = document.getElementById('storage-info-text');
     this.storageWidget = new StorageWidget(storageFillEl, storageTextEl);
-    await this.storageWidget.init();
+    try {
+      await this.storageWidget.init();
+    } catch (e) {
+      console.warn('[App] StorageWidget init falló:', e);
+    }
 
     // 5. Inicializar Gestor de Libros y Persistencia IndexedDB
     this.bookManager = new BookManager(this.storageWidget);
     await this.bookManager.init();
 
     // Inicializar vocabulario predeterminado si el store está vacío
-    await VocabularyManager.initPresets();
+    try {
+      await VocabularyManager.initPresets();
+    } catch (e) {
+      console.warn('[App] Vocabulary presets falló:', e);
+    }
 
     // 6. Inicializar Controlador del Lector EPUB
     this.readerView = new ReaderView();
@@ -98,6 +107,12 @@ class App {
     await this.restoreLastState();
 
     console.log('✦ Biblioteca Arcadia inicializada con éxito');
+    } catch (err) {
+      console.error('[App] Error fatal en init():', err);
+      try {
+        Toast.error('Error al iniciar la biblioteca. Recarga la página.');
+      } catch (_) {}
+    }
   }
 
   /**
@@ -119,21 +134,24 @@ class App {
     // Rotar frase con animación fluida
     if (refreshBtn) {
       refreshBtn.addEventListener('click', () => {
+        const textEl = document.getElementById('quote-text') || quoteTextEl;
+        const authorEl = document.getElementById('quote-author') || quoteAuthorEl;
+        const sourceEl = document.getElementById('quote-source') || quoteSourceEl;
         refreshBtn.classList.add('spinning');
-        quoteTextEl.style.opacity = '0';
-        quoteAuthorEl.style.opacity = '0';
-        if (quoteSourceEl) quoteSourceEl.style.opacity = '0';
+        textEl.style.opacity = '0';
+        authorEl.style.opacity = '0';
+        if (sourceEl) sourceEl.style.opacity = '0';
 
         setTimeout(() => {
           const nextQuote = this.quotesService.getNextQuote();
-          quoteTextEl.textContent = nextQuote.text;
-          quoteAuthorEl.textContent = `— ${nextQuote.author}`;
-          if (quoteSourceEl) {
-            quoteSourceEl.textContent = nextQuote.source ? ` · ${nextQuote.source}` : '';
-            quoteSourceEl.style.opacity = '1';
+          textEl.textContent = nextQuote.text;
+          authorEl.textContent = `— ${nextQuote.author || 'Anónimo'}`;
+          if (sourceEl) {
+            sourceEl.textContent = nextQuote.source ? ` · ${nextQuote.source}` : '';
+            sourceEl.style.opacity = '1';
           }
-          quoteTextEl.style.opacity = '1';
-          quoteAuthorEl.style.opacity = '1';
+          textEl.style.opacity = '1';
+          authorEl.style.opacity = '1';
           refreshBtn.classList.remove('spinning');
         }, 200);
       });
@@ -186,18 +204,17 @@ class App {
       sortSelect.addEventListener('change', (e) => {
         appState.set('sortBy', e.target.value);
       });
+      CustomSelect.enhance(sortSelect);
     }
 
     // Toggle Grid / Lista
     if (btnGrid && btnList) {
       const updateToggleButtons = (mode) => {
-        if (mode === 'grid') {
-          btnGrid.classList.add('active');
-          btnList.classList.remove('active');
-        } else {
-          btnList.classList.add('active');
-          btnGrid.classList.remove('active');
-        }
+        const isGrid = mode === 'grid';
+        btnGrid.classList.toggle('active', isGrid);
+        btnList.classList.toggle('active', !isGrid);
+        btnGrid.setAttribute('aria-pressed', String(isGrid));
+        btnList.setAttribute('aria-pressed', String(!isGrid));
       };
 
       updateToggleButtons(appState.get('viewMode'));
@@ -242,6 +259,7 @@ class App {
 
   /**
    * Navegación del Sidebar, Drawer lateral móvil y Bottom Nav.
+   * Usa delegación de eventos para soportar colecciones dinámicas.
    */
   initNavigation() {
     const sidebar = document.getElementById('app-sidebar');
@@ -254,9 +272,11 @@ class App {
         if (open) {
           sidebar.classList.add('drawer-open');
           backdrop.classList.add('active');
+          mobileToggle?.setAttribute('aria-expanded', 'true');
         } else {
           sidebar.classList.remove('drawer-open');
           backdrop.classList.remove('active');
+          mobileToggle?.setAttribute('aria-expanded', 'false');
         }
       }
     };
@@ -269,50 +289,63 @@ class App {
       backdrop.addEventListener('click', () => toggleDrawer(false));
     }
 
-    // Enlaces del Sidebar (Filtros de Colección y Vistas)
-    document.querySelectorAll('[data-nav-filter]').forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.preventDefault();
-        const filter = item.dataset.navFilter;
-        if (!filter) return;
-
-        // Actualizar clase activa en enlaces
-        document.querySelectorAll('[data-nav-filter]').forEach(el => el.classList.remove('active'));
-        item.classList.add('active');
-
-        // Sincronizar con Bottom Nav si aplica
-        document.querySelectorAll('.mobile-nav-link[data-nav-filter]').forEach(mItem => {
-          mItem.classList.toggle('active', mItem.dataset.navFilter === filter);
-        });
-
-        appState.set('activeFilter', filter);
-        localStorage.setItem('arcadia_active_filter', filter);
-        toggleDrawer(false);
+    const applyFilter = (filter, sourceEl = null) => {
+      if (!filter) return;
+      // Actualizar clase activa en enlaces (sidebar + móvil + modal estados)
+      document.querySelectorAll('[data-nav-filter]').forEach(el => {
+        const isActive = el.dataset.navFilter === filter;
+        el.classList.toggle('active', isActive);
+        // Para colecciones renderizadas como .nav-item wrapper
+        if (el.classList.contains('nav-item-link')) {
+          el.closest('.nav-item')?.classList.toggle('active', isActive);
+        }
       });
+
+      document.querySelectorAll('.mobile-nav-link[data-nav-filter]').forEach(mItem => {
+        mItem.classList.toggle('active', mItem.dataset.navFilter === filter);
+      });
+
+      appState.set('activeFilter', filter);
+      try {
+        localStorage.setItem('arcadia_active_filter', filter);
+      } catch (_) {}
+      toggleDrawer(false);
+    };
+
+    // Delegación global: cualquier [data-nav-filter] presente o futuro
+    document.addEventListener('click', (e) => {
+      const navEl = e.target.closest('[data-nav-filter]');
+      // Ignorar los que están dentro del selector de colecciones del sidebar (tienen manejo propio visual)
+      // No: los manejamos igual aquí para unificar. Solo evitamos doble manejo marcando.
+      if (navEl && !navEl.dataset.navDelegated) {
+        // Si es un <a href="#...">, prevenir salto
+        if (navEl.tagName === 'A') e.preventDefault();
+        const filter = navEl.dataset.navFilter;
+        if (filter) {
+          // Cerrar modal de estados si el clic viene de ahí
+          const statesModal = document.getElementById('states-modal');
+          if (navEl.closest('#states-modal') && statesModal) {
+            statesModal.classList.remove('active');
+          }
+          applyFilter(filter, navEl);
+        }
+      }
+
+      const actionLink = e.target.closest('.mobile-nav-link[data-action="open-settings"]');
+      if (actionLink) {
+        e.preventDefault();
+        this.openThemeModal();
+      }
     });
 
-    // Enlaces de la Bottom Navigation móvil
+    // Enlaces de la Bottom Navigation móvil con data-action (compat)
     document.querySelectorAll('.mobile-nav-link').forEach(link => {
       link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const filter = link.dataset.navFilter;
         const action = link.dataset.action;
-
         if (action === 'open-settings') {
-          this.openThemeModal();
+          // Ya manejado por delegación, evitar doble apertura
+          e.preventDefault();
           return;
-        }
-
-        if (filter) {
-          document.querySelectorAll('.mobile-nav-link').forEach(l => l.classList.remove('active'));
-          link.classList.add('active');
-
-          document.querySelectorAll('[data-nav-filter]').forEach(sItem => {
-            sItem.classList.toggle('active', sItem.dataset.navFilter === filter);
-          });
-
-          appState.set('activeFilter', filter);
-          localStorage.setItem('arcadia_active_filter', filter);
         }
       });
     });
@@ -424,35 +457,52 @@ class App {
    * Restaura la última vista activa (lector con el libro abierto en su página, o la sección/filtro activo).
    */
   async restoreLastState() {
-    if (window.location.hash) {
-      try {
-        history.replaceState(null, '', window.location.pathname + window.location.search);
-      } catch (_) {}
-    }
-
-    const savedView = localStorage.getItem('arcadia_active_view');
-    const savedBookId = localStorage.getItem('arcadia_active_book_id');
-
-    // 1. Si estaba leyendo un libro, reabrir el lector en ese libro
-    if (savedView === 'reader' && savedBookId && this.bookManager) {
-      const book = this.bookManager.getBookById(savedBookId);
-      if (book && this.readerView) {
-        await this.readerView.open(savedBookId);
-        return;
+    try {
+      if (window.location.hash) {
+        try {
+          history.replaceState(null, '', window.location.pathname + window.location.search);
+        } catch (_) {}
       }
-    }
 
-    // 2. Si estaba en una sección (Notas, Vocabulario, Frases, Favoritos, etc.), restaurar filtro
-    const targetFilter = localStorage.getItem('arcadia_active_filter') || 'all';
+      let savedView = null;
+      let savedBookId = null;
+      let targetFilter = 'all';
+      try {
+        savedView = localStorage.getItem('arcadia_active_view');
+        savedBookId = localStorage.getItem('arcadia_active_book_id');
+        targetFilter = localStorage.getItem('arcadia_active_filter') || 'all';
+      } catch (_) {}
 
-    if (targetFilter && targetFilter !== 'all') {
-      appState.set('activeFilter', targetFilter);
-      document.querySelectorAll('[data-nav-filter]').forEach(el => {
-        el.classList.toggle('active', el.dataset.navFilter === targetFilter);
-      });
-      document.querySelectorAll('.mobile-nav-link[data-nav-filter]').forEach(el => {
-        el.classList.toggle('active', el.dataset.navFilter === targetFilter);
-      });
+      // 1. Si estaba leyendo un libro, reabrir el lector en ese libro
+      if (savedView === 'reader' && savedBookId && this.bookManager) {
+        try {
+          const book = await this.bookManager.getBook(savedBookId);
+          if (book && this.readerView) {
+            await this.readerView.open(savedBookId);
+            return;
+          }
+        } catch (e) {
+          console.warn('[App] No se pudo restaurar el libro anterior:', e);
+        }
+        // Limpiar estado corrupto
+        try {
+          localStorage.setItem('arcadia_active_view', 'library');
+          localStorage.removeItem('arcadia_active_book_id');
+        } catch (_) {}
+      }
+
+      // 2. Si estaba en una sección (Notas, Vocabulario, Frases, Favoritos, etc.), restaurar filtro
+      if (targetFilter && targetFilter !== 'all') {
+        appState.set('activeFilter', targetFilter);
+        document.querySelectorAll('[data-nav-filter]').forEach(el => {
+          el.classList.toggle('active', el.dataset.navFilter === targetFilter);
+        });
+        document.querySelectorAll('.mobile-nav-link[data-nav-filter]').forEach(el => {
+          el.classList.toggle('active', el.dataset.navFilter === targetFilter);
+        });
+      }
+    } catch (err) {
+      console.warn('[App] restoreLastState falló:', err);
     }
   }
 }
@@ -460,5 +510,9 @@ class App {
 // Arrancar al cargar el DOM
 document.addEventListener('DOMContentLoaded', () => {
   const app = new App();
-  app.init();
+  app.init().catch((err) => {
+    console.error('[App] init() rechazado:', err);
+  });
+  // Exponer para depuración
+  window.__arcadiaApp = app;
 });

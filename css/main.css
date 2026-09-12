@@ -1,9 +1,8 @@
 /* ==========================================================================
    ESTILOS GENERALES, RESET Y TIPOGRAFÍA BASE - BIBLIOTECA ARCADIA
    ========================================================================== */
-
-@import './tokens.css';
-@import './themes.css';
+/* NOTA: tokens.css y themes.css ya se cargan vía <link> en index.html.
+   No se usa @import aquí para evitar doble petición y bloqueo de render. */
 
 /* Reset Moderno */
 *, *::before, *::after {
@@ -18,6 +17,18 @@ html {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
   scroll-behavior: smooth;
+  color-scheme: light dark;
+}
+
+[data-theme="lavender-light"],
+[data-theme="clear-sky"],
+[data-theme="enchanted-forest"],
+[data-theme="wine-poetry"] {
+  color-scheme: light;
+}
+
+[data-theme="mystic-night"] {
+  color-scheme: dark;
 }
 
 body {
@@ -59,9 +70,64 @@ button {
 }
 
 button:focus-visible,
-a:focus-visible {
-  outline: 2px solid var(--color-primary-light);
+a:focus-visible,
+[tabindex]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--color-primary-light);
   outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Botones de navegación reseteados (sidebar / móvil / estados) */
+button.nav-item,
+button.mobile-nav-link,
+button.state-option-card {
+  font-family: inherit;
+  text-align: left;
+  width: 100%;
+  background: transparent;
+  border: none;
+}
+
+button.mobile-nav-link {
+  text-align: center;
+  align-items: center;
+}
+
+button.state-option-card {
+  cursor: pointer;
+  display: flex;
+}
+
+/* Grupo de botones del banner */
+.quote-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-quote-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: var(--radius-full, 999px);
+  background: var(--color-surface-hover);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-height: 32px;
+}
+
+.btn-quote-secondary:hover {
+  border-color: var(--color-primary-light);
+  color: var(--color-text);
 }
 
 /* Inputs, Selects y Textareas Estilizados Globalmente */
@@ -84,9 +150,8 @@ input:hover, select:hover, textarea:hover {
 input:focus, input:focus-visible,
 select:focus, select:focus-visible,
 textarea:focus, textarea:focus-visible {
-  outline: none !important;
-  border-color: var(--color-primary-light) !important;
-  box-shadow: 0 0 0 3px var(--color-primary-glow) !important;
+  border-color: var(--color-primary-light);
+  box-shadow: 0 0 0 3px var(--color-primary-glow);
 }
 
 /* Excepciones para inputs integrados en cajas compuestas */
@@ -152,9 +217,18 @@ ul, ol {
   background: var(--color-text-muted);
 }
 
-/* Accesibilidad y Selección */
+/* Accesibilidad y Selección (contraste seguro en temas claros y oscuros) */
 ::selection {
   background-color: var(--color-primary-light);
+  color: #FFFFFF;
+  text-shadow: none;
+}
+
+[data-theme="lavender-light"] ::selection,
+[data-theme="clear-sky"] ::selection,
+[data-theme="enchanted-forest"] ::selection,
+[data-theme="wine-poetry"] ::selection {
+  background-color: var(--color-primary, #5B4CC4);
   color: #FFFFFF;
 }
 
@@ -269,4 +343,24 @@ ul, ol {
 .theme-modal-close:hover {
   background: var(--color-border) !important;
   color: var(--color-text) !important;
+}
+
+/* Respeto a movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Renderizado eficiente de tarjetas */
+.book-card,
+.book-list-item,
+.annotation-card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 220px;
 }

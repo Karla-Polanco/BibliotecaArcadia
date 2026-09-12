@@ -8,7 +8,6 @@
 
 import { readerManager } from './ReaderManager.js';
 import { ReaderSettings } from './ReaderSettings.js';
-import { BookmarkManager } from './BookmarkManager.js';
 import { SearchManager } from './SearchManager.js';
 import { ScaleManager } from '../ui/ScaleManager.js';
 import { Toast } from '../ui/Toast.js';
@@ -35,8 +34,7 @@ export class ReaderView {
     this.settingsPanelEl = document.getElementById('reader-settings-panel');
     this.settingsBackdropEl = document.getElementById('reader-settings-backdrop');
 
-    // Elementos de Marcadores y Búsqueda
-    this.bookmarkBtn = document.getElementById('btn-reader-bookmark');
+    // Elementos de Búsqueda
     this.searchBtn = document.getElementById('btn-reader-search');
     this.searchPanelEl = document.getElementById('reader-search-panel');
     this.searchBackdropEl = document.getElementById('reader-search-backdrop');
@@ -112,34 +110,7 @@ export class ReaderView {
       this.tocBackdropEl.addEventListener('click', () => this.toggleToc(false));
     }
 
-    // 5. Botón de Marcador de Posición
-    if (this.bookmarkBtn) {
-      this.bookmarkBtn.addEventListener('click', async () => {
-        if (!this.currentBookId || !readerManager.currentCfi) return;
-
-        const chapter = this.chapterEl ? this.chapterEl.textContent : 'Página marcada';
-        const progressText = this.progressTextEl ? this.progressTextEl.textContent : '0%';
-        const pct = parseFloat(progressText) || 0;
-
-        const res = await BookmarkManager.toggleBookmark({
-          bookId: this.currentBookId,
-          cfi: readerManager.currentCfi,
-          chapterTitle: chapter,
-          percentage: pct,
-          textSnippet: ''
-        });
-
-        this.bookmarkBtn.classList.toggle('bookmark-active', res.added);
-        if (res.added) {
-          Toast.success('Marcador añadido a esta página.');
-        } else {
-          Toast.info('Marcador retirado.');
-        }
-        this.renderBookmarks();
-      });
-    }
-
-    // 6. Botón y Panel de Búsqueda Intra-Libro
+    // 5. Botón y Panel de Búsqueda Intra-Libro
     if (this.searchBtn) {
       this.searchBtn.addEventListener('click', () => this.toggleSearch());
     }
@@ -195,11 +166,19 @@ export class ReaderView {
     // 7. Barra de Progreso Interactiva
     const progressTrack = document.getElementById('reader-progress-track');
     if (progressTrack) {
-      progressTrack.addEventListener('click', (e) => {
+      progressTrack.addEventListener('click', async (e) => {
         const rect = progressTrack.getBoundingClientRect();
         const clickRatio = (e.clientX - rect.left) / rect.width;
         const targetPercent = Math.max(0, Math.min(100, clickRatio * 100));
-        readerManager.goToPercentage(targetPercent);
+        try {
+          const ok = await readerManager.goToPercentage(targetPercent);
+          if (!ok && this.searchStatusText !== undefined) {
+            Toast.info('Aún calculando ubicaciones del libro… inténtalo en unos segundos.');
+          }
+        } catch (err) {
+          console.warn('Salto por porcentaje falló:', err);
+          Toast.error('No se pudo saltar a esa posición.');
+        }
       });
     }
 
@@ -220,6 +199,23 @@ export class ReaderView {
         readerManager.updateSettings({});
       }
     });
+
+    // 12. Reajustar el libro al rotar o redimensionar la ventana.
+    // (Mostrar/ocultar barras ya no cambia el layout: siempre flotan.)
+    let winResizeT = null;
+    window.addEventListener('resize', () => {
+      if (!this.isOpen) return;
+      clearTimeout(winResizeT);
+      winResizeT = setTimeout(() => {
+        try { readerManager.resizeToViewport(); } catch (_) {}
+      }, 250);
+    });
+    window.addEventListener('orientationchange', () => {
+      if (!this.isOpen) return;
+      setTimeout(() => {
+        try { readerManager.resizeToViewport(); } catch (_) {}
+      }, 350);
+    });
   }
 
   /**
@@ -230,6 +226,10 @@ export class ReaderView {
   async open(bookId, initialCfi = null) {
     this.currentBookId = bookId;
     this.isOpen = true;
+
+    // Bloquear el scroll de la página de fondo (su barra se veía sobre el lector)
+    try { document.body.classList.add('reader-open'); } catch (_) {}
+    try { document.documentElement.classList.add('reader-open'); } catch (_) {}
 
     if (this.container) {
       this.container.classList.add('active');
@@ -272,6 +272,9 @@ export class ReaderView {
     if (this.container) {
       this.container.classList.remove('active');
     }
+    // Restaurar el scroll de la página de fondo
+    try { document.body.classList.remove('reader-open'); } catch (_) {}
+    try { document.documentElement.classList.remove('reader-open'); } catch (_) {}
     this.toggleToc(false);
     readerManager.destroy();
 
@@ -284,8 +287,11 @@ export class ReaderView {
 
   /**
    * Actualiza los datos de cabecera y barra de progreso.
+   * ReaderManager emite {cfi, chapterTitle, percentage, location}.
+   * El título del libro se fijó en open(); aquí solo se actualiza si viene explícito.
    */
   updateLocationInfo(data) {
+    if (!data) return;
     if (this.titleEl && data.title) {
       this.titleEl.textContent = data.title;
       if (this.infoTitleEl) this.infoTitleEl.textContent = data.title;
@@ -294,12 +300,21 @@ export class ReaderView {
       this.chapterEl.textContent = data.chapterTitle;
       if (this.infoChapterEl) this.infoChapterEl.textContent = data.chapterTitle;
     }
+    const pct = typeof data.percentage === 'number' && !isNaN(data.percentage)
+      ? Math.max(0, Math.min(100, Math.round(data.percentage * 10) / 10))
+      : 0;
     if (this.progressFillEl) {
-      this.progressFillEl.style.width = `${data.percentage}%`;
+      this.progressFillEl.style.width = `${pct}%`;
     }
     if (this.progressTextEl) {
-      this.progressTextEl.textContent = `${data.percentage}%`;
-      if (this.infoProgressEl) this.infoProgressEl.textContent = `${data.percentage}%`;
+      this.progressTextEl.textContent = `${pct}%`;
+      if (this.infoProgressEl) this.infoProgressEl.textContent = `${pct}%`;
+    }
+    // Accesibilidad: exponer progreso como progressbar
+    const track = document.getElementById('reader-progress-track');
+    if (track) {
+      track.setAttribute('aria-valuenow', String(Math.round(pct)));
+      track.setAttribute('aria-valuetext', `${pct}% leído`);
     }
 
     // Actualizar capítulo activo en el drawer TOC
@@ -316,14 +331,6 @@ export class ReaderView {
       }
     }
 
-    // Comprobar si la página actual tiene marcador
-    if (this.bookmarkBtn && this.currentBookId && data.cfi) {
-      BookmarkManager.isBookmarked(this.currentBookId, data.cfi).then(bm => {
-        if (this.bookmarkBtn) {
-          this.bookmarkBtn.classList.toggle('bookmark-active', !!bm);
-        }
-      }).catch(() => {});
-    }
   }
 
   /**
@@ -378,20 +385,22 @@ export class ReaderView {
       this.tocDrawerEl.classList.remove('open');
       this.tocBackdropEl.classList.remove('open');
     }
+    document.getElementById('btn-reader-toc')?.setAttribute('aria-expanded', String(isOpen));
   }
 
   /**
    * Alterna pantalla completa (Fullscreen API).
    */
   toggleFullscreen() {
+    const btn = document.getElementById('btn-reader-fullscreen');
     if (!document.fullscreenElement) {
       const el = document.documentElement;
       if (el.requestFullscreen) {
-        el.requestFullscreen().catch(() => {});
+        el.requestFullscreen().then(() => btn?.setAttribute('aria-pressed', 'true')).catch(() => {});
       }
     } else {
       if (document.exitFullscreen) {
-        document.exitFullscreen().catch(() => {});
+        document.exitFullscreen().then(() => btn?.setAttribute('aria-pressed', 'false')).catch(() => {});
       }
     }
   }
@@ -428,11 +437,6 @@ export class ReaderView {
     // Evitar adjuntar múltiples escuchadores repetidos sobre el mismo documento
     if (doc._arcadiaEventsAttached) return;
     doc._arcadiaEventsAttached = true;
-
-    // Inyectar tarjeta al final del capítulo si estamos en modo Desplazamiento
-    if (false) {
-      // this.injectChapterEndCard(doc, win); // Solicitado por el usuario: quitar el cuadro final
-    }
 
     let touchStartX = 0;
     let touchStartY = 0;
@@ -506,60 +510,6 @@ export class ReaderView {
     });
   }
 
-  /**
-   * Inyecta una tarjeta visual al final del capítulo en modo Desplazamiento
-   * permitiendo continuar al siguiente capítulo con un toque cómodo.
-   */
-  injectChapterEndCard(doc, win) {
-    if (!doc || !doc.body) return;
-    if (doc.getElementById('arcadia-chapter-end-card')) return;
-
-    const card = doc.createElement('div');
-    card.id = 'arcadia-chapter-end-card';
-    card.className = 'arcadia-chapter-nav-card';
-    card.style.cssText = `
-      margin: 16px auto 26px auto !important;
-      padding: 10px 12px !important;
-      border-radius: 8px !important;
-      background: rgba(125, 125, 125, 0.06) !important;
-      border: 1px solid rgba(125, 125, 125, 0.14) !important;
-      text-align: center !important;
-      max-width: 290px !important;
-      width: 80% !important;
-      box-sizing: border-box !important;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-    `;
-
-    card.innerHTML = `
-      <div style="font-size: 0.50rem !important; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.45; margin-bottom: 6px;">✦ fin del capítulo ✦</div>
-      <div style="display: flex; gap: 8px; justify-content: center; align-items: center; flex-wrap: wrap;">
-        <button id="btn-card-prev-chapter" style="padding: 5px 10px; border-radius: 999px; background: rgba(125,125,125,0.12); border: 1px solid rgba(125,125,125,0.22); color: inherit; font-size: 0.70rem; font-weight: 600; cursor: pointer; transition: all 0.2s;">← Cap. ant.</button>
-        <button id="btn-card-next-chapter" style="padding: 5px 14px; border-radius: 999px; background: #5B4CC4; border: none; color: #FFFFFF; font-size: 0.72rem; font-weight: bold; cursor: pointer; box-shadow: 0 2px 6px rgba(91, 76, 196, 0.3); transition: transform 0.2s;">Siguiente cap. →</button>
-      </div>
-    `;
-
-    const btnPrev = card.querySelector('#btn-card-prev-chapter');
-    const btnNext = card.querySelector('#btn-card-next-chapter');
-
-    if (btnPrev) {
-      btnPrev.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        readerManager.prevChapter();
-      });
-    }
-
-    if (btnNext) {
-      btnNext.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        readerManager.nextChapter();
-      });
-    }
-
-    doc.body.appendChild(card);
-  }
-
 /**
     * Abre o cierra el panel de configuración del lector.
     */
@@ -577,6 +527,7 @@ const isOpen = show !== undefined ? show : !this.settingsPanelEl.classList.conta
       this.settingsPanelEl.classList.remove('open');
       this.settingsBackdropEl.classList.remove('open');
     }
+    document.getElementById('btn-reader-settings')?.setAttribute('aria-expanded', String(isOpen));
   }
 
   /**
@@ -611,9 +562,16 @@ const isOpen = show !== undefined ? show : !this.settingsPanelEl.classList.conta
       btn.classList.toggle('active', parseInt(btn.dataset.col) === settings.columns);
     });
 
-    // 5. Tema del lector
+    // 5. Tema del lector (soporta alias legacy 'wine' → 'wine-poetry')
     document.querySelectorAll('#reader-theme-options [data-reader-theme]').forEach(chip => {
-      chip.classList.toggle('active', chip.dataset.readerTheme === (settings.theme || 'inherit'));
+      const themeVal = (settings.theme || 'inherit');
+      const normalizedChip = chip.dataset.readerTheme === 'wine' ? 'wine-poetry' : chip.dataset.readerTheme;
+      const normalizedTheme = themeVal === 'wine' ? 'wine-poetry' : themeVal;
+      const isActive = normalizedChip === normalizedTheme;
+      chip.classList.toggle('active', isActive);
+      if (chip.getAttribute('role') === 'radio') {
+        chip.setAttribute('aria-checked', String(isActive));
+      }
     });
 
     // 6. Actualizar variables CSS del contenedor principal del lector para que coincida con el tema seleccionado
@@ -698,74 +656,6 @@ const isOpen = show !== undefined ? show : !this.settingsPanelEl.classList.conta
   }
 
   /**
-   * Renderiza la lista de marcadores del libro actual en el drawer lateral.
-   */
-  async renderBookmarks() {
-    if (!this.bookmarksListEl || !this.currentBookId) return;
-
-    const bookmarks = await BookmarkManager.getBookmarksForBook(this.currentBookId);
-
-    if (!bookmarks || bookmarks.length === 0) {
-      this.bookmarksListEl.innerHTML = `
-        <div style="padding: 30px 20px; text-align: center; color: var(--color-text-muted); font-size: var(--text-sm);">
-          <svg style="width: 36px; height: 36px; margin: 0 auto 10px; opacity: 0.4;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-          </svg>
-          <p>No hay páginas marcadas en este libro.</p>
-          <span style="font-size: 0.75rem; opacity: 0.7;">Pulsa el icono de cinta en la cabecera para marcar la página actual.</span>
-        </div>
-      `;
-      return;
-    }
-
-    this.bookmarksListEl.innerHTML = bookmarks.map(bm => {
-      const dateStr = bm.createdAt ? new Date(bm.createdAt).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' }) : '';
-      return `
-        <div class="bookmark-item" data-cfi="${this.escapeHtml(bm.cfi)}">
-          <div class="bookmark-header">
-            <span class="bookmark-chapter">${this.escapeHtml(bm.chapterTitle)}</span>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span class="bookmark-percentage">${bm.percentage}%</span>
-              <button class="btn-delete-bm" data-action="delete-bm" data-id="${bm.id}" title="Eliminar marcador" style="color: var(--color-text-muted); padding: 2px; cursor: pointer;">
-                <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-              </button>
-            </div>
-          </div>
-          <span style="font-size: 0.7rem; color: var(--color-text-muted);">${dateStr}</span>
-        </div>
-      `;
-    }).join('');
-
-    // Evento de clic en marcador para saltar
-    this.bookmarksListEl.querySelectorAll('.bookmark-item').forEach(itemEl => {
-      itemEl.addEventListener('click', (e) => {
-        if (e.target.closest('[data-action="delete-bm"]')) return;
-        const cfi = itemEl.dataset.cfi;
-        if (cfi) {
-          readerManager.goTo(cfi);
-          this.toggleToc(false);
-        }
-      });
-    });
-
-    // Evento de eliminar marcador
-    this.bookmarksListEl.querySelectorAll('[data-action="delete-bm"]').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        e.stopPropagation();
-        const id = btn.dataset.id;
-        await BookmarkManager.removeBookmark(id);
-        Toast.info('Marcador eliminado.');
-        this.renderBookmarks();
-        // Actualizar botón de cinta
-        if (this.bookmarkBtn && readerManager.currentCfi) {
-          const isStillBm = await BookmarkManager.isBookmarked(this.currentBookId, readerManager.currentCfi);
-          this.bookmarkBtn.classList.toggle('bookmark-active', !!isStillBm);
-        }
-      });
-    });
-  }
-
-  /**
    * Abre o cierra el panel de búsqueda intra-libro.
    */
   toggleSearch(show) {
@@ -785,6 +675,7 @@ const isOpen = show !== undefined ? show : !this.settingsPanelEl.classList.conta
         this.searchManager.cancel();
       }
     }
+    document.getElementById('btn-reader-search')?.setAttribute('aria-expanded', String(isOpen));
   }
 
   /**
@@ -811,8 +702,16 @@ const isOpen = show !== undefined ? show : !this.settingsPanelEl.classList.conta
       `;
     }
 
-    this.searchManager = new SearchManager(readerManager.book);
-    const results = await this.searchManager.search(query, 60);
+    this.searchManager = new SearchManager(readerManager.book, readerManager.currentBookId);
+    let results = [];
+    try {
+      results = await this.searchManager.search(query, 60);
+    } catch (err) {
+      console.warn('Búsqueda falló:', err);
+      if (this.searchStatusText) this.searchStatusText.textContent = 'Error en la búsqueda';
+      if (this.searchResultsList) this.searchResultsList.innerHTML = '';
+      return;
+    }
 
     if (!this.searchResultsList) return;
 
@@ -849,12 +748,17 @@ const isOpen = show !== undefined ? show : !this.settingsPanelEl.classList.conta
 
     // Evento de clic en resultado de búsqueda
     this.searchResultsList.querySelectorAll('.search-result-item').forEach(itemEl => {
-      itemEl.addEventListener('click', () => {
+      itemEl.addEventListener('click', async () => {
         const cfi = itemEl.dataset.cfi;
         if (cfi) {
-          readerManager.goTo(cfi);
-          this.toggleSearch(false);
-          Toast.success('Navegado a la coincidencia.');
+          try {
+            await readerManager.goTo(cfi);
+            this.toggleSearch(false);
+            Toast.success('Navegado a la coincidencia.');
+          } catch (err) {
+            console.warn('Salto a coincidencia falló:', err);
+            Toast.error('No se pudo navegar a ese pasaje.');
+          }
         }
       });
     });

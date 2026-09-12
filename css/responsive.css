@@ -13,7 +13,7 @@
   left: 0;
   width: 100%;
   z-index: var(--z-sticky);
-  padding: 0 var(--space-md);
+  padding: 0 12px;
   align-items: center;
   justify-content: space-between;
 }
@@ -68,9 +68,15 @@
   font-size: 0.7rem;
   font-weight: var(--weight-medium);
   padding: 6px 12px;
+  min-height: 48px;
+  min-width: 64px;
   border-radius: var(--radius-sm);
   position: relative;
   transition: all var(--transition-fast);
+  font-family: inherit;
+  border: none;
+  background: transparent;
+  cursor: pointer;
 }
 
 .mobile-nav-link svg {
@@ -152,31 +158,41 @@
     flex-direction: column;
     align-items: flex-start;
     padding: var(--space-sm) var(--space-md);
-    gap: var(--space-sm);
+    gap: 8px;
     margin-bottom: var(--space-md);
+  }
+
+  .quote-content {
+    gap: 2px;
   }
 
   .quote-text {
     font-size: var(--text-base);
+    margin: 2px 0;
+  }
+
+  .quote-meta-row {
+    margin-top: 10px;
   }
 
   .quote-actions {
-    gap: 6px;
+    gap: 8px;
     width: 100%;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .btn-quote-refresh,
-  .btn-quote-add-trigger,
-  .btn-quote-manage-trigger {
+  #btn-banner-add-quote,
+  #btn-banner-manage-quotes {
     padding: 6px 10px;
     font-size: 0.70rem;
     gap: 4px;
   }
 
   .btn-quote-refresh svg,
-  .btn-quote-add-trigger svg,
-  .btn-quote-manage-trigger svg {
+  #btn-banner-add-quote svg,
+  #btn-banner-manage-quotes svg {
     width: 12px;
     height: 12px;
   }
@@ -200,9 +216,9 @@
   .search-box {
     max-width: 100%;
     min-width: unset;
-    height: 56px !important;
-    min-height: 56px !important;
-    padding: 0 18px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    padding: 0 14px !important;
   }
 
   .view-actions {
@@ -212,15 +228,23 @@
 
   .sort-select-wrapper {
     flex: 1;
+    min-width: 0;
   }
 
   .sort-select {
     width: 100%;
   }
 
-  /* Grid en Móvil: 2 columnas limpias */
+  .sort-select-wrapper .cselect,
+  .sort-select-wrapper .cselect-btn {
+    width: 100%;
+    max-width: 100%;
+    flex: 1 1 auto;
+  }
+
+  /* Grid en Móvil: fluido, 2 columnas en pantallas normales, 1 en muy pequeñas */
   .books-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: var(--space-md) var(--space-sm);
   }
 
@@ -316,5 +340,67 @@
 
   .theme-options-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   BREAKPOINT: MÓVIL PEQUEÑO (< 380px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 380px) {
+  .books-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 10px;
+  }
+
+  .quote-banner {
+    padding: 12px 14px;
+  }
+
+  .quote-text {
+    font-size: 1rem;
+  }
+
+  .quote-btn-group {
+    width: 100%;
+  }
+
+  .btn-quote-refresh,
+  .btn-quote-secondary {
+    flex: 1;
+    justify-content: center;
+    min-height: 40px;
+  }
+
+  .library-header-top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-upload-epub {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+  }
+
+  .mobile-topbar {
+    padding: 0 8px;
+  }
+
+  .reader-header {
+    padding: 8px 10px;
+  }
+
+  .btn-reader-action {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* Barra inferior con 5 accesos: comprimir en pantallas estrechas */
+@media (max-width: 380px) {
+  .mobile-nav-link {
+    min-width: 0;
+    padding: 6px 8px;
+    font-size: 0.65rem;
   }
 }

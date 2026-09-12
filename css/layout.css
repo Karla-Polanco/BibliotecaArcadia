@@ -34,7 +34,7 @@
 
 /* Header del Sidebar (Branding Tipográfico Puro) */
 .sidebar-header {
-  padding: 18px 16px 14px;
+  padding: 4px 10px 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,11 +47,11 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 200px;
+  max-width: 100%;
   cursor: default;
   container-type: inline-size;
   user-select: none;
-  gap: 2px;
+  gap: 0;
 }
 
 .brand-ornament-top {
@@ -60,13 +60,17 @@
   justify-content: center;
   color: var(--brand-icon-color, var(--brand-star-color, var(--color-primary-light, #718CFF)));
   line-height: 1;
-  margin-bottom: 4px;
-  opacity: 0.95;
+  margin-bottom: 0;
+  opacity: 1;
   transition: color 0.35s ease, transform 0.3s ease;
 }
 
 .brand-ornament-top:hover {
-  transform: translateY(-1px) scale(1.08);
+  transform: translateY(-1px) scale(1.06);
+}
+
+.brand-ornament-top.emblem-glow .brand-emblem {
+  filter: drop-shadow(0 3px 10px var(--brand-title-shadow, rgba(91, 76, 196, 0.45))) drop-shadow(0 0 2px rgba(255,255,255,0.25));
 }
 
 .brand-icon-svg {
@@ -74,38 +78,64 @@
   height: 38px;
   display: inline-block;
   flex-shrink: 0;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.brand-typography .brand-icon-svg.brand-emblem {
+  width: 72px;
+  height: 49px;
+}
+
+.mobile-logo-wrap .brand-icon-svg.brand-emblem {
+  width: 40px;
+  height: 40px;
 }
 
 .brand-typography:hover .brand-icon-svg {
-  filter: drop-shadow(0 0 6px var(--brand-title-shadow, rgba(91, 76, 196, 0.4)));
+  filter: drop-shadow(0 0 8px var(--brand-title-shadow, rgba(91, 76, 196, 0.55)));
+  transform: translateY(-1px);
 }
 
 .brand-eyebrow-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 7px;
   width: 100%;
 }
 
 .brand-eyebrow {
   font-family: 'Cinzel', Georgia, serif;
-  font-size: 0.70rem;
-  letter-spacing: 0.32em;
-  text-indent: 0.32em;
-  font-weight: 600;
+  font-size: 0.68rem;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  font-weight: 700;
   color: var(--brand-eyebrow-color, #D6D0F0);
   text-transform: uppercase;
   white-space: nowrap;
   transition: color 0.35s ease;
 }
 
+.brand-diamond {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary, var(--color-primary-light, #38A9E8));
+  opacity: 0.95;
+  filter: drop-shadow(0 0 3px var(--brand-title-shadow, rgba(91, 76, 196, 0.5)));
+}
+
+.brand-diamond svg {
+  display: block;
+  width: 13px;
+  height: 13px;
+}
+
 .brand-rule {
   flex: 1;
   height: 1px;
-  background: var(--brand-rule-color, rgba(157, 142, 248, 0.45));
-  max-width: 28px;
+  background: linear-gradient(90deg, transparent, var(--brand-rule-color, rgba(157, 142, 248, 0.45)), transparent);
+  max-width: 64px;
   transition: background 0.35s ease;
 }
 
@@ -114,22 +144,51 @@
   font-size: 1.75rem;
   font-size: 12.5cqw;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  text-indent: 0.08em;
-  margin: 2px 0 0 0;
-  line-height: 1.05;
+  letter-spacing: 0.14em;
+  text-indent: 0.14em;
+  margin: 3px 0 0 0;
+  line-height: 1.1;
   max-width: 100%;
   text-align: center;
   white-space: nowrap;
   background: var(--brand-title-gradient, linear-gradient(180deg, #FFFFFF 0%, #E6E1F5 50%, #C4B9FC 100%));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 12px var(--brand-title-shadow, rgba(91, 76, 196, 0.35)));
+  color: transparent;
   transition: all 0.35s ease;
 }
 
-.brand-typography:hover .brand-wordmark {
-  filter: drop-shadow(0 4px 18px var(--brand-title-shadow, rgba(91, 76, 196, 0.55)));
+.brand-tagline {
+  margin: 4px 0 0 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.56rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  opacity: 0.9;
+  white-space: nowrap;
+}
+
+.brand-wordmark-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1;
+  gap: 2px;
+}
+
+.brand-tagline-compact {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.52rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  opacity: 0.9;
+  white-space: nowrap;
 }
 
 /* Cuerpo con Scroll del Sidebar */
@@ -159,16 +218,22 @@
   margin-bottom: 2px;
 }
 
-/* Enlaces de Navegación */
+/* Enlaces de Navegación (funcionan como <button> y como <a>) */
 .nav-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
+  min-height: 44px;
   padding: 10px var(--space-sm);
   border-radius: var(--radius-sm);
   color: var(--color-text-secondary);
   font-size: var(--text-sm);
   font-weight: var(--weight-medium);
+  font-family: inherit;
+  text-align: left;
+  background: transparent;
+  border: none;
   cursor: pointer;
   transition: all var(--transition-fast);
 }
@@ -183,6 +248,11 @@
   color: var(--color-text);
   font-weight: var(--weight-semibold);
   box-shadow: inset 3px 0 0 var(--color-primary-light);
+}
+
+.nav-item:focus-visible {
+  outline: 3px solid var(--color-primary-light);
+  outline-offset: 2px;
 }
 
 .nav-item-content {

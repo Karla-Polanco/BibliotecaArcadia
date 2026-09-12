@@ -42,12 +42,16 @@ export class NoteManager {
     if (!bookId) throw new Error('Se requiere bookId para registrar una nota.');
     if (!content.trim() && !title.trim()) throw new Error('La nota no puede estar vacía.');
 
+    const cleanSelected = (selectedText || '').trim();
+    const fallbackTitle = cleanSelected
+      ? (cleanSelected.length > 40 ? cleanSelected.substring(0, 40).trimEnd() + '…' : cleanSelected)
+      : 'Nota de lectura';
     const note = {
       id: typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `note-${Date.now()}`,
       bookId,
       cfiRange,
-      selectedText: (selectedText || '').trim(),
-      title: (title || '').trim() || (selectedText ? selectedText.substring(0, 40) + '...' : 'Nota de lectura'),
+      selectedText: cleanSelected,
+      title: (title || '').trim() || fallbackTitle,
       content: content.trim(),
       color: color || 'yellow',
       createdAt: Date.now(),

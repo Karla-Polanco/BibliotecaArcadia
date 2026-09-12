@@ -37,14 +37,16 @@
 - **Gestos táctiles:** Soporte para deslizamiento lateral (*swipe*) y toque en el centro para alternar el modo inmersivo sin distracciones.
 
 ### 3. 🎨 Tipografía y Ajustes Personalizados
-- **Fuentes literarias optimizadas:** Literata, Merriweather, Roboto, Inter y OpenDyslexic (para accesibilidad en dislexia).
-- **Control granular:** Tamaño de letra (12px a 36px), peso tipográfico (Normal / Medio / Negrita), interlineado (1.2, 1.4, 1.6, 1.8) y márgenes (estrecho, normal, amplio).
-- **Persistencia por libro:** Cada ejemplar recuerda su propia configuración y su posición exacta mediante identificadores canónicos de fragmento (**CFI**).
-- **Sistema de 4 temas cromáticos:**
+- **Fuentes literarias optimizadas:** Literata, Source Serif 4, Lora, EB Garamond, Playfair Display, Poppins, Inter, Roboto y OpenDyslexic (para accesibilidad en dislexia).
+- **Control granular:** Tamaño de letra (12px a 36px), peso tipográfico (Normal / Medio / Negrita), interlineado (1.3, 1.6, 1.9) y 1–2 columnas (en escritorio).
+- **Persistencia por libro y global:** Cada ejemplar recuerda su propia configuración y su posición exacta mediante identificadores canónicos de fragmento (**CFI**); además se guardan preferencias globales en `localStorage`.
+- **Sistema de 6 apariencias:**
   - *Nocturno Místico* (por defecto, oscuro y profundo)
   - *Lavanda Claro* (luminoso y suave)
-  - *Crepúsculo Profundo* (tonos azulados nocturnos)
-  - *Tema del Sistema* (sincronizado con las preferencias del SO)
+  - *Niebla Serena (`wine-poetry`)* (acuarela rosa/lavanda diurna)
+  - *Bosque de la Mañana (`enchanted-forest`)* (verdes salvia diurnos)
+  - *Cielo Claro (`clear-sky`)* (celeste/azul diurno)
+  - *Tema del Sistema* (resuelve automáticamente a Nocturno o Lavanda según el SO)
 
 ### 4. ✍️ Motor de Selección, Resaltados, Subrayados y Notas
 - **Barra flotante contextual:** Se despliega automáticamente al seleccionar texto en las páginas.
@@ -52,10 +54,10 @@
 - **Subrayado estilizado y notas vinculadas:** Posibilidad de adjuntar reflexiones a citas del texto.
 - **Catálogo centralizado de notas:** Vista dedicada accesible desde el menú lateral con filtros por libro y tipo, búsqueda en vivo y salto instantáneo a la posición de la cita en el libro.
 
-### 5. 🔖 Marcadores y Búsqueda Intra-Libro
-- **Marcador con un clic:** Botón de cinta en la cabecera del lector que detecta automáticamente si la página actual está marcada.
-- **Doble pestaña en el Drawer:** Alterna entre *Capítulos* y *Marcadores* guardados con porcentaje de lectura y fecha.
-- **Búsqueda de texto completo:** Escaneo rápido del *spine* del EPUB con extracción de fragmentos (*snippets*) contextuales, resaltado de coincidencias y navegación inmediata al pasaje encontrado.
+### 5. 🔖 Búsqueda Intra-Libro y Navegación por Capítulos
+- **Drawer de capítulos:** Tabla de contenidos (TOC) con resaltado del capítulo activo y salto directo.
+- **Búsqueda de texto completo:** Escaneo del *spine* del EPUB (`spine.items` con fallback) con extracción de fragmentos (*snippets*) contextuales, resaltado de coincidencias y navegación inmediata al pasaje encontrado. Historial en IndexedDB (`searchHistory`).
+- **Barra de progreso interactiva:** Porcentaje clicable con espera a `LocationsManager` y mensajes accesibles (`role="progressbar"`).
 
 ### 6. 🗂️ Colecciones Personalizadas y Estanterías
 - **Colecciones dinámicas:** Creación de estanterías con nombres, descripciones y paleta cromática distintiva.
@@ -107,8 +109,11 @@ BibliotecaArcadia/
 │   │   ├── ReaderManager.js    # Integración central con epub.js
 │   │   ├── ReaderSettings.js   # Configuraciones de lectura por libro
 │   │   ├── ReaderView.js       # UI del visor, atajos, pantalla completa y drawer
-│   │   ├── BookmarkManager.js  # CRUD de marcadores de página
 │   │   └── SearchManager.js    # Buscador de texto completo intra-libro
+│   ├── quotes/
+│   │   ├── QuotesManager.js    # CRUD de frases en IndexedDB
+│   │   ├── QuotesService.js    # Rotación del banner y persistencia de índice
+│   │   └── QuotesView.js       # Vista de tarjetas de frases
 │   ├── annotations/
 │   │   ├── AnnotationManager.js# Gestor de resaltados y subrayados CFI
 │   │   ├── NoteManager.js      # Gestor de notas de lectura
@@ -118,9 +123,13 @@ BibliotecaArcadia/
 │   │   └── VocabularyView.js   # Vista de flashcards léxicas
 │   ├── ui/
 │   │   ├── ThemeManager.js     # Selector y persistencia de temas visuales
+│   │   ├── ScaleManager.js     # Escala tipográfica global de la app
 │   │   ├── Toast.js            # Sistema de notificaciones emergentes
+│   │   ├── Modal.js            # Sistema de diálogos (confirm/prompt)
 │   │   ├── FloatingMenu.js     # Barra de acciones contextual sobre selecciones
-│   │   └── CollectionModal.js  # Modales para colecciones
+│   │   ├── CollectionModal.js  # Modales para colecciones
+│   │   ├── QuoteModal.js       # Modal para crear/editar frases
+│   │   └── CustomSelect.js     # Mejora accesible de <select>
 │   └── pwa/
 │       └── PWAManager.js       # Ciclo de vida PWA, offline y prompt install
 └── assets/

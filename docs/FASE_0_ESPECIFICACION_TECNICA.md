@@ -621,7 +621,7 @@ BibliotecaArcadia/
 │   ├── annotations/            # Dominio de Anotaciones y Marcadores
 │   │   ├── AnnotationManager.js# Lógica de resaltados y subrayados (CFI)
 │   │   ├── NoteManager.js      # CRUD de notas asociadas e independientes
-│   │   ├── BookmarkManager.js  # Gestión de marcadores de posición rápida
+│   │   ├── BookmarkManager.js  # RETIRADO (no implementado: capítulos, búsqueda y notas)
 │   │   └── AnnotationsView.js  # Vista unificada de notas, citas y marcadores
 │   │
 │   ├── vocabulary/             # Dominio de Vocabulario
@@ -1038,11 +1038,10 @@ A continuación se define el desglose sistemático de las fases de desarrollo de
   - Los resaltados sobreviven a cambios de tamaño de fuente o ventana.
   - Sección "Notas y subrayados" que lista todas las anotaciones y permite saltar directamente a la posición exacta en el libro.
 
-#### FASE 6: Sistema de Marcadores y Búsqueda Intra-Libro
-- **Objetivo:** Añadir marcadores rápidos con un clic en la cabecera del lector. Implementar búsqueda de palabras/frases dentro del texto del libro con navegación de resultados.
-- **Archivos a crear/modificar:** `js/annotations/BookmarkManager.js`, `js/search/SearchManager.js`, `js/search/search.worker.js`.
+#### FASE 6: Búsqueda Intra-Libro (marcadores retirados)
+- **Objetivo:** Implementar búsqueda de palabras/frases dentro del texto del libro con navegación de resultados. Los marcadores rápidos se retiraron del producto: la navegación es por capítulos, búsqueda y notas (el store heredado `bookmarks` se elimina en la migración de `db.js`).
+- **Archivos a crear/modificar:** `js/reader/SearchManager.js`, `js/reader/ReaderView.js`.
 - **Criterios de Aceptación:**
-  - Marcadores listados en la tabla de contenidos con salto inmediato.
   - Búsqueda veloz que resalta resultados y muestra contador ("3 de 17").
 
 #### FASE 7: Sistema de Colecciones y Biblioteca Inteligente

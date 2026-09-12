@@ -6,7 +6,7 @@
  * mediante caché Cache-First del App Shell y limpieza de versiones obsoletas.
  */
 
-const CACHE_NAME = 'arcadia-pwa-v61';
+const CACHE_NAME = 'arcadia-pwa-v86';
 
 // Recursos esenciales del App Shell a precachear
 const APP_SHELL_ASSETS = [
@@ -34,7 +34,6 @@ const APP_SHELL_ASSETS = [
   './js/quotes/QuotesManager.js',
   './js/quotes/QuotesService.js',
   './js/quotes/QuotesView.js',
-  './js/reader/BookmarkManager.js',
   './js/reader/LocationsManager.js',
   './js/reader/ReaderManager.js',
   './js/reader/ReaderSettings.js',
@@ -53,8 +52,14 @@ const APP_SHELL_ASSETS = [
   './js/ui/FloatingMenu.js',
   './js/ui/ThemeManager.js',
   './js/ui/Toast.js',
+  './js/ui/CustomSelect.js',
   './assets/libs/jszip.min.js',
   './assets/libs/epub.min.js'
+];
+
+// EPUB de muestra / fallback (opcional: puede no existir en producción)
+const OPTIONAL_ASSETS = [
+  './assets/sample/sample_book.epub'
 ];
 
 // 1. INSTALACIÓN: Precarga en caché de todos los archivos del App Shell
@@ -73,6 +78,13 @@ self.addEventListener('install', (event) => {
         }
       });
       await Promise.all(cachePromises);
+      // Opcionales (no bloquean la instalación si faltan)
+      for (const asset of OPTIONAL_ASSETS) {
+        try {
+          const r = await fetch(asset, { cache: 'no-cache' });
+          if (r && r.ok) await cache.put(asset, r);
+        } catch (_) {}
+      }
       return self.skipWaiting();
     })
   );

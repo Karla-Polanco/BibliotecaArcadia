@@ -19,9 +19,10 @@ export class QuoteModal {
     if (prev) prev.remove();
 
     const isEdit = !!editQuote;
-    const initialText = isEdit ? (editQuote.text || '').replace(/^«|»$/g, '') : '';
-    const initialAuthor = isEdit ? (editQuote.author || '') : '';
-    const initialSource = isEdit ? (editQuote.source || '') : '';
+    const escAttr = (v) => String(v || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const initialText = isEdit ? escAttr((editQuote.text || '').replace(/^«|»$/g, '')) : '';
+    const initialAuthor = isEdit ? escAttr(editQuote.author || '') : '';
+    const initialSource = isEdit ? escAttr(editQuote.source || '') : '';
     const initialFavorite = isEdit ? !!editQuote.favorite : false;
 
     const backdrop = document.createElement('div');

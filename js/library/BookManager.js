@@ -91,18 +91,16 @@ export class BookManager {
     });
 
     // 5. Inicializar configuración visual personalizada por libro
+    // Alineada con ReaderSettings.DEFAULT_SETTINGS (sin campos muertos)
     await dbManager.put('readerSettings', {
       bookId: newBook.id,
       fontFamily: 'Literata',
       fontSize: 18,
       fontWeight: 'normal',
       lineHeight: 1.6,
-      letterSpacing: 0,
-      margins: 'normal',
-      contentWidth: 800,
       columns: 1,
       flowMode: 'scrolled-doc',
-      theme: 'system'
+      theme: 'inherit'
     });
 
     // 6. Actualizar memoria y cuota de almacenamiento
@@ -147,6 +145,8 @@ export class BookManager {
 
   /**
    * Elimina un libro de IndexedDB y purga sus registros relacionales.
+   * Limpia progreso, ajustes, anotaciones, notas, vocabulario,
+   * relaciones N:M, historial de búsqueda y de posiciones.
    */
   async deleteBook(id) {
     // Eliminar libro
@@ -154,26 +154,72 @@ export class BookManager {
 
     // Eliminar progreso y ajustes asociados
     try {
-      await dbManager.delete('readingProgress', id);
-      await dbManager.delete('readerSettings', id);
+      await dbManager.delete('readingProgress', id).catch(() => {});
+      await dbManager.delete('readerSettings', id).catch(() => {});
 
       // Limpiar anotaciones asociadas
-      const annots = await dbManager.getByIndex('annotations', 'by_bookId', id);
-      for (const a of annots) {
-        await dbManager.delete('annotations', a.id);
+      try {
+        const annots = await dbManager.getByIndex('annotations', 'by_bookId', id);
+        for (const a of annots || []) {
+          await dbManager.delete('annotations', a.id).catch(() => {});
+        }
+      } catch (_) {
+        const annots = await dbManager.getAll('annotations').catch(() => []);
+        for (const a of (annots || []).filter(x => x.bookId === id)) {
+          await dbManager.delete('annotations', a.id).catch(() => {});
+        }
       }
 
       // Limpiar notas asociadas
-      const notes = await dbManager.getByIndex('notes', 'by_bookId', id);
-      for (const n of notes) {
-        await dbManager.delete('notes', n.id);
+      try {
+        const notes = await dbManager.getByIndex('notes', 'by_bookId', id);
+        for (const n of notes || []) {
+          await dbManager.delete('notes', n.id).catch(() => {});
+        }
+      } catch (_) {
+        const notes = await dbManager.getAll('notes').catch(() => []);
+        for (const n of (notes || []).filter(x => x.bookId === id)) {
+          await dbManager.delete('notes', n.id).catch(() => {});
+        }
       }
 
-      // Limpiar marcadores asociados
-      const bmarks = await dbManager.getByIndex('bookmarks', 'by_bookId', id);
-      for (const bm of bmarks) {
-        await dbManager.delete('bookmarks', bm.id);
-      }
+      // Limpiar vocabulario asociado (bookId o legacy 'default'/'general' no se borran globalmente)
+      try {
+        const words = await dbManager.getByIndex('words', 'by_bookId', id);
+        for (const w of words || []) {
+          await dbManager.delete('words', w.id).catch(() => {});
+        }
+      } catch (_) {}
+
+      // Limpiar relaciones N:M book_collections
+      try {
+        let rels = [];
+        try {
+          rels = await dbManager.getByIndex('book_collections', 'by_book', id);
+        } catch (_) {
+          rels = (await dbManager.getAll('book_collections').catch(() => []))
+            .filter(r => r.bookId === id);
+        }
+        for (const r of rels || []) {
+          try {
+            await dbManager.delete('book_collections', [r.bookId, r.collectionId]);
+          } catch (_) {}
+        }
+      } catch (_) {}
+
+      // Limpiar historiales asociados (si existen)
+      try {
+        const hist = await dbManager.getAll('searchHistory').catch(() => []);
+        for (const h of (hist || []).filter(x => x.bookId === id)) {
+          await dbManager.delete('searchHistory', h.id).catch(() => {});
+        }
+      } catch (_) {}
+      try {
+        const pos = await dbManager.getByIndex('positionHistory', 'by_bookId', id).catch(() => []);
+        for (const p of pos || []) {
+          await dbManager.delete('positionHistory', p.id).catch(() => {});
+        }
+      } catch (_) {}
     } catch (err) {
       console.warn('Advertencia al purgar registros secundarios del libro:', err);
     }

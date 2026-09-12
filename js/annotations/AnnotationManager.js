@@ -11,12 +11,12 @@ import { appState } from '../state.js';
 
 export class AnnotationManager {
   static COLORS = {
-    yellow: { bg: 'rgba(250, 204, 21, 0.45)', border: '#EAB308', name: 'Amarillo' },
-    green:  { bg: 'rgba(74, 222, 128, 0.45)', border: '#22C55E', name: 'Verde' },
-    blue:   { bg: 'rgba(96, 165, 250, 0.45)', border: '#3B82F6', name: 'Azul' },
-    purple: { bg: 'rgba(192, 132, 252, 0.45)', border: '#A855F7', name: 'Púrpura' },
-    orange: { bg: 'rgba(251, 146, 60, 0.45)', border: '#F97316', name: 'Naranja' },
-    pink:   { bg: 'rgba(244, 114, 182, 0.45)', border: '#EC4899', name: 'Rosa' }
+    yellow: { bg: 'rgba(253, 224, 71, 0.50)', border: '#EAB308', name: 'Amarillo' },
+    green:  { bg: 'rgba(110, 231, 183, 0.50)', border: '#10B981', name: 'Verde' },
+    blue:   { bg: 'rgba(125, 211, 252, 0.50)', border: '#0284C7', name: 'Azul' },
+    purple: { bg: 'rgba(196, 181, 253, 0.55)', border: '#8B5CF6', name: 'Púrpura' },
+    orange: { bg: 'rgba(253, 186, 116, 0.50)', border: '#EA580C', name: 'Naranja' },
+    pink:   { bg: 'rgba(249, 168, 212, 0.50)', border: '#DB2777', name: 'Rosa' }
   };
 
   constructor() {

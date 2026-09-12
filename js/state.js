@@ -5,16 +5,31 @@
  * Maneja el estado global de la interfaz sin acoplamiento a frameworks.
  */
 
+function safeGet(key, fallback = null) {
+  try {
+    const v = localStorage.getItem(key);
+    return v !== null ? v : fallback;
+  } catch (_) {
+    return fallback;
+  }
+}
+
+function safeSet(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch (_) {}
+}
+
 export class AppState {
   constructor() {
     this.state = {
       activeView: 'library',       // 'library', 'current', 'favorites', 'annotations', 'vocabulary', 'settings'
-      activeFilter: 'all',         // 'all', 'to_read', 'reading', 'completed', 'favorites'
-      viewMode: localStorage.getItem('arcadia_view_mode') || 'grid', // 'grid' | 'list'
+      activeFilter: safeGet('arcadia_active_filter', 'all') || 'all', // 'all', 'to_read', 'reading', 'completed', 'favorites'
+      viewMode: safeGet('arcadia_view_mode', 'grid') || 'grid', // 'grid' | 'list'
       sortBy: 'recent',            // 'recent', 'title', 'author', 'progress'
       searchQuery: '',
-      currentReadingId: 'book-1',  // ID del libro en lectura activa
-      selectedTheme: localStorage.getItem('arcadia_theme') || 'mystic-night'
+      currentReadingId: null,  // ID del libro en lectura activa (null = ninguno)
+      selectedTheme: safeGet('arcadia_theme', 'mystic-night') || 'mystic-night'
     };
 
     this.subscribers = new Map();
@@ -35,7 +50,13 @@ export class AppState {
     this.state[key] = value;
 
     if (key === 'viewMode') {
-      localStorage.setItem('arcadia_view_mode', value);
+      safeSet('arcadia_view_mode', value);
+    }
+    if (key === 'activeFilter') {
+      safeSet('arcadia_active_filter', value);
+    }
+    if (key === 'selectedTheme') {
+      safeSet('arcadia_theme', value);
     }
 
     this.notify(key, value);

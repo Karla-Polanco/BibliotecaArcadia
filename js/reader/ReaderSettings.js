@@ -100,16 +100,23 @@ export class ReaderSettings {
 
       body {
         margin: 0 auto !important;
-        max-width: 760px !important;
-        padding: 0 24px !important;
+        max-width: 880px !important;
+        padding-top: 72px !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        padding-bottom: 68px !important;
         font-family: ${fontStack} !important;
         font-size: ${settings.fontSize}px !important;
         font-weight: ${fontWeightVal} !important;
         line-height: ${settings.lineHeight} !important;
+        text-align: justify !important;
         box-sizing: border-box !important;
         overflow-x: hidden !important;
         word-break: normal !important;
         overflow-wrap: break-word !important;
+        -webkit-hyphens: auto !important;
+        -ms-hyphens: auto !important;
+        hyphens: auto !important;
       }
 
       *, p, span, div, li, em, strong, b, i, blockquote, a {
@@ -122,16 +129,49 @@ export class ReaderSettings {
         font-size: inherit !important;
         line-height: ${settings.lineHeight} !important;
         font-weight: ${fontWeightVal} !important;
+        text-align: justify !important;
         margin-top: 0 !important;
         margin-bottom: 1.15em !important;
+        -webkit-hyphens: auto !important;
+        -ms-hyphens: auto !important;
+        hyphens: auto !important;
       }
 
       h1, h2, h3, h4, h5, h6 {
         color: ${themeColors.heading} !important;
         font-family: ${fontStack} !important;
         font-weight: ${settings.fontWeight === 'bold' ? '900' : '700'} !important;
+        text-align: center !important;
         margin-top: 1.4em !important;
         margin-bottom: 0.6em !important;
+      }
+
+      /* Títulos de capítulo marcados con clases o ids del propio libro */
+      [class*="capitul" i], [class*="capítul" i], [class*="chapter" i],
+      [class*="titul" i], [class*="títul" i], [class*="title" i],
+      [class*="heading" i], [class*="cabecera" i],
+      [id*="capitul" i], [id*="chapter" i],
+      [id*="titul" i], [id*="title" i] {
+        text-align: center !important;
+      }
+
+      /* Ornamentos del capítulo (icono bajo el título): imágenes sueltas o en contenedor */
+      body > img, body > svg {
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      figure {
+        text-align: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      p:has(> img), div:has(> img),
+      p:has(> svg), div:has(> svg),
+      p:has(> a > img), div:has(> a > img) {
+        text-align: center !important;
       }
 
       a {
@@ -179,13 +219,17 @@ export class ReaderSettings {
         },
         'body': {
           'margin': '0',
-          'padding': '0 22px',
+          'padding-top': '72px',
+          'padding-bottom': '68px',
+          'padding-left': '20px',
+          'padding-right': '20px',
           'color': themeColors.text,
           'background': themeColors.bg,
           'font-family': fontStack,
           'font-size': `${settings.fontSize}px`,
           'font-weight': fontWeightVal,
           'line-height': settings.lineHeight,
+          'text-align': 'justify',
           'box-sizing': 'border-box',
           'overflow-x': 'hidden',
           'word-break': 'normal',
@@ -194,7 +238,11 @@ export class ReaderSettings {
         'p, span, div, li, em, strong, b, i, blockquote, a': {
           'font-family': fontStack,
           'font-weight': fontWeightVal,
+          'text-align': 'justify',
           'color': themeColors.text
+        },
+        'h1, h2, h3, h4, h5, h6': {
+          'text-align': 'center'
         }
       });
     } catch (_) {}
@@ -210,7 +258,7 @@ export class ReaderSettings {
           const fontLink = content.document.createElement('link');
           fontLink.id = 'arcadia-google-fonts';
           fontLink.rel = 'stylesheet';
-          fontLink.href = 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;0,7..72,800;1,7..72,400&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap';
+          fontLink.href = 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;0,7..72,800;1,7..72,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap';
           content.document.head.appendChild(fontLink);
         }
 
@@ -242,8 +290,12 @@ const effectiveSpread = (!isMobile && settings.columns === 2) ? 'always' : 'auto
     switch (fontName) {
       case 'Literata':
         return "'Literata', Georgia, serif";
+      case 'Source Serif':
+      case 'SourceSerif':
+        return "'Source Serif 4', Georgia, serif";
       case 'Merriweather':
-        return "'Merriweather', Georgia, serif";
+        // Migración: los ajustes guardados con Merriweather usan la nueva serif
+        return "'Source Serif 4', Georgia, serif";
       case 'Lora':
         return "'Lora', Georgia, serif";
       case 'EB Garamond':
@@ -271,6 +323,8 @@ const effectiveSpread = (!isMobile && settings.columns === 2) ? 'always' : 'auto
    * Obtiene la paleta de colores para el lector.
    */
   static _getThemeColors(themeName) {
+    // Alias legacy: 'wine' → 'wine-poetry'
+    if (themeName === 'wine') themeName = 'wine-poetry';
     if (themeName === 'lavender-light') {
       return {
         bg: '#FCFBFE',
@@ -297,10 +351,10 @@ const effectiveSpread = (!isMobile && settings.columns === 2) ? 'always' : 'auto
     }
     if (themeName === 'enchanted-forest') {
       return {
-        bg: '#F5F0E6',
-        text: '#262922',
-        heading: '#1E2B1A',
-        accent: '#6C8B5E'
+        bg: '#F4F7F2',
+        text: '#3E4A3E',
+        heading: '#333D33',
+        accent: '#546F52'
       };
     }
     if (themeName === 'clear-sky') {
@@ -308,23 +362,23 @@ const effectiveSpread = (!isMobile && settings.columns === 2) ? 'always' : 'auto
         bg: '#EBF4FA',
         text: '#132D48',
         heading: '#0F233B',
-        accent: '#3182CE'
+        accent: '#2563EB'
       };
     }
     if (themeName === 'wine' || themeName === 'wine-poetry') {
       return {
-        bg: '#170B12',
-        text: '#F5E9EC',
-        heading: '#DDA5B7',
-        accent: '#C47791'
+        bg: '#FAF5F6',
+        text: '#4A3E44',
+        heading: '#3A2F35',
+        accent: '#9A7585'
       };
     }
     // mystic-night por defecto
     return {
-      bg: '#111111',
-      text: '#E5E3EB',
-      heading: '#F2F0F7',
-      accent: '#5B4CC4'
+      bg: '#0D1226',
+      text: '#E8ECF7',
+      heading: '#FFFFFF',
+      accent: '#718CFF'
     };
   }
 }

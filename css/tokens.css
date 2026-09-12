@@ -5,7 +5,7 @@
 :root {
   /* Tipografía General */
   --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-serif: 'Literata', 'Merriweather', Georgia, 'Times New Roman', serif;
+  --font-serif: 'Literata', 'Source Serif 4', Georgia, 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
 
   /* Escala Tipográfica (Más grande y legible) */
@@ -57,12 +57,24 @@
   --header-height: 60px;
   --reading-banner-height: 72px;
 
-  /* Z-Index */
+  /* Altura unificada de controles de biblioteca (select + Grid/Lista) */
+  --control-height: 44px;
+
+  /* Z-Index (usar siempre estas variables, sin literales en componentes) */
   --z-sidebar: 40;
   --z-sticky: 30;
   --z-mobile-nav: 50;
   --z-drawer: 100;
   --z-floating-menu: 110;
+  --z-reader: 150;
+  --z-search: 190;
   --z-modal: 200;
   --z-toast: 300;
+
+  /* Foco accesible */
+  --color-border-focus: var(--color-primary-light);
+  --focus-ring: 0 0 0 3px var(--color-primary-glow);
+
+  /* Sombra suave para temas claros */
+  --shadow-card-soft: 0 10px 30px -12px rgba(30, 27, 75, 0.18);
 }

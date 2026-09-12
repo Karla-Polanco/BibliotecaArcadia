@@ -17,6 +17,7 @@ export class FloatingMenu {
     this.menuEl = null;
     this.noteModalEl = null;
     this.activeSelection = null; // { cfiRange, text, chapterTitle }
+    this._lastContents = null; // último contents del iframe (para limpiar la selección al cerrar)
     this._initElements();
   }
 
@@ -88,6 +89,13 @@ export class FloatingMenu {
       ">
         <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
       </button>
+
+      <!-- Cerrar -->
+      <button class="floating-btn" id="btn-float-close" title="Cerrar barra" aria-label="Cerrar barra" style="
+        padding: 6px 8px 6px 10px; border-radius: 0 6px 6px 0; color: var(--color-text-muted); cursor: pointer; border-left: 1px solid var(--color-border, #303030); margin-left: 2px;
+      ">
+        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
     `;
 
     document.body.appendChild(this.menuEl);
@@ -98,13 +106,18 @@ export class FloatingMenu {
         e.stopPropagation();
         const color = btn.dataset.color;
         if (this.activeSelection) {
-          await annotationManager.addHighlight(
-            this.activeSelection.cfiRange,
-            this.activeSelection.text,
-            color,
-            this.activeSelection.chapterTitle
-          );
-          Toast.success('Texto resaltado.');
+          try {
+            await annotationManager.addHighlight(
+              this.activeSelection.cfiRange,
+              this.activeSelection.text,
+              color,
+              this.activeSelection.chapterTitle
+            );
+            Toast.success('Texto resaltado.');
+          } catch (err) {
+            console.warn('Error al resaltar:', err);
+            Toast.error('No se pudo guardar el resaltado.');
+          }
           this.hide();
         }
       });
@@ -115,13 +128,18 @@ export class FloatingMenu {
       underlineBtn.addEventListener('click', async (e) => {
         e.stopPropagation();
         if (this.activeSelection) {
-          await annotationManager.addUnderline(
-            this.activeSelection.cfiRange,
-            this.activeSelection.text,
-            'purple',
-            this.activeSelection.chapterTitle
-          );
-          Toast.success('Texto subrayado.');
+          try {
+            await annotationManager.addUnderline(
+              this.activeSelection.cfiRange,
+              this.activeSelection.text,
+              'purple',
+              this.activeSelection.chapterTitle
+            );
+            Toast.success('Texto subrayado.');
+          } catch (err) {
+            console.warn('Error al subrayar:', err);
+            Toast.error('No se pudo guardar el subrayado.');
+          }
           this.hide();
         }
       });
@@ -167,9 +185,22 @@ export class FloatingMenu {
       });
     }
 
+    const closeBtn = this.menuEl.querySelector('#btn-float-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.dismiss();
+      });
+    }
+
     // Escuchar clics en anotaciones existentes para eliminarlas
     window.addEventListener('arcadia:annotation-clicked', (e) => {
       this.showAnnotationOptions(e.detail.annotation);
+    });
+
+    // Cerrar la barra con Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') this.hide();
     });
   }
 
@@ -179,6 +210,7 @@ export class FloatingMenu {
    */
   attach(rendition) {
     rendition.on('selected', (cfiRange, contents) => {
+      this._lastContents = contents;
       const selection = contents.window.getSelection();
       const text = selection ? selection.toString().trim() : '';
 
@@ -216,6 +248,12 @@ export class FloatingMenu {
   showAt(x, y) {
     if (!this.menuEl) return;
 
+    // En móvil se oculta la opción de Copiar para no estorbar al subrayar
+    const copyBtn = this.menuEl.querySelector('#btn-float-copy');
+    if (copyBtn) {
+      copyBtn.style.display = window.innerWidth <= 768 ? 'none' : '';
+    }
+
     // Hacer visible brevemente para medir el ancho real
     this.menuEl.style.opacity = '0';
     this.menuEl.style.transform = 'translate(-50%, -100%) scale(1)';
@@ -247,10 +285,22 @@ export class FloatingMenu {
   }
 
   /**
+   * Cierra la barra y limpia la selección del libro para que no reaparezca.
+   */
+  dismiss() {
+    try {
+      const w = this._lastContents && this._lastContents.window;
+      const sel = w && w.getSelection ? w.getSelection() : null;
+      if (sel && sel.removeAllRanges) sel.removeAllRanges();
+    } catch (_) {}
+    this.hide();
+  }
+
+  /**
    * Diálogo modal para redactar una nota vinculada.
    */
   async openNoteDialog(selection) {
-    const quote = selection.text.length > 120 ? selection.text.substring(0, 120) + '...' : selection.text;
+    const quote = selection.text.length > 120 ? selection.text.substring(0, 120).trimEnd() + '…' : selection.text;
     const noteText = await Modal.prompt({
       title: 'Nota al margen',
       message: `Cita seleccionada:\n«${quote}»`,
@@ -262,15 +312,20 @@ export class FloatingMenu {
     if (noteText === null || !noteText.trim()) return;
 
     try {
+      const cleanTitle = noteText.trim().length > 35
+        ? noteText.trim().substring(0, 35).trimEnd() + '…'
+        : noteText.trim();
       await NoteManager.createNote({
-        bookId: annotationManager.currentBookId,
+        bookId: annotationManager.currentBookId || 'general',
         cfiRange: selection.cfiRange,
         selectedText: selection.text,
-        title: noteText.trim().substring(0, 35) + '...',
+        title: cleanTitle,
         content: noteText.trim()
       });
-      // También agregar un resaltado suave en amarillo
-      annotationManager.addHighlight(selection.cfiRange, selection.text, 'yellow', selection.chapterTitle);
+      // También agregar un resaltado suave en amarillo (sin bloquear si falla)
+      try {
+        await annotationManager.addHighlight(selection.cfiRange, selection.text, 'yellow', selection.chapterTitle);
+      } catch (_) {}
       Toast.success('Nota guardada con éxito.');
     } catch (err) {
       Toast.error('Error al guardar la nota.');
@@ -281,7 +336,8 @@ export class FloatingMenu {
    * Menú emergente para eliminar o editar un resaltado existente.
    */
   async showAnnotationOptions(annotation) {
-    const quote = annotation.text ? annotation.text.substring(0, 60) + '...' : 'Pasaje seleccionado';
+    const short = annotation.text ? annotation.text.substring(0, 60) : 'Pasaje seleccionado';
+    const quote = annotation.text && annotation.text.length > 60 ? short.trimEnd() + '…' : short;
     const confirmed = await Modal.confirm({
       title: 'Eliminar anotación',
       message: `Cita: «${quote}»\n\n¿Deseas eliminar este ${annotation.type === 'underline' ? 'subrayado' : 'resaltado'}?`,
@@ -374,7 +430,7 @@ export class FloatingMenu {
           <button id="btn-cancel-def" style="padding: 8px 16px; border-radius: var(--radius-sm); font-size: var(--text-xs); color: var(--color-text-secondary); cursor: pointer;">Cerrar</button>
           <button id="btn-save-vocab" style="padding: 8px 18px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: bold; background-color: var(--color-primary-light); color: #FFFFFF; cursor: pointer; display: flex; align-items: center; gap: 6px;">
             <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-            <span>Guardar en Vocabulario</span>
+            <span>Guardar</span>
           </button>
         </div>
       </div>

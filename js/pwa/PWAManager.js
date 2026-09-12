@@ -21,31 +21,45 @@ export class PWAManager {
   }
 
   /**
-   * Comprueba si la aplicación se está ejecutando instalada como PWA o si ya fue instalada.
+   * Comprueba si la aplicación se está ejecutando instalada como PWA.
+   * Solo cuenta como instalada si hay señal inequívoca (modo standalone,
+   * API de iOS o marca guardada tras instalar). A propósito NO se usa el
+   * referrer android-app:// porque los navegadores dentro de otras apps
+   * (WhatsApp, Instagram…) también lo envían y ocultarían la descarga.
    * @returns {boolean}
    */
   static isAppInstalled() {
-    const isStandalone = (
-      window.matchMedia('(display-mode: standalone)').matches ||
-      window.navigator.standalone === true ||
-      document.referrer.includes('android-app://') ||
-      localStorage.getItem('arcadia_pwa_installed') === 'true'
-    );
-    return isStandalone;
+    try {
+      if (window.matchMedia) {
+        try {
+          if (window.matchMedia('(display-mode: standalone)').matches) return true;
+        } catch (_) {}
+      }
+      if (window.navigator && window.navigator.standalone === true) return true;
+      try {
+        if (localStorage.getItem('arcadia_pwa_installed') === 'true') return true;
+      } catch (_) {}
+      return false;
+    } catch (_) {
+      return false;
+    }
   }
 
   /**
-   * Oculta el botón "Descargar app" en la barra lateral si la app ya está instalada.
+   * Muestra los botones "Descargar app" (sidebar y barra móvil) salvo
+   * que la app ya esté instalada.
    */
   static syncInstallButtonVisibility() {
-    const installBtn = document.getElementById('btn-pwa-install');
-    if (!installBtn) return;
-
-    if (this.isAppInstalled()) {
-      installBtn.style.setProperty('display', 'none', 'important');
-    } else {
-      installBtn.style.display = 'flex';
-    }
+    const installed = this.isAppInstalled();
+    ['btn-pwa-install', 'btn-pwa-install-mobile'].forEach((id) => {
+      const btn = document.getElementById(id);
+      if (!btn) return;
+      if (installed) {
+        btn.style.setProperty('display', 'none', 'important');
+      } else {
+        btn.style.removeProperty('display');
+      }
+    });
   }
 
   /**
@@ -121,15 +135,17 @@ export class PWAManager {
       }
     } catch (_) {}
 
-    // Permitir abrir siempre el modal informativo / de instalación desde la barra lateral
-    const installBtn = document.getElementById('btn-pwa-install');
-    if (installBtn) {
+    // Permitir abrir siempre el modal informativo / de instalación
+    // desde la barra lateral y desde la navegación móvil
+    ['btn-pwa-install', 'btn-pwa-install-mobile'].forEach((id) => {
+      const btn = document.getElementById(id);
+      if (!btn) return;
       this.syncInstallButtonVisibility();
-      installBtn.addEventListener('click', (e) => {
+      btn.addEventListener('click', (e) => {
         e.preventDefault();
         this.promptInstall();
       });
-    }
+    });
   }
 
   /**

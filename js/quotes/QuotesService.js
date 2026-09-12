@@ -137,7 +137,7 @@ export class QuotesService {
 
     const current = this.getCurrentQuote();
     quoteTextEl.textContent = current.text;
-    quoteAuthorEl.textContent = `— ${current.author}`;
+    quoteAuthorEl.textContent = `— ${current.author || 'Anónimo'}`;
     if (quoteSourceEl) {
       quoteSourceEl.textContent = current.source ? ` · ${current.source}` : '';
     }

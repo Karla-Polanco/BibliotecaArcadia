@@ -33,12 +33,15 @@ export class Toast {
 
   /**
    * Muestra un mensaje emergente.
+   * Dura 8 segundos por defecto, se pausa al pasar el cursor por encima
+   * y siempre puede cerrarse manualmente con su botón ✕.
    * @param {string} message - Texto a mostrar
    * @param {'info'|'success'|'error'|'warning'} type - Tipo de notificación
-   * @param {number} duration - Duración en milisegundos (defecto: 3500ms)
+   * @param {number} duration - Duración en milisegundos (defecto: 8000ms, 0 = persistente)
    */
-  static show(message, type = 'info', duration = 3500) {
+  static show(message, type = 'info', duration = 8000) {
     const container = this._ensureContainer();
+    this._ensureCloseStyles();
 
     const toastEl = document.createElement('div');
     toastEl.className = `toast-message toast-${type}`;
@@ -62,13 +65,13 @@ export class Toast {
     `;
 
     toastEl.innerHTML = `
-      <div style="display: flex; align-items: center; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 10px; min-width: 0;">
         ${this._getTypeIcon(type)}
         <span>${this._escape(message)}</span>
       </div>
-      <button style="color: var(--color-text-muted); padding: 4px; border-radius: 4px; cursor: pointer;" aria-label="Cerrar">
-        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      <button class="toast-close-btn" style="color: var(--color-text-muted); padding: 7px; border-radius: 8px; cursor: pointer; flex-shrink: 0; background: transparent; border: none; display: flex; align-items: center;" aria-label="Cerrar notificación" title="Cerrar">
+        <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
     `;
@@ -81,18 +84,56 @@ export class Toast {
       toastEl.style.opacity = '1';
     });
 
-    const closeBtn = toastEl.querySelector('button');
+    let dismissed = false;
     const dismiss = () => {
+      if (dismissed) return;
+      dismissed = true;
+      clearTimeout(timer);
       toastEl.style.transform = 'translateY(12px)';
       toastEl.style.opacity = '0';
       setTimeout(() => toastEl.remove(), 250);
     };
 
-    if (closeBtn) closeBtn.addEventListener('click', dismiss);
+    const closeBtn = toastEl.querySelector('.toast-close-btn');
+    if (closeBtn) closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dismiss();
+    });
+
+    // Auto-cierre con pausa al pasar el cursor (para poder leer con calma)
+    let remaining = duration;
+    let timer = null;
+    let startedAt = 0;
+    const schedule = () => {
+      clearTimeout(timer);
+      if (remaining <= 0 || duration <= 0) return;
+      startedAt = Date.now();
+      timer = setTimeout(dismiss, remaining);
+    };
+    toastEl.addEventListener('mouseenter', () => {
+      clearTimeout(timer);
+      if (duration > 0) remaining -= Date.now() - startedAt;
+    });
+    toastEl.addEventListener('mouseleave', () => {
+      if (dismissed) return;
+      if (duration <= 0) return;
+      if (remaining <= 0) { dismiss(); return; }
+      schedule();
+    });
 
     if (duration > 0) {
-      setTimeout(dismiss, duration);
+      schedule();
     }
+  }
+
+  static _ensureCloseStyles() {
+    if (document.getElementById('toast-close-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'toast-close-styles';
+    style.textContent = `
+      .toast-close-btn:hover { background-color: var(--color-surface-hover) !important; color: var(--color-text) !important; }
+    `;
+    document.head.appendChild(style);
   }
 
   static success(msg, duration) { this.show(msg, 'success', duration); }

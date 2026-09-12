@@ -9,8 +9,9 @@
 import { dbManager } from '../db.js';
 
 export class SearchManager {
-  constructor(bookInstance) {
+  constructor(bookInstance, bookId = null) {
     this.book = bookInstance;
+    this.bookId = bookId;
     this.isSearching = false;
   }
 
@@ -28,15 +29,18 @@ export class SearchManager {
 
     this.isSearching = true;
     const allResults = [];
-    const spineItems = this.book.spine.spineItems || [];
+    // epub.js expone spine.items (v0.3). Se acepta spineItems como alias legacy.
+    const spineItems = (this.book.spine && (this.book.spine.items || this.book.spine.spineItems)) || [];
 
-    // Guardar término en el historial de IndexedDB
+    // Guardar término en el historial de IndexedDB (con ambos campos para compatibilidad de índices)
     try {
+      const now = Date.now();
       await dbManager.put('searchHistory', {
-        id: `search-${Date.now()}`,
+        id: `search-${now}-${Math.random().toString(36).slice(2, 7)}`,
         query: cleanQuery,
-        bookId: this.book.package ? (this.book.package.metadata?.identifier || 'book') : 'book',
-        searchedAt: Date.now()
+        bookId: this.bookId || (this.book.package ? (this.book.package.metadata?.identifier || 'book') : 'book'),
+        searchedAt: now,
+        timestamp: now
       });
     } catch (e) {}
 
@@ -45,8 +49,17 @@ export class SearchManager {
 
       const item = spineItems[i];
       try {
-        // Cargar sección en memoria
-        await item.load(this.book.load.bind(this.book));
+        // Cargar sección en memoria (compat con distintas versiones de epub.js)
+        try {
+          if (item.load.length >= 1 && this.book.load) {
+            await item.load(this.book.load.bind(this.book));
+          } else {
+            await item.load();
+          }
+        } catch (loadErr) {
+          // Reintento sin argumentos
+          try { await item.load(); } catch (_) { throw loadErr; }
+        }
 
         // Obtener título del capítulo para este item
         const chapterTitle = this._findChapterTitle(item.href) || `Sección ${i + 1}`;

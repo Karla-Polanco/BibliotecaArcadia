@@ -41,6 +41,13 @@ export class StorageWidget {
    * Actualiza los valores cuantitativos y visuales del medidor.
    */
   async update() {
+    const setProgress = (pct) => {
+      const track = document.getElementById('storage-progress-track');
+      if (track) {
+        track.setAttribute('aria-valuenow', String(Math.round(pct)));
+        track.setAttribute('aria-valuetext', `${Math.round(pct)}% de almacenamiento usado`);
+      }
+    };
     if (navigator.storage && navigator.storage.estimate) {
       try {
         const estimate = await navigator.storage.estimate();
@@ -59,14 +66,16 @@ export class StorageWidget {
         if (this.fillEl) {
           this.fillEl.style.width = `${percentage}%`;
         }
+        setProgress(percentage);
         return;
       } catch (err) {
         console.warn('Error al consultar StorageEstimate:', err);
       }
     }
 
-    // Fallback si no está soportado
-    if (this.textEl) this.textEl.textContent = '1.2 GB de 5 GB usados';
-    if (this.fillEl) this.fillEl.style.width = '24%';
+    // Fallback si no está soportado (sin datos inventados: estado indeterminado)
+    if (this.textEl) this.textEl.textContent = 'Almacenamiento no disponible en este navegador';
+    if (this.fillEl) this.fillEl.style.width = '0%';
+    setProgress(0);
   }
 }

@@ -10,6 +10,22 @@ import { dbManager } from '../db.js';
 import { appState } from '../state.js';
 
 export class VocabularyManager {
+  /** Timeout compatible con Safari antiguo (sin AbortSignal.timeout). */
+  static _timeoutSignal(ms) {
+    try {
+      if (typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function') {
+        return AbortSignal.timeout(ms);
+      }
+    } catch (_) {}
+    try {
+      const ctrl = new AbortController();
+      setTimeout(() => { try { ctrl.abort(); } catch (_) {} }, ms);
+      return ctrl.signal;
+    } catch (_) {
+      return undefined;
+    }
+  }
+
   // Diccionario local offline de términos literarios y comunes para disponibilidad garantizada
   static LOCAL_DICTIONARY = {
     'arcadia': {
@@ -55,53 +71,19 @@ export class VocabularyManager {
   };
 
   /**
-   * Pre-siembra inicial de palabras de muestra si el store está vacío.
+   * Inicialización del cuaderno: ya NO se pre-siembran palabras de muestra.
+   * Solo se conservan los términos creados por el usuario. Además elimina
+   * las palabras heredadas de pre-siembra antigua (ids word-1/2/3) si existen.
    */
   static async initPresets(sampleBookId = 'sample-book') {
     try {
       const existing = await dbManager.getAll('words');
-      if (existing && existing.length > 0) return existing;
-
-      const initialWords = [
-        {
-          id: 'word-1',
-          word: 'Arcadia',
-          contextSentence: 'La Biblioteca Arcadia abre sus puertas a mundos inexplorados.',
-          definition: 'Región idílica asociada con la paz, la belleza y la plenitud literaria.',
-          phonetic: '/arˈka.ðja/',
-          bookId: sampleBookId,
-          language: 'es',
-          mastered: true,
-          dateAdded: Date.now() - 3600000 * 24
-        },
-        {
-          id: 'word-2',
-          word: 'Inefable',
-          contextSentence: 'Un sentimiento inefable se apoderó de él al contemplar el horizonte.',
-          definition: 'Que no puede ser expresado en palabras ordinarias.',
-          phonetic: '/i.neˈfa.βle/',
-          bookId: sampleBookId,
-          language: 'es',
-          mastered: false,
-          dateAdded: Date.now() - 3600000 * 12
-        },
-        {
-          id: 'word-3',
-          word: 'Ataraxia',
-          contextSentence: 'Buscaba la ataraxia a través de la lectura sosegada.',
-          definition: 'Tranquilidad imperturbable y serenidad del espíritu.',
-          phonetic: '/a.taˈɾak.sja/',
-          bookId: sampleBookId,
-          language: 'es',
-          mastered: false,
-          dateAdded: Date.now() - 3600000 * 2
+      const legacyIds = ['word-1', 'word-2', 'word-3'];
+      for (const w of (existing || [])) {
+        if (legacyIds.includes(w.id)) {
+          await dbManager.delete('words', w.id);
         }
-      ];
-
-      for (const w of initialWords) {
-        await dbManager.put('words', w);
       }
-
       return await dbManager.getAll('words');
     } catch (e) {
       console.warn('Error al inicializar vocabulario:', e);
@@ -129,11 +111,40 @@ export class VocabularyManager {
       };
     }
 
-    // 2. Si hay conexión, intentar API de diccionario
+    // 2. Wiktionary: definición real en el idioma pedido
     try {
-      if (navigator.onLine) {
-        const resp = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/${lang === 'es' ? 'es' : 'en'}/${encodeURIComponent(cleanWord)}`, {
-          signal: AbortSignal.timeout(3000)
+      if (lang === 'en') {
+        const wikiEn = await this._lookupWiktionary(cleanWord, 'en');
+        if (wikiEn) {
+          return {
+            word: cleanWord,
+            definition: wikiEn,
+            phonetic: this._generateApproximatedPhonetic(cleanWord),
+            source: 'wiktionary'
+          };
+        }
+      } else {
+        // Español: se parsea el wikitexto (el endpoint de definiciones
+        // no existe en es.wiktionary). Nunca se devuelve inglés aquí.
+        const wikiEs = await this._lookupWiktionaryES(cleanWord);
+        if (wikiEs) {
+          return {
+            word: cleanWord,
+            definition: wikiEs,
+            phonetic: this._generateApproximatedPhonetic(cleanWord),
+            source: 'wiktionary'
+          };
+        }
+      }
+    } catch (err) {
+      // Sigue al siguiente origen
+    }
+
+    // 3. Si el idioma es inglés, intentar API de diccionario en inglés
+    try {
+      if (lang === 'en' && navigator.onLine) {
+        const resp = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(cleanWord)}`, {
+          signal: this._timeoutSignal(3000)
         });
         if (resp.ok) {
           const data = await resp.json();
@@ -159,7 +170,7 @@ export class VocabularyManager {
       // Fallback silencioso a estimación léxica
     }
 
-    // 3. Fallback inteligente: estimación morfológica
+    // 4. Fallback inteligente: estimación morfológica
     return {
       word: cleanWord,
       definition: `Término léxico del texto. Puedes editar esta definición libremente.`,
@@ -169,22 +180,133 @@ export class VocabularyManager {
   }
 
   /**
+   * Busca una definición real en Wiktionary (español o inglés).
+   * @returns {Promise<string|null>} - Definición en texto plano o null
+   * @private
+   */
+  static async _lookupWiktionary(word, wikiLang) {
+    const resp = await fetch(`https://${wikiLang}.wiktionary.org/api/rest_v1/page/definition/${encodeURIComponent(word)}`, {
+      signal: this._timeoutSignal(4000)
+    });
+    if (!resp.ok) return null;
+    const data = await resp.json();
+    const pages = Object.values(data || {});
+    for (const entries of pages) {
+      if (!Array.isArray(entries)) continue;
+      for (const entry of entries) {
+        if (wikiLang === 'en' && entry.language && !/english/i.test(entry.language)) continue;
+        const defs = entry.definitions || [];
+        for (const d of defs) {
+          const text = this._stripHtml(d.definition || '');
+          if (text && text.length > 3 && !/^alternative (form|spelling)/i.test(text)) {
+            return text.length > 420 ? text.slice(0, 420).trim() + '…' : text;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Busca el significado real en el Wiktionary español parseando el wikitexto
+   * (acepciones `;1:` / `#`). Solo devuelve español; si no hay, null.
+   * @returns {Promise<string|null>}
+   * @private
+   */
+  static async _lookupWiktionaryES(word) {
+    const titles = [word];
+    const capitalized = word.charAt(0).toUpperCase() + word.slice(1);
+    if (capitalized !== word) titles.push(capitalized);
+
+    for (const title of titles) {
+      let wikitext = null;
+      try {
+        const resp = await fetch(`https://es.wiktionary.org/w/api.php?action=parse&page=${encodeURIComponent(title)}&prop=wikitext&format=json&origin=*`, {
+          signal: this._timeoutSignal(5000)
+        });
+        if (!resp.ok) continue;
+        const data = await resp.json();
+        if (data.error || !data.parse || !data.parse.wikitext) continue;
+        wikitext = data.parse.wikitext['*'];
+      } catch (err) {
+        continue;
+      }
+
+      // Quedarse solo con la sección de español
+      const esMatch = wikitext.match(/^==\s*\{\{lengua\|es\}\}\s*==/m);
+      let scope = wikitext;
+      if (esMatch) {
+        const start = esMatch.index + esMatch[0].length;
+        const rest = wikitext.slice(start);
+        const nextLang = rest.match(/^==\s*(?!\{\{lengua\|es\}\})[^=\n]+\s*==/m);
+        scope = nextLang ? rest.slice(0, nextLang.index) : rest;
+      }
+
+      const lines = scope.split('\n');
+      for (const line of lines) {
+        const m = line.match(/^;\d+\s*:?\s*(.+)$/) || line.match(/^#\s*([^:#*].*)$/);
+        if (!m) continue;
+        const clean = this._cleanWikitextDef(m[1]);
+        if (!clean || clean.length < 20) continue;
+        if (/^(Véase|Forma |Grafía |Plural de|Participio|Variante )/i.test(clean)) continue;
+        return clean.length > 420 ? clean.slice(0, 420).trim() + '…' : clean;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Limpia una acepción en wikitexto a texto plano legible.
+   * @private
+   */
+  static _cleanWikitextDef(raw) {
+    let text = String(raw || '');
+    for (let i = 0; i < 5; i++) {
+      const next = text.replace(/\{\{[^{}]*\}\}/g, ' ');
+      if (next === text) break;
+      text = next;
+    }
+    text = text
+      .replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, '$2')
+      .replace(/\[\[([^\]]+)\]\]/g, '$1')
+      .replace(/'''/g, '')
+      .replace(/''/g, '');
+    const ta = document.createElement('textarea');
+    ta.innerHTML = text;
+    return (ta.value || '').replace(/\s+([.,;:!?])/g, '$1').replace(/\s+/g, ' ').trim();
+  }
+
+  /**
+   * Convierte un fragmento HTML en texto plano legible.
+   * @private
+   */
+  static _stripHtml(html) {
+    const noTags = String(html || '').replace(/<[^>]*>/g, ' ');
+    const ta = document.createElement('textarea');
+    ta.innerHTML = noTags;
+    return (ta.value || '').replace(/\s+/g, ' ').trim();
+  }
+
+  /**
    * Guarda una palabra en el cuaderno de vocabulario.
+   * Unifica el centinela de libro general en 'general' (legacy 'default' se normaliza al leer).
    */
   static async addWord({ word, contextSentence = '', definition = '', phonetic = '', bookId = '', language = 'es' }) {
     const cleanWord = (word || '').trim().replace(/[.,;:!?()"«»]/g, '');
     if (!cleanWord) throw new Error('Palabra no válida.');
 
+    const now = Date.now();
+    const normalizedBookId = (!bookId || bookId === 'default') ? 'general' : bookId;
     const wordEntity = {
       id: typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `w-${Date.now()}`,
       word: cleanWord.charAt(0).toUpperCase() + cleanWord.slice(1).toLowerCase(),
       contextSentence: (contextSentence || '').trim(),
       definition: (definition || '').trim() || 'Definición pendiente de personalizar.',
       phonetic: phonetic || this._generateApproximatedPhonetic(cleanWord),
-      bookId: bookId || 'default',
+      bookId: normalizedBookId,
       language: language || 'es',
-      mastered: false,
-      dateAdded: Date.now()
+      dateAdded: now,
+      createdAt: now
     };
 
     await dbManager.put('words', wordEntity);
@@ -193,28 +315,18 @@ export class VocabularyManager {
   }
 
   /**
-   * Obtiene todas las palabras guardadas.
+   * Obtiene todas las palabras guardadas (normaliza legacy 'default' → 'general').
    */
   static async getAllWords() {
     try {
       const items = await dbManager.getAll('words');
-      return (items || []).sort((a, b) => (b.dateAdded || 0) - (a.dateAdded || 0));
+      const normalized = (items || []).map(w => (
+        w.bookId === 'default' ? { ...w, bookId: 'general' } : w
+      ));
+      return normalized.sort((a, b) => ((b.dateAdded ?? b.createdAt ?? 0)) - ((a.dateAdded ?? a.createdAt ?? 0)));
     } catch (e) {
       return [];
     }
-  }
-
-  /**
-   * Alterna el estado de maestría/dominada de una palabra.
-   */
-  static async toggleMastered(wordId) {
-    const item = await dbManager.get('words', wordId);
-    if (!item) return;
-
-    item.mastered = !item.mastered;
-    await dbManager.put('words', item);
-    appState.notify('wordUpdated', item);
-    return item.mastered;
   }
 
   /**

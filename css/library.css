@@ -15,9 +15,10 @@
   border-radius: var(--radius-lg, 16px);
   padding: 16px 20px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px 16px;
   margin-bottom: 20px;
   position: relative;
   overflow: hidden;
@@ -37,14 +38,16 @@
 
 .quote-watermark {
   position: absolute;
-  right: 220px;
+  right: 16px;
   top: -20px;
   font-family: Georgia, serif;
-  font-size: 8rem;
+  font-size: clamp(4rem, 10vw, 8rem);
   line-height: 1;
   color: rgba(255, 255, 255, 0.05);
   pointer-events: none;
   user-select: none;
+  max-width: 40%;
+  overflow: hidden;
 }
 
 .quote-content {
@@ -52,18 +55,18 @@
   flex-direction: column;
   gap: 6px;
   z-index: 1;
-  flex: 1;
+  flex: 1 1 100%;
   min-width: 0;
 }
 
 .quote-text {
   font-family: var(--font-serif, Georgia, serif);
-  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-size: clamp(1.15rem, 2.2vw, 1.45rem);
   font-style: italic;
   font-weight: 500;
-  color: #FFFFFF;
+  color: #FFFBF0;
   line-height: 1.55;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.005em;
   transition: opacity var(--transition-normal);
   margin: 4px 0 6px 0;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65), 0 0 14px rgba(0, 0, 0, 0.45);
@@ -74,10 +77,11 @@
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+  margin-top: 6px;
 }
 
 .quote-author {
-  font-size: var(--text-sm, 0.9rem);
+  font-size: 0.78rem;
   color: rgba(255, 255, 255, 0.9);
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -96,15 +100,20 @@
 .quote-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 12px;
   z-index: 1;
-  flex-shrink: 0;
+  flex: 1 1 100%;
   flex-wrap: wrap;
 }
 
+.quote-actions .quote-meta-row {
+  margin-top: 0;
+}
+
 .btn-quote-refresh,
-.btn-quote-add-trigger,
-.btn-quote-manage-trigger {
+#btn-banner-add-quote,
+#btn-banner-manage-quotes {
   background-color: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #FFFFFF;
@@ -122,27 +131,17 @@
   transition: all var(--transition-fast);
 }
 
-.btn-quote-add-trigger {
-  background-color: var(--color-primary-light, #7B6BF0);
-  border-color: var(--color-primary-light, #7B6BF0);
-  box-shadow: 0 2px 8px var(--color-primary-glow, rgba(123, 107, 240, 0.4));
-}
-
 .btn-quote-refresh:hover,
-.btn-quote-manage-trigger:hover {
+#btn-banner-add-quote:hover,
+#btn-banner-manage-quotes:hover {
   background-color: rgba(255, 255, 255, 0.22);
   border-color: rgba(255, 255, 255, 0.35);
   transform: translateY(-1px);
 }
 
-.btn-quote-add-trigger:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
-}
-
 .btn-quote-refresh svg,
-.btn-quote-add-trigger svg,
-.btn-quote-manage-trigger svg {
+#btn-banner-add-quote svg,
+#btn-banner-manage-quotes svg {
   width: 14px;
   height: 14px;
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -181,13 +180,13 @@
 .btn-upload-epub {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
   color: #FFFFFF;
-  padding: 10px 20px;
+  padding: 7px 14px;
   border-radius: var(--radius-md);
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
   font-weight: var(--weight-semibold);
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   box-shadow: 0 4px 14px var(--color-primary-glow);
   cursor: pointer;
 }
@@ -213,17 +212,17 @@
 
 .search-box {
   flex: 1;
-  min-width: 260px;
+  min-width: 200px;
   max-width: 560px;
   background-color: var(--color-surface);
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-full, 999px);
   display: flex;
   align-items: center;
-  padding: 0 22px;
-  gap: 14px;
-  height: 56px !important;
-  min-height: 56px !important;
+  padding: 0 14px;
+  gap: 9px;
+  height: 36px !important;
+  min-height: 36px !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
 }
@@ -238,8 +237,8 @@
 }
 
 .search-icon {
-  width: 22px !important;
-  height: 22px !important;
+  width: 16px !important;
+  height: 16px !important;
   color: var(--color-text-muted);
   flex-shrink: 0;
 }
@@ -252,7 +251,7 @@
   width: 100% !important;
   height: 100% !important;
   color: var(--color-text) !important;
-  font-size: 1.05rem !important;
+  font-size: 0.9rem !important;
   background: transparent !important;
   border: none !important;
   outline: none !important;
@@ -264,23 +263,25 @@
 
 .search-input::placeholder {
   color: var(--color-text-muted);
-  font-size: 1rem;
+  font-size: 0.85rem;
 }
 
 .view-actions {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: var(--space-sm);
 }
 
 .sort-select-wrapper {
   position: relative;
   display: inline-flex;
-  align-items: center;
+  align-items: stretch;
+  height: var(--control-height, 44px);
 }
 
 .sort-select {
-  height: 40px;
+  height: var(--control-height, 44px);
+  min-height: var(--control-height, 44px);
   padding: 0 36px 0 14px !important;
   font-size: var(--text-sm);
   font-weight: 500;
@@ -295,6 +296,9 @@
   appearance: none;
   -webkit-appearance: none;
   background-image: none !important; /* Usamos el icono chevron SVG posicionado */
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
 }
 
 .sort-select:hover {
@@ -329,23 +333,35 @@
   color: var(--color-text);
 }
 
-/* Conmutador Segmentado Grid / Lista */
+/* Conmutador Segmentado Grid / Lista — misma altura exterior que el select */
 .view-mode-toggle {
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md, 10px);
   display: flex;
+  align-items: stretch;
   padding: 3px;
   gap: 2px;
+  height: var(--control-height, 44px);
+  min-height: var(--control-height, 44px);
+  box-sizing: border-box;
 }
 
 .toggle-btn {
-  padding: 6px 12px;
+  min-height: 0;
+  height: 100%;
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
   border-radius: var(--radius-sm);
   color: var(--color-text-muted);
   font-size: var(--text-xs);
   font-weight: var(--weight-medium);
   gap: 6px;
+  box-sizing: border-box;
+  white-space: nowrap;
 }
 
 .toggle-btn:hover {
@@ -356,6 +372,11 @@
   background-color: var(--color-surface-secondary);
   color: var(--color-text);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.toggle-btn:focus-visible {
+  outline: 3px solid var(--color-primary-light);
+  outline-offset: 2px;
 }
 
 .toggle-btn svg {
@@ -455,13 +476,13 @@
   overflow: hidden;
 }
 
-/* Botón Favorito Flotante */
+/* Botón Favorito Flotante — visible siempre en táctil/teclado, no solo hover */
 .btn-book-fav {
   position: absolute;
   top: 8px;
   right: 8px;
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-full);
   background: rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(4px);
@@ -473,9 +494,20 @@
 }
 
 .book-card:hover .btn-book-fav,
-.btn-book-fav.is-fav {
+.btn-book-fav.is-fav,
+.btn-book-fav:focus-visible,
+.book-card:focus-within .btn-book-fav {
   opacity: 1;
   transform: scale(1);
+}
+
+@media (hover: none) {
+  .btn-book-fav {
+    opacity: 1;
+    transform: scale(1);
+    width: 40px;
+    height: 40px;
+  }
 }
 
 .btn-book-fav.is-fav {
@@ -849,15 +881,23 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   padding: 12px 14px;
   border-radius: var(--radius-lg);
   background-color: var(--color-surface-secondary);
   border: 1.5px solid var(--color-border);
   text-decoration: none;
   color: var(--color-text);
+  font: inherit;
+  text-align: left;
   cursor: pointer;
   transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+}
+
+.state-option-card:focus-visible {
+  outline: 3px solid var(--color-primary-light);
+  outline-offset: 2px;
 }
 
 .state-option-card:hover {
@@ -1060,9 +1100,9 @@
 }
 
 .tag-wp {
-  background: rgba(196, 119, 145, 0.16);
-  color: #C47791;
-  border: 1px solid rgba(196, 119, 145, 0.38);
+  background: rgba(154, 117, 133, 0.12);
+  color: #8A6573;
+  border: 1px solid rgba(154, 117, 133, 0.35);
 }
 
 .tag-ef {
@@ -1169,5 +1209,174 @@ body.drag-over-active::after {
 @keyframes pulse-border {
   0%, 100% { border-color: var(--color-primary-light); }
   50% { border-color: var(--color-secondary); }
+}
+
+/* ==========================================================================
+   CUSTOM SELECT - DESPLEGABLE PERSONALIZADO
+   ========================================================================== */
+.cselect {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  height: var(--control-height, 44px);
+  min-height: var(--control-height, 44px);
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.cselect > select {
+  position: absolute !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.cselect-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  height: var(--control-height, 44px);
+  min-height: var(--control-height, 44px);
+  min-width: 150px;
+  max-width: 230px;
+  padding: 0 12px 0 14px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.04));
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md, 10px);
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+  box-sizing: border-box;
+}
+
+.cselect-btn:hover {
+  border-color: var(--color-text-secondary);
+  background-color: var(--color-surface-hover);
+}
+
+.cselect.open .cselect-btn,
+.cselect-btn:focus-visible {
+  border-color: var(--color-primary-light);
+  box-shadow: 0 0 0 3px var(--color-primary-glow), 0 2px 8px rgba(0, 0, 0, 0.08);
+  outline: none;
+}
+
+.cselect-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cselect-chev {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.cselect-chev svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+
+.cselect.open .cselect-chev {
+  transform: rotate(180deg);
+  color: var(--color-primary-light);
+}
+
+.cselect-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 100%;
+  max-width: 280px;
+  max-height: 250px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  background-color: var(--color-surface-elevated, var(--color-surface));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, 10px);
+  box-shadow: var(--shadow-card, 0 10px 30px rgba(0, 0, 0, 0.4));
+  z-index: 60;
+}
+
+.cselect-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color var(--transition-fast);
+}
+
+.cselect-option .cselect-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cselect-option:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.cselect-option.selected {
+  background-color: var(--color-surface-active, var(--color-surface-hover));
+  font-weight: 600;
+}
+
+.cselect-check {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: var(--color-primary-light);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.cselect-option.selected .cselect-check {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   FILTROS COMPACTOS DE CUADERNOS (Frases, Notas, Vocabulario)
+   Misma altura aproximada que el botón «Añadir» de la cabecera.
+   ========================================================================== */
+.quotes-header-panel .cselect,
+.annotations-header-panel .cselect,
+.vocab-header-panel .cselect {
+  height: 32px;
+  min-height: 32px;
+}
+
+.quotes-header-panel .cselect-btn,
+.annotations-header-panel .cselect-btn,
+.vocab-header-panel .cselect-btn {
+  height: 32px;
+  min-height: 32px;
+  padding: 0 10px 0 12px;
+  font-size: 0.78rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Respaldo si el select nativo queda visible (sin CustomSelect) */
+.quotes-header-panel select,
+.annotations-header-panel select {
+  min-height: 32px;
 }
 

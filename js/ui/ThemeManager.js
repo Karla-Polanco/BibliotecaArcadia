@@ -38,6 +38,7 @@ export class ThemeManager {
 
   /**
    * Aplica un tema al documento raíz.
+   * Normaliza aliases legacy y el tema 'deep-twilight' no existente en CSS.
    * @param {string} themeName - Nombre del tema
    */
   applyTheme(themeName) {
@@ -45,6 +46,24 @@ export class ThemeManager {
       themeName = ThemeManager.THEMES.MYSTIC_NIGHT;
     }
     themeName = themeName.trim();
+
+    // Normalizar temas inexistentes en CSS hacia el más cercano
+    const knownThemes = new Set([
+      ThemeManager.THEMES.MYSTIC_NIGHT,
+      ThemeManager.THEMES.LAVENDER_LIGHT,
+      ThemeManager.THEMES.WINE_POETRY,
+      ThemeManager.THEMES.ENCHANTED_FOREST,
+      ThemeManager.THEMES.CLEAR_SKY,
+      ThemeManager.THEMES.SYSTEM
+    ]);
+    if (themeName === ThemeManager.THEMES.DEEP_TWILIGHT) {
+      // 'deep-twilight' nunca tuvo tarjeta CSS: mapear a mystic-night
+      themeName = ThemeManager.THEMES.MYSTIC_NIGHT;
+    }
+    if (!knownThemes.has(themeName)) {
+      console.warn(`[ThemeManager] Tema desconocido "${themeName}", usando mystic-night`);
+      themeName = ThemeManager.THEMES.MYSTIC_NIGHT;
+    }
 
     this.currentTheme = themeName;
     localStorage.setItem(ThemeManager.STORAGE_KEY, themeName);
@@ -92,29 +111,40 @@ export class ThemeManager {
    */
   _updateFavicon(themeName) {
     const themePalettes = {
-      'mystic-night': { bg: '#0F172A', bg2: '#020408', star1: '#AEBEFF', star2: '#718CFF', star3: '#3156C9' },
+      'mystic-night': { bg: '#0B1D3A', bg2: '#06101F', star1: '#D7E1EC', star2: '#8FA9C4', star3: '#1B4167' },
+      'deep-twilight': { bg: '#0B1D3A', bg2: '#06101F', star1: '#D7E1EC', star2: '#8FA9C4', star3: '#1B4167' },
+      'system': { bg: '#0B1D3A', bg2: '#06101F', star1: '#D7E1EC', star2: '#8FA9C4', star3: '#1B4167' },
       'clear-sky': { bg: '#0F2338', bg2: '#061322', star1: '#E0F2FE', star2: '#60A5FA', star3: '#2563EB' },
       'enchanted-forest': { bg: '#0D2818', bg2: '#04120A', star1: '#DCFCE7', star2: '#4ADE80', star3: '#227D48' },
       'lavender-light': { bg: '#271E56', bg2: '#130C33', star1: '#DDD6FE', star2: '#A78BFA', star3: '#6C5CE7' },
-      'wine-poetry': { bg: '#211019', bg2: '#0D040A', star1: '#FCE7F3', star2: '#E08DAA', star3: '#C47791' }
+      'wine-poetry': { bg: '#F6F0F1', bg2: '#E4C9D2', star1: '#FFFFFF', star2: '#C2A3B0', star3: '#8A6573' },
+      'paper': { bg: '#F4F1EA', bg2: '#E4C9A2', star1: '#FFFFFF', star2: '#C2A36B', star3: '#8B6914' },
+      'neutral': { bg: '#252525', bg2: '#101010', star1: '#FFFFFF', star2: '#A0A0A0', star3: '#555555' }
     };
 
     const p = themePalettes[themeName] || themePalettes['mystic-night'];
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 20 20" width="100%" height="100%">
+    // Trío de estrellas (grande al centro, dos pequeñas a los lados y abajo),
+    // igual que el icono de la app. Tamaño explícito: algunos navegadores
+    // no muestran favicons con width/height en porcentaje.
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <defs>
-    <linearGradient id="favStarGrad" x1="10%" y1="0%" x2="90%" y2="100%">
+    <linearGradient id="favBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="${p.bg}"/>
+      <stop offset="100%" stop-color="${p.bg2}"/>
+    </linearGradient>
+    <linearGradient id="favStarGrad" x1="0" y1="0" x2="0.7" y2="1">
       <stop offset="0%" stop-color="${p.star1}"/>
-      <stop offset="50%" stop-color="${p.star2}"/>
+      <stop offset="55%" stop-color="${p.star2}"/>
       <stop offset="100%" stop-color="${p.star3}"/>
     </linearGradient>
-    <linearGradient id="starStrokeGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="${p.star2}"/>
-      <stop offset="50%" stop-color="#FFFFFF"/>
-      <stop offset="100%" stop-color="${p.star3}"/>
-    </linearGradient>
+    <polygon id="favS8" points="245,170 164.8,163.9 187.5,132.5 156.1,155.2 150,75 143.9,155.2 112.5,132.5 135.2,163.9 55,170 135.2,176.1 112.5,207.5 143.9,184.8 150,265 156.1,184.8 187.5,207.5 164.8,176.1"/>
   </defs>
-  <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.73 1.73 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.73 1.73 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.73 1.73 0 0 0 3.407 2.31zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z" 
-        fill="url(#favStarGrad)" stroke="url(#starStrokeGrad)" stroke-width="0.3" stroke-linejoin="round"/>
+  <rect x="0" y="0" width="64" height="64" rx="14" fill="url(#favBg)"/>
+  <g fill="url(#favStarGrad)">
+    <use href="#favS8" transform="translate(12.3 6.7) scale(0.131)"/>
+    <use href="#favS8" transform="translate(7.6 29.1) scale(0.0525)"/>
+    <use href="#favS8" transform="translate(40.6 29.1) scale(0.0525)"/>
+  </g>
 </svg>`;
 
     try {
