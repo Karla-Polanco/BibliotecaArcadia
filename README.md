@@ -110,10 +110,6 @@ BibliotecaArcadia/
 │   │   ├── ReaderSettings.js   # Configuraciones de lectura por libro
 │   │   ├── ReaderView.js       # UI del visor, atajos, pantalla completa y drawer
 │   │   └── SearchManager.js    # Buscador de texto completo intra-libro
-│   ├── quotes/
-│   │   ├── QuotesManager.js    # CRUD de frases en IndexedDB
-│   │   ├── QuotesService.js    # Rotación del banner y persistencia de índice
-│   │   └── QuotesView.js       # Vista de tarjetas de frases
 │   ├── annotations/
 │   │   ├── AnnotationManager.js# Gestor de resaltados y subrayados CFI
 │   │   ├── NoteManager.js      # Gestor de notas de lectura
@@ -128,7 +124,6 @@ BibliotecaArcadia/
 │   │   ├── Modal.js            # Sistema de diálogos (confirm/prompt)
 │   │   ├── FloatingMenu.js     # Barra de acciones contextual sobre selecciones
 │   │   ├── CollectionModal.js  # Modales para colecciones
-│   │   ├── QuoteModal.js       # Modal para crear/editar frases
 │   │   └── CustomSelect.js     # Mejora accesible de <select>
 │   └── pwa/
 │       └── PWAManager.js       # Ciclo de vida PWA, offline y prompt install

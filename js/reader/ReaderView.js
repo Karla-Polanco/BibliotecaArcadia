@@ -200,6 +200,35 @@ export class ReaderView {
       }
     });
 
+    // 11b. Atajos de teclado en la ventana principal mientras el lector está activo
+    window.addEventListener('keydown', (e) => {
+      if (!this.isOpen) return;
+      // Si el foco está en un input de búsqueda o textarea, no interceptar
+      if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
+
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+        e.preventDefault();
+        readerManager.nextPage();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        readerManager.prevPage();
+      } else if (e.key === 'Escape') {
+        if (this.settingsPanelEl?.classList.contains('open')) {
+          this.toggleSettings(false);
+        } else if (this.searchPanelEl?.classList.contains('open')) {
+          this.toggleSearch(false);
+        } else if (this.tocDrawerEl?.classList.contains('open')) {
+          this.toggleToc(false);
+        } else {
+          this.close();
+        }
+      } else if (e.key === 'f' || e.key === 'F') {
+        if (!e.ctrlKey && !e.metaKey) {
+          this.toggleFullscreen();
+        }
+      }
+    });
+
     // 12. Reajustar el libro al rotar o redimensionar la ventana.
     // (Mostrar/ocultar barras ya no cambia el layout: siempre flotan.)
     let winResizeT = null;
@@ -434,7 +463,6 @@ export class ReaderView {
     const doc = contents.document;
     const win = contents.window || window;
 
-    // Evitar adjuntar múltiples escuchadores repetidos sobre el mismo documento
     if (doc._arcadiaEventsAttached) return;
     doc._arcadiaEventsAttached = true;
 
@@ -457,10 +485,20 @@ export class ReaderView {
         const deltaY = e.changedTouches[0].clientY - touchStartY;
         const deltaTime = Date.now() - touchStartTime;
 
-        // Registrar timestamp para suprimir clics sintéticos del navegador móvil
         this.lastTouchTimestamp = Date.now();
 
-        // Si fue un toque simple sin arrastre (tap rápido)
+        // 1. Detección de Gesto Swipe Horizontal (Deslizar para cambiar de página)
+        const isHorizontalSwipe = Math.abs(deltaX) > 50 && Math.abs(deltaX) > Math.abs(deltaY) * 1.6 && deltaTime < 650;
+        if (isHorizontalSwipe) {
+          if (deltaX < 0) {
+            readerManager.nextPage();
+          } else {
+            readerManager.prevPage();
+          }
+          return;
+        }
+
+        // 2. Toque simple (tap rápido) para alternar barras
         if (Math.abs(deltaX) < 18 && Math.abs(deltaY) < 18 && deltaTime < 500) {
           let selection = '';
           try {
@@ -468,10 +506,8 @@ export class ReaderView {
                         (window.getSelection ? window.getSelection().toString() : '');
           } catch (_) {}
 
-          // Si el usuario está seleccionando texto para nota o subrayado, no alternar barras
           if (selection && selection.trim().length > 0) return;
 
-          // Al tocar la pantalla: SOLO alternar el menú y los botones (NO cambiar hoja)
           if (this.container) {
             this.container.classList.toggle('bars-hidden');
           }
@@ -481,9 +517,7 @@ export class ReaderView {
 
     // 2. Detección de clics de ratón en pantalla (Escritorio)
     doc.addEventListener('click', (e) => {
-      // Ignorar clics sintéticos disparados inmediatamente después de un toque táctil
       if (Date.now() - this.lastTouchTimestamp < 650) return;
-
       if (e.target.closest('a, button, input, .arcadia-chapter-nav-card')) return;
 
       let selection = '';
@@ -494,7 +528,6 @@ export class ReaderView {
 
       if (selection && selection.trim().length > 0) return;
 
-      // Al hacer clic en la pantalla: SOLO alternar el menú y los botones (NO cambiar hoja)
       if (this.container) {
         this.container.classList.toggle('bars-hidden');
       }
@@ -510,13 +543,13 @@ export class ReaderView {
     });
   }
 
-/**
-    * Abre o cierra el panel de configuración del lector.
-    */
+  /**
+   * Abre o cierra el panel de configuración del lector.
+   */
   toggleSettings(show) {
     if (!this.settingsPanelEl || !this.settingsBackdropEl) return;
 
-const isOpen = show !== undefined ? show : !this.settingsPanelEl.classList.contains('open');
+    const isOpen = show !== undefined ? show : !this.settingsPanelEl.classList.contains('open');
     if (isOpen) {
       this.toggleToc(false);
       this.syncSettingsUI(readerManager.getSettings());
@@ -555,11 +588,6 @@ const isOpen = show !== undefined ? show : !this.settingsPanelEl.classList.conta
     // 4. Interlineado
     document.querySelectorAll('#line-height-options [data-lh]').forEach(btn => {
       btn.classList.toggle('active', parseFloat(btn.dataset.lh) === settings.lineHeight);
-    });
-
-    // 4. Columnas
-    document.querySelectorAll('#columns-options [data-col]').forEach(btn => {
-      btn.classList.toggle('active', parseInt(btn.dataset.col) === settings.columns);
     });
 
     // 5. Tema del lector (soporta alias legacy 'wine' → 'wine-poetry')
@@ -632,15 +660,6 @@ const isOpen = show !== undefined ? show : !this.settingsPanelEl.classList.conta
       btn.addEventListener('click', async () => {
         const lh = parseFloat(btn.dataset.lh);
         const updated = await readerManager.updateSettings({ lineHeight: lh });
-        this.syncSettingsUI(updated);
-      });
-    });
-
-    // 4. Columnas
-    document.querySelectorAll('#columns-options [data-col]').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const cols = parseInt(btn.dataset.col);
-        const updated = await readerManager.updateSettings({ columns: cols });
         this.syncSettingsUI(updated);
       });
     });

@@ -34,7 +34,7 @@
 
 /* Header del Sidebar (Branding Tipográfico Puro) */
 .sidebar-header {
-  padding: 4px 10px 8px;
+  padding: 8px 12px 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -58,19 +58,35 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--brand-icon-color, var(--brand-star-color, var(--color-primary-light, #718CFF)));
   line-height: 1;
-  margin-bottom: 0;
+  margin-bottom: 2px;
   opacity: 1;
-  transition: color 0.35s ease, transform 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .brand-ornament-top:hover {
-  transform: translateY(-1px) scale(1.06);
+  transform: translateY(-2px) scale(1.04);
 }
 
-.brand-ornament-top.emblem-glow .brand-emblem {
-  filter: drop-shadow(0 3px 10px var(--brand-title-shadow, rgba(91, 76, 196, 0.45))) drop-shadow(0 0 2px rgba(255,255,255,0.25));
+.brand-logo-img {
+  width: auto;
+  max-width: 80px;
+  height: auto;
+  max-height: 56px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 12px rgba(212, 175, 55, 0.45));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.brand-logo-img:hover {
+  filter: drop-shadow(0 4px 16px rgba(212, 175, 55, 0.65));
+}
+
+.brand-emblem-mobile {
+  width: auto;
+  height: 28px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(212, 175, 55, 0.4));
 }
 
 .brand-icon-svg {
@@ -79,21 +95,6 @@
   display: inline-block;
   flex-shrink: 0;
   transition: transform 0.3s ease, filter 0.3s ease;
-}
-
-.brand-typography .brand-icon-svg.brand-emblem {
-  width: 72px;
-  height: 49px;
-}
-
-.mobile-logo-wrap .brand-icon-svg.brand-emblem {
-  width: 40px;
-  height: 40px;
-}
-
-.brand-typography:hover .brand-icon-svg {
-  filter: drop-shadow(0 0 8px var(--brand-title-shadow, rgba(91, 76, 196, 0.55)));
-  transform: translateY(-1px);
 }
 
 .brand-eyebrow-row {
@@ -120,9 +121,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-secondary, var(--color-primary-light, #38A9E8));
+  color: var(--color-gold, #D4AF37);
   opacity: 0.95;
-  filter: drop-shadow(0 0 3px var(--brand-title-shadow, rgba(91, 76, 196, 0.5)));
+  filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.5));
 }
 
 .brand-diamond svg {
@@ -134,29 +135,47 @@
 .brand-rule {
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--brand-rule-color, rgba(157, 142, 248, 0.45)), transparent);
+  background: linear-gradient(90deg, transparent, var(--color-gold-glow, rgba(212, 175, 55, 0.35)), transparent);
   max-width: 64px;
   transition: background 0.35s ease;
 }
 
 .brand-wordmark {
-  font-family: 'Cinzel Decorative', 'Cinzel', 'Playfair Display', Georgia, serif;
-  font-size: 1.75rem;
-  font-size: 12.5cqw;
+  font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+  font-size: 1.65rem;
+  font-size: 12cqw;
   font-weight: 700;
-  letter-spacing: 0.14em;
-  text-indent: 0.14em;
+  letter-spacing: 0.18em;
+  text-indent: 0.18em;
   margin: 3px 0 0 0;
   line-height: 1.1;
   max-width: 100%;
   text-align: center;
   white-space: nowrap;
-  background: var(--brand-title-gradient, linear-gradient(180deg, #FFFFFF 0%, #E6E1F5 50%, #C4B9FC 100%));
+  background: var(--brand-title-gradient, linear-gradient(135deg, #FFF6E5 0%, #E5B869 45%, #C29543 85%, #9E7422 100%));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
   transition: all 0.35s ease;
+}
+
+.mobile-brand-wordmark {
+  font-family: 'Cinzel', 'Playfair Display', Georgia, serif !important;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.18em !important;
+  text-indent: 0.18em !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  background: var(--brand-title-gradient, linear-gradient(135deg, #FFF6E5 0%, #E5B869 45%, #C29543 85%, #9E7422 100%)) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .brand-tagline {
@@ -264,7 +283,7 @@
 .nav-icon {
   width: 18px;
   height: 18px;
-  stroke-width: 2;
+  stroke-width: 1.8;
   color: currentColor;
   opacity: 0.85;
 }

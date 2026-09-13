@@ -11,12 +11,12 @@ import { appState } from '../state.js';
 
 export class AnnotationManager {
   static COLORS = {
-    yellow: { bg: 'rgba(253, 224, 71, 0.50)', border: '#EAB308', name: 'Amarillo' },
-    green:  { bg: 'rgba(110, 231, 183, 0.50)', border: '#10B981', name: 'Verde' },
-    blue:   { bg: 'rgba(125, 211, 252, 0.50)', border: '#0284C7', name: 'Azul' },
-    purple: { bg: 'rgba(196, 181, 253, 0.55)', border: '#8B5CF6', name: 'Púrpura' },
-    orange: { bg: 'rgba(253, 186, 116, 0.50)', border: '#EA580C', name: 'Naranja' },
-    pink:   { bg: 'rgba(249, 168, 212, 0.50)', border: '#DB2777', name: 'Rosa' }
+    gold:   { bg: 'rgba(212, 175, 55, 0.45)', border: '#D4AF37', name: 'Oro Arcadia' },
+    yellow: { bg: 'rgba(254, 240, 138, 0.55)', border: '#EAB308', name: 'Ámbar Cálido' },
+    green:  { bg: 'rgba(167, 243, 208, 0.55)', border: '#10B981', name: 'Menta / Esmeralda' },
+    blue:   { bg: 'rgba(186, 230, 253, 0.55)', border: '#0284C7', name: 'Azul Celeste' },
+    purple: { bg: 'rgba(221, 214, 254, 0.55)', border: '#8B5CF6', name: 'Lavanda' },
+    pink:   { bg: 'rgba(251, 207, 232, 0.55)', border: '#EC4899', name: 'Rosa Empolvado' }
   };
 
   constructor() {

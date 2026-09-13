@@ -101,34 +101,6 @@ button.state-option-card {
   display: flex;
 }
 
-/* Grupo de botones del banner */
-.quote-btn-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.btn-quote-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 12px;
-  border-radius: var(--radius-full, 999px);
-  background: var(--color-surface-hover);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-secondary);
-  font-size: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  min-height: 32px;
-}
-
-.btn-quote-secondary:hover {
-  border-color: var(--color-primary-light);
-  color: var(--color-text);
-}
 
 /* Inputs, Selects y Textareas Estilizados Globalmente */
 input, select, textarea {
@@ -282,19 +254,20 @@ ul, ol {
 .modal-card,
 .arcadia-modal-card {
   background-color: var(--color-surface, #1E1C2E) !important;
+  background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.05) 0%, transparent 70%) !important;
   border: 1px solid var(--color-border, rgba(255, 255, 255, 0.14)) !important;
-  border-radius: var(--radius-lg, 16px) !important;
-  box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.8) !important;
+  border-radius: var(--radius-xl, 22px) !important;
+  box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(212, 175, 55, 0.12) !important;
   color: var(--color-text, #FFFFFF) !important;
   position: relative !important;
   width: 100% !important;
   max-width: 500px;
   max-height: 90vh !important;
-   overflow-y: auto !important;
-   overflow-x: hidden !important;
-   margin: auto !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  margin: auto !important;
   transform: scale(0.95);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease;
 }
 
 /* Modales amplios (Formato Horizontal / Landscape) */
@@ -315,33 +288,85 @@ ul, ol {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  gap: 12px !important;
-  margin-bottom: 16px !important;
+  gap: 14px !important;
+  margin-bottom: 20px !important;
+  padding-bottom: 14px !important;
+  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.07)) !important;
 }
 
 .theme-modal-title {
-  font-size: 1.2rem !important;
+  font-family: 'Cinzel', var(--font-serif, Georgia, serif) !important;
+  font-size: 1.25rem !important;
   font-weight: 700 !important;
   color: var(--color-text) !important;
+  letter-spacing: 0.04em !important;
   margin: 0 !important;
 }
 
-.theme-modal-close {
-  width: 32px !important;
-  height: 32px !important;
-  border-radius: 8px !important;
+.theme-modal-close,
+.modal-close-btn {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: var(--radius-full, 999px) !important;
   background: var(--color-surface-hover, rgba(255, 255, 255, 0.05)) !important;
-  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1)) !important;
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.12)) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   color: var(--color-text-secondary) !important;
   cursor: pointer !important;
-  transition: all 0.15s ease !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-.theme-modal-close:hover {
+.theme-modal-close:hover,
+.modal-close-btn:hover {
   background: var(--color-border) !important;
+  color: var(--color-text) !important;
+  transform: rotate(90deg) scale(1.05) !important;
+  border-color: var(--color-primary-light) !important;
+}
+
+/* Botones con estilo noble / Kindle Paperwhite */
+.btn-setting-action:hover {
+  border-color: var(--color-primary-light) !important;
+  background-color: var(--color-surface-hover) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--color-primary-glow, rgba(0, 0, 0, 0.15));
+}
+
+/* Controles de Formulario Universales en Modales */
+.modal-card input[type="text"],
+.modal-card input[type="search"],
+.modal-card textarea,
+.arcadia-modal-card input[type="text"],
+.arcadia-modal-card input[type="search"],
+.arcadia-modal-card textarea,
+.theme-modal-dialog input[type="text"],
+.theme-modal-dialog textarea {
+  border-radius: var(--radius-sm, 10px) !important;
+  border: 1.5px solid var(--color-border, rgba(255, 255, 255, 0.14)) !important;
+  background-color: var(--color-surface-elevated, rgba(0, 0, 0, 0.25)) !important;
+  color: var(--color-text, #FFF) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
+}
+
+.modal-card input:focus,
+.modal-card textarea:focus,
+.arcadia-modal-card input:focus,
+.arcadia-modal-card textarea:focus,
+.theme-modal-dialog input:focus,
+.theme-modal-dialog textarea:focus {
+  border-color: var(--color-gold, #D4AF37) !important;
+  box-shadow: 0 0 0 3px var(--color-gold-glow, rgba(212, 175, 55, 0.25)) !important;
+  outline: none !important;
+}
+
+/* Tipografía Serena para Títulos de Modales */
+.modal-header .modal-title,
+.arcadia-modal-card h3,
+.theme-modal-title {
+  font-family: 'Cinzel', var(--font-serif, Georgia, serif) !important;
+  letter-spacing: 0.03em !important;
   color: var(--color-text) !important;
 }
 

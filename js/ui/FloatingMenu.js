@@ -31,10 +31,12 @@ export class FloatingMenu {
       position: fixed;
       z-index: 250;
       background-color: var(--color-surface-elevated, #242424);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--color-border, #303030);
       border-radius: var(--radius-full, 9999px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-      padding: 6px 10px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(212, 175, 55, 0.15);
+      padding: 6px 12px;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -71,7 +73,7 @@ export class FloatingMenu {
       <button class="floating-btn" id="btn-float-note" title="Añadir nota" aria-label="Añadir nota" style="
         padding: 6px 8px; border-radius: 6px; color: var(--color-text); cursor: pointer; display: flex; align-items: center; gap: 4px; font-size: 12px;
       ">
-        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
         <span>Nota</span>
       </button>
 
@@ -79,22 +81,22 @@ export class FloatingMenu {
       <button class="floating-btn" id="btn-float-define" title="Definición y fonética" aria-label="Definir palabra" style="
         padding: 6px 8px; border-radius: 6px; color: var(--color-text); cursor: pointer; display: flex; align-items: center; gap: 4px; font-size: 12px;
       ">
-        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
         <span>Definir</span>
       </button>
 
       <!-- Copiar -->
       <button class="floating-btn" id="btn-float-copy" title="Copiar texto" aria-label="Copiar texto" style="
-        padding: 6px 8px; border-radius: 6px; color: var(--color-text-muted); cursor: pointer;
+        padding: 6px 8px; border-radius: 6px; color: var(--color-text-secondary); cursor: pointer;
       ">
-        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
       </button>
 
       <!-- Cerrar -->
       <button class="floating-btn" id="btn-float-close" title="Cerrar barra" aria-label="Cerrar barra" style="
-        padding: 6px 8px 6px 10px; border-radius: 0 6px 6px 0; color: var(--color-text-muted); cursor: pointer; border-left: 1px solid var(--color-border, #303030); margin-left: 2px;
+        padding: 6px 8px 6px 10px; border-radius: 0 6px 6px 0; color: var(--color-text-secondary); cursor: pointer; border-left: 1px solid var(--color-border); margin-left: 2px;
       ">
-        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
     `;
 
@@ -132,10 +134,10 @@ export class FloatingMenu {
             await annotationManager.addUnderline(
               this.activeSelection.cfiRange,
               this.activeSelection.text,
-              'purple',
+              'gold',
               this.activeSelection.chapterTitle
             );
-            Toast.success('Texto subrayado.');
+            Toast.success('Texto subrayado en oro.');
           } catch (err) {
             console.warn('Error al subrayar:', err);
             Toast.error('No se pudo guardar el subrayado.');
@@ -384,42 +386,40 @@ export class FloatingMenu {
 
     overlay.innerHTML = `
       <div class="theme-modal-dialog" style="max-width: 440px; padding: 24px;">
-        <div class="theme-modal-header" style="margin-bottom: 14px;">
+        <div class="theme-modal-header" style="margin-bottom: 16px;">
           <div>
             <div style="display: flex; align-items: center; gap: 10px;">
-              <h2 class="theme-modal-title" style="font-size: 1.4rem; text-transform: capitalize;">${this.escapeHtml(defData.word)}</h2>
+              <h2 class="theme-modal-title" style="font-family: 'Cinzel', serif; font-size: 1.35rem; letter-spacing: 0.03em; text-transform: capitalize;">${this.escapeHtml(defData.word)}</h2>
               <button id="btn-speak-word" title="Escuchar pronunciación fonética" style="
-                width: 32px; height: 32px; border-radius: 50%; background-color: var(--color-primary-light); color: #FFF; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none;
+                width: 32px; height: 32px; border-radius: 50%; background: var(--color-surface-hover); border: 1px solid var(--color-border); color: var(--color-gold, #D4AF37); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.18s ease;
               ">
-                <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+                <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
               </button>
             </div>
             ${defData.phonetic ? `<span style="font-family: monospace; font-size: var(--text-xs); color: var(--color-primary-light);">${this.escapeHtml(defData.phonetic)}</span>` : ''}
           </div>
-          <button class="theme-modal-close" id="btn-close-def-modal">
-            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          <button class="theme-modal-close" id="btn-close-def-modal" aria-label="Cerrar modal">
+            <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
         </div>
 
         <div style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 12px;">
           <!-- Definición editable -->
-          <div style="padding: 12px; border-radius: var(--radius-sm); background-color: var(--color-surface); border: 1px solid var(--color-border);">
-            <span style="font-size: 0.7rem; text-transform: uppercase; font-weight: bold; color: var(--color-primary-light); display: block; margin-bottom: 6px;">Definición</span>
+          <div style="padding: 12px; border-radius: var(--radius-sm, 10px); background-color: var(--color-surface); border: 1px solid var(--color-border);">
+            <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; font-weight: bold; color: var(--color-gold, #D4AF37); display: block; margin-bottom: 6px;">Definición</span>
             <textarea id="def-modal-definition" style="
-              width: 100%; min-height: 70px; background: var(--color-surface-elevated, #161625);
-              border: 1px solid var(--color-border, #333); border-radius: var(--radius-sm, 6px);
-              color: var(--color-text, #fff); padding: 10px; font-size: var(--text-sm, 0.875rem);
+              width: 100%; min-height: 70px;
+              color: var(--color-text); padding: 10px; font-size: var(--text-sm, 0.875rem);
               line-height: 1.5; resize: vertical; box-sizing: border-box; font-family: inherit;
             ">${this.escapeHtml(defData.definition)}</textarea>
           </div>
 
           <!-- Contexto en el libro (siempre visible y editable) -->
-          <div style="padding: 12px; border-radius: var(--radius-sm); background-color: var(--color-surface); border: 1px solid var(--color-border);">
-            <span style="font-size: 0.7rem; text-transform: uppercase; font-weight: bold; color: var(--color-text-muted); display: block; margin-bottom: 6px;">Contexto en el libro</span>
+          <div style="padding: 12px; border-radius: var(--radius-sm, 10px); background-color: var(--color-surface); border: 1px solid var(--color-border);">
+            <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; font-weight: bold; color: var(--color-text-muted); display: block; margin-bottom: 6px;">Contexto en el libro</span>
             <textarea id="def-modal-context" style="
-              width: 100%; min-height: 50px; background: var(--color-surface-elevated, #161625);
-              border: 1px solid var(--color-border, #333); border-radius: var(--radius-sm, 6px);
-              color: var(--color-text-secondary, #aaa); padding: 10px; font-size: var(--text-xs, 0.8rem);
+              width: 100%; min-height: 50px;
+              color: var(--color-text-secondary); padding: 10px; font-size: var(--text-xs, 0.8rem);
               line-height: 1.4; resize: vertical; box-sizing: border-box; font-family: inherit;
               font-style: italic;
             ">${this.escapeHtml(selection.text)}</textarea>
@@ -427,9 +427,18 @@ export class FloatingMenu {
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 10px;">
-          <button id="btn-cancel-def" style="padding: 8px 16px; border-radius: var(--radius-sm); font-size: var(--text-xs); color: var(--color-text-secondary); cursor: pointer;">Cerrar</button>
-          <button id="btn-save-vocab" style="padding: 8px 18px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: bold; background-color: var(--color-primary-light); color: #FFFFFF; cursor: pointer; display: flex; align-items: center; gap: 6px;">
-            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <button id="btn-cancel-def" style="
+            padding: 9px 18px; border-radius: var(--radius-sm, 8px); font-size: 0.82rem; font-weight: 600;
+            color: var(--color-text-secondary); background: var(--color-surface-hover); border: 1px solid var(--color-border);
+            cursor: pointer; transition: all 0.18s ease;
+          ">Cerrar</button>
+          <button id="btn-save-vocab" style="
+            padding: 9px 22px; border-radius: var(--radius-sm, 8px); font-size: 0.82rem; font-weight: 600;
+            background: linear-gradient(135deg, var(--color-primary, #30256F), var(--color-primary-light, #5B4CC4));
+            color: #FFFFFF; border: none; box-shadow: 0 4px 14px var(--color-primary-glow);
+            cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.18s ease;
+          ">
+            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 4v16m8-8H4"/></svg>
             <span>Guardar</span>
           </button>
         </div>

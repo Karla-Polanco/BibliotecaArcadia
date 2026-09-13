@@ -19,8 +19,11 @@
 }
 
 .mobile-nav-toggle {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: var(--radius-sm);
   color: var(--color-text);
 }
@@ -30,14 +33,33 @@
 }
 
 .mobile-logo-wrap {
-  display: flex;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
-.mobile-logo-wrap .brand-star-svg {
-  width: 22px;
-  height: 22px;
+.brand-emblem-mobile {
+  height: 26px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(212, 175, 55, 0.45));
+  display: block;
+}
+
+#mobile-upload-trigger {
+  padding: 6px 14px !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  border-radius: var(--radius-full, 9999px) !important;
+  gap: 5px !important;
+  box-shadow: 0 2px 8px var(--color-primary-glow, rgba(0, 0, 0, 0.15)) !important;
 }
 
 /* Bottom Navigation Bar fija (Móvil) */
@@ -153,64 +175,33 @@
     padding: var(--space-md) var(--space-md) calc(var(--mobile-nav-height) + var(--space-lg));
   }
 
-  /* Banner literario en móvil */
-  .quote-banner {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: var(--space-sm) var(--space-md);
-    gap: 8px;
-    margin-bottom: var(--space-md);
+
+  /* Ocultar botón duplicado de Subir libro en el contenido móvil (el topbar ya tiene el botón) */
+  .library-header-top #btn-upload-trigger {
+    display: none !important;
   }
 
-  .quote-content {
-    gap: 2px;
+  .library-header {
+    gap: 14px;
+    margin-bottom: 18px;
   }
 
-  .quote-text {
-    font-size: var(--text-base);
-    margin: 2px 0;
-  }
-
-  .quote-meta-row {
-    margin-top: 10px;
-  }
-
-  .quote-actions {
-    gap: 8px;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .btn-quote-refresh,
-  #btn-banner-add-quote,
-  #btn-banner-manage-quotes {
-    padding: 6px 10px;
-    font-size: 0.70rem;
-    gap: 4px;
-  }
-
-  .btn-quote-refresh svg,
-  #btn-banner-add-quote svg,
-  #btn-banner-manage-quotes svg {
-    width: 12px;
-    height: 12px;
-  }
-
-  /* Toolbar de Biblioteca en móvil */
   .library-header-top {
     flex-wrap: wrap;
-    gap: var(--space-sm);
+    gap: var(--space-xs);
+    padding-bottom: 0;
   }
 
   .library-title {
-    font-size: var(--text-lg);
+    font-size: 1.45rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
   }
 
   .library-controls {
     flex-direction: column;
     align-items: stretch;
-    gap: var(--space-sm);
+    gap: 10px;
   }
 
   .search-box {
@@ -221,25 +212,74 @@
     padding: 0 14px !important;
   }
 
+  /* Acciones de filtro y vista compactas y elegantes para móvil */
   .view-actions {
+    display: flex;
+    align-items: center;
     justify-content: space-between;
+    gap: 8px;
     width: 100%;
   }
 
   .sort-select-wrapper {
     flex: 1;
     min-width: 0;
+    height: 34px !important;
+    min-height: 34px !important;
   }
 
   .sort-select {
     width: 100%;
+    height: 34px !important;
+    min-height: 34px !important;
+    font-size: 0.82rem !important;
+    padding: 0 28px 0 12px !important;
+    border-radius: var(--radius-sm, 8px) !important;
   }
 
-  .sort-select-wrapper .cselect,
+  .sort-select-wrapper .cselect {
+    height: 34px !important;
+    min-height: 34px !important;
+    width: 100%;
+  }
+
   .sort-select-wrapper .cselect-btn {
     width: 100%;
     max-width: 100%;
-    flex: 1 1 auto;
+    height: 34px !important;
+    min-height: 34px !important;
+    padding: 0 10px !important;
+    font-size: 0.82rem !important;
+    font-weight: 500 !important;
+    border-radius: var(--radius-sm, 8px) !important;
+    border-width: 1px !important;
+    gap: 6px !important;
+  }
+
+  .sort-select-wrapper .cselect-chev svg {
+    width: 13px !important;
+    height: 13px !important;
+  }
+
+  .view-mode-toggle {
+    height: 34px !important;
+    min-height: 34px !important;
+    padding: 2px !important;
+    border-radius: var(--radius-sm, 8px) !important;
+    border-width: 1px !important;
+    flex-shrink: 0;
+  }
+
+  .toggle-btn {
+    padding: 0 10px !important;
+    font-size: 0.78rem !important;
+    gap: 5px !important;
+    border-radius: 6px !important;
+  }
+
+  .toggle-btn svg {
+    width: 13px !important;
+    height: 13px !important;
   }
 
   /* Grid en Móvil: fluido, 2 columnas en pantallas normales, 1 en muy pequeñas */
@@ -352,24 +392,6 @@
     gap: 12px 10px;
   }
 
-  .quote-banner {
-    padding: 12px 14px;
-  }
-
-  .quote-text {
-    font-size: 1rem;
-  }
-
-  .quote-btn-group {
-    width: 100%;
-  }
-
-  .btn-quote-refresh,
-  .btn-quote-secondary {
-    flex: 1;
-    justify-content: center;
-    min-height: 40px;
-  }
 
   .library-header-top {
     flex-direction: column;

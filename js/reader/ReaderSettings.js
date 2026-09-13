@@ -193,7 +193,31 @@ export class ReaderSettings {
       }
 
       ::selection {
-        background: rgba(123, 107, 240, 0.35) !important;
+        background: rgba(212, 175, 55, 0.38) !important;
+        color: inherit !important;
+      }
+
+      .arcadia-highlight {
+        border-radius: 3px !important;
+        padding: 1px 0 !important;
+        transition: filter 0.15s ease !important;
+        cursor: pointer !important;
+      }
+
+      .arcadia-highlight:hover {
+        filter: brightness(1.15) !important;
+      }
+
+      .arcadia-underline {
+        text-decoration: underline !important;
+        text-underline-offset: 3px !important;
+        text-decoration-thickness: 2.5px !important;
+        cursor: pointer !important;
+        transition: filter 0.15s ease !important;
+      }
+
+      .arcadia-underline:hover {
+        filter: brightness(1.25) !important;
       }
 
       ::-webkit-scrollbar {
@@ -258,7 +282,7 @@ export class ReaderSettings {
           const fontLink = content.document.createElement('link');
           fontLink.id = 'arcadia-google-fonts';
           fontLink.rel = 'stylesheet';
-          fontLink.href = 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;0,7..72,800;1,7..72,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap';
+          fontLink.href = 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;0,7..72,800;1,7..72,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap';
           content.document.head.appendChild(fontLink);
         }
 
@@ -276,9 +300,9 @@ export class ReaderSettings {
 
     // 5. Configuración de columnas (spread)
     if (rendition.spread) {
-const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
-const effectiveSpread = (!isMobile && settings.columns === 2) ? 'always' : 'auto';
-       rendition.spread(effectiveSpread);
+      const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+      const effectiveSpread = (!isMobile && settings.columns === 2) ? 'always' : 'auto';
+      rendition.spread(effectiveSpread);
     }
   }
 
@@ -305,6 +329,9 @@ const effectiveSpread = (!isMobile && settings.columns === 2) ? 'always' : 'auto
       case 'Playfair':
       case 'Playfair Display':
         return "'Playfair Display', Georgia, serif";
+      case 'Atkinson':
+      case 'Atkinson Hyperlegible':
+        return "'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
       case 'Poppins':
         return "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
       case 'Inter':
@@ -327,58 +354,74 @@ const effectiveSpread = (!isMobile && settings.columns === 2) ? 'always' : 'auto
     if (themeName === 'wine') themeName = 'wine-poetry';
     if (themeName === 'lavender-light') {
       return {
-        bg: '#FCFBFE',
-        text: '#201C30',
-        heading: '#1A162B',
-        accent: '#5B4CC4'
+        bg: '#FAF8FC',
+        text: '#242032',
+        heading: '#161324',
+        accent: '#6454D6'
+      };
+    }
+    if (themeName === 'oled') {
+      return {
+        bg: '#000000',
+        text: '#D5D8DE',
+        heading: '#FFFFFF',
+        accent: '#D4AF37'
+      };
+    }
+    if (themeName === 'mint') {
+      return {
+        bg: '#EAF0E8',
+        text: '#1C2E1E',
+        heading: '#122013',
+        accent: '#2D7A4D'
       };
     }
     if (themeName === 'paper') {
       return {
-        bg: '#F4F1EA',
-        text: '#292824',
-        heading: '#1A1714',
-        accent: '#8B6914'
+        bg: '#F7F1E3',
+        text: '#2D251E',
+        heading: '#1C1714',
+        accent: '#8C6630'
       };
     }
     if (themeName === 'neutral') {
       return {
-        bg: '#252525',
-        text: '#F2F2F2',
+        bg: '#222222',
+        text: '#E8EAED',
         heading: '#FFFFFF',
-        accent: '#A0A0A0'
+        accent: '#B3ADA2'
       };
     }
     if (themeName === 'enchanted-forest') {
       return {
-        bg: '#F4F7F2',
-        text: '#3E4A3E',
-        heading: '#333D33',
-        accent: '#546F52'
+        bg: '#F2F6F3',
+        text: '#22382B',
+        heading: '#15261C',
+        accent: '#2D7A4D'
       };
     }
     if (themeName === 'clear-sky') {
       return {
-        bg: '#EBF4FA',
-        text: '#132D48',
-        heading: '#0F233B',
-        accent: '#2563EB'
+        bg: '#EFF5FB',
+        text: '#16283D',
+        heading: '#0F1D2E',
+        accent: '#2A6EE8'
       };
     }
     if (themeName === 'wine' || themeName === 'wine-poetry') {
       return {
-        bg: '#FAF5F6',
-        text: '#4A3E44',
-        heading: '#3A2F35',
-        accent: '#9A7585'
+        bg: '#F8F3F4',
+        text: '#36222B',
+        heading: '#25151C',
+        accent: '#8A4363'
       };
     }
     // mystic-night por defecto
     return {
-      bg: '#0D1226',
-      text: '#E8ECF7',
+      bg: '#080D1D',
+      text: '#E2E7F5',
       heading: '#FFFFFF',
-      accent: '#718CFF'
+      accent: '#849DFF'
     };
   }
 }

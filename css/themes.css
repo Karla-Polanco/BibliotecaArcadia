@@ -45,14 +45,14 @@
     --reader-text: #E8ECF7;
 
     /* Marca Tipográfica Emblemática */
-    --brand-eyebrow-color: #AEBEFF;
-    --brand-rule-color: rgba(113, 140, 255, 0.32);
-    --brand-star-color: #718CFF;
-    --brand-icon-color: #718CFF;
-    --brand-icon-ribbon: #AEBEFF;
+    --brand-eyebrow-color: #E5B869;
+    --brand-rule-color: rgba(212, 175, 55, 0.4);
+    --brand-star-color: #D4AF37;
+    --brand-icon-color: #D4AF37;
+    --brand-icon-ribbon: #F5E8C7;
 
-    --brand-title-gradient: linear-gradient(180deg, #FFFFFF 0%, #DCE7FF 45%, #9AAEFF 78%, #7768D8 100%);
-    --brand-title-shadow: rgba(87, 107, 255, 0.42);
+    --brand-title-gradient: linear-gradient(135deg, #FFFFFF 0%, #F5E8C7 45%, #D4AF37 80%, #C29543 100%);
+    --brand-title-shadow: rgba(212, 175, 55, 0.45);
 
     /* Patrón Atmosférico: Cielo Estrellado y Nebulosa */
     --banner-bg-pattern: radial-gradient(circle at 20% 30%, rgba(113, 140, 255, 0.1) 0%, transparent 40%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg fill='%23718CFF' opacity='0.5'%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.3) translate(60,10)'/%3E%3Ccircle cx='120' cy='40' r='1.5'/%3E%3Ccircle cx='200' cy='80' r='1'/%3E%3Ccircle cx='60' cy='160' r='1.2'/%3E%3Ccircle cx='250' cy='50' r='1.8'/%3E%3Ccircle cx='170' cy='200' r='1'/%3E%3Ccircle cx='80' cy='250' r='1.3'/%3E%3Ccircle cx='280' cy='160' r='1.1'/%3E%3Ccircle cx='30' cy='280' r='1.4'/%3E%3Cpolygon points='15,15 17,22 25,22 19,27 21,34 15,30 9,34 11,27 5,22 13,22' transform='scale(0.15) translate(100,50)'/%3E%3Ccircle cx='230' cy='250' r='1.5'/%3E%3Ccircle cx='100' cy='130' r='1'/%3E%3Ccircle cx='50' cy='50' r='1.2'/%3E%3Ccircle cx='260' cy='120' r='1.1'/%3E%3Ccircle cx='140' cy='270' r='1.3'/%3E%3C/g%3E%3Cg fill='%23A78BFA' opacity='0.4'%3E%3Ccircle cx='90' cy='90' r='1.5'/%3E%3Ccircle cx='220' cy='140' r='1.2'/%3E%3Ccircle cx='140' cy='260' r='1'/%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.2) translate(900,600)'/%3E%3Ccircle cx='30' cy='140' r='1.3'/%3E%3Ccircle cx='180' cy='30' r='1'/%3E%3Ccircle cx='270' cy='220' r='1.5'/%3E%3Ccircle cx='60' cy='90' r='1'/%3E%3Ccircle cx='240' cy='280' r='1.2'/%3E%3Cpolygon points='10,20 12,26 18,26 14,30 16,36 10,32 4,36 6,30 0,26 8,26' transform='scale(0.15) translate(200,180)'/%3E%3C/g%3E%3Cg fill='%23F59E0B' opacity='0.35'%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.25) translate(450,200)'/%3E%3Ccircle cx='270' cy='220' r='1.5'/%3E%3Ccircle cx='210' cy='90' r='1'/%3E%3Ccircle cx='130' cy='180' r='1.3'/%3E%3Cpolygon points='15,15 17,22 25,22 19,27 21,34 15,30 9,34 11,27 5,22 13,22' transform='scale(0.15) translate(80,250)'/%3E%3Ccircle cx='35' cy='200' r='1.1'/%3E%3Ccircle cx='190' cy='260' r='1.4'/%3E%3Ccircle cx='290' cy='70' r='1'/%3E%3Ccircle cx='75' cy='150' r='1.2'/%3E%3Ccircle cx='160' cy='40' r='1'/%3E%3C/g%3E%3C/svg%3E");
@@ -105,14 +105,14 @@
     --reader-text: #172A3D;
 
     /* Marca Tipográfica Emblemática */
-    --brand-eyebrow-color: #1D5C96;
-    --brand-rule-color: rgba(37, 99, 235, 0.35);
-    --brand-star-color: #1D5C96;
-    --brand-icon-color: #1D5C96;
-    --brand-icon-ribbon: #2563EB;
+    --brand-eyebrow-color: #8A6414;
+    --brand-rule-color: rgba(181, 133, 36, 0.35);
+    --brand-star-color: #C29543;
+    --brand-icon-color: #C29543;
+    --brand-icon-ribbon: #D49E34;
 
-    --brand-title-gradient: linear-gradient(180deg, #123359 0%, #1D5C96 55%, #2563EB 100%);
-    --brand-title-shadow: rgba(37, 99, 235, 0.25);
+    --brand-title-gradient: linear-gradient(135deg, #0F2338 0%, #1D5C96 45%, #C29543 85%, #8C6B1C 100%);
+    --brand-title-shadow: rgba(181, 133, 36, 0.25);
 
     /* Patrón Atmosférico Exclusivo para el Banner: Nubes claras */
     --banner-bg-pattern: radial-gradient(circle at 75% 25%, rgba(147, 197, 253, 0.2) 0%, transparent 40%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg fill='%2360A5FA' opacity='0.45'%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.28) translate(80,20)'/%3E%3Ccircle cx='180' cy='60' r='1.5'/%3E%3Ccircle cx='240' cy='140' r='1'/%3E%3Ccircle cx='80' cy='200' r='1.3'/%3E%3C/g%3E%3Cg fill='%2338BDF8' opacity='0.35'%3E%3Ccircle cx='130' cy='100' r='1.5'/%3E%3Ccircle cx='220' cy='220' r='1.8'/%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.18) translate(1100,800)'/%3E%3C/g%3E%3Cg fill='%23BFDBFE' opacity='0.3'%3E%3Ccircle cx='50' cy='50' r='1'/%3E%3Ccircle cx='270' cy='80' r='1.2'/%3E%3C/g%3E%3C/svg%3E");
@@ -164,13 +164,13 @@
     --reader-text: #1D2B23;
 
     /* Marca Tipográfica Emblemática */
-    --brand-eyebrow-color: #0D2818;
-    --brand-rule-color: rgba(34, 125, 72, 0.4);
-    --brand-star-color: #227D48;
-    --brand-icon-color: #1B5634;
-    --brand-icon-ribbon: #38A169;
-    --brand-title-gradient: linear-gradient(180deg, #091C11 0%, #174E2E 50%, #227D48 100%);
-    --brand-title-shadow: rgba(34, 125, 72, 0.25);
+    --brand-eyebrow-color: #8A6414;
+    --brand-rule-color: rgba(197, 138, 58, 0.35);
+    --brand-star-color: #C58A3A;
+    --brand-icon-color: #C58A3A;
+    --brand-icon-ribbon: #8A6414;
+    --brand-title-gradient: linear-gradient(135deg, #1C3824 0%, #2D5838 45%, #C58A3A 85%, #8A6414 100%);
+    --brand-title-shadow: rgba(197, 138, 58, 0.25);
 
     /* Patrón Atmosférico Exclusivo para el Banner: Hojas y Ramitas */
     --banner-bg-pattern: radial-gradient(circle at 15% 70%, rgba(34, 125, 72, 0.1) 0%, transparent 45%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg fill='%23227D48' opacity='0.4'%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.28) translate(60,30)'/%3E%3Ccircle cx='160' cy='60' r='1.5'/%3E%3Ccircle cx='240' cy='160' r='1.2'/%3E%3Ccircle cx='80' cy='220' r='1'/%3E%3C/g%3E%3Cg fill='%2338A169' opacity='0.35'%3E%3Ccircle cx='110' cy='130' r='1.5'/%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.2) translate(1050,700)'/%3E%3C/g%3E%3Cg fill='%23D97706' opacity='0.35'%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.22) translate(500,100)'/%3E%3Ccircle cx='260' cy='240' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
@@ -222,13 +222,13 @@
     --reader-text: #302A3E;
 
     /* Marca Tipográfica Emblemática */
-    --brand-eyebrow-color: #271E56;
-    --brand-rule-color: rgba(108, 92, 231, 0.35);
-    --brand-star-color: #6C5CE7;
-    --brand-icon-color: #5241B0;
-    --brand-icon-ribbon: #8B5CF6;
-    --brand-title-gradient: linear-gradient(180deg, #171135 0%, #271E56 50%, #6C5CE7 100%);
-    --brand-title-shadow: rgba(108, 92, 231, 0.25);
+    --brand-eyebrow-color: #8C6B1C;
+    --brand-rule-color: rgba(194, 149, 67, 0.35);
+    --brand-star-color: #C29543;
+    --brand-icon-color: #C29543;
+    --brand-icon-ribbon: #8C6B1C;
+    --brand-title-gradient: linear-gradient(135deg, #271E56 0%, #4E3C8A 45%, #C29543 85%, #8C6B1C 100%);
+    --brand-title-shadow: rgba(194, 149, 67, 0.25);
 
     /* Patrón Atmosférico Exclusivo para el Banner: Pétalos y Polvo estelar */
     --banner-bg-pattern: radial-gradient(circle at 80% 20%, rgba(167, 139, 250, 0.15) 0%, transparent 40%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg fill='%236C5CE7' opacity='0.4'%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.28) translate(60,20)'/%3E%3Ccircle cx='190' cy='70' r='1.5'/%3E%3Ccircle cx='60' cy='180' r='1.2'/%3E%3Ccircle cx='240' cy='200' r='1'/%3E%3C/g%3E%3Cg fill='%23A78BFA' opacity='0.35'%3E%3Ccircle cx='120' cy='110' r='1.5'/%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.2) translate(1000,700)'/%3E%3Ccircle cx='220' cy='260' r='1.2'/%3E%3C/g%3E%3Cg fill='%23D97706' opacity='0.3'%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.22) translate(550,250)'/%3E%3C/g%3E%3C/svg%3E");
@@ -279,13 +279,13 @@
 
     /* Marca Tipográfica Emblemática */
     --brand-eyebrow-color: #D5A15D;
-    --brand-rule-color: rgba(213, 161, 93, 0.34);
-    --brand-star-color: #C47791;
-    --brand-icon-color: #A94A68;
-    --brand-icon-ribbon: #C47791;
+    --brand-rule-color: rgba(213, 161, 93, 0.35);
+    --brand-star-color: #D5A15D;
+    --brand-icon-color: #D5A15D;
+    --brand-icon-ribbon: #D5A15D;
 
-    --brand-title-gradient: linear-gradient(180deg, #FFF7F3 0%, #F0DCE1 48%, #D39AAE 78%, #C47791 100%);
-    --brand-title-shadow: rgba(169, 74, 104, 0.30);
+    --brand-title-gradient: linear-gradient(135deg, #FFF7F3 0%, #F5E8C7 45%, #E5B869 80%, #D5A15D 100%);
+    --brand-title-shadow: rgba(213, 161, 93, 0.30);
 
     /* Patrón Atmosférico: ramas florales y resplandor sutil */
     --banner-bg-pattern: radial-gradient(circle at 20% 20%, rgba(213, 161, 93, 0.08) 0%, transparent 40%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg fill='%23D5A15D' opacity='0.45'%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.3) translate(50,10)'/%3E%3Ccircle cx='170' cy='50' r='1.5'/%3E%3Ccircle cx='250' cy='130' r='1'/%3E%3Ccircle cx='80' cy='210' r='1.3'/%3E%3C/g%3E%3Cg fill='%23C47791' opacity='0.35'%3E%3Ccircle cx='120' cy='120' r='1.5'/%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.2) translate(1050,600)'/%3E%3C/g%3E%3Cg fill='%23F1D5DE' opacity='0.3'%3E%3Ccircle cx='220' cy='250' r='1.2'/%3E%3Ccircle cx='40' cy='80' r='1'/%3E%3C/g%3E%3C/svg%3E");
@@ -332,34 +332,13 @@
 }
 .swatch-sys-accent { background-color: #5B4CC4; }
 
-/* 7. PALETAS DE COLOR PARA EL LECTOR (READER THEME CHIPS) */
-
-.reader-theme-chip[data-reader-theme="inherit"] {
-    background: linear-gradient(135deg, #FBFAFE 0%, #D9D3E4 34%, #6E6884 52%, #2A2536 68%, #101828 100%);
-    color: #FFFFFF;
-    border: 1px solid #8E8798;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75);
-}
-
-/* NOCHE — mystic-night */
+/* 7. PALETAS DE COLOR PARA EL LECTOR (LEGACY UTILIDADES) */
 .r-theme-night { background: #0D1226; color: #E8ECF7; border: 1px solid #232C52; }
-
-/* LAVANDA — lavender-light */
 .r-theme-light { background: #F8F6FD; color: #29243A; border: 1px solid #DED8ED; }
-
-/* PAPEL — tema cálido y universal */
 .r-theme-paper { background: #F4F1EA; color: #292824; border: 1px solid #D8D3C8; }
-
-/* NIEBLA — serenity mist (antes vino) */
 .r-theme-wine { background: #FAF5F6; color: #4A3E44; border: 1px solid #E3D3D8; }
-
-/* BOSQUE — morning forest */
 .r-theme-forest { background: #F4F7F2; color: #3E4A3E; border: 1px solid #D3DCCF; }
-
-/* CIELO — clear-sky */
 .r-theme-sky { background: #F0F6FD; color: #0F2338; border: 1px solid #CFE0F2; }
-
-/* NEUTRO — gris elegante y universal */
 .r-theme-neutral { background: #252525; color: #F2F2F2; border: 1px solid #464646; }
 
 /* 8. CAMPO DE ESTRELLAS DEL BANNER (estilo Via Lactea, tinte del tema) */
@@ -427,7 +406,7 @@
 
     --color-badge-bg: rgba(110, 136, 163, 0.14);
     --color-badge-text: #C9D5E3;
-    --color-accent-gold: #C9D2DE;
+    --color-accent-gold: #D4AF37;
 
     --banner-gradient: linear-gradient(135deg, #06101F 0%, #0B1D3A 55%, #102A4C 100%);
     --banner-border: rgba(110, 136, 163, 0.35);
@@ -435,14 +414,14 @@
     --reader-bg: #081426;
     --reader-text: #E9EDF4;
 
-    --brand-eyebrow-color: #B9C5D6;
-    --brand-rule-color: rgba(110, 136, 163, 0.35);
-    --brand-star-color: #6E88A3;
-    --brand-icon-color: #6E88A3;
-    --brand-icon-ribbon: #8FA9C4;
+    --brand-eyebrow-color: #E5B869;
+    --brand-rule-color: rgba(212, 175, 55, 0.4);
+    --brand-star-color: #D4AF37;
+    --brand-icon-color: #D4AF37;
+    --brand-icon-ribbon: #F5E8C7;
 
-    --brand-title-gradient: linear-gradient(180deg, #FFFFFF 0%, #D8E1EC 45%, #9FB0C6 78%, #6E88A3 100%);
-    --brand-title-shadow: rgba(110, 136, 163, 0.40);
+    --brand-title-gradient: linear-gradient(135deg, #FFFFFF 0%, #F5E8C7 45%, #D4AF37 80%, #C29543 100%);
+    --brand-title-shadow: rgba(212, 175, 55, 0.45);
 
     --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='%23D7E1EC'%3E%3Ccircle cx='12' cy='30' r='1' opacity='0.45'/%3E%3Ccircle cx='38' cy='85' r='0.8' opacity='0.35'/%3E%3Ccircle cx='64' cy='22' r='1.3' opacity='0.55'/%3E%3Ccircle cx='91' cy='60' r='0.9' opacity='0.4'/%3E%3Ccircle cx='118' cy='18' r='1.1' opacity='0.5'/%3E%3Ccircle cx='145' cy='55' r='0.8' opacity='0.35'/%3E%3Ccircle cx='172' cy='28' r='1.2' opacity='0.55'/%3E%3Ccircle cx='198' cy='70' r='0.9' opacity='0.4'/%3E%3Ccircle cx='225' cy='35' r='1.1' opacity='0.5'/%3E%3Ccircle cx='248' cy='90' r='0.8' opacity='0.35'/%3E%3Ccircle cx='25' cy='130' r='1.1' opacity='0.45'/%3E%3Ccircle cx='52' cy='165' r='0.8' opacity='0.35'/%3E%3Ccircle cx='80' cy='120' r='1.4' opacity='0.6'/%3E%3Ccircle cx='105' cy='155' r='0.9' opacity='0.4'/%3E%3Ccircle cx='132' cy='110' r='1.1' opacity='0.45'/%3E%3Ccircle cx='158' cy='150' r='0.8' opacity='0.35'/%3E%3Ccircle cx='185' cy='125' r='1.2' opacity='0.55'/%3E%3Ccircle cx='212' cy='160' r='0.9' opacity='0.4'/%3E%3Ccircle cx='238' cy='130' r='1.1' opacity='0.45'/%3E%3Ccircle cx='15' cy='205' r='0.9' opacity='0.4'/%3E%3Ccircle cx='45' cy='235' r='1.2' opacity='0.55'/%3E%3Ccircle cx='72' cy='200' r='0.8' opacity='0.35'/%3E%3Ccircle cx='100' cy='228' r='1.1' opacity='0.45'/%3E%3Ccircle cx='128' cy='195' r='0.9' opacity='0.4'/%3E%3Ccircle cx='155' cy='232' r='1.4' opacity='0.6'/%3E%3Ccircle cx='182' cy='205' r='0.8' opacity='0.35'/%3E%3Ccircle cx='210' cy='235' r='1.1' opacity='0.45'/%3E%3Ccircle cx='236' cy='200' r='0.9' opacity='0.4'/%3E%3Ccircle cx='30' cy='155' r='1' opacity='0.42'/%3E%3Ccircle cx='115' cy='85' r='1' opacity='0.42'/%3E%3Ccircle cx='190' cy='95' r='1' opacity='0.42'/%3E%3Ccircle cx='75' cy='245' r='0.9' opacity='0.4'/%3E%3Ccircle cx='165' cy='20' r='0.9' opacity='0.4'/%3E%3C/g%3E%3Cg fill='%23FFFFFF'%3E%3Ccircle cx='64' cy='22' r='1.3' opacity='0.8'/%3E%3Ccircle cx='80' cy='120' r='1.4' opacity='0.8'/%3E%3Ccircle cx='155' cy='232' r='1.4' opacity='0.8'/%3E%3Ccircle cx='185' cy='125' r='1.2' opacity='0.75'/%3E%3Ccircle cx='225' cy='35' r='1.1' opacity='0.75'/%3E%3C/g%3E%3Cg fill='%238FA9C4'%3E%3Ccircle cx='50' cy='48' r='0.9' opacity='0.45'/%3E%3Ccircle cx='135' cy='75' r='0.9' opacity='0.45'/%3E%3Ccircle cx='218' cy='105' r='0.9' opacity='0.45'/%3E%3Ccircle cx='98' cy='185' r='0.9' opacity='0.45'/%3E%3Ccircle cx='188' cy='215' r='0.9' opacity='0.45'/%3E%3Ccircle cx='22' cy='110' r='0.8' opacity='0.4'/%3E%3C/g%3E%3C/svg%3E");
     --banner-bg-pattern: radial-gradient(circle at 20% 30%, rgba(110, 136, 163, 0.12) 0%, transparent 40%), var(--starfield);
@@ -497,14 +476,14 @@
     --reader-bg: #FAF5F6;
     --reader-text: #4A3E44;
 
-    --brand-eyebrow-color: #7A5A66;
-    --brand-rule-color: rgba(154, 117, 133, 0.35);
-    --brand-star-color: #9A7585;
-    --brand-icon-color: #9A7585;
-    --brand-icon-ribbon: #C2A3B0;
+    --brand-eyebrow-color: #8A6414;
+    --brand-rule-color: rgba(213, 161, 93, 0.35);
+    --brand-star-color: #D5A15D;
+    --brand-icon-color: #D5A15D;
+    --brand-icon-ribbon: #8A6414;
 
-    --brand-title-gradient: linear-gradient(180deg, #4A3E44 0%, #6E5560 55%, #9A7585 100%);
-    --brand-title-shadow: rgba(154, 117, 133, 0.25);
+    --brand-title-gradient: linear-gradient(135deg, #4A2834 0%, #7A4958 35%, #D5A15D 80%, #A67332 100%);
+    --brand-title-shadow: rgba(213, 161, 93, 0.25);
 
     --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='%23C2A3B0'%3E%3Ccircle cx='60' cy='70' r='1.4' opacity='0.5'/%3E%3Ccircle cx='230' cy='50' r='1.6' opacity='0.55'/%3E%3Ccircle cx='190' cy='220' r='1.4' opacity='0.5'/%3E%3Ccircle cx='90' cy='250' r='1.2' opacity='0.45'/%3E%3Ccircle cx='150' cy='130' r='1.3' opacity='0.5'/%3E%3Ccircle cx='40' cy='160' r='1.1' opacity='0.45'/%3E%3C/g%3E%3C/svg%3E");
     --banner-bg-pattern: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.55) 0%, transparent 45%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg fill='%23EACBD6' opacity='0.5'%3E%3Cg transform='translate(55,75) rotate(-25) scale(1.3)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(235,60) rotate(22) scale(1.35)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(185,225) rotate(-12) scale(1.3)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%23D8A9B8' opacity='0.6'%3E%3Cg transform='translate(60,70) rotate(-30)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(230,50) rotate(25)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(190,220) rotate(-15)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(90,250) rotate(35)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(260,150) rotate(-40)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%23C2A3B0' opacity='0.65'%3E%3Ccircle cx='120' cy='120' r='2.8'/%3E%3Ccircle cx='200' cy='160' r='3'/%3E%3Ccircle cx='75' cy='200' r='2.6'/%3E%3C/g%3E%3Cg fill='%239A7585'%3E%3Ccircle cx='120' cy='120' r='1' opacity='0.7'/%3E%3Ccircle cx='200' cy='160' r='1.1' opacity='0.7'/%3E%3Ccircle cx='75' cy='200' r='1' opacity='0.7'/%3E%3C/g%3E%3Cg fill='%23B98A99'%3E%3Ccircle cx='150' cy='130' r='1.4' opacity='0.5'/%3E%3Ccircle cx='40' cy='160' r='1.2' opacity='0.45'/%3E%3Ccircle cx='250' cy='250' r='1.3' opacity='0.45'/%3E%3Ccircle cx='110' cy='30' r='1' opacity='0.4'/%3E%3C/g%3E%3C/svg%3E");
@@ -514,11 +493,6 @@
     --theme-bg-size: 340px 340px;
 }
 
-/* Banner claro: texto malva oscuro legible sobre niebla */
-[data-theme="wine-poetry"] .quote-text { color: #5C4A53; text-shadow: none; }
-[data-theme="wine-poetry"] .quote-author { color: #7A5A66; text-shadow: none; }
-[data-theme="wine-poetry"] .quote-source { color: #9A8A91; text-shadow: none; }
-[data-theme="wine-poetry"] .quote-watermark { color: rgba(154, 117, 133, 0.12); }
 
 /* Muestras del modal para Serenity Mist */
 .swatch-wp-1 { background-color: #F7F1F1; border: 1px solid #E3D3D8; }
@@ -566,14 +540,14 @@
     --reader-bg: #F4F7F2;
     --reader-text: #3E4A3E;
 
-    --brand-eyebrow-color: #4F6B4D;
-    --brand-rule-color: rgba(84, 111, 82, 0.35);
-    --brand-star-color: #5A7358;
-    --brand-icon-color: #5A7358;
-    --brand-icon-ribbon: #8AA383;
+    --brand-eyebrow-color: #8A6414;
+    --brand-rule-color: rgba(197, 138, 58, 0.35);
+    --brand-star-color: #C58A3A;
+    --brand-icon-color: #C58A3A;
+    --brand-icon-ribbon: #8A6414;
 
-    --brand-title-gradient: linear-gradient(180deg, #333D33 0%, #3E4A3E 55%, #5A7358 100%);
-    --brand-title-shadow: rgba(84, 111, 82, 0.25);
+    --brand-title-gradient: linear-gradient(135deg, #1C3824 0%, #2D5838 45%, #C58A3A 85%, #8A6414 100%);
+    --brand-title-shadow: rgba(197, 138, 58, 0.25);
 
     --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='%237A9A76'%3E%3Ccircle cx='60' cy='70' r='1.4' opacity='0.5'/%3E%3Ccircle cx='230' cy='80' r='1.6' opacity='0.55'/%3E%3Ccircle cx='180' cy='220' r='1.4' opacity='0.5'/%3E%3Ccircle cx='80' cy='240' r='1.2' opacity='0.45'/%3E%3Ccircle cx='150' cy='130' r='1.3' opacity='0.5'/%3E%3Ccircle cx='40' cy='160' r='1.1' opacity='0.45'/%3E%3C/g%3E%3C/svg%3E");
     --banner-bg-pattern: radial-gradient(circle at 15% 70%, rgba(255, 255, 255, 0.5) 0%, transparent 45%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg fill='%23C3D2BE' opacity='0.35'%3E%3Cg transform='translate(50,70) rotate(-25) scale(1.3)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(215,60) rotate(20) scale(1.35)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(160,220) rotate(-12) scale(1.3)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z'/%3E%3C/g%3E%3C/g%3E%3Cg transform='translate(70,60) rotate(-30)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z' fill='%239DB49A' opacity='0.55'/%3E%3Cpath d='M3 0 L31 0' stroke='%235F7F5C' stroke-width='1' opacity='0.5' fill='none'/%3E%3C/g%3E%3Cg transform='translate(230,80) rotate(25)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z' fill='%239DB49A' opacity='0.55'/%3E%3Cpath d='M3 0 L31 0' stroke='%235F7F5C' stroke-width='1' opacity='0.5' fill='none'/%3E%3C/g%3E%3Cg transform='translate(180,220) rotate(-15)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z' fill='%239DB49A' opacity='0.55'/%3E%3Cpath d='M3 0 L31 0' stroke='%235F7F5C' stroke-width='1' opacity='0.5' fill='none'/%3E%3C/g%3E%3Cg transform='translate(80,240) rotate(30)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z' fill='%239DB49A' opacity='0.55'/%3E%3Cpath d='M3 0 L31 0' stroke='%235F7F5C' stroke-width='1' opacity='0.5' fill='none'/%3E%3C/g%3E%3Cg transform='translate(140,150) rotate(15) scale(0.7)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z' fill='%237A9A76' opacity='0.6'/%3E%3C/g%3E%3Cg transform='translate(45,170) rotate(-20) scale(0.65)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z' fill='%237A9A76' opacity='0.6'/%3E%3C/g%3E%3Cg fill='%23FFFFFF'%3E%3Ccircle cx='66' cy='58' r='1.1' opacity='0.65'/%3E%3Ccircle cx='226' cy='78' r='1.2' opacity='0.65'/%3E%3Ccircle cx='176' cy='218' r='1' opacity='0.6'/%3E%3Ccircle cx='258' cy='168' r='1' opacity='0.6'/%3E%3C/g%3E%3Cg fill='%235F7F5C'%3E%3Ccircle cx='150' cy='130' r='1.4' opacity='0.5'/%3E%3Ccircle cx='40' cy='160' r='1.2' opacity='0.45'/%3E%3Ccircle cx='250' cy='250' r='1.3' opacity='0.45'/%3E%3Ccircle cx='110' cy='30' r='1' opacity='0.4'/%3E%3C/g%3E%3C/svg%3E");
@@ -583,11 +557,6 @@
     --theme-bg-size: 340px 340px;
 }
 
-/* Banner claro bosque: letras musgo oscuras */
-[data-theme="enchanted-forest"] .quote-text { color: #3E4A3E; text-shadow: none; }
-[data-theme="enchanted-forest"] .quote-author { color: #4F6B4D; text-shadow: none; }
-[data-theme="enchanted-forest"] .quote-source { color: #7A8577; text-shadow: none; }
-[data-theme="enchanted-forest"] .quote-watermark { color: rgba(84, 111, 82, 0.12); }
 
 /* Muestras del modal para Morning Forest */
 .swatch-ef-1 { background-color: #E4EBDD; border: 1px solid #D3DCCF; }
@@ -632,48 +601,10 @@
     --banner-gradient: linear-gradient(135deg, #F4F0FD 0%, #E4D8F6 55%, #D3C2F0 100%);
     --banner-border: rgba(108, 92, 231, 0.30);
 }
-[data-theme="lavender-light"] .quote-text { color: #3A3350; text-shadow: none; }
-[data-theme="lavender-light"] .quote-author { color: #5847BC; text-shadow: none; }
-[data-theme="lavender-light"] .quote-source { color: #7A6F8A; text-shadow: none; }
-[data-theme="lavender-light"] .quote-watermark { color: rgba(108, 92, 231, 0.10); }
-[data-theme="lavender-light"] .btn-quote-refresh,
-[data-theme="lavender-light"] #btn-banner-add-quote,
-[data-theme="lavender-light"] #btn-banner-manage-quotes {
-    background-color: rgba(255, 255, 255, 0.6);
-    border-color: rgba(108, 92, 231, 0.35);
-    color: #3A3350;
-}
 
 [data-theme="clear-sky"] {
     --banner-gradient: linear-gradient(135deg, #F2F8FE 0%, #DCEBF9 55%, #C2DDF3 100%);
     --banner-border: rgba(37, 99, 235, 0.28);
-}
-[data-theme="clear-sky"] .quote-text { color: #14395D; text-shadow: none; }
-[data-theme="clear-sky"] .quote-author { color: #1D5C96; text-shadow: none; }
-[data-theme="clear-sky"] .quote-source { color: #5B7A94; text-shadow: none; }
-[data-theme="clear-sky"] .quote-watermark { color: rgba(37, 99, 235, 0.10); }
-[data-theme="clear-sky"] .btn-quote-refresh,
-[data-theme="clear-sky"] #btn-banner-add-quote,
-[data-theme="clear-sky"] #btn-banner-manage-quotes {
-    background-color: rgba(255, 255, 255, 0.6);
-    border-color: rgba(37, 99, 235, 0.35);
-    color: #14395D;
-}
-
-[data-theme="enchanted-forest"] .btn-quote-refresh,
-[data-theme="enchanted-forest"] #btn-banner-add-quote,
-[data-theme="enchanted-forest"] #btn-banner-manage-quotes {
-    background-color: rgba(255, 255, 255, 0.6);
-    border-color: rgba(84, 111, 82, 0.35);
-    color: #3E4A3E;
-}
-
-[data-theme="wine-poetry"] .btn-quote-refresh,
-[data-theme="wine-poetry"] #btn-banner-add-quote,
-[data-theme="wine-poetry"] #btn-banner-manage-quotes {
-    background-color: rgba(255, 255, 255, 0.6);
-    border-color: rgba(154, 117, 133, 0.35);
-    color: #5C4A53;
 }
 
 /* ==========================================================================

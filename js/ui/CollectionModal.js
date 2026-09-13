@@ -57,44 +57,34 @@ export class CollectionModal {
     overlay.innerHTML = `
       <div class="theme-modal-dialog" style="max-width: 440px; padding: 24px;">
         <div class="theme-modal-header" style="margin-bottom: 16px;">
-          <h2 class="theme-modal-title">${isEdit ? 'Editar Colección' : 'Nueva Colección'}</h2>
-          <button class="theme-modal-close" id="btn-close-col-modal">
-            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          <h2 class="theme-modal-title" style="font-family: 'Cinzel', serif; letter-spacing: 0.03em;">${isEdit ? 'Editar Colección' : 'Nueva Colección'}</h2>
+          <button class="theme-modal-close" id="btn-close-col-modal" aria-label="Cerrar modal">
+            <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
         </div>
 
         <form id="col-form" style="display: flex; flex-direction: column; gap: 14px;">
           <div>
-            <label style="display: block; font-size: var(--text-xs); color: var(--color-text-muted); margin-bottom: 6px; font-weight: bold;">NOMBRE DE LA COLECCIÓN</label>
+            <label style="display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-muted); margin-bottom: 6px; font-weight: bold;">NOMBRE DE LA COLECCIÓN</label>
             <input type="text" id="col-name" required value="${isEdit ? this.escapeHtml(collectionToEdit.name) : ''}" placeholder="Ej. Novelas Históricas, Ensayo..." style="
               width: 100%;
               padding: 10px 14px;
-              border-radius: var(--radius-sm);
-              background-color: var(--color-surface);
-              border: 1px solid var(--color-border);
-              color: var(--color-text);
               font-size: var(--text-sm);
-              outline: none;
             ">
           </div>
 
           <div>
-            <label style="display: block; font-size: var(--text-xs); color: var(--color-text-muted); margin-bottom: 6px; font-weight: bold;">DESCRIPCIÓN (OPCIONAL)</label>
+            <label style="display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-muted); margin-bottom: 6px; font-weight: bold;">DESCRIPCIÓN (OPCIONAL)</label>
             <textarea id="col-desc" rows="2" placeholder="Breve nota sobre esta temática..." style="
               width: 100%;
               padding: 10px 14px;
-              border-radius: var(--radius-sm);
-              background-color: var(--color-surface);
-              border: 1px solid var(--color-border);
-              color: var(--color-text);
               font-size: var(--text-sm);
-              outline: none;
               resize: none;
             ">${isEdit ? this.escapeHtml(collectionToEdit.description || '') : ''}</textarea>
           </div>
 
           <div>
-            <label style="display: block; font-size: var(--text-xs); color: var(--color-text-muted); margin-bottom: 8px; font-weight: bold;">COLOR DISTINTIVO</label>
+            <label style="display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-muted); margin-bottom: 8px; font-weight: bold;">COLOR DISTINTIVO</label>
             <div id="col-colors-wrapper" style="display: flex; gap: 10px; align-items: center;">
               ${colorsHtml}
             </div>
@@ -103,20 +93,41 @@ export class CollectionModal {
           <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-top: 12px;">
             ${isEdit ? `
               <button type="button" id="btn-col-delete" style="
-                padding: 8px 14px;
-                border-radius: var(--radius-sm);
-                font-size: var(--text-xs);
+                padding: 9px 16px;
+                border-radius: var(--radius-sm, 8px);
+                font-size: 0.82rem;
                 font-weight: 600;
                 background-color: rgba(220, 38, 38, 0.12);
                 color: #EF4444;
                 border: 1px solid rgba(220, 38, 38, 0.25);
                 cursor: pointer;
                 margin-right: auto;
-                transition: all 0.15s ease;
+                transition: all 0.18s ease;
               ">Eliminar colección</button>
             ` : ''}
-            <button type="button" id="btn-col-cancel" style="padding: 8px 16px; border-radius: var(--radius-sm); font-size: var(--text-xs); color: var(--color-text-secondary); cursor: pointer;">Cancelar</button>
-            <button type="submit" style="padding: 8px 20px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: bold; background-color: var(--color-primary-light); color: #FFFFFF; cursor: pointer;">Guardar</button>
+            <button type="button" id="btn-col-cancel" style="
+              padding: 9px 18px;
+              border-radius: var(--radius-sm, 8px);
+              font-size: 0.82rem;
+              font-weight: 600;
+              color: var(--color-text-secondary);
+              background: var(--color-surface-hover);
+              border: 1px solid var(--color-border);
+              cursor: pointer;
+              transition: all 0.18s ease;
+            ">Cancelar</button>
+            <button type="submit" style="
+              padding: 9px 22px;
+              border-radius: var(--radius-sm, 8px);
+              font-size: 0.82rem;
+              font-weight: 600;
+              background: linear-gradient(135deg, var(--color-primary, #30256F), var(--color-primary-light, #5B4CC4));
+              color: #FFFFFF;
+              border: none;
+              box-shadow: 0 4px 14px var(--color-primary-glow);
+              cursor: pointer;
+              transition: all 0.18s ease;
+            ">Guardar</button>
           </div>
         </form>
       </div>
@@ -227,11 +238,11 @@ export class CollectionModal {
       <div class="theme-modal-dialog" style="max-width: 420px; padding: 24px;">
         <div class="theme-modal-header" style="margin-bottom: 16px;">
           <div>
-            <h2 class="theme-modal-title">Asignar a Colección</h2>
-            <span style="font-size: var(--text-xs); color: var(--color-text-muted);">${this.escapeHtml(book.title)}</span>
+            <h2 class="theme-modal-title" style="font-family: 'Cinzel', serif; letter-spacing: 0.03em;">Asignar a Colección</h2>
+            <span style="font-size: var(--text-xs); color: var(--color-text-secondary);">${this.escapeHtml(book.title)}</span>
           </div>
-          <button class="theme-modal-close" id="btn-close-assign-modal">
-            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          <button class="theme-modal-close" id="btn-close-assign-modal" aria-label="Cerrar modal">
+            <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
         </div>
 
@@ -246,14 +257,14 @@ export class CollectionModal {
               align-items: center;
               gap: 12px;
               padding: 10px 12px;
-              border-radius: var(--radius-sm);
+              border-radius: var(--radius-sm, 8px);
               background-color: var(--color-surface);
               border: 1px solid var(--color-border);
               cursor: pointer;
-              transition: background-color var(--transition-fast);
+              transition: background-color var(--transition-fast), border-color var(--transition-fast);
             ">
               <input type="checkbox" data-col-id="${col.id}" ${linkedIds.has(col.id) ? 'checked' : ''} style="accent-color: var(--color-primary-light); width: 16px; height: 16px;">
-              <span style="width: 10px; height: 10px; border-radius: 50%; background-color: ${col.color || '#5B4CC4'};"></span>
+              <span style="width: 12px; height: 12px; border-radius: 50%; background-color: ${col.color || '#5B4CC4'}; box-shadow: 0 0 0 1px rgba(255,255,255,0.2);"></span>
               <div style="flex: 1; display: flex; flex-direction: column;">
                 <span style="font-size: var(--text-xs); font-weight: bold; color: var(--color-text);">${this.escapeHtml(col.name)}</span>
                 ${col.description ? `<span style="font-size: 0.7rem; color: var(--color-text-muted);">${this.escapeHtml(col.description)}</span>` : ''}
@@ -263,7 +274,18 @@ export class CollectionModal {
         </div>
 
         <div style="display: flex; justify-content: flex-end;">
-          <button id="btn-done-assign" style="padding: 8px 20px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: bold; background-color: var(--color-primary-light); color: #FFFFFF; cursor: pointer;">Listo</button>
+          <button id="btn-done-assign" style="
+            padding: 9px 24px;
+            border-radius: var(--radius-sm, 8px);
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--color-primary, #30256F), var(--color-primary-light, #5B4CC4));
+            color: #FFFFFF;
+            border: none;
+            box-shadow: 0 4px 14px var(--color-primary-glow);
+            cursor: pointer;
+            transition: all 0.18s ease;
+          ">Listo</button>
         </div>
       </div>
     `;

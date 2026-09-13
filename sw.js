@@ -6,15 +6,18 @@
  * mediante caché Cache-First del App Shell y limpieza de versiones obsoletas.
  */
 
-const CACHE_NAME = 'arcadia-pwa-v86';
+const CACHE_NAME = 'arcadia-pwa-v95';
 
 // Recursos esenciales del App Shell a precachear
 const APP_SHELL_ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './assets/icons/favicon.svg',
-  './assets/icons/icon.svg',
+  './assets/icons/icon-192.png',
+  './assets/icons/icon-512.png',
+  './assets/icons/icon.png',
+  './assets/icons/logo-transparent.png',
+  './assets/icons/logo.png',
   './css/tokens.css',
   './css/themes.css',
   './css/main.css',
@@ -31,9 +34,6 @@ const APP_SHELL_ASSETS = [
   './js/library/CollectionManager.js',
   './js/library/LibraryView.js',
   './js/library/StorageWidget.js',
-  './js/quotes/QuotesManager.js',
-  './js/quotes/QuotesService.js',
-  './js/quotes/QuotesView.js',
   './js/reader/LocationsManager.js',
   './js/reader/ReaderManager.js',
   './js/reader/ReaderSettings.js',
@@ -47,12 +47,12 @@ const APP_SHELL_ASSETS = [
   './js/pwa/PWAManager.js',
   './js/ui/Modal.js',
   './js/ui/CollectionModal.js',
-  './js/ui/QuoteModal.js',
   './js/ui/ScaleManager.js',
   './js/ui/FloatingMenu.js',
   './js/ui/ThemeManager.js',
   './js/ui/Toast.js',
   './js/ui/CustomSelect.js',
+  './js/ui/BackupManager.js',
   './assets/libs/jszip.min.js',
   './assets/libs/epub.min.js'
 ];

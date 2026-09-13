@@ -30,30 +30,32 @@
   <meta name="theme-color" content="#0B1D3A">
   <title>Biblioteca Arcadia · App de lectura</title>
 
-  <!-- PWA Web App Manifest e Iconos -->
+  <!-- PWA Web App Manifest e Iconos PNG -->
   <link rel="manifest" href="manifest.json">
-  <link rel="icon" id="app-favicon" type="image/svg+xml" href="assets/icons/favicon.svg?v=12">
-  <link rel="apple-touch-icon" href="assets/icons/icon.svg?v=12">
+  <link rel="icon" id="app-favicon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icons/icon-512.png">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="assets/icons/icon-512.png">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Arcadia">
 
-  <!-- Fuentes Tipográficas Literarias y de Marca (Poppins, Literata, Source Serif 4, Lora, EB Garamond, Playfair, Inter, Roboto, Cinzel) -->
+  <!-- Fuentes Tipográficas Literarias y de Marca (Poppins, Literata, Source Serif 4, Lora, EB Garamond, Playfair, Atkinson Hyperlegible, Inter, Roboto, Cinzel) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;0,7..72,800;1,7..72,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;0,7..72,800;1,7..72,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;600;700;800&display=swap"
     rel="stylesheet">
 
   <!-- Hojas de Estilo Modulares -->
-  <link rel="stylesheet" href="css/tokens.css">
-  <link rel="stylesheet" href="css/themes.css">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/library.css">
-  <link rel="stylesheet" href="css/reader.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/tokens.css?v=95">
+  <link rel="stylesheet" href="css/themes.css?v=95">
+  <link rel="stylesheet" href="css/main.css?v=95">
+  <link rel="stylesheet" href="css/layout.css?v=95">
+  <link rel="stylesheet" href="css/library.css?v=95">
+  <link rel="stylesheet" href="css/reader.css?v=95">
+  <link rel="stylesheet" href="css/responsive.css?v=95">
 </head>
 
 <body>
@@ -77,29 +79,11 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
     </button>
-    <div class="mobile-logo-wrap" style="display: flex; align-items: center; gap: 4px;">
-      <span class="brand-ornament-top emblem-glow" style="margin: 0; color: var(--brand-icon-color, var(--brand-star-color, #718CFF));">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" class="brand-icon-svg brand-emblem" viewBox="0 0 512 512" aria-hidden="true">
-          <g fill="url(#arcStarGrad)">
-            <use href="#arcStar8" transform="translate(-6.5 -52.5) scale(1.75)"/>
-            <use href="#arcStar8" transform="translate(-20 247) scale(0.55)"/>
-            <use href="#arcStar8" transform="translate(368 247) scale(0.55)"/>
-          </g>
-        </svg>
-      </span>
-      <span class="brand-wordmark" style="font-size: 1.15rem; margin: 0; line-height: 1;">ARCADIA</span>
-      <span class="brand-ornament-top emblem-glow" style="margin: 0; color: var(--brand-icon-color, var(--brand-star-color, #718CFF));">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" class="brand-icon-svg brand-emblem" viewBox="0 0 512 512" aria-hidden="true">
-          <g fill="url(#arcStarGrad)">
-            <use href="#arcStar8" transform="translate(-6.5 -52.5) scale(1.75)"/>
-            <use href="#arcStar8" transform="translate(-20 247) scale(0.55)"/>
-            <use href="#arcStar8" transform="translate(368 247) scale(0.55)"/>
-          </g>
-        </svg>
-      </span>
+    <div class="mobile-logo-wrap">
+      <img src="assets/icons/logo-transparent.png" alt="Arcadia" class="brand-emblem-mobile" width="32" height="22">
+      <span class="brand-wordmark mobile-brand-wordmark">ARCADIA</span>
     </div>
-    <button class="btn-upload-epub" id="mobile-upload-trigger" style="padding: 5px 10px; font-size: var(--text-xs);"
-      aria-label="Subir libro">
+    <button class="btn-upload-epub" id="mobile-upload-trigger" aria-label="Subir libro">
       <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
@@ -120,13 +104,7 @@
       <div class="sidebar-header">
         <div class="brand-typography">
           <div class="brand-ornament-top emblem-glow">
-            <svg xmlns="http://www.w3.org/2000/svg" width="72" height="49" class="brand-icon-svg brand-emblem" viewBox="0 70 512 350" aria-hidden="true">
-              <g fill="url(#arcStarGrad)">
-                <use href="#arcStar8" transform="translate(-6.5 -52.5) scale(1.75)"/>
-                <use href="#arcStar8" transform="translate(-20 247) scale(0.55)"/>
-                <use href="#arcStar8" transform="translate(368 247) scale(0.55)"/>
-              </g>
-            </svg>
+            <img src="assets/icons/logo-transparent.png" alt="Arcadia Emblem" class="brand-logo-img" width="70" height="49">
           </div>
           <div class="brand-eyebrow-row">
             <span class="brand-rule"></span>
@@ -197,16 +175,6 @@
             <span class="nav-badge" id="badge-vocabulary">0</span>
           </button>
 
-          <button type="button" class="nav-item" data-nav-filter="quotes">
-            <div class="nav-item-content">
-              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-              </svg>
-              <span>Frases y citas</span>
-            </div>
-            <span class="nav-badge" id="badge-quotes">0</span>
-          </button>
 
           <button type="button" class="nav-item" id="nav-settings">
             <div class="nav-item-content">
@@ -216,18 +184,6 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
               <span>Ajustes</span>
-            </div>
-          </button>
-
-          <!-- Botón de Estados -->
-          <button id="btn-open-states-modal" class="nav-item"
-            style="width: 100%; border: none; background: transparent; cursor: pointer; text-align: left; font-family: inherit;">
-            <div class="nav-item-content">
-              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-              </svg>
-              <span>Estados</span>
             </div>
           </button>
 
@@ -291,37 +247,6 @@
     <main class="app-main" id="app-main">
       <div class="main-content">
 
-        <!-- 1. Banner Literario Superior -->
-        <section class="quote-banner" id="quote-banner-section" aria-label="Cita literaria">
-          <div class="quote-watermark" aria-hidden="true">“</div>
-          <div class="quote-content">
-            <p class="quote-text" id="quote-text" aria-live="polite">«Un lector vive mil vidas antes de morir. El que nunca lee solo vive
-              una.»</p>
-          </div>
-          <div class="quote-actions">
-            <div class="quote-meta-row">
-              <span class="quote-author" id="quote-author">— George R. R. Martin</span>
-              <span class="quote-source" id="quote-source"></span>
-            </div>
-            <div class="quote-btn-group">
-              <button class="btn-quote-refresh" id="btn-refresh-quote" title="Ver otra frase"
-                aria-label="Cambiar frase literaria">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-                <span>Siguiente</span>
-              </button>
-              <button class="btn-quote-secondary" id="btn-banner-add-quote" title="Añadir frase propia">
-                <span aria-hidden="true">+</span>
-                <span>Añadir</span>
-              </button>
-              <button class="btn-quote-secondary" id="btn-banner-manage-quotes" title="Gestionar todas las frases">
-                <span>Gestionar</span>
-              </button>
-            </div>
-          </div>
-        </section>
 
         <!-- 2. Barra de Control de Biblioteca (Toolbar) -->
         <section class="library-header">
@@ -439,97 +364,6 @@
     </button>
   </nav>
 
-  <!-- ==============================
-       MODAL DE ESTADOS DE LECTURA RENOVADO
-       ============================== -->
-  <div class="modal-overlay" id="states-modal" role="dialog" aria-modal="true" aria-labelledby="modal-states-title">
-    <div class="modal-card">
-      <div class="modal-header">
-        <div class="states-header-group">
-          <div class="states-header-icon">
-            <svg style="width: 22px; height: 22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-            </svg>
-          </div>
-          <div class="states-header-titles">
-            <h3 class="modal-title" id="modal-states-title">Estado de lectura</h3>
-            <span class="modal-subtitle">Filtra tus libros según tu progreso</span>
-          </div>
-        </div>
-        <button class="modal-close-btn" id="modal-states-close-btn" aria-label="Cerrar modal">
-          <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-      <div class="states-modal-body">
-        <!-- 1. Por leer -->
-        <button type="button" class="state-option-card" data-nav-filter="to_read">
-          <div class="state-option-left">
-            <div class="state-icon-badge state-badge-to-read">
-              <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div class="state-option-info">
-              <span class="state-option-name">Por leer</span>
-              <span class="state-option-desc">Libros pendientes en tu lista</span>
-            </div>
-          </div>
-          <div class="state-option-right">
-            <span class="state-count-pill" id="badge-to-read">0</span>
-            <svg class="state-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </div>
-        </button>
-
-        <!-- 2. En lectura -->
-        <button type="button" class="state-option-card" data-nav-filter="reading">
-          <div class="state-option-left">
-            <div class="state-icon-badge state-badge-reading">
-              <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>
-            </div>
-            <div class="state-option-info">
-              <span class="state-option-name">En lectura</span>
-              <span class="state-option-desc">Libros que estás leyendo actualmente</span>
-            </div>
-          </div>
-          <div class="state-option-right">
-            <span class="state-count-pill" id="badge-reading">0</span>
-            <svg class="state-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </div>
-        </button>
-
-        <!-- 3. Completados -->
-        <button type="button" class="state-option-card" data-nav-filter="completed">
-          <div class="state-option-left">
-            <div class="state-icon-badge state-badge-completed">
-              <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div class="state-option-info">
-              <span class="state-option-name">Completados</span>
-              <span class="state-option-desc">Lecturas finalizadas con éxito</span>
-            </div>
-          </div>
-          <div class="state-option-right">
-            <span class="state-count-pill" id="badge-completed">0</span>
-            <svg class="state-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </div>
-        </button>
-      </div>
-    </div>
-  </div>
-
   <!-- ========================================================================
        MODAL DE SELECCIÓN DE TEMAS (RENOVADO Y VISUALMENTE ENRIQUECIDO)
        ======================================================================== -->
@@ -541,8 +375,8 @@
           <p style="font-size: 0.78rem; color: var(--color-text-secondary); margin: 3px 0 0 0;">Personaliza los temas y la escala visual de la biblioteca</p>
         </div>
         <button class="modal-close-btn" id="modal-close-btn" aria-label="Cerrar modal">
-          <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
@@ -677,11 +511,11 @@
 
       <!-- Preferencias y Elementos de la Interfaz -->
       <div class="settings-preferences-section settings-section-divider"
-        style="margin-top: 24px; padding: 28px 16px 16px 16px; border-top: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 16px;">
+        style="margin-top: 24px; padding: 24px 8px 16px 8px; border-top: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 20px;">
         <!-- 1. Tamaño de Letras de la App -->
         <div class="settings-block">
           <div class="settings-row-space"
-            style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
+            style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
             <div>
               <h4 class="settings-section-subtitle"
                 style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0 0 4px 0;">
@@ -697,6 +531,36 @@
           </div>
         </div>
 
+        <!-- 2. Copia de Seguridad y Restauración de Datos -->
+        <div class="settings-block" style="padding-top: 16px; border-top: 1px solid var(--color-border-subtle, rgba(255,255,255,0.06));">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <h4 class="settings-section-subtitle"
+                style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0 0 4px 0;">
+                Copia de Seguridad y Datos</h4>
+              <p class="settings-section-desc" style="font-size: 0.75rem; color: var(--color-text-muted); margin: 0;">
+                Guarda tus notas, citas, colecciones y progreso en un archivo JSON o restáuralos en otro dispositivo.</p>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button id="btn-export-backup" class="btn-setting-action" style="
+                display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: var(--radius-sm, 8px);
+                background-color: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text);
+                font-size: var(--text-xs); font-weight: 600; cursor: pointer; transition: all 0.2s ease;
+              ">
+                <svg style="width: 14px; height: 14px; color: var(--color-primary-light);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                <span>Exportar copia</span>
+              </button>
+              <button id="btn-import-backup" class="btn-setting-action" style="
+                display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: var(--radius-sm, 8px);
+                background-color: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text);
+                font-size: var(--text-xs); font-weight: 600; cursor: pointer; transition: all 0.2s ease;
+              ">
+                <svg style="width: 14px; height: 14px; color: var(--color-accent-gold, #D4AF37);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                <span>Restaurar</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -710,7 +574,7 @@
       <div class="reader-header-left">
         <button class="btn-reader-back" id="btn-reader-back" aria-label="Volver a la biblioteca">
           <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
           <span>Biblioteca</span>
         </button>
@@ -726,7 +590,7 @@
         <button class="btn-reader-action" id="btn-reader-search" title="Buscar en este libro"
           aria-label="Buscar en el libro" aria-expanded="false" aria-controls="reader-search-panel">
           <svg style="width: 19px; height: 19px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </button>
@@ -734,7 +598,7 @@
         <!-- Tabla de Contenidos -->
         <button class="btn-reader-action" id="btn-reader-toc" title="Capítulos" aria-label="Tabla de Contenidos" aria-expanded="false" aria-controls="reader-toc-drawer">
           <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h7" />
           </svg>
         </button>
 
@@ -742,7 +606,7 @@
         <button class="btn-reader-action" id="btn-reader-settings" title="Ajustes de lectura y tipografía"
           aria-label="Ajustes de lectura" aria-expanded="false" aria-controls="reader-settings-panel">
           <svg style="width: 19px; height: 19px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
               d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
           </svg>
         </button>
@@ -751,7 +615,7 @@
         <button class="btn-reader-action" id="btn-reader-fullscreen" title="Pantalla Completa"
           aria-label="Alternar pantalla completa" aria-pressed="false">
           <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
               d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
           </svg>
         </button>
@@ -782,7 +646,7 @@
       <button class="btn-footer-chapter" id="btn-footer-prev-chapter" title="Capítulo anterior"
         aria-label="Capítulo anterior">
         <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 19l-7-7 7-7" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 19l-7-7 7-7" />
         </svg>
         <span class="btn-chapter-label">Cap. anterior</span>
       </button>
@@ -796,7 +660,7 @@
         aria-label="Capítulo siguiente">
         <span class="btn-chapter-label">Cap. siguiente</span>
         <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5l7 7-7 7" />
         </svg>
       </button>
     </footer>
@@ -810,7 +674,7 @@
         </div>
         <button class="toc-close-btn" id="toc-close-btn" aria-label="Cerrar panel">
           <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
@@ -826,7 +690,7 @@
         <div class="search-input-wrapper">
           <svg style="width: 18px; height: 18px; color: var(--color-text-muted); flex-shrink: 0;" fill="none"
             stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <label class="sr-only" for="input-reader-search">Buscar texto en este libro</label>
@@ -834,7 +698,7 @@
           <button id="btn-clear-reader-search" title="Borrar búsqueda" aria-label="Borrar búsqueda"
             style="color: var(--color-text-muted); cursor: pointer; padding: 4px; display: none; background: transparent; border: none;">
             <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
           <button id="btn-submit-reader-search"
@@ -869,6 +733,8 @@
             style="font-family: 'EB Garamond', Garamond, serif;">Garamond</button>
           <button class="setting-pill-btn" data-font="Playfair"
             style="font-family: 'Playfair Display', Georgia, serif;">Playfair</button>
+          <button class="setting-pill-btn" data-font="Atkinson"
+            style="font-family: 'Atkinson Hyperlegible', sans-serif;">Atkinson</button>
           <button class="setting-pill-btn" data-font="Poppins"
             style="font-family: 'Poppins', sans-serif;">Poppins</button>
           <button class="setting-pill-btn" data-font="Inter" style="font-family: 'Inter', sans-serif;">Inter</button>
@@ -908,34 +774,38 @@
         </div>
       </div>
 
-            <!-- Columnas -->
-      <div class="settings-group" id="columns-settings-group">
-        <span class="settings-group-label">Columnas</span>
-        <div class="settings-btn-grid" id="columns-options">
-          <button class="setting-pill-btn active" data-col="1">1 Columna</button>
-          <button class="setting-pill-btn" data-col="2">2 Columnas</button>
-        </div>
-      </div>
-
       <!-- Tema del Lector (Anulable por libro) -->
       <div class="settings-group">
         <span class="settings-group-label" id="reader-theme-label">Tema de Lectura</span>
         <div class="reader-theme-swatches" id="reader-theme-options" role="radiogroup" aria-labelledby="reader-theme-label">
-          <button type="button" class="reader-theme-chip active" data-reader-theme="inherit" title="Heredar tema global" role="radio" aria-checked="true">Auto</button>
-          <button type="button" class="reader-theme-chip" data-reader-theme="mystic-night" role="radio" aria-checked="false"
-            style="background-color: #0D1226; color: #E8ECF7;">Noche</button>
-          <button type="button" class="reader-theme-chip" data-reader-theme="lavender-light" role="radio" aria-checked="false"
-            style="background-color: #FCFBFE; color: #201C30;">Día</button>
-          <button type="button" class="reader-theme-chip" data-reader-theme="paper" role="radio" aria-checked="false" style="background-color: #F4F1EA; color: #292824;">
-            Papel</button>
-          <button type="button" class="reader-theme-chip" data-reader-theme="neutral" role="radio" aria-checked="false" style="background-color: #252525; color: #F2F2F2;">
-            Neutro</button>
-          <button type="button" class="reader-theme-chip" data-reader-theme="enchanted-forest" role="radio" aria-checked="false"
-            style="background-color: #F4F7F2; color: #3E4A3E;">Bosque</button>
-          <button type="button" class="reader-theme-chip" data-reader-theme="clear-sky" role="radio" aria-checked="false"
-            style="background-color: #EBF4FA; color: #132D48;">Cielo</button>
-          <button type="button" class="reader-theme-chip" data-reader-theme="wine-poetry" role="radio" aria-checked="false" style="background-color: #FAF5F6; color: #4A3E44;">
-            Niebla</button>
+          <button type="button" class="reader-theme-chip active" data-reader-theme="inherit" title="Sincronizar con tema de la app" role="radio" aria-checked="true">
+            <span class="reader-theme-swatch swatch-auto"></span>
+            <span class="reader-theme-name">Auto</span>
+          </button>
+          <button type="button" class="reader-theme-chip" data-reader-theme="paper" title="Tema Sepia" role="radio" aria-checked="false">
+            <span class="reader-theme-swatch" style="background-color: #F7F1E3; border: 1px solid #DFD7C7;"></span>
+            <span class="reader-theme-name">Sepia</span>
+          </button>
+          <button type="button" class="reader-theme-chip" data-reader-theme="lavender-light" title="Tema Blanco" role="radio" aria-checked="false">
+            <span class="reader-theme-swatch" style="background-color: #FFFFFF; border: 1px solid #DFDFDF;"></span>
+            <span class="reader-theme-name">Blanco</span>
+          </button>
+          <button type="button" class="reader-theme-chip" data-reader-theme="neutral" title="Tema Carbón" role="radio" aria-checked="false">
+            <span class="reader-theme-swatch" style="background-color: #222222; border: 1px solid #444444;"></span>
+            <span class="reader-theme-name">Carbón</span>
+          </button>
+          <button type="button" class="reader-theme-chip" data-reader-theme="oled" title="Tema OLED Negro Puro" role="radio" aria-checked="false">
+            <span class="reader-theme-swatch" style="background-color: #000000; border: 1px solid #333333;"></span>
+            <span class="reader-theme-name">OLED</span>
+          </button>
+          <button type="button" class="reader-theme-chip" data-reader-theme="mint" title="Tema Menta" role="radio" aria-checked="false">
+            <span class="reader-theme-swatch" style="background-color: #EAF0E8; border: 1px solid #CFDCCF;"></span>
+            <span class="reader-theme-name">Menta</span>
+          </button>
+          <button type="button" class="reader-theme-chip" data-reader-theme="mystic-night" title="Tema Noche Mística" role="radio" aria-checked="false">
+            <span class="reader-theme-swatch" style="background-color: #0B132B; border: 1px solid #1C274C;"></span>
+            <span class="reader-theme-name">Noche</span>
+          </button>
         </div>
       </div>
     </div>

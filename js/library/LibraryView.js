@@ -14,13 +14,12 @@ import { Toast } from '../ui/Toast.js';
 import { Modal } from '../ui/Modal.js';
 
 export class LibraryView {
-  constructor(containerElement, bookManager, onOpenBook = null, annotationsView = null, vocabularyView = null, quotesView = null) {
+  constructor(containerElement, bookManager, onOpenBook = null, annotationsView = null, vocabularyView = null) {
     this.container = containerElement;
     this.bookManager = bookManager;
     this.onOpenBook = onOpenBook;
     this.annotationsView = annotationsView;
     this.vocabularyView = vocabularyView;
-    this.quotesView = quotesView;
     this.filteredBooks = [];
     this.init();
   }
@@ -60,11 +59,6 @@ export class LibraryView {
     appState.subscribe('wordAdded', () => this.updateBadges());
     appState.subscribe('wordUpdated', () => this.updateBadges());
     appState.subscribe('wordRemoved', () => this.updateBadges());
-
-    // Suscripción a eventos de frases y citas para badges
-    appState.subscribe('quoteAdded', () => this.updateBadges());
-    appState.subscribe('quoteUpdated', () => this.updateBadges());
-    appState.subscribe('quoteDeleted', () => this.updateBadges());
 
     // Suscripción a eventos de colecciones
     appState.subscribe('collectionAdded', () => {
@@ -145,16 +139,6 @@ export class LibraryView {
         elVocab.textContent = wordsCount;
       } catch (e) {
         elVocab.textContent = '0';
-      }
-    }
-
-    const elQuotes = document.getElementById('badge-quotes');
-    if (elQuotes) {
-      try {
-        const quotesCount = await dbManager.count('quotes');
-        elQuotes.textContent = quotesCount;
-      } catch (e) {
-        elQuotes.textContent = '0';
       }
     }
 
@@ -265,15 +249,6 @@ export class LibraryView {
       if (libraryHeader) libraryHeader.style.display = 'none';
       if (this.vocabularyView) {
         this.vocabularyView.loadAndRender();
-      }
-      return;
-    }
-
-    // Si el filtro activo es "Frases y citas", ocultar el encabezado de biblioteca y delegar a QuotesView
-    if (filter === 'quotes') {
-      if (libraryHeader) libraryHeader.style.display = 'none';
-      if (this.quotesView) {
-        this.quotesView.loadAndRender();
       }
       return;
     }
@@ -494,10 +469,9 @@ export class LibraryView {
           ` : `
             <div class="book-cover-placeholder" style="background: ${book.coverGradient || 'var(--banner-gradient)'};">
               <div class="placeholder-spine"></div>
-              <svg class="placeholder-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>
+              <img src="assets/icons/logo-transparent.png" alt="" class="placeholder-icon-emblem">
               <div class="placeholder-title">${this.escapeHtml(book.title)}</div>
+              ${book.author ? `<div class="placeholder-author">${this.escapeHtml(book.author)}</div>` : ''}
             </div>
           `}
 
@@ -548,10 +522,8 @@ export class LibraryView {
           ${book.coverDataUrl ? `
             <img src="${book.coverDataUrl}" alt="${this.escapeHtml(book.title)}" class="list-cover-thumb" style="object-fit: cover;">
           ` : `
-            <div class="list-cover-thumb" style="background: ${book.coverGradient || 'var(--banner-gradient)'};">
-              <svg style="width: 20px; height: 20px; opacity: 0.85;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>
+            <div class="list-cover-thumb" style="background: ${book.coverGradient || 'var(--banner-gradient)'}; display: flex; align-items: center; justify-content: center;">
+              <img src="assets/icons/logo-transparent.png" alt="" style="width: 24px; height: auto; opacity: 0.92; filter: drop-shadow(0 1px 4px rgba(0,0,0,0.5));">
             </div>
           `}
           <div class="list-info">
@@ -700,6 +672,10 @@ export class LibraryView {
         <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
         <span>Colecciones...</span>
       </button>
+      <button class="menu-action-btn" data-opt="download" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; border-radius: 6px; font-size: var(--text-xs); color: var(--color-text); cursor: pointer;">
+        <svg style="width: 14px; height: 14px; color: var(--color-primary-light);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        <span>Descargar EPUB</span>
+      </button>
       <button class="menu-action-btn" data-opt="delete" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; border-radius: 6px; font-size: var(--text-xs); color: #EF4444; cursor: pointer;">
         <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
         <span>Eliminar libro</span>
@@ -732,10 +708,45 @@ export class LibraryView {
       CollectionModal.openAssignModal(book, () => this.updateBadges());
     });
 
+    const downloadBtn = menu.querySelector('[data-opt="download"]');
+    if (downloadBtn) {
+      downloadBtn.addEventListener('click', () => {
+        menu.remove();
+        this.downloadBookEpub(book);
+      });
+    }
+
     menu.querySelector('[data-opt="delete"]').addEventListener('click', () => {
       menu.remove();
       this.confirmDeleteBook(book);
     });
+  }
+
+  /**
+   * Descarga el archivo EPUB original guardado en IndexedDB.
+   */
+  async downloadBookEpub(book) {
+    if (!book || !book.fileBlob) {
+      Toast.error('Archivo binario no disponible.');
+      return;
+    }
+    try {
+      const url = URL.createObjectURL(book.fileBlob);
+      const a = document.createElement('a');
+      const safeTitle = (book.title || 'libro').replace(/[\\/:*?"<>|]/g, '_');
+      a.href = url;
+      a.download = `${safeTitle}.epub`;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        a.remove();
+        URL.revokeObjectURL(url);
+      }, 500);
+      Toast.success(`Descargando «${book.title}»...`);
+    } catch (err) {
+      console.warn('Error descargando EPUB:', err);
+      Toast.error('No se pudo descargar el archivo.');
+    }
   }
 
   /**

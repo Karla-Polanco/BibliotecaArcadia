@@ -7,9 +7,6 @@
 
 import { ThemeManager } from './ui/ThemeManager.js';
 import { ScaleManager } from './ui/ScaleManager.js';
-import { QuotesService } from './quotes/QuotesService.js';
-import { QuotesView } from './quotes/QuotesView.js';
-import { QuoteModal } from './ui/QuoteModal.js';
 import { LibraryView } from './library/LibraryView.js';
 import { BookManager } from './library/BookManager.js';
 import { StorageWidget } from './library/StorageWidget.js';
@@ -20,19 +17,18 @@ import { VocabularyManager } from './vocabulary/VocabularyManager.js';
 import { PWAManager } from './pwa/PWAManager.js';
 import { Toast } from './ui/Toast.js';
 import { CustomSelect } from './ui/CustomSelect.js';
+import { BackupManager } from './ui/BackupManager.js';
 import { appState } from './state.js';
 
 class App {
   constructor() {
     this.themeManager = new ThemeManager();
-    this.quotesService = new QuotesService();
     this.storageWidget = null;
     this.bookManager = null;
     this.libraryView = null;
     this.readerView = null;
     this.annotationsView = null;
     this.vocabularyView = null;
-    this.quotesView = null;
   }
 
   async init() {
@@ -44,11 +40,7 @@ class App {
     this.themeManager.init();
     ScaleManager.init();
 
-    // 3. Cargar citas literarias del usuario y configurar Banner
-    await this.quotesService.reload();
-    this.initQuoteBanner();
-
-    // 4. Inicializar Widget de Almacenamiento Local
+    // 3. Inicializar Widget de Almacenamiento Local
     const storageFillEl = document.getElementById('storage-progress-fill');
     const storageTextEl = document.getElementById('storage-info-text');
     this.storageWidget = new StorageWidget(storageFillEl, storageTextEl);
@@ -58,7 +50,7 @@ class App {
       console.warn('[App] StorageWidget init falló:', e);
     }
 
-    // 5. Inicializar Gestor de Libros y Persistencia IndexedDB
+    // 4. Inicializar Gestor de Libros y Persistencia IndexedDB
     this.bookManager = new BookManager(this.storageWidget);
     await this.bookManager.init();
 
@@ -69,10 +61,10 @@ class App {
       console.warn('[App] Vocabulary presets falló:', e);
     }
 
-    // 6. Inicializar Controlador del Lector EPUB
+    // 5. Inicializar Controlador del Lector EPUB
     this.readerView = new ReaderView();
 
-    // 7. Inicializar Vistas de Anotaciones, Vocabulario, Frases y Biblioteca
+    // 6. Inicializar Vistas de Anotaciones, Vocabulario y Biblioteca
     const booksContainer = document.getElementById('books-container');
     if (booksContainer) {
       this.annotationsView = new AnnotationsView(
@@ -82,28 +74,25 @@ class App {
 
       this.vocabularyView = new VocabularyView(booksContainer);
 
-      this.quotesView = new QuotesView(booksContainer, this.quotesService);
-
       this.libraryView = new LibraryView(
         booksContainer,
         this.bookManager,
         (bookId) => this.readerView.open(bookId),
         this.annotationsView,
-        this.vocabularyView,
-        this.quotesView
+        this.vocabularyView
       );
     }
 
-    // 9. Vincular Controles de Barra de Herramientas y Subida
+    // 7. Vincular Controles de Barra de Herramientas y Subida
     this.initToolbarControls();
 
-    // 10. Vincular Navegación del Sidebar y Móvil
+    // 8. Vincular Navegación del Sidebar y Móvil
     this.initNavigation();
 
-    // 11. Vincular Modal de Selector de Temas y Ajustes
+    // 9. Vincular Modal de Selector de Temas y Ajustes
     this.initThemeModal();
 
-    // 12. Restaurar última vista, libro o sección activa al recargar
+    // 10. Restaurar última vista, libro o sección activa al recargar
     await this.restoreLastState();
 
     console.log('✦ Biblioteca Arcadia inicializada con éxito');
@@ -112,70 +101,6 @@ class App {
       try {
         Toast.error('Error al iniciar la biblioteca. Recarga la página.');
       } catch (_) {}
-    }
-  }
-
-  /**
-   * Inicializa el banner con la cita y la rotación interactiva.
-   */
-  initQuoteBanner() {
-    const quoteTextEl = document.getElementById('quote-text');
-    const quoteAuthorEl = document.getElementById('quote-author');
-    const quoteSourceEl = document.getElementById('quote-source');
-    const refreshBtn = document.getElementById('btn-refresh-quote');
-    const addQuoteBtn = document.getElementById('btn-banner-add-quote');
-    const manageQuotesBtn = document.getElementById('btn-banner-manage-quotes');
-
-    if (!quoteTextEl || !quoteAuthorEl) return;
-
-    // Mostrar cita inicial persistida
-    this.quotesService.updateBannerDOM();
-
-    // Rotar frase con animación fluida
-    if (refreshBtn) {
-      refreshBtn.addEventListener('click', () => {
-        const textEl = document.getElementById('quote-text') || quoteTextEl;
-        const authorEl = document.getElementById('quote-author') || quoteAuthorEl;
-        const sourceEl = document.getElementById('quote-source') || quoteSourceEl;
-        refreshBtn.classList.add('spinning');
-        textEl.style.opacity = '0';
-        authorEl.style.opacity = '0';
-        if (sourceEl) sourceEl.style.opacity = '0';
-
-        setTimeout(() => {
-          const nextQuote = this.quotesService.getNextQuote();
-          textEl.textContent = nextQuote.text;
-          authorEl.textContent = `— ${nextQuote.author || 'Anónimo'}`;
-          if (sourceEl) {
-            sourceEl.textContent = nextQuote.source ? ` · ${nextQuote.source}` : '';
-            sourceEl.style.opacity = '1';
-          }
-          textEl.style.opacity = '1';
-          authorEl.style.opacity = '1';
-          refreshBtn.classList.remove('spinning');
-        }, 200);
-      });
-    }
-
-    // Botón añadir frase desde el banner
-    if (addQuoteBtn) {
-      addQuoteBtn.addEventListener('click', () => {
-        QuoteModal.open(null, async () => {
-          await this.quotesService.reload();
-          this.quotesService.updateBannerDOM();
-        });
-      });
-    }
-
-    // Botón gestionar todas las frases
-    if (manageQuotesBtn) {
-      manageQuotesBtn.addEventListener('click', () => {
-        appState.set('activeFilter', 'quotes');
-        localStorage.setItem('arcadia_active_filter', 'quotes');
-        document.querySelectorAll('[data-nav-filter]').forEach(el => {
-          el.classList.toggle('active', el.dataset.navFilter === 'quotes');
-        });
-      });
     }
   }
 
@@ -315,18 +240,10 @@ class App {
     // Delegación global: cualquier [data-nav-filter] presente o futuro
     document.addEventListener('click', (e) => {
       const navEl = e.target.closest('[data-nav-filter]');
-      // Ignorar los que están dentro del selector de colecciones del sidebar (tienen manejo propio visual)
-      // No: los manejamos igual aquí para unificar. Solo evitamos doble manejo marcando.
       if (navEl && !navEl.dataset.navDelegated) {
-        // Si es un <a href="#...">, prevenir salto
         if (navEl.tagName === 'A') e.preventDefault();
         const filter = navEl.dataset.navFilter;
         if (filter) {
-          // Cerrar modal de estados si el clic viene de ahí
-          const statesModal = document.getElementById('states-modal');
-          if (navEl.closest('#states-modal') && statesModal) {
-            statesModal.classList.remove('active');
-          }
           applyFilter(filter, navEl);
         }
       }
@@ -350,49 +267,6 @@ class App {
       });
     });
 
-    // Sincronización del modal de estados
-    const updateStatesModalActive = () => {
-      const currentFilter = appState.get('activeFilter') || 'all';
-      const statesModal = document.getElementById('states-modal');
-      if (statesModal) {
-        statesModal.querySelectorAll('[data-nav-filter]').forEach(card => {
-          card.classList.toggle('active', card.dataset.navFilter === currentFilter);
-        });
-      }
-    };
-
-    // Botón de estados
-    const btnStates = document.getElementById('btn-open-states-modal');
-    if (btnStates) {
-      btnStates.addEventListener('click', (e) => {
-        e.preventDefault();
-        const modal = document.getElementById('states-modal');
-        if (modal) {
-          updateStatesModalActive();
-          modal.classList.add('active');
-        }
-        toggleDrawer(false); // Cierra el menú lateral en móviles si está abierto
-      });
-    }
-
-    // Cerrar modal de estados
-    const closeStatesBtn = document.getElementById('modal-states-close-btn');
-    const statesModal = document.getElementById('states-modal');
-    if (closeStatesBtn && statesModal) {
-      closeStatesBtn.addEventListener('click', () => statesModal.classList.remove('active'));
-      statesModal.addEventListener('click', (e) => {
-        if (e.target === statesModal) statesModal.classList.remove('active');
-      });
-      
-      // Cerrar al seleccionar una opción y actualizar activo
-      statesModal.querySelectorAll('[data-nav-filter]').forEach(item => {
-        item.addEventListener('click', () => {
-          updateStatesModalActive();
-          statesModal.classList.remove('active');
-        });
-      });
-    }
-
     // Ajustes en el Sidebar abre el modal de temas
     const settingsNavItem = document.getElementById('nav-settings');
     if (settingsNavItem) {
@@ -409,9 +283,8 @@ class App {
    */
   initThemeModal() {
     const modal = document.getElementById('theme-modal');
-    const closeBtn = document.getElementById('modal-close-btn');
-
     if (!modal) return;
+    const closeBtn = document.getElementById('modal-close-btn');
 
     if (closeBtn) {
       closeBtn.addEventListener('click', () => this.closeThemeModal());
@@ -420,6 +293,16 @@ class App {
     modal.addEventListener('click', (e) => {
       if (e.target === modal) this.closeThemeModal();
     });
+
+    // Botones de copia de seguridad (Exportar e Importar)
+    const btnExport = document.getElementById('btn-export-backup');
+    if (btnExport) {
+      btnExport.addEventListener('click', () => BackupManager.exportBackup());
+    }
+    const btnImport = document.getElementById('btn-import-backup');
+    if (btnImport) {
+      btnImport.addEventListener('click', () => BackupManager.triggerFileInput());
+    }
 
     // Tarjetas de opción de tema
     document.querySelectorAll('.theme-option-card').forEach(card => {
@@ -471,6 +354,12 @@ class App {
         savedView = localStorage.getItem('arcadia_active_view');
         savedBookId = localStorage.getItem('arcadia_active_book_id');
         targetFilter = localStorage.getItem('arcadia_active_filter') || 'all';
+        if (targetFilter === 'quotes') {
+          targetFilter = 'all';
+          localStorage.setItem('arcadia_active_filter', 'all');
+        }
+        localStorage.removeItem('arcadia_saved_quote_idx');
+        localStorage.removeItem('arcadia_active_banner_quote_id');
       } catch (_) {}
 
       // 1. Si estaba leyendo un libro, reabrir el lector en ese libro

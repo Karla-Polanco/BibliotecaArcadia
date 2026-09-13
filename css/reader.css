@@ -86,8 +86,10 @@
 }
 
 .reader-book-title {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
+  font-family: 'Cinzel', var(--font-serif, Georgia, serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
   color: var(--color-text);
   white-space: nowrap;
   overflow: hidden;
@@ -159,6 +161,11 @@
   scroll-padding-bottom: 68px;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  box-sizing: border-box;
+  background-color: var(--reader-bg, var(--color-background));
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .reader-viewport::-webkit-scrollbar {
@@ -181,12 +188,6 @@ html.reader-open {
 .reader-view::-webkit-scrollbar,
 #reader-content::-webkit-scrollbar {
   display: none;
-}
-  box-sizing: border-box;
-  background-color: var(--reader-bg, var(--color-background));
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
 }
 
 #reader-content {
@@ -682,46 +683,72 @@ html.reader-open {
   color: var(--color-text);
 }
 
-/* Swatches de Temas en el Lector */
+/* Swatches y Selectores de Temas en el Lector (Kindle Elegante) */
 .reader-theme-swatches {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 8px;
 }
 
 .reader-theme-chip {
   width: 100%;
-  min-height: 44px;
+  min-height: 42px;
   box-sizing: border-box;
-  padding: 0 4px;
+  padding: 8px 12px;
   border-radius: var(--radius-md, 10px);
-  border: 2px solid var(--color-border);
-  display: flex;
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  color: var(--color-text-secondary);
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  font-size: 0.78rem;
-  font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  justify-content: flex-start;
+  gap: 10px;
   cursor: pointer;
   transition: all var(--transition-fast);
   font-family: inherit;
+  user-select: none;
 }
 
 .reader-theme-chip:hover {
-  transform: translateY(-2px);
-  border-color: var(--color-text-muted);
+  background-color: var(--color-surface-hover);
+  color: var(--color-text);
+  border-color: var(--color-primary-light);
+  transform: translateY(-1px);
 }
 
 .reader-theme-chip.active {
-  border-color: var(--color-primary-light);
-  box-shadow: 0 0 0 2px var(--color-primary-glow);
+  border-color: var(--color-gold, #D4AF37) !important;
+  background-color: var(--color-surface-hover) !important;
+  color: var(--color-text) !important;
+  box-shadow: 0 0 0 2px var(--color-gold, #D4AF37), 0 3px 12px rgba(212, 175, 55, 0.25) !important;
+  transform: translateY(-1px);
 }
 
 .reader-theme-chip:focus-visible {
-  outline: 3px solid var(--color-primary-light);
+  outline: 2px solid var(--color-gold, #D4AF37);
   outline-offset: 2px;
+}
+
+.reader-theme-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+.reader-theme-swatch.swatch-auto {
+  background: linear-gradient(135deg, #FFFFFF 50%, #151522 50%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.reader-theme-name {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: inherit;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 .reader-settings-backdrop {
@@ -791,26 +818,27 @@ html.reader-open {
    -------------------------------------------------------------------------- */
 .reader-search-panel {
   position: fixed;
-  top: calc(var(--header-height) + 8px);
+  top: 14px;
   left: 0;
   right: 0;
   margin: 0 auto;
-  width: 420px;
-  max-width: calc(100vw - 28px);
-  max-height: calc(100vh - var(--header-height) - 20px);
-  max-height: calc(100dvh - var(--header-height) - 20px);
-  background-color: var(--color-surface-elevated, #1E1C2E);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg, 16px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
-  z-index: 220;
+  width: 460px;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100vh - 40px);
+  max-height: calc(100dvh - 40px);
+  background-color: var(--color-surface, #1E1C2E);
+  background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.14));
+  border-radius: var(--radius-xl, 20px);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(212, 175, 55, 0.12);
+  z-index: 250;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transform: translateY(-10px) scale(0.97);
+  transform: translateY(-20px) scale(0.96);
   opacity: 0;
   pointer-events: none;
-  transition: all var(--transition-normal);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reader-search-panel.open {
@@ -999,13 +1027,29 @@ html.reader-open {
   }
 
   .reader-search-panel {
-    top: auto;
-    bottom: calc(var(--header-height) + 12px);
-    right: 12px;
-    left: 12px;
+    top: max(8px, env(safe-area-inset-top));
+    bottom: auto;
+    right: 10px;
+    left: 10px;
+    margin: 0 auto;
     width: auto;
-    max-width: calc(100vw - 24px);
-    max-height: 70vh;
+    max-width: calc(100vw - 20px);
+    max-height: calc(100dvh - 20px);
+  }
+
+  .reader-theme-swatches {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .reader-theme-chip {
+    min-height: 42px;
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .reader-theme-name {
+    font-size: 0.8rem;
   }
 
   .search-input-wrapper {
@@ -1026,11 +1070,6 @@ html.reader-open {
   }
 }
 
-/* Ocultar ajuste de columnas en modo App (Standalone) sin importar la resolución */
-@media (display-mode: standalone) {
-  #columns-settings-group {
-    display: none !important;
-  }
-}
+
 
 
