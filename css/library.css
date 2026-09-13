@@ -734,8 +734,15 @@
   max-width: 980px !important;
   width: 94vw !important;
   max-height: 90vh;
+  max-height: 90dvh;
   overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border, rgba(255, 255, 255, 0.18)) transparent;
   padding: 24px 28px;
+  padding-right: 20px;
   border-radius: var(--radius-xl);
 }
 

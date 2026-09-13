@@ -371,11 +371,48 @@
     padding: 0 !important;
   }
 
-  /* Modal de temas en móvil */
-  .modal-card {
-    padding: var(--space-md);
-    max-height: 90vh;
+  /* Modales en móvil: hoja inferior cómoda, sin barra invasiva */
+  .theme-modal-overlay,
+  .modal-overlay,
+  .arcadia-modal-overlay {
+    padding: 12px !important;
     overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .theme-modal-dialog,
+  .modal-card,
+  .arcadia-modal-card {
+    padding: var(--space-md);
+    padding-right: 12px;
+    padding-left: 16px;
+    max-height: 92vh;
+    max-height: 92dvh;
+    margin-top: auto !important;
+    margin-bottom: auto !important;
+    border-radius: 18px !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .theme-modal-dialog::-webkit-scrollbar,
+  .modal-card::-webkit-scrollbar,
+  .arcadia-modal-card::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .theme-modal-dialog::-webkit-scrollbar-track,
+  .modal-card::-webkit-scrollbar-track,
+  .arcadia-modal-card::-webkit-scrollbar-track {
+    margin: 14px 0;
+  }
+
+  #theme-modal .modal-card {
+    width: 100% !important;
+    max-height: 92vh;
+    max-height: 92dvh;
+    padding: 18px 14px 18px 18px;
   }
 
   .theme-options-grid {
