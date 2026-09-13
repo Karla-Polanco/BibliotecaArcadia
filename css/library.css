@@ -731,10 +731,10 @@
    MODAL SELECTOR DE TEMAS RENOVADO
    -------------------------------------------------------------------------- */
 #theme-modal .modal-card {
-  max-width: 980px !important;
-  width: 94vw !important;
+  width: 100% !important;
+  max-width: min(980px, 100%) !important;
   max-height: 90vh;
-  max-height: 90dvh;
+  max-height: min(90vh, calc(100dvh - 40px));
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;

@@ -241,6 +241,12 @@ ul, ol {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  /* El overlay nunca genera scroll horizontal; si el card excede la altura
+     (teclado móvil, landscape), el overlay absorbe el scroll y no el body */
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch;
 }
 
 .theme-modal-overlay.active,
@@ -263,9 +269,13 @@ ul, ol {
   width: 100% !important;
   max-width: 500px;
   max-height: 90vh !important;
-  max-height: 90dvh !important;
+  /* Descuenta el padding del overlay (20px por lado): el card + su scrollbar
+     nunca tocan el borde del viewport ni se salen del container */
+  max-height: min(90vh, calc(100dvh - 40px)) !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
+  box-sizing: border-box !important;
+  isolation: isolate !important;
   margin: auto !important;
   transform: scale(0.95);
   transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease;
@@ -313,26 +323,34 @@ ul, ol {
   background-clip: padding-box;
 }
 
+.theme-modal-dialog::-webkit-scrollbar-button,
+.modal-card::-webkit-scrollbar-button,
+.arcadia-modal-card::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
 .theme-modal-dialog::-webkit-scrollbar-corner,
 .modal-card::-webkit-scrollbar-corner,
 .arcadia-modal-card::-webkit-scrollbar-corner {
   background: transparent;
 }
 
-/* Cabecera fija al hacer scroll: el título y la X siempre visibles */
+/* Cabecera estática: el título hace scroll con el contenido, no se queda fijo */
 .modal-card > .modal-header,
 .theme-modal-dialog > .theme-modal-header,
 #theme-modal .modal-card > .modal-header {
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  background-color: var(--color-surface, #1E1C2E);
-  background-color: color-mix(in srgb, var(--color-surface, #1E1C2E) 88%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding-top: 4px;
-  padding-bottom: 12px;
-  margin-bottom: 8px;
+  position: static !important;
+  top: auto !important;
+  z-index: auto !important;
+  background: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 20px !important;
 }
 
 /* Listas internas con scroll propio (asignar colección, resultados, etc.) */
@@ -391,8 +409,10 @@ ul, ol {
 #theme-modal .modal-card,
 .modal-card.modal-wide,
 .theme-modal-dialog.wide {
-  max-width: 960px !important;
-  width: 92vw !important;
+  /* 100% del content-box del overlay (no vw): en móviles estrechos el card
+     no desborda y su scrollbar no queda fuera del viewport */
+  width: 100% !important;
+  max-width: min(960px, 100%) !important;
 }
 
 .theme-modal-overlay.active .theme-modal-dialog,
