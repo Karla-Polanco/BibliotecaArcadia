@@ -1,636 +1,350 @@
-/* SISTEMA DE TEMAS DINÁMICOS Y PATRONES ATMOSFÉRICOS - BIBLIOTECA ARCADIA */
+/* ==========================================================================
+   SISTEMA DE TEMAS DINÁMICOS - BIBLIOTECA ARCADIA
+   ========================================================================== */
 
-/* 1. TEMA PREDETERMINADO: NOCTURNO MÍSTICO (mystic-night) */
-
+/* --------------------------------------------------------------------------
+   1. TEMA PREDETERMINADO: NOCTURNO MÍSTICO (mystic-night)
+   Fondo medianoche profundo, superficies cristalinas y acentos azul zafiro y oro.
+   -------------------------------------------------------------------------- */
 :root,
 [data-theme="mystic-night"] {
-    --color-background: #02040B;
-    --color-surface: #050914;
-    --color-surface-secondary: #080D1B;
-    --color-surface-elevated: #0D1426;
-    --color-surface-hover: rgba(90, 130, 255, 0.07);
-    --color-surface-active: rgba(100, 140, 255, 0.12);
+  --color-background: #060B14;
+  --color-surface: #0B1324;
+  --color-surface-secondary: #101B33;
+  --color-surface-elevated: #162444;
+  --color-surface-hover: rgba(99, 137, 230, 0.08);
+  --color-surface-active: rgba(99, 137, 230, 0.14);
 
-    /* Acentos de Color */
-    --color-primary-dark: #101A45;
-    --color-primary: #3B62D6;
-    --color-primary-light: #849DFF;
-    --color-primary-glow: rgba(75, 105, 255, 0.45);
+  /* Acentos Cromáticos */
+  --color-primary-dark: #12244C;
+  --color-primary: #3B6FD6;
+  --color-primary-light: #6E9BFF;
+  --color-primary-glow: rgba(59, 111, 214, 0.35);
 
-    --color-secondary: #4AB2EB;
-    --color-secondary-glow: rgba(56, 169, 232, 0.38);
+  --color-secondary: #48ADE8;
+  --color-secondary-glow: rgba(72, 173, 232, 0.25);
 
-    /* Tipografía y Contraste */
-    --color-text: #F3F6FF;
-    --color-text-secondary: #A8B2CC;
-    --color-text-muted: #68738D;
-    --color-text-inverse: #02040B;
+  /* Tipografía y Contraste Óptimo */
+  --color-text: #F0F4FC;
+  --color-text-secondary: #A6B8D6;
+  --color-text-muted: #697D9F;
+  --color-text-inverse: #060B14;
 
-    /* Bordes y Divisores */
-    --color-border: #18213A;
-    --color-border-subtle: #0C1324;
-    --color-border-focus: #718CFF;
+  /* Bordes y Divisores */
+  --color-border: #1B2D4F;
+  --color-border-subtle: #121F38;
+  --color-border-focus: #6E9BFF;
 
-    /* Badges y Estados */
-    --color-badge-bg: rgba(91, 116, 255, 0.16);
-    --color-badge-text: #BFCBFF;
-    --color-accent-gold: #EEBE73;
+  /* Badges y Estados */
+  --color-badge-bg: rgba(79, 126, 235, 0.15);
+  --color-badge-text: #B9CEFF;
+  --color-accent-gold: #E5BE68;
 
-    /* Banner Literario */
-    --banner-gradient: linear-gradient(135deg, #050817 0%, #0A1230 48%, #111743 100%);
-    --banner-border: rgba(113, 140, 255, 0.28);
+  /* Banner Literario */
+  --banner-gradient: linear-gradient(135deg, #091224 0%, #102144 52%, #193166 100%);
+  --banner-border: rgba(110, 155, 255, 0.28);
 
-    /* Lector */
-    --reader-bg: #03050D;
-    --reader-text: #E8ECF7;
+  /* Lector */
+  --reader-bg: #070D1A;
+  --reader-text: #E8EEF8;
 
-    /* Marca Tipográfica Emblemática */
-    --brand-eyebrow-color: #E5B869;
-    --brand-rule-color: rgba(212, 175, 55, 0.4);
-    --brand-star-color: #D4AF37;
-    --brand-icon-color: #D4AF37;
-    --brand-icon-ribbon: #F5E8C7;
+  /* Marca Tipográfica Emblemática */
+  --brand-eyebrow-color: #E5BE68;
+  --brand-rule-color: rgba(229, 190, 104, 0.4);
+  --brand-star-color: #E5BE68;
+  --brand-icon-color: #E5BE68;
+  --brand-icon-ribbon: #F6E6BF;
 
-    --brand-title-gradient: linear-gradient(135deg, #FFFFFF 0%, #F5E8C7 45%, #D4AF37 80%, #C29543 100%);
-    --brand-title-shadow: rgba(212, 175, 55, 0.45);
+  --brand-title-gradient: linear-gradient(135deg, #FFFFFF 0%, #F5E8C7 45%, #E5BE68 80%, #C29543 100%);
+  --brand-title-shadow: rgba(229, 190, 104, 0.35);
+  --brand-wordmark-color: #D3E0F7;
 
-    /* Patrón Atmosférico: Cielo Estrellado y Nebulosa */
-    --banner-bg-pattern: radial-gradient(circle at 20% 30%, rgba(113, 140, 255, 0.1) 0%, transparent 40%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg fill='%23718CFF' opacity='0.5'%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.3) translate(60,10)'/%3E%3Ccircle cx='120' cy='40' r='1.5'/%3E%3Ccircle cx='200' cy='80' r='1'/%3E%3Ccircle cx='60' cy='160' r='1.2'/%3E%3Ccircle cx='250' cy='50' r='1.8'/%3E%3Ccircle cx='170' cy='200' r='1'/%3E%3Ccircle cx='80' cy='250' r='1.3'/%3E%3Ccircle cx='280' cy='160' r='1.1'/%3E%3Ccircle cx='30' cy='280' r='1.4'/%3E%3Cpolygon points='15,15 17,22 25,22 19,27 21,34 15,30 9,34 11,27 5,22 13,22' transform='scale(0.15) translate(100,50)'/%3E%3Ccircle cx='230' cy='250' r='1.5'/%3E%3Ccircle cx='100' cy='130' r='1'/%3E%3Ccircle cx='50' cy='50' r='1.2'/%3E%3Ccircle cx='260' cy='120' r='1.1'/%3E%3Ccircle cx='140' cy='270' r='1.3'/%3E%3C/g%3E%3Cg fill='%23A78BFA' opacity='0.4'%3E%3Ccircle cx='90' cy='90' r='1.5'/%3E%3Ccircle cx='220' cy='140' r='1.2'/%3E%3Ccircle cx='140' cy='260' r='1'/%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.2) translate(900,600)'/%3E%3Ccircle cx='30' cy='140' r='1.3'/%3E%3Ccircle cx='180' cy='30' r='1'/%3E%3Ccircle cx='270' cy='220' r='1.5'/%3E%3Ccircle cx='60' cy='90' r='1'/%3E%3Ccircle cx='240' cy='280' r='1.2'/%3E%3Cpolygon points='10,20 12,26 18,26 14,30 16,36 10,32 4,36 6,30 0,26 8,26' transform='scale(0.15) translate(200,180)'/%3E%3C/g%3E%3Cg fill='%23F59E0B' opacity='0.35'%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.25) translate(450,200)'/%3E%3Ccircle cx='270' cy='220' r='1.5'/%3E%3Ccircle cx='210' cy='90' r='1'/%3E%3Ccircle cx='130' cy='180' r='1.3'/%3E%3Cpolygon points='15,15 17,22 25,22 19,27 21,34 15,30 9,34 11,27 5,22 13,22' transform='scale(0.15) translate(80,250)'/%3E%3Ccircle cx='35' cy='200' r='1.1'/%3E%3Ccircle cx='190' cy='260' r='1.4'/%3E%3Ccircle cx='290' cy='70' r='1'/%3E%3Ccircle cx='75' cy='150' r='1.2'/%3E%3Ccircle cx='160' cy='40' r='1'/%3E%3C/g%3E%3C/svg%3E");
-    --banner-bg-size: 100% 100%, 300px 300px;
-    --theme-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='%23718CFF' opacity='0.3'%3E%3Ccircle cx='20' cy='15' r='1'/%3E%3Ccircle cx='55' cy='45' r='0.8'/%3E%3Ccircle cx='120' cy='30' r='1.2'/%3E%3Ccircle cx='160' cy='60' r='0.9'/%3E%3Ccircle cx='180' cy='130' r='1.1'/%3E%3Ccircle cx='10' cy='110' r='0.8'/%3E%3Ccircle cx='90' cy='160' r='1'/%3E%3Ccircle cx='145' cy='170' r='0.9'/%3E%3Ccircle cx='35' cy='180' r='1.2'/%3E%3Ccircle cx='175' cy='20' r='0.7'/%3E%3Ccircle cx='80' cy='100' r='1'/%3E%3Ccircle cx='25' cy='60' r='0.8'/%3E%3Ccircle cx='130' cy='140' r='1.1'/%3E%3Ccircle cx='65' cy='130' r='0.9'/%3E%3Ccircle cx='190' cy='100' r='1'/%3E%3Ccircle cx='50' cy='175' r='0.8'/%3E%3Ccircle cx='110' cy='75' r='1.2'/%3E%3Ccircle cx='155' cy='115' r='0.7'/%3E%3Ccircle cx='40' cy='35' r='0.9'/%3E%3Ccircle cx='100' cy='55' r='1'/%3E%3Ccircle cx='185' cy='165' r='0.8'/%3E%3Ccircle cx='60' cy='85' r='1.1'/%3E%3Ccircle cx='135' cy='10' r='0.7'/%3E%3Ccircle cx='15' cy='150' r='0.9'/%3E%3Ccircle cx='170' cy='150' r='1'/%3E%3C/g%3E%3Cg fill='%23A78BFA' opacity='0.25'%3E%3Ccircle cx='30' cy='80' r='0.8'/%3E%3Ccircle cx='105' cy='25' r='1'/%3E%3Ccircle cx='150' cy='90' r='0.7'/%3E%3Ccircle cx='70' cy='175' r='1.1'/%3E%3Ccircle cx='190' cy='60' r='0.8'/%3E%3Ccircle cx='45' cy='140' r='0.9'/%3E%3Ccircle cx='130' cy='65' r='1'/%3E%3Ccircle cx='85' cy='35' r='0.7'/%3E%3C/g%3E%3Cg fill='%23F59E0B' opacity='0.2'%3E%3Cpolygon points='5,5 7,10 12,10 9,14 10,19 5,16 0,19 2,14 0,10 3,10' transform='scale(0.4) translate(25,25)'/%3E%3Cpolygon points='5,5 7,10 12,10 9,14 10,19 5,16 0,19 2,14 0,10 3,10' transform='scale(0.4) translate(120,140)'/%3E%3Cpolygon points='5,5 7,10 12,10 9,14 10,19 5,16 0,19 2,14 0,10 3,10' transform='scale(0.4) translate(160,30)'/%3E%3Cpolygon points='5,5 7,10 12,10 9,14 10,19 5,16 0,19 2,14 0,10 3,10' transform='scale(0.35) translate(50,160)'/%3E%3Cpolygon points='5,5 7,10 12,10 9,14 10,19 5,16 0,19 2,14 0,10 3,10' transform='scale(0.3) translate(180,170)'/%3E%3Cpolygon points='5,5 7,10 12,10 9,14 10,19 5,16 0,19 2,14 0,10 3,10' transform='scale(0.4) translate(10,10)'/%3E%3C/g%3E%3C/g%3E");
-    --theme-bg-size: 200px 200px, auto;
+  /* Micro-texturas Atmosféricas Suaves (Cero ruido invasivo) */
+  --theme-bg-pattern: radial-gradient(circle at 50% 0%, rgba(59, 111, 214, 0.07) 0%, transparent 60%);
+  --banner-bg-pattern: radial-gradient(circle at 80% 20%, rgba(110, 155, 255, 0.12) 0%, transparent 50%);
+  --banner-bg-size: 100% 100%;
 }
 
-/* 2. TEMA: CIELO CLARO (clear-sky)
-   Fondo celeste fresco con nubes esponjosas. */
-[data-theme="clear-sky"] {
-    --color-background: #F0F6FD;
-    --color-surface: #FFFFFF;
-    --color-surface-secondary: #E7F0F8;
-    --color-surface-elevated: #FFFFFF;
-    --color-surface-hover: rgba(37, 99, 235, 0.06);
-    --color-surface-active: rgba(37, 99, 235, 0.10);
-
-    /* Acentos de Color */
-    --color-primary-dark: #123359;
-    --color-primary: #21649F;
-    --color-primary-light: #2E6BF0;
-    --color-primary-glow: rgba(37, 99, 235, 0.25);
-
-    --color-secondary: #0A8DCE;
-    --color-secondary-glow: rgba(2, 132, 199, 0.20);
-
-    /* Tipografía y Contraste */
-    --color-text: #0F2338;
-    --color-text-secondary: #52677A;
-    --color-text-muted: #8293A3;
-    --color-text-inverse: #FFFFFF;
-
-    /* Bordes y Divisores */
-    --color-border: #CFE0F2;
-    --color-border-subtle: #E3EDF6;
-    --color-border-focus: #2563EB;
-
-    /* Badges y Estados */
-    --color-badge-bg: rgba(37, 99, 235, 0.10);
-    --color-badge-text: #1D5C96;
-    --color-accent-gold: #DC9F36;
-
-    /* Banner Literario */
-    --banner-gradient: linear-gradient(135deg, #164A78 0%, #2373AD 52%, #4B91CF 100%);
-    --banner-border: rgba(37, 99, 235, 0.22);
-
-    /* Lector */
-    --reader-bg: #F4F8FD;
-    --reader-text: #172A3D;
-
-    /* Marca Tipográfica Emblemática */
-    --brand-eyebrow-color: #8A6414;
-    --brand-rule-color: rgba(181, 133, 36, 0.35);
-    --brand-star-color: #C29543;
-    --brand-icon-color: #C29543;
-    --brand-icon-ribbon: #D49E34;
-
-    --brand-title-gradient: linear-gradient(135deg, #0F2338 0%, #1D5C96 45%, #C29543 85%, #8C6B1C 100%);
-    --brand-title-shadow: rgba(181, 133, 36, 0.25);
-
-    /* Patrón Atmosférico Exclusivo para el Banner: Nubes claras */
-    --banner-bg-pattern: radial-gradient(circle at 75% 25%, rgba(147, 197, 253, 0.2) 0%, transparent 40%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg fill='%2360A5FA' opacity='0.45'%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.28) translate(80,20)'/%3E%3Ccircle cx='180' cy='60' r='1.5'/%3E%3Ccircle cx='240' cy='140' r='1'/%3E%3Ccircle cx='80' cy='200' r='1.3'/%3E%3C/g%3E%3Cg fill='%2338BDF8' opacity='0.35'%3E%3Ccircle cx='130' cy='100' r='1.5'/%3E%3Ccircle cx='220' cy='220' r='1.8'/%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.18) translate(1100,800)'/%3E%3C/g%3E%3Cg fill='%23BFDBFE' opacity='0.3'%3E%3Ccircle cx='50' cy='50' r='1'/%3E%3Ccircle cx='270' cy='80' r='1.2'/%3E%3C/g%3E%3C/svg%3E");
-    --banner-bg-size: 100% 100%, 300px 300px;
---theme-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='%2360A5FA' opacity='0.3'%3E%3Ccircle cx='15' cy='20' r='1'/%3E%3Ccircle cx='50' cy='55' r='0.8'/%3E%3Ccircle cx='110' cy='35' r='1.2'/%3E%3Ccircle cx='155' cy='65' r='0.9'/%3E%3Ccircle cx='175' cy='120' r='1.1'/%3E%3Ccircle cx='8' cy='105' r='0.8'/%3E%3Ccircle cx='85' cy='155' r='1'/%3E%3Ccircle cx='140' cy='175' r='0.9'/%3E%3Ccircle cx='30' cy='185' r='1.2'/%3E%3Ccircle cx='170' cy='25' r='0.7'/%3E%3Ccircle cx='70' cy='95' r='1'/%3E%3Ccircle cx='20' cy='70' r='0.8'/%3E%3Ccircle cx='125' cy='135' r='1.1'/%3E%3Ccircle cx='60' cy='125' r='0.9'/%3E%3Ccircle cx='185' cy='95' r='1'/%3E%3Ccircle cx='45' cy='170' r='0.8'/%3E%3Ccircle cx='105' cy='70' r='1.2'/%3E%3Ccircle cx='150' cy='110' r='0.7'/%3E%3Ccircle cx='35' cy='40' r='0.9'/%3E%3Ccircle cx='95' cy='50' r='1'/%3E%3Ccircle cx='180' cy='160' r='0.8'/%3E%3Ccircle cx='55' cy='80' r='1.1'/%3E%3Ccircle cx='130' cy='15' r='0.7'/%3E%3Ccircle cx='12' cy='145' r='0.9'/%3E%3Ccircle cx='165' cy='145' r='1'/%3E%3C/g%3E%3Cg fill='%2338BDF8' opacity='0.25'%3E%3Ccircle cx='35' cy='85' r='0.8'/%3E%3Ccircle cx='100' cy='30' r='1'/%3E%3Ccircle cx='145' cy='95' r='0.7'/%3E%3Ccircle cx='75' cy='170' r='1.1'/%3E%3Ccircle cx='185' cy='65' r='0.8'/%3E%3Ccircle cx='50' cy='135' r='0.9'/%3E%3Ccircle cx='125' cy='70' r='1'/%3E%3Ccircle cx='80' cy='40' r='0.7'/%3E%3C/g%3E%3Cg fill='%23BFDBFE' opacity='0.2'%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.35) translate(20,20)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.35) translate(115,135)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.3) translate(155,25)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.35) translate(45,155)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.28) translate(175,165)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.35) translate(5,5)'/%3E%3C/g%3E%3C/g%3E");
-}
-
-/* 3. TEMA: BOSQUE ENCANTADO (enchanted-forest)
-   Fondo fresco eucalipto y esmeralda con hojas botánicas, 
-   flores delicadas y rocío mágico. */
-[data-theme="enchanted-forest"] {
-    --color-background: #F2F7F4;
-    --color-surface: #FFFFFF;
-    --color-surface-secondary: #E7F0EA;
-    --color-surface-elevated: #FFFFFF;
-    --color-surface-hover: rgba(34, 125, 72, 0.06);
-    --color-surface-active: rgba(34, 125, 72, 0.10);
-
-    /* Acentos de Color Botánicos Puros */
-    --color-primary-dark: #0D2818;
-    --color-primary: #1B5533;
-    --color-primary-light: #268A50;
-    --color-primary-glow: rgba(34, 125, 72, 0.25);
-    --color-secondary: #3DAA6F;
-    --color-secondary-glow: rgba(56, 161, 105, 0.20);
-
-    /* Tipografía y Contraste */
-    --color-text: #17261D;
-    --color-text-secondary: #5B6D61;
-    --color-text-muted: #87978D;
-    --color-text-inverse: #FFFFFF;
-
-    /* Bordes y Divisores */
-    --color-border: #D4E3D8;
-    --color-border-subtle: #E8F0EB;
-    --color-border-focus: #227D48;
-
-    /* Badges y Estados */
-    --color-badge-bg: rgba(34, 125, 72, 0.10);
-    --color-badge-text: #22603B;
-    --color-accent-gold: #CB9040;
-
-    /* Banner Literario Botánico */
-    --banner-gradient: linear-gradient(135deg, #123A25 0%, #1B5634 55%, #34744D 100%);
-    --banner-border: rgba(56, 161, 105, 0.25);
-
-    /* Lector */
-    --reader-bg: #F4F9F7;
-    --reader-text: #1D2B23;
-
-    /* Marca Tipográfica Emblemática */
-    --brand-eyebrow-color: #8A6414;
-    --brand-rule-color: rgba(197, 138, 58, 0.35);
-    --brand-star-color: #C58A3A;
-    --brand-icon-color: #C58A3A;
-    --brand-icon-ribbon: #8A6414;
-    --brand-title-gradient: linear-gradient(135deg, #1C3824 0%, #2D5838 45%, #C58A3A 85%, #8A6414 100%);
-    --brand-title-shadow: rgba(197, 138, 58, 0.25);
-
-    /* Patrón Atmosférico Exclusivo para el Banner: Hojas y Ramitas */
-    --banner-bg-pattern: radial-gradient(circle at 15% 70%, rgba(34, 125, 72, 0.1) 0%, transparent 45%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg fill='%23227D48' opacity='0.4'%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.28) translate(60,30)'/%3E%3Ccircle cx='160' cy='60' r='1.5'/%3E%3Ccircle cx='240' cy='160' r='1.2'/%3E%3Ccircle cx='80' cy='220' r='1'/%3E%3C/g%3E%3Cg fill='%2338A169' opacity='0.35'%3E%3Ccircle cx='110' cy='130' r='1.5'/%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.2) translate(1050,700)'/%3E%3C/g%3E%3Cg fill='%23D97706' opacity='0.35'%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.22) translate(500,100)'/%3E%3Ccircle cx='260' cy='240' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
-    --banner-bg-size: 100% 100%, 300px 300px;
---theme-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='%23227D48' opacity='0.3'%3E%3Ccircle cx='15' cy='20' r='1'/%3E%3Ccircle cx='50' cy='55' r='0.8'/%3E%3Ccircle cx='110' cy='35' r='1.2'/%3E%3Ccircle cx='155' cy='65' r='0.9'/%3E%3Ccircle cx='175' cy='120' r='1.1'/%3E%3Ccircle cx='8' cy='105' r='0.8'/%3E%3Ccircle cx='85' cy='155' r='1'/%3E%3Ccircle cx='140' cy='175' r='0.9'/%3E%3Ccircle cx='30' cy='185' r='1.2'/%3E%3Ccircle cx='170' cy='25' r='0.7'/%3E%3Ccircle cx='70' cy='95' r='1'/%3E%3Ccircle cx='20' cy='70' r='0.8'/%3E%3Ccircle cx='125' cy='135' r='1.1'/%3E%3Ccircle cx='60' cy='125' r='0.9'/%3E%3Ccircle cx='185' cy='95' r='1'/%3E%3Ccircle cx='45' cy='170' r='0.8'/%3E%3Ccircle cx='105' cy='70' r='1.2'/%3E%3Ccircle cx='150' cy='110' r='0.7'/%3E%3Ccircle cx='35' cy='40' r='0.9'/%3E%3Ccircle cx='95' cy='50' r='1'/%3E%3Ccircle cx='180' cy='160' r='0.8'/%3E%3Ccircle cx='55' cy='80' r='1.1'/%3E%3Ccircle cx='130' cy='15' r='0.7'/%3E%3Ccircle cx='12' cy='145' r='0.9'/%3E%3Ccircle cx='165' cy='145' r='1'/%3E%3C/g%3E%3Cg fill='%2338A169' opacity='0.25'%3E%3Ccircle cx='35' cy='85' r='0.8'/%3E%3Ccircle cx='100' cy='30' r='1'/%3E%3Ccircle cx='145' cy='95' r='0.7'/%3E%3Ccircle cx='75' cy='170' r='1.1'/%3E%3Ccircle cx='185' cy='65' r='0.8'/%3E%3Ccircle cx='50' cy='135' r='0.9'/%3E%3Ccircle cx='125' cy='70' r='1'/%3E%3Ccircle cx='80' cy='40' r='0.7'/%3E%3C/g%3E%3Cg fill='%23D97706' opacity='0.2'%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.35) translate(20,20)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.35) translate(115,135)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.3) translate(155,25)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.35) translate(45,155)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.28) translate(175,165)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.35) translate(5,5)'/%3E%3C/g%3E%3C/g%3E");
-}
-
-/* 4. TEMA: LAVANDA CLARO (lavender-light)
-   Fondo perla lavanda con pétalos sutiles, polvo estelar 
-   y destellos violetas. */
+/* --------------------------------------------------------------------------
+   2. TEMA: LAVANDA CLARO (lavender-light)
+   Fondo perla lavanda luminoso, superficies níveas y acentos amatista serenos.
+   -------------------------------------------------------------------------- */
 [data-theme="lavender-light"] {
-    --color-background: #F8F6FD;
-    --color-surface: #FFFFFF;
-    --color-surface-secondary: #F0ECF9;
-    --color-surface-elevated: #FFFFFF;
-    --color-surface-hover: rgba(108, 92, 231, 0.06);
-    --color-surface-active: rgba(108, 92, 231, 0.10);
+  --color-background: #F8F6FD;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #F1EDF9;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-hover: rgba(108, 92, 231, 0.06);
+  --color-surface-active: rgba(108, 92, 231, 0.12);
 
-    /* Acentos de Color */
-    --color-primary-dark: #271E56;
-    --color-primary: #5947BC;
-    --color-primary-light: #7365EB;
-    --color-primary-glow: rgba(108, 92, 231, 0.24);
-    --color-secondary: #9266F8;
-    --color-secondary-glow: rgba(139, 92, 246, 0.18);
+  /* Acentos Cromáticos */
+  --color-primary-dark: #2A215E;
+  --color-primary: #5948B8;
+  --color-primary-light: #705DD9;
+  --color-primary-glow: rgba(89, 72, 184, 0.22);
 
-    /* Tipografía y Contraste */
-    --color-text: #29243A;
-    --color-text-secondary: #6F687E;
-    --color-text-muted: #9A93A8;
-    --color-text-inverse: #FFFFFF;
+  --color-secondary: #8E78E6;
+  --color-secondary-glow: rgba(142, 120, 230, 0.18);
 
-    /* Bordes y Divisores */
-    --color-border: #DED8ED;
-    --color-border-subtle: #EEEAF5;
-    --color-border-focus: #6C5CE7;
+  /* Tipografía y Contraste WCAG AA */
+  --color-text: #1E1A30;
+  --color-text-secondary: #585172;
+  --color-text-muted: #787095;
+  --color-text-inverse: #FFFFFF;
 
-    /* Badges y Estados */
-    --color-badge-bg: rgba(108, 92, 231, 0.10);
-    --color-badge-text: #5B4AB5;
-    --color-accent-gold: #BE8833;
+  /* Bordes y Divisores */
+  --color-border: #DCD5ED;
+  --color-border-subtle: #EDE8F6;
+  --color-border-focus: #5948B8;
 
-    /* Banner Literario */
-    --banner-gradient: linear-gradient(135deg, #45378F 0%, #5D4CB7 52%, #7869D2 100%);
-    --banner-border: rgba(108, 92, 231, 0.22);
+  /* Badges y Estados */
+  --color-badge-bg: rgba(89, 72, 184, 0.10);
+  --color-badge-text: #4F3EAD;
+  --color-accent-gold: #C08C36;
 
-    /* Lector */
-    --reader-bg: #FAF9FD;
-    --reader-text: #302A3E;
+  /* Banner Literario */
+  --banner-gradient: linear-gradient(135deg, #F3EEFB 0%, #E8DEF7 52%, #D8CAEE 100%);
+  --banner-border: rgba(108, 92, 231, 0.24);
 
-    /* Marca Tipográfica Emblemática */
-    --brand-eyebrow-color: #8C6B1C;
-    --brand-rule-color: rgba(194, 149, 67, 0.35);
-    --brand-star-color: #C29543;
-    --brand-icon-color: #C29543;
-    --brand-icon-ribbon: #8C6B1C;
-    --brand-title-gradient: linear-gradient(135deg, #271E56 0%, #4E3C8A 45%, #C29543 85%, #8C6B1C 100%);
-    --brand-title-shadow: rgba(194, 149, 67, 0.25);
+  /* Lector */
+  --reader-bg: #FAF9FE;
+  --reader-text: #26213B;
 
-    /* Patrón Atmosférico Exclusivo para el Banner: Pétalos y Polvo estelar */
-    --banner-bg-pattern: radial-gradient(circle at 80% 20%, rgba(167, 139, 250, 0.15) 0%, transparent 40%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg fill='%236C5CE7' opacity='0.4'%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.28) translate(60,20)'/%3E%3Ccircle cx='190' cy='70' r='1.5'/%3E%3Ccircle cx='60' cy='180' r='1.2'/%3E%3Ccircle cx='240' cy='200' r='1'/%3E%3C/g%3E%3Cg fill='%23A78BFA' opacity='0.35'%3E%3Ccircle cx='120' cy='110' r='1.5'/%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.2) translate(1000,700)'/%3E%3Ccircle cx='220' cy='260' r='1.2'/%3E%3C/g%3E%3Cg fill='%23D97706' opacity='0.3'%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.22) translate(550,250)'/%3E%3C/g%3E%3C/svg%3E");
-    --banner-bg-size: 100% 100%, 300px 300px;
---theme-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='%236C5CE7' opacity='0.3'%3E%3Ccircle cx='15' cy='20' r='1'/%3E%3Ccircle cx='50' cy='55' r='0.8'/%3E%3Ccircle cx='110' cy='35' r='1.2'/%3E%3Ccircle cx='155' cy='65' r='0.9'/%3E%3Ccircle cx='175' cy='120' r='1.1'/%3E%3Ccircle cx='8' cy='105' r='0.8'/%3E%3Ccircle cx='85' cy='155' r='1'/%3E%3Ccircle cx='140' cy='175' r='0.9'/%3E%3Ccircle cx='30' cy='185' r='1.2'/%3E%3Ccircle cx='170' cy='25' r='0.7'/%3E%3Ccircle cx='70' cy='95' r='1'/%3E%3Ccircle cx='20' cy='70' r='0.8'/%3E%3Ccircle cx='125' cy='135' r='1.1'/%3E%3Ccircle cx='60' cy='125' r='0.9'/%3E%3Ccircle cx='185' cy='95' r='1'/%3E%3Ccircle cx='45' cy='170' r='0.8'/%3E%3Ccircle cx='105' cy='70' r='1.2'/%3E%3Ccircle cx='150' cy='110' r='0.7'/%3E%3Ccircle cx='35' cy='40' r='0.9'/%3E%3Ccircle cx='95' cy='50' r='1'/%3E%3Ccircle cx='180' cy='160' r='0.8'/%3E%3Ccircle cx='55' cy='80' r='1.1'/%3E%3Ccircle cx='130' cy='15' r='0.7'/%3E%3Ccircle cx='12' cy='145' r='0.9'/%3E%3Ccircle cx='165' cy='145' r='1'/%3E%3C/g%3E%3Cg fill='%23A78BFA' opacity='0.25'%3E%3Ccircle cx='35' cy='85' r='0.8'/%3E%3Ccircle cx='100' cy='30' r='1'/%3E%3Ccircle cx='145' cy='95' r='0.7'/%3E%3Ccircle cx='75' cy='170' r='1.1'/%3E%3Ccircle cx='185' cy='65' r='0.8'/%3E%3Ccircle cx='50' cy='135' r='0.9'/%3E%3Ccircle cx='125' cy='70' r='1'/%3E%3Ccircle cx='80' cy='40' r='0.7'/%3E%3C/g%3E%3Cg fill='%23D97706' opacity='0.2'%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.35) translate(20,20)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.35) translate(115,135)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.3) translate(155,25)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.35) translate(45,155)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.28) translate(175,165)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.35) translate(5,5)'/%3E%3C/g%3E%3C/g%3E");
+  /* Marca Tipográfica */
+  --brand-eyebrow-color: #8C6615;
+  --brand-rule-color: rgba(192, 140, 54, 0.35);
+  --brand-star-color: #C08C36;
+  --brand-icon-color: #C08C36;
+  --brand-icon-ribbon: #8C6615;
+
+  --brand-title-gradient: linear-gradient(135deg, #20174A 0%, #46338C 45%, #C08C36 85%, #8C6615 100%);
+  --brand-title-shadow: rgba(192, 140, 54, 0.22);
+  --brand-wordmark-color: #4F3EAD;
+
+  --theme-bg-pattern: radial-gradient(circle at 50% 0%, rgba(108, 92, 231, 0.05) 0%, transparent 60%);
+  --banner-bg-pattern: radial-gradient(circle at 85% 20%, rgba(142, 120, 230, 0.15) 0%, transparent 50%);
+  --banner-bg-size: 100% 100%;
 }
 
-/* 5. TEMA: VINO & POESÍA (wine-poetry) */
+/* --------------------------------------------------------------------------
+   3. TEMA: CIELO CLARO (clear-sky)
+   Fondo celeste fresco, pureza visual y acentos azul ultramar.
+   -------------------------------------------------------------------------- */
+[data-theme="clear-sky"] {
+  --color-background: #F2F7FC;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #E8F0F8;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-hover: rgba(29, 92, 178, 0.06);
+  --color-surface-active: rgba(29, 92, 178, 0.12);
+
+  /* Acentos Cromáticos */
+  --color-primary-dark: #0F3057;
+  --color-primary: #1F5F9F;
+  --color-primary-light: #2E7AC7;
+  --color-primary-glow: rgba(31, 95, 159, 0.22);
+
+  --color-secondary: #3B98D9;
+  --color-secondary-glow: rgba(59, 152, 217, 0.18);
+
+  /* Tipografía y Contraste WCAG AA */
+  --color-text: #10243E;
+  --color-text-secondary: #485E77;
+  --color-text-muted: #697F99;
+  --color-text-inverse: #FFFFFF;
+
+  /* Bordes y Divisores */
+  --color-border: #C8DBEE;
+  --color-border-subtle: #E2ECF6;
+  --color-border-focus: #1F5F9F;
+
+  /* Badges y Estados */
+  --color-badge-bg: rgba(31, 95, 159, 0.10);
+  --color-badge-text: #195188;
+  --color-accent-gold: #C98D2E;
+
+  /* Banner Literario */
+  --banner-gradient: linear-gradient(135deg, #EFF6FD 0%, #DCEBFA 52%, #C5DEF5 100%);
+  --banner-border: rgba(31, 95, 159, 0.22);
+
+  /* Lector */
+  --reader-bg: #F5F9FD;
+  --reader-text: #162B45;
+
+  /* Marca Tipográfica */
+  --brand-eyebrow-color: #8C6212;
+  --brand-rule-color: rgba(201, 141, 46, 0.35);
+  --brand-star-color: #C98D2E;
+  --brand-icon-color: #C98D2E;
+  --brand-icon-ribbon: #8C6212;
+
+  --brand-title-gradient: linear-gradient(135deg, #0E2847 0%, #1A548C 45%, #C98D2E 85%, #8C6212 100%);
+  --brand-title-shadow: rgba(201, 141, 46, 0.22);
+  --brand-wordmark-color: #1A548C;
+
+  --theme-bg-pattern: radial-gradient(circle at 50% 0%, rgba(31, 95, 159, 0.05) 0%, transparent 60%);
+  --banner-bg-pattern: radial-gradient(circle at 80% 20%, rgba(59, 152, 217, 0.14) 0%, transparent 50%);
+  --banner-bg-size: 100% 100%;
+}
+
+/* --------------------------------------------------------------------------
+   4. TEMA: BOSQUE DE LA MAÑANA (enchanted-forest)
+   Tonos salvia botánicos, frescura serena y acentos bosque noble.
+   -------------------------------------------------------------------------- */
+[data-theme="enchanted-forest"] {
+  --color-background: #F1F6F2;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #E6EFE8;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-hover: rgba(36, 107, 65, 0.06);
+  --color-surface-active: rgba(36, 107, 65, 0.12);
+
+  /* Acentos Cromáticos */
+  --color-primary-dark: #123822;
+  --color-primary: #276B43;
+  --color-primary-light: #378A58;
+  --color-primary-glow: rgba(39, 107, 67, 0.24);
+
+  --color-secondary: #48A870;
+  --color-secondary-glow: rgba(72, 168, 112, 0.18);
+
+  /* Tipografía y Contraste */
+  --color-text: #152A1E;
+  --color-text-secondary: #4A6354;
+  --color-text-muted: #6B8374;
+  --color-text-inverse: #FFFFFF;
+
+  /* Bordes y Divisores */
+  --color-border: #CCE0D3;
+  --color-border-subtle: #E2ECE5;
+  --color-border-focus: #276B43;
+
+  /* Badges y Estados */
+  --color-badge-bg: rgba(39, 107, 67, 0.10);
+  --color-badge-text: #205937;
+  --color-accent-gold: #B88531;
+
+  /* Banner Literario */
+  --banner-gradient: linear-gradient(135deg, #EEF5F0 0%, #DEECE2 52%, #C8DFCF 100%);
+  --banner-border: rgba(39, 107, 67, 0.22);
+
+  /* Lector */
+  --reader-bg: #F4F8F5;
+  --reader-text: #183022;
+
+  /* Marca Tipográfica */
+  --brand-eyebrow-color: #7D5911;
+  --brand-rule-color: rgba(184, 133, 49, 0.35);
+  --brand-star-color: #B88531;
+  --brand-icon-color: #B88531;
+  --brand-icon-ribbon: #7D5911;
+
+  --brand-title-gradient: linear-gradient(135deg, #132E1F 0%, #245E3B 45%, #B88531 85%, #7D5911 100%);
+  --brand-title-shadow: rgba(184, 133, 49, 0.22);
+  --brand-wordmark-color: #245E3B;
+
+  --theme-bg-pattern: radial-gradient(circle at 50% 0%, rgba(39, 107, 67, 0.05) 0%, transparent 60%);
+  --banner-bg-pattern: radial-gradient(circle at 80% 20%, rgba(72, 168, 112, 0.14) 0%, transparent 50%);
+  --banner-bg-size: 100% 100%;
+}
+
+/* --------------------------------------------------------------------------
+   5. TEMA: NIEBLA SERENA (wine-poetry)
+   Acuarela delicada en niebla rosada, malva tenue y cálida elegancia.
+   -------------------------------------------------------------------------- */
 [data-theme="wine-poetry"] {
-    --color-background: #170B12;
-    --color-surface: #211019;
-    --color-surface-secondary: #2B151F;
-    --color-surface-elevated: #391C29;
-    --color-surface-hover: rgba(190, 91, 120, 0.07);
-    --color-surface-active: rgba(190, 91, 120, 0.11);
+  --color-background: #F8F3F4;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #F2E8EB;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-hover: rgba(135, 70, 95, 0.06);
+  --color-surface-active: rgba(135, 70, 95, 0.12);
 
-    --color-primary-dark: #401522;
-    --color-primary: #7F3049;
-    --color-primary-light: #B15470;
-    --color-primary-glow: rgba(169, 74, 104, 0.28);
+  /* Acentos Cromáticos */
+  --color-primary-dark: #431E2D;
+  --color-primary: #7E3E58;
+  --color-primary-light: #9B516F;
+  --color-primary-glow: rgba(126, 62, 88, 0.24);
 
-    --color-secondary: #CB8099;
-    --color-secondary-glow: rgba(196, 119, 145, 0.22);
+  --color-secondary: #BD6F8F;
+  --color-secondary-glow: rgba(189, 111, 143, 0.18);
 
-    /* Tipografía y Contraste */
-    --color-text: #F5E9EC;
-    --color-text-secondary: #CDB9C0;
-    --color-text-muted: #8F737D;
-    --color-text-inverse: #170B12;
+  /* Tipografía y Contraste */
+  --color-text: #2D1A23;
+  --color-text-secondary: #654E57;
+  --color-text-muted: #856C76;
+  --color-text-inverse: #FFFFFF;
 
-    /* Bordes y Divisores */
-    --color-border: #4A2633;
-    --color-border-subtle: #321A25;
-    --color-border-focus: #C47791;
+  /* Bordes y Divisores */
+  --color-border: #E2D0D6;
+  --color-border-subtle: #EFE4E8;
+  --color-border-focus: #7E3E58;
 
-    /* Badges y Estados */
-    --color-badge-bg: rgba(196, 119, 145, 0.13);
-    --color-badge-text: #DDA5B7;
-    --color-accent-gold: #DAA765;
+  /* Badges y Estados */
+  --color-badge-bg: rgba(126, 62, 88, 0.10);
+  --color-badge-text: #6B3249;
+  --color-accent-gold: #B88531;
 
-    /* Banner Literario */
-    --banner-gradient: linear-gradient(135deg, #281019 0%, #4A192D 48%, #6B2943 76%, #432034 100%);
-    --banner-border: rgba(213, 161, 93, 0.28);
+  /* Banner Literario */
+  --banner-gradient: linear-gradient(135deg, #F8F2F4 0%, #EFE1E6 52%, #DECAD2 100%);
+  --banner-border: rgba(126, 62, 88, 0.22);
 
-    /* Lector */
-    --reader-bg: #1A0D14;
-    --reader-text: #EFE1E5;
+  /* Lector */
+  --reader-bg: #FAF5F7;
+  --reader-text: #331F28;
 
-    /* Marca Tipográfica Emblemática */
-    --brand-eyebrow-color: #D5A15D;
-    --brand-rule-color: rgba(213, 161, 93, 0.35);
-    --brand-star-color: #D5A15D;
-    --brand-icon-color: #D5A15D;
-    --brand-icon-ribbon: #D5A15D;
+  /* Marca Tipográfica */
+  --brand-eyebrow-color: #8C6115;
+  --brand-rule-color: rgba(184, 133, 49, 0.35);
+  --brand-star-color: #B88531;
+  --brand-icon-color: #B88531;
+  --brand-icon-ribbon: #8C6115;
 
-    --brand-title-gradient: linear-gradient(135deg, #FFF7F3 0%, #F5E8C7 45%, #E5B869 80%, #D5A15D 100%);
-    --brand-title-shadow: rgba(213, 161, 93, 0.30);
+  --brand-title-gradient: linear-gradient(135deg, #381B26 0%, #6E334B 45%, #B88531 85%, #8C6115 100%);
+  --brand-title-shadow: rgba(184, 133, 49, 0.22);
+  --brand-wordmark-color: #6E334B;
 
-    /* Patrón Atmosférico: ramas florales y resplandor sutil */
-    --banner-bg-pattern: radial-gradient(circle at 20% 20%, rgba(213, 161, 93, 0.08) 0%, transparent 40%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg fill='%23D5A15D' opacity='0.45'%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.3) translate(50,10)'/%3E%3Ccircle cx='170' cy='50' r='1.5'/%3E%3Ccircle cx='250' cy='130' r='1'/%3E%3Ccircle cx='80' cy='210' r='1.3'/%3E%3C/g%3E%3Cg fill='%23C47791' opacity='0.35'%3E%3Ccircle cx='120' cy='120' r='1.5'/%3E%3Cpolygon points='40,10 43,30 63,30 47,42 53,62 40,50 27,62 33,42 17,30 37,30' transform='scale(0.2) translate(1050,600)'/%3E%3C/g%3E%3Cg fill='%23F1D5DE' opacity='0.3'%3E%3Ccircle cx='220' cy='250' r='1.2'/%3E%3Ccircle cx='40' cy='80' r='1'/%3E%3C/g%3E%3C/svg%3E");
-    --banner-bg-size: 100% 100%, 300px 300px;
---theme-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='%23D5A15D' opacity='0.3'%3E%3Ccircle cx='15' cy='20' r='1'/%3E%3Ccircle cx='50' cy='55' r='0.8'/%3E%3Ccircle cx='110' cy='35' r='1.2'/%3E%3Ccircle cx='155' cy='65' r='0.9'/%3E%3Ccircle cx='175' cy='120' r='1.1'/%3E%3Ccircle cx='8' cy='105' r='0.8'/%3E%3Ccircle cx='85' cy='155' r='1'/%3E%3Ccircle cx='140' cy='175' r='0.9'/%3E%3Ccircle cx='30' cy='185' r='1.2'/%3E%3Ccircle cx='170' cy='25' r='0.7'/%3E%3Ccircle cx='70' cy='95' r='1'/%3E%3Ccircle cx='20' cy='70' r='0.8'/%3E%3Ccircle cx='125' cy='135' r='1.1'/%3E%3Ccircle cx='60' cy='125' r='0.9'/%3E%3Ccircle cx='185' cy='95' r='1'/%3E%3Ccircle cx='45' cy='170' r='0.8'/%3E%3Ccircle cx='105' cy='70' r='1.2'/%3E%3Ccircle cx='150' cy='110' r='0.7'/%3E%3Ccircle cx='35' cy='40' r='0.9'/%3E%3Ccircle cx='95' cy='50' r='1'/%3E%3Ccircle cx='180' cy='160' r='0.8'/%3E%3Ccircle cx='55' cy='80' r='1.1'/%3E%3Ccircle cx='130' cy='15' r='0.7'/%3E%3Ccircle cx='12' cy='145' r='0.9'/%3E%3Ccircle cx='165' cy='145' r='1'/%3E%3C/g%3E%3Cg fill='%23C47791' opacity='0.25'%3E%3Ccircle cx='35' cy='85' r='0.8'/%3E%3Ccircle cx='100' cy='30' r='1'/%3E%3Ccircle cx='145' cy='95' r='0.7'/%3E%3Ccircle cx='75' cy='170' r='1.1'/%3E%3Ccircle cx='185' cy='65' r='0.8'/%3E%3Ccircle cx='50' cy='135' r='0.9'/%3E%3Ccircle cx='125' cy='70' r='1'/%3E%3Ccircle cx='80' cy='40' r='0.7'/%3E%3C/g%3E%3Cg fill='%23F1D5DE' opacity='0.2'%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.35) translate(20,20)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.35) translate(115,135)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.3) translate(155,25)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.35) translate(45,155)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.28) translate(175,165)'/%3E%3Cpolygon points='3,3 5,8 10,8 7,12 8,17 3,14 0,17 2,12 0,8 4,8' transform='scale(0.35) translate(5,5)'/%3E%3C/g%3E%3C/g%3E");
+  --theme-bg-pattern: radial-gradient(circle at 50% 0%, rgba(126, 62, 88, 0.05) 0%, transparent 60%);
+  --banner-bg-pattern: radial-gradient(circle at 80% 20%, rgba(189, 111, 143, 0.14) 0%, transparent 50%);
+  --banner-bg-size: 100% 100%;
 }
 
-/* 6. MUESTRAS DE COLOR DEL MODAL (SWATCHES) */
+/* --------------------------------------------------------------------------
+   6. MUESTRAS DE COLOR PARA EL MODAL DE APARIENCIA (SWATCHES)
+   -------------------------------------------------------------------------- */
+/* Nocturno Místico */
+.swatch-mn-1 { background-color: #060B14; }
+.swatch-mn-2 { background-color: #0B1324; }
+.swatch-mn-3 { background-color: #3B6FD6; }
+.swatch-mn-4 { background-color: #6E9BFF; }
 
-/* NOCTURNO MÍSTICO */
-.swatch-mn-1 { background-color: #02040B; }
-.swatch-mn-2 { background-color: #101A45; }
-.swatch-mn-3 { background-color: #7356D8; }
-.swatch-mn-4 { background-color: #3156C9; }
+/* Lavanda Claro */
+.swatch-ll-1 { background-color: #FFFFFF; border: 1px solid #DCD5ED; }
+.swatch-ll-2 { background-color: #F1EDF9; border: 1px solid #DCD5ED; }
+.swatch-ll-3 { background-color: #5948B8; }
+.swatch-ll-4 { background-color: #8E78E6; }
 
-/* LAVANDA CLARO */
-.swatch-ll-1 { background-color: #FFFFFF; border: 1px solid #DDD; }
-.swatch-ll-2 { background-color: #F0ECF9; border: 1px solid #DDD; }
-.swatch-ll-3 { background-color: #6C5CE7; }
-.swatch-ll-4 { background-color: #8B5CF6; }
+/* Niebla Serena */
+.swatch-wp-1 { background-color: #F8F3F4; border: 1px solid #E2D0D6; }
+.swatch-wp-2 { background-color: #F2E8EB; border: 1px solid #E2D0D6; }
+.swatch-wp-3 { background-color: #7E3E58; }
+.swatch-wp-4 { background-color: #BD6F8F; }
 
-/* VINO & POESÍA */
-.swatch-wp-1 { background-color: #170B12; }
-.swatch-wp-2 { background-color: #762B43; }
-.swatch-wp-3 { background-color: #C47791; }
-.swatch-wp-4 { background-color: #D5A15D; }
+/* Bosque de la Mañana */
+.swatch-ef-1 { background-color: #F1F6F2; border: 1px solid #CCE0D3; }
+.swatch-ef-2 { background-color: #E6EFE8; border: 1px solid #CCE0D3; }
+.swatch-ef-3 { background-color: #276B43; }
+.swatch-ef-4 { background-color: #48A870; }
 
-/* BOSQUE ENCANTADO */
-.swatch-ef-1 { background-color: #F2F7F4; border: 1px solid #D4E3D8; }
-.swatch-ef-2 { background-color: #E7F0EA; border: 1px solid #D4E3D8; }
-.swatch-ef-3 { background-color: #227D48; }
-.swatch-ef-4 { background-color: #C58A3A; }
+/* Cielo Claro */
+.swatch-cs-1 { background-color: #F2F7FC; border: 1px solid #C8DBEE; }
+.swatch-cs-2 { background-color: #E8F0F8; border: 1px solid #C8DBEE; }
+.swatch-cs-3 { background-color: #1F5F9F; }
+.swatch-cs-4 { background-color: #3B98D9; }
 
-/* CIELO CLARO */
-.swatch-cs-1 { background-color: #F0F6FD; border: 1px solid #CFE0F2; }
-.swatch-cs-2 { background-color: #E7F0F8; border: 1px solid #CFE0F2; }
-.swatch-cs-3 { background-color: #2563EB; }
-.swatch-cs-4 { background-color: #1D5C96; }
-
-/* TEMA DEL SISTEMA */
+/* Tema del Sistema */
 .swatch-sys-auto {
-    background: linear-gradient(135deg, #FBFAFE 0%, #D9D3E4 38%, #2A2536 62%, #101828 100%);
-    border: 1px solid #555;
+  background: linear-gradient(135deg, #FFFFFF 0%, #E8F0F8 48%, #0B1324 52%, #060B14 100%);
+  border: 1px solid rgba(126, 148, 176, 0.35);
 }
-.swatch-sys-accent { background-color: #5B4CC4; }
-
-/* 7. PALETAS DE COLOR PARA EL LECTOR (LEGACY UTILIDADES) */
-.r-theme-night { background: #0D1226; color: #E8ECF7; border: 1px solid #232C52; }
-.r-theme-light { background: #F8F6FD; color: #29243A; border: 1px solid #DED8ED; }
-.r-theme-paper { background: #F4F1EA; color: #292824; border: 1px solid #D8D3C8; }
-.r-theme-wine { background: #FAF5F6; color: #4A3E44; border: 1px solid #E3D3D8; }
-.r-theme-forest { background: #F4F7F2; color: #3E4A3E; border: 1px solid #D3DCCF; }
-.r-theme-sky { background: #F0F6FD; color: #0F2338; border: 1px solid #CFE0F2; }
-.r-theme-neutral { background: #252525; color: #F2F2F2; border: 1px solid #464646; }
-
-/* 8. CAMPO DE ESTRELLAS DEL BANNER (estilo Via Lactea, tinte del tema) */
-
-:root,
-[data-theme="mystic-night"] {
-  --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='%239DB4FF'%3E%3Ccircle cx='49.6' cy='175.5' r='1.1' opacity='0.25'/%3E%3Ccircle cx='125.0' cy='61.8' r='1.2' opacity='0.32'/%3E%3Ccircle cx='203.9' cy='133.0' r='1.0' opacity='0.2'/%3E%3Ccircle cx='66.7' cy='10.8' r='0.8' opacity='0.16'/%3E%3Ccircle cx='150.5' cy='26.6' r='1.2' opacity='0.32'/%3E%3Ccircle cx='65.7' cy='65.8' r='0.5' opacity='0.12'/%3E%3Ccircle cx='249.4' cy='187.3' r='1.3' opacity='0.37'/%3E%3Ccircle cx='157.8' cy='18.2' r='0.8' opacity='0.16'/%3E%3Ccircle cx='129.4' cy='37.8' r='1.4' opacity='0.41'/%3E%3Ccircle cx='98.4' cy='47.2' r='1.2' opacity='0.33'/%3E%3Ccircle cx='40.0' cy='232.7' r='0.9' opacity='0.19'/%3E%3Ccircle cx='142.5' cy='92.3' r='0.9' opacity='0.2'/%3E%3Ccircle cx='54.9' cy='18.9' r='1.3' opacity='0.36'/%3E%3Ccircle cx='66.4' cy='197.3' r='0.7' opacity='0.13'/%3E%3Ccircle cx='242.5' cy='224.6' r='1.2' opacity='0.3'/%3E%3Ccircle cx='193.1' cy='149.4' r='1.2' opacity='0.29'/%3E%3Ccircle cx='39.4' cy='124.3' r='1.2' opacity='0.34'/%3E%3Ccircle cx='58.3' cy='231.6' r='1.3' opacity='0.37'/%3E%3Ccircle cx='108.3' cy='97.7' r='0.9' opacity='0.19'/%3E%3Ccircle cx='102.6' cy='248.8' r='0.8' opacity='0.17'/%3E%3Ccircle cx='16.4' cy='32.4' r='1.1' opacity='0.29'/%3E%3Ccircle cx='248.3' cy='129.0' r='0.9' opacity='0.2'/%3E%3Ccircle cx='142.1' cy='189.6' r='0.7' opacity='0.14'/%3E%3Ccircle cx='156.1' cy='143.6' r='1.1' opacity='0.24'/%3E%3Ccircle cx='53.4' cy='50.8' r='0.8' opacity='0.16'/%3E%3Ccircle cx='232.5' cy='93.2' r='1.0' opacity='0.23'/%3E%3Ccircle cx='83.6' cy='34.8' r='0.6' opacity='0.12'/%3E%3Ccircle cx='205.3' cy='196.5' r='0.8' opacity='0.17'/%3E%3Ccircle cx='174.0' cy='172.2' r='1.3' opacity='0.38'/%3E%3Ccircle cx='240.0' cy='107.7' r='1.4' opacity='0.43'/%3E%3Ccircle cx='240.7' cy='151.7' r='1.3' opacity='0.37'/%3E%3Ccircle cx='127.8' cy='100.1' r='0.7' opacity='0.14'/%3E%3Ccircle cx='220.3' cy='49.0' r='0.6' opacity='0.12'/%3E%3Ccircle cx='203.3' cy='195.7' r='0.9' opacity='0.2'/%3E%3Ccircle cx='210.9' cy='22.5' r='0.7' opacity='0.14'/%3E%3Ccircle cx='79.6' cy='110.7' r='0.7' opacity='0.13'/%3E%3Ccircle cx='26.7' cy='91.1' r='1.3' opacity='0.38'/%3E%3Ccircle cx='246.0' cy='189.0' r='0.9' opacity='0.19'/%3E%3Ccircle cx='70.5' cy='240.1' r='1.0' opacity='0.21'/%3E%3Ccircle cx='184.9' cy='16.8' r='0.7' opacity='0.14'/%3E%3Ccircle cx='211.2' cy='200.9' r='1.3' opacity='0.37'/%3E%3Ccircle cx='154.3' cy='112.3' r='1.0' opacity='0.23'/%3E%3Ccircle cx='213.8' cy='83.9' r='1.0' opacity='0.21'/%3E%3Ccircle cx='76.2' cy='194.4' r='0.5' opacity='0.12'/%3E%3Ccircle cx='174.5' cy='239.0' r='0.5' opacity='0.12'/%3E%3Ccircle cx='152.5' cy='164.5' r='1.3' opacity='0.35'/%3E%3Ccircle cx='150.2' cy='71.7' r='0.9' opacity='0.17'/%3E%3Ccircle cx='240.1' cy='227.3' r='0.6' opacity='0.13'/%3E%3Ccircle cx='32.8' cy='32.5' r='0.5' opacity='0.12'/%3E%3Ccircle cx='117.2' cy='43.8' r='1.3' opacity='0.36'/%3E%3C/g%3E%3Cg fill='%23DCE6FF'%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(163.5,49.3) scale(0.82)' opacity='0.38'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(128.7,69.4) scale(0.6)' opacity='0.34'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(103.6,175.4) scale(0.83)' opacity='0.31'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(175.5,210.8) scale(0.96)' opacity='0.49'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(23.7,122.2) scale(0.54)' opacity='0.48'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(59.9,175.7) scale(0.65)' opacity='0.47'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(89.7,31.1) scale(0.73)' opacity='0.37'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(216.6,85.7) scale(0.8)' opacity='0.43'/%3E%3C/g%3E%3C/svg%3E");
-  --banner-bg-pattern: radial-gradient(circle at 20% 30%, rgba(113, 140, 255, 0.1) 0%, transparent 40%), var(--starfield);
-  --banner-bg-size: 100% 100%, 260px 260px;
-}
-
-[data-theme="clear-sky"] {
-  --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='%2393C2F2'%3E%3Ccircle cx='49.6' cy='175.5' r='1.1' opacity='0.25'/%3E%3Ccircle cx='125.0' cy='61.8' r='1.2' opacity='0.32'/%3E%3Ccircle cx='203.9' cy='133.0' r='1.0' opacity='0.2'/%3E%3Ccircle cx='66.7' cy='10.8' r='0.8' opacity='0.16'/%3E%3Ccircle cx='150.5' cy='26.6' r='1.2' opacity='0.32'/%3E%3Ccircle cx='65.7' cy='65.8' r='0.5' opacity='0.12'/%3E%3Ccircle cx='249.4' cy='187.3' r='1.3' opacity='0.37'/%3E%3Ccircle cx='157.8' cy='18.2' r='0.8' opacity='0.16'/%3E%3Ccircle cx='129.4' cy='37.8' r='1.4' opacity='0.41'/%3E%3Ccircle cx='98.4' cy='47.2' r='1.2' opacity='0.33'/%3E%3Ccircle cx='40.0' cy='232.7' r='0.9' opacity='0.19'/%3E%3Ccircle cx='142.5' cy='92.3' r='0.9' opacity='0.2'/%3E%3Ccircle cx='54.9' cy='18.9' r='1.3' opacity='0.36'/%3E%3Ccircle cx='66.4' cy='197.3' r='0.7' opacity='0.13'/%3E%3Ccircle cx='242.5' cy='224.6' r='1.2' opacity='0.3'/%3E%3Ccircle cx='193.1' cy='149.4' r='1.2' opacity='0.29'/%3E%3Ccircle cx='39.4' cy='124.3' r='1.2' opacity='0.34'/%3E%3Ccircle cx='58.3' cy='231.6' r='1.3' opacity='0.37'/%3E%3Ccircle cx='108.3' cy='97.7' r='0.9' opacity='0.19'/%3E%3Ccircle cx='102.6' cy='248.8' r='0.8' opacity='0.17'/%3E%3Ccircle cx='16.4' cy='32.4' r='1.1' opacity='0.29'/%3E%3Ccircle cx='248.3' cy='129.0' r='0.9' opacity='0.2'/%3E%3Ccircle cx='142.1' cy='189.6' r='0.7' opacity='0.14'/%3E%3Ccircle cx='156.1' cy='143.6' r='1.1' opacity='0.24'/%3E%3Ccircle cx='53.4' cy='50.8' r='0.8' opacity='0.16'/%3E%3Ccircle cx='232.5' cy='93.2' r='1.0' opacity='0.23'/%3E%3Ccircle cx='83.6' cy='34.8' r='0.6' opacity='0.12'/%3E%3Ccircle cx='205.3' cy='196.5' r='0.8' opacity='0.17'/%3E%3Ccircle cx='174.0' cy='172.2' r='1.3' opacity='0.38'/%3E%3Ccircle cx='240.0' cy='107.7' r='1.4' opacity='0.43'/%3E%3Ccircle cx='240.7' cy='151.7' r='1.3' opacity='0.37'/%3E%3Ccircle cx='127.8' cy='100.1' r='0.7' opacity='0.14'/%3E%3Ccircle cx='220.3' cy='49.0' r='0.6' opacity='0.12'/%3E%3Ccircle cx='203.3' cy='195.7' r='0.9' opacity='0.2'/%3E%3Ccircle cx='210.9' cy='22.5' r='0.7' opacity='0.14'/%3E%3Ccircle cx='79.6' cy='110.7' r='0.7' opacity='0.13'/%3E%3Ccircle cx='26.7' cy='91.1' r='1.3' opacity='0.38'/%3E%3Ccircle cx='246.0' cy='189.0' r='0.9' opacity='0.19'/%3E%3Ccircle cx='70.5' cy='240.1' r='1.0' opacity='0.21'/%3E%3Ccircle cx='184.9' cy='16.8' r='0.7' opacity='0.14'/%3E%3Ccircle cx='211.2' cy='200.9' r='1.3' opacity='0.37'/%3E%3Ccircle cx='154.3' cy='112.3' r='1.0' opacity='0.23'/%3E%3Ccircle cx='213.8' cy='83.9' r='1.0' opacity='0.21'/%3E%3Ccircle cx='76.2' cy='194.4' r='0.5' opacity='0.12'/%3E%3Ccircle cx='174.5' cy='239.0' r='0.5' opacity='0.12'/%3E%3Ccircle cx='152.5' cy='164.5' r='1.3' opacity='0.35'/%3E%3Ccircle cx='150.2' cy='71.7' r='0.9' opacity='0.17'/%3E%3Ccircle cx='240.1' cy='227.3' r='0.6' opacity='0.13'/%3E%3Ccircle cx='32.8' cy='32.5' r='0.5' opacity='0.12'/%3E%3Ccircle cx='117.2' cy='43.8' r='1.3' opacity='0.36'/%3E%3C/g%3E%3Cg fill='%23D6E9FC'%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(163.5,49.3) scale(0.82)' opacity='0.38'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(128.7,69.4) scale(0.6)' opacity='0.34'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(103.6,175.4) scale(0.83)' opacity='0.31'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(175.5,210.8) scale(0.96)' opacity='0.49'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(23.7,122.2) scale(0.54)' opacity='0.48'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(59.9,175.7) scale(0.65)' opacity='0.47'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(89.7,31.1) scale(0.73)' opacity='0.37'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(216.6,85.7) scale(0.8)' opacity='0.43'/%3E%3C/g%3E%3C/svg%3E");
-  --banner-bg-pattern: radial-gradient(circle at 75% 25%, rgba(147, 197, 253, 0.2) 0%, transparent 40%), var(--starfield);
-  --banner-bg-size: 100% 100%, 260px 260px;
-}
-
-[data-theme="enchanted-forest"] {
-  --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='%238FCBA0'%3E%3Ccircle cx='49.6' cy='175.5' r='1.1' opacity='0.25'/%3E%3Ccircle cx='125.0' cy='61.8' r='1.2' opacity='0.32'/%3E%3Ccircle cx='203.9' cy='133.0' r='1.0' opacity='0.2'/%3E%3Ccircle cx='66.7' cy='10.8' r='0.8' opacity='0.16'/%3E%3Ccircle cx='150.5' cy='26.6' r='1.2' opacity='0.32'/%3E%3Ccircle cx='65.7' cy='65.8' r='0.5' opacity='0.12'/%3E%3Ccircle cx='249.4' cy='187.3' r='1.3' opacity='0.37'/%3E%3Ccircle cx='157.8' cy='18.2' r='0.8' opacity='0.16'/%3E%3Ccircle cx='129.4' cy='37.8' r='1.4' opacity='0.41'/%3E%3Ccircle cx='98.4' cy='47.2' r='1.2' opacity='0.33'/%3E%3Ccircle cx='40.0' cy='232.7' r='0.9' opacity='0.19'/%3E%3Ccircle cx='142.5' cy='92.3' r='0.9' opacity='0.2'/%3E%3Ccircle cx='54.9' cy='18.9' r='1.3' opacity='0.36'/%3E%3Ccircle cx='66.4' cy='197.3' r='0.7' opacity='0.13'/%3E%3Ccircle cx='242.5' cy='224.6' r='1.2' opacity='0.3'/%3E%3Ccircle cx='193.1' cy='149.4' r='1.2' opacity='0.29'/%3E%3Ccircle cx='39.4' cy='124.3' r='1.2' opacity='0.34'/%3E%3Ccircle cx='58.3' cy='231.6' r='1.3' opacity='0.37'/%3E%3Ccircle cx='108.3' cy='97.7' r='0.9' opacity='0.19'/%3E%3Ccircle cx='102.6' cy='248.8' r='0.8' opacity='0.17'/%3E%3Ccircle cx='16.4' cy='32.4' r='1.1' opacity='0.29'/%3E%3Ccircle cx='248.3' cy='129.0' r='0.9' opacity='0.2'/%3E%3Ccircle cx='142.1' cy='189.6' r='0.7' opacity='0.14'/%3E%3Ccircle cx='156.1' cy='143.6' r='1.1' opacity='0.24'/%3E%3Ccircle cx='53.4' cy='50.8' r='0.8' opacity='0.16'/%3E%3Ccircle cx='232.5' cy='93.2' r='1.0' opacity='0.23'/%3E%3Ccircle cx='83.6' cy='34.8' r='0.6' opacity='0.12'/%3E%3Ccircle cx='205.3' cy='196.5' r='0.8' opacity='0.17'/%3E%3Ccircle cx='174.0' cy='172.2' r='1.3' opacity='0.38'/%3E%3Ccircle cx='240.0' cy='107.7' r='1.4' opacity='0.43'/%3E%3Ccircle cx='240.7' cy='151.7' r='1.3' opacity='0.37'/%3E%3Ccircle cx='127.8' cy='100.1' r='0.7' opacity='0.14'/%3E%3Ccircle cx='220.3' cy='49.0' r='0.6' opacity='0.12'/%3E%3Ccircle cx='203.3' cy='195.7' r='0.9' opacity='0.2'/%3E%3Ccircle cx='210.9' cy='22.5' r='0.7' opacity='0.14'/%3E%3Ccircle cx='79.6' cy='110.7' r='0.7' opacity='0.13'/%3E%3Ccircle cx='26.7' cy='91.1' r='1.3' opacity='0.38'/%3E%3Ccircle cx='246.0' cy='189.0' r='0.9' opacity='0.19'/%3E%3Ccircle cx='70.5' cy='240.1' r='1.0' opacity='0.21'/%3E%3Ccircle cx='184.9' cy='16.8' r='0.7' opacity='0.14'/%3E%3Ccircle cx='211.2' cy='200.9' r='1.3' opacity='0.37'/%3E%3Ccircle cx='154.3' cy='112.3' r='1.0' opacity='0.23'/%3E%3Ccircle cx='213.8' cy='83.9' r='1.0' opacity='0.21'/%3E%3Ccircle cx='76.2' cy='194.4' r='0.5' opacity='0.12'/%3E%3Ccircle cx='174.5' cy='239.0' r='0.5' opacity='0.12'/%3E%3Ccircle cx='152.5' cy='164.5' r='1.3' opacity='0.35'/%3E%3Ccircle cx='150.2' cy='71.7' r='0.9' opacity='0.17'/%3E%3Ccircle cx='240.1' cy='227.3' r='0.6' opacity='0.13'/%3E%3Ccircle cx='32.8' cy='32.5' r='0.5' opacity='0.12'/%3E%3Ccircle cx='117.2' cy='43.8' r='1.3' opacity='0.36'/%3E%3C/g%3E%3Cg fill='%23CDEED6'%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(163.5,49.3) scale(0.82)' opacity='0.38'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(128.7,69.4) scale(0.6)' opacity='0.34'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(103.6,175.4) scale(0.83)' opacity='0.31'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(175.5,210.8) scale(0.96)' opacity='0.49'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(23.7,122.2) scale(0.54)' opacity='0.48'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(59.9,175.7) scale(0.65)' opacity='0.47'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(89.7,31.1) scale(0.73)' opacity='0.37'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(216.6,85.7) scale(0.8)' opacity='0.43'/%3E%3C/g%3E%3C/svg%3E");
-  --banner-bg-pattern: radial-gradient(circle at 15% 70%, rgba(34, 125, 72, 0.1) 0%, transparent 45%), var(--starfield);
-  --banner-bg-size: 100% 100%, 260px 260px;
-}
-
-[data-theme="lavender-light"] {
-  --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='%23B49FF0'%3E%3Ccircle cx='49.6' cy='175.5' r='1.1' opacity='0.25'/%3E%3Ccircle cx='125.0' cy='61.8' r='1.2' opacity='0.32'/%3E%3Ccircle cx='203.9' cy='133.0' r='1.0' opacity='0.2'/%3E%3Ccircle cx='66.7' cy='10.8' r='0.8' opacity='0.16'/%3E%3Ccircle cx='150.5' cy='26.6' r='1.2' opacity='0.32'/%3E%3Ccircle cx='65.7' cy='65.8' r='0.5' opacity='0.12'/%3E%3Ccircle cx='249.4' cy='187.3' r='1.3' opacity='0.37'/%3E%3Ccircle cx='157.8' cy='18.2' r='0.8' opacity='0.16'/%3E%3Ccircle cx='129.4' cy='37.8' r='1.4' opacity='0.41'/%3E%3Ccircle cx='98.4' cy='47.2' r='1.2' opacity='0.33'/%3E%3Ccircle cx='40.0' cy='232.7' r='0.9' opacity='0.19'/%3E%3Ccircle cx='142.5' cy='92.3' r='0.9' opacity='0.2'/%3E%3Ccircle cx='54.9' cy='18.9' r='1.3' opacity='0.36'/%3E%3Ccircle cx='66.4' cy='197.3' r='0.7' opacity='0.13'/%3E%3Ccircle cx='242.5' cy='224.6' r='1.2' opacity='0.3'/%3E%3Ccircle cx='193.1' cy='149.4' r='1.2' opacity='0.29'/%3E%3Ccircle cx='39.4' cy='124.3' r='1.2' opacity='0.34'/%3E%3Ccircle cx='58.3' cy='231.6' r='1.3' opacity='0.37'/%3E%3Ccircle cx='108.3' cy='97.7' r='0.9' opacity='0.19'/%3E%3Ccircle cx='102.6' cy='248.8' r='0.8' opacity='0.17'/%3E%3Ccircle cx='16.4' cy='32.4' r='1.1' opacity='0.29'/%3E%3Ccircle cx='248.3' cy='129.0' r='0.9' opacity='0.2'/%3E%3Ccircle cx='142.1' cy='189.6' r='0.7' opacity='0.14'/%3E%3Ccircle cx='156.1' cy='143.6' r='1.1' opacity='0.24'/%3E%3Ccircle cx='53.4' cy='50.8' r='0.8' opacity='0.16'/%3E%3Ccircle cx='232.5' cy='93.2' r='1.0' opacity='0.23'/%3E%3Ccircle cx='83.6' cy='34.8' r='0.6' opacity='0.12'/%3E%3Ccircle cx='205.3' cy='196.5' r='0.8' opacity='0.17'/%3E%3Ccircle cx='174.0' cy='172.2' r='1.3' opacity='0.38'/%3E%3Ccircle cx='240.0' cy='107.7' r='1.4' opacity='0.43'/%3E%3Ccircle cx='240.7' cy='151.7' r='1.3' opacity='0.37'/%3E%3Ccircle cx='127.8' cy='100.1' r='0.7' opacity='0.14'/%3E%3Ccircle cx='220.3' cy='49.0' r='0.6' opacity='0.12'/%3E%3Ccircle cx='203.3' cy='195.7' r='0.9' opacity='0.2'/%3E%3Ccircle cx='210.9' cy='22.5' r='0.7' opacity='0.14'/%3E%3Ccircle cx='79.6' cy='110.7' r='0.7' opacity='0.13'/%3E%3Ccircle cx='26.7' cy='91.1' r='1.3' opacity='0.38'/%3E%3Ccircle cx='246.0' cy='189.0' r='0.9' opacity='0.19'/%3E%3Ccircle cx='70.5' cy='240.1' r='1.0' opacity='0.21'/%3E%3Ccircle cx='184.9' cy='16.8' r='0.7' opacity='0.14'/%3E%3Ccircle cx='211.2' cy='200.9' r='1.3' opacity='0.37'/%3E%3Ccircle cx='154.3' cy='112.3' r='1.0' opacity='0.23'/%3E%3Ccircle cx='213.8' cy='83.9' r='1.0' opacity='0.21'/%3E%3Ccircle cx='76.2' cy='194.4' r='0.5' opacity='0.12'/%3E%3Ccircle cx='174.5' cy='239.0' r='0.5' opacity='0.12'/%3E%3Ccircle cx='152.5' cy='164.5' r='1.3' opacity='0.35'/%3E%3Ccircle cx='150.2' cy='71.7' r='0.9' opacity='0.17'/%3E%3Ccircle cx='240.1' cy='227.3' r='0.6' opacity='0.13'/%3E%3Ccircle cx='32.8' cy='32.5' r='0.5' opacity='0.12'/%3E%3Ccircle cx='117.2' cy='43.8' r='1.3' opacity='0.36'/%3E%3C/g%3E%3Cg fill='%23DCCFF9'%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(163.5,49.3) scale(0.82)' opacity='0.38'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(128.7,69.4) scale(0.6)' opacity='0.34'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(103.6,175.4) scale(0.83)' opacity='0.31'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(175.5,210.8) scale(0.96)' opacity='0.49'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(23.7,122.2) scale(0.54)' opacity='0.48'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(59.9,175.7) scale(0.65)' opacity='0.47'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(89.7,31.1) scale(0.73)' opacity='0.37'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(216.6,85.7) scale(0.8)' opacity='0.43'/%3E%3C/g%3E%3C/svg%3E");
-  --banner-bg-pattern: radial-gradient(circle at 80% 20%, rgba(167, 139, 250, 0.15) 0%, transparent 40%), var(--starfield);
-  --banner-bg-size: 100% 100%, 260px 260px;
-}
-
-[data-theme="wine-poetry"] {
-  --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='%23DE9DAD'%3E%3Ccircle cx='49.6' cy='175.5' r='1.1' opacity='0.25'/%3E%3Ccircle cx='125.0' cy='61.8' r='1.2' opacity='0.32'/%3E%3Ccircle cx='203.9' cy='133.0' r='1.0' opacity='0.2'/%3E%3Ccircle cx='66.7' cy='10.8' r='0.8' opacity='0.16'/%3E%3Ccircle cx='150.5' cy='26.6' r='1.2' opacity='0.32'/%3E%3Ccircle cx='65.7' cy='65.8' r='0.5' opacity='0.12'/%3E%3Ccircle cx='249.4' cy='187.3' r='1.3' opacity='0.37'/%3E%3Ccircle cx='157.8' cy='18.2' r='0.8' opacity='0.16'/%3E%3Ccircle cx='129.4' cy='37.8' r='1.4' opacity='0.41'/%3E%3Ccircle cx='98.4' cy='47.2' r='1.2' opacity='0.33'/%3E%3Ccircle cx='40.0' cy='232.7' r='0.9' opacity='0.19'/%3E%3Ccircle cx='142.5' cy='92.3' r='0.9' opacity='0.2'/%3E%3Ccircle cx='54.9' cy='18.9' r='1.3' opacity='0.36'/%3E%3Ccircle cx='66.4' cy='197.3' r='0.7' opacity='0.13'/%3E%3Ccircle cx='242.5' cy='224.6' r='1.2' opacity='0.3'/%3E%3Ccircle cx='193.1' cy='149.4' r='1.2' opacity='0.29'/%3E%3Ccircle cx='39.4' cy='124.3' r='1.2' opacity='0.34'/%3E%3Ccircle cx='58.3' cy='231.6' r='1.3' opacity='0.37'/%3E%3Ccircle cx='108.3' cy='97.7' r='0.9' opacity='0.19'/%3E%3Ccircle cx='102.6' cy='248.8' r='0.8' opacity='0.17'/%3E%3Ccircle cx='16.4' cy='32.4' r='1.1' opacity='0.29'/%3E%3Ccircle cx='248.3' cy='129.0' r='0.9' opacity='0.2'/%3E%3Ccircle cx='142.1' cy='189.6' r='0.7' opacity='0.14'/%3E%3Ccircle cx='156.1' cy='143.6' r='1.1' opacity='0.24'/%3E%3Ccircle cx='53.4' cy='50.8' r='0.8' opacity='0.16'/%3E%3Ccircle cx='232.5' cy='93.2' r='1.0' opacity='0.23'/%3E%3Ccircle cx='83.6' cy='34.8' r='0.6' opacity='0.12'/%3E%3Ccircle cx='205.3' cy='196.5' r='0.8' opacity='0.17'/%3E%3Ccircle cx='174.0' cy='172.2' r='1.3' opacity='0.38'/%3E%3Ccircle cx='240.0' cy='107.7' r='1.4' opacity='0.43'/%3E%3Ccircle cx='240.7' cy='151.7' r='1.3' opacity='0.37'/%3E%3Ccircle cx='127.8' cy='100.1' r='0.7' opacity='0.14'/%3E%3Ccircle cx='220.3' cy='49.0' r='0.6' opacity='0.12'/%3E%3Ccircle cx='203.3' cy='195.7' r='0.9' opacity='0.2'/%3E%3Ccircle cx='210.9' cy='22.5' r='0.7' opacity='0.14'/%3E%3Ccircle cx='79.6' cy='110.7' r='0.7' opacity='0.13'/%3E%3Ccircle cx='26.7' cy='91.1' r='1.3' opacity='0.38'/%3E%3Ccircle cx='246.0' cy='189.0' r='0.9' opacity='0.19'/%3E%3Ccircle cx='70.5' cy='240.1' r='1.0' opacity='0.21'/%3E%3Ccircle cx='184.9' cy='16.8' r='0.7' opacity='0.14'/%3E%3Ccircle cx='211.2' cy='200.9' r='1.3' opacity='0.37'/%3E%3Ccircle cx='154.3' cy='112.3' r='1.0' opacity='0.23'/%3E%3Ccircle cx='213.8' cy='83.9' r='1.0' opacity='0.21'/%3E%3Ccircle cx='76.2' cy='194.4' r='0.5' opacity='0.12'/%3E%3Ccircle cx='174.5' cy='239.0' r='0.5' opacity='0.12'/%3E%3Ccircle cx='152.5' cy='164.5' r='1.3' opacity='0.35'/%3E%3Ccircle cx='150.2' cy='71.7' r='0.9' opacity='0.17'/%3E%3Ccircle cx='240.1' cy='227.3' r='0.6' opacity='0.13'/%3E%3Ccircle cx='32.8' cy='32.5' r='0.5' opacity='0.12'/%3E%3Ccircle cx='117.2' cy='43.8' r='1.3' opacity='0.36'/%3E%3C/g%3E%3Cg fill='%23F2CBD3'%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(163.5,49.3) scale(0.82)' opacity='0.38'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(128.7,69.4) scale(0.6)' opacity='0.34'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(103.6,175.4) scale(0.83)' opacity='0.31'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(175.5,210.8) scale(0.96)' opacity='0.49'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(23.7,122.2) scale(0.54)' opacity='0.48'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(59.9,175.7) scale(0.65)' opacity='0.47'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(89.7,31.1) scale(0.73)' opacity='0.37'/%3E%3Cpath d='M0,-9 C1.2,-2.5 2.5,-1.2 9,0 C2.5,1.2 1.2,2.5 0,9 C-1.2,2.5 -2.5,1.2 -9,0 C-2.5,-1.2 -1.2,-2.5 0,-9 Z' transform='translate(216.6,85.7) scale(0.8)' opacity='0.43'/%3E%3C/g%3E%3C/svg%3E");
-  --banner-bg-pattern: radial-gradient(circle at 20% 20%, rgba(213, 161, 93, 0.08) 0%, transparent 40%), var(--starfield);
-  --banner-bg-size: 100% 100%, 260px 260px;
-}
-
-/* ==========================================================================
-   9. MIDNIGHT BLUE — refinamiento de mystic-night según paleta
-      #06101F · #0B1D3A · #102A4C · #1B4167 · #6E88A3
-      Incluye constelación real (estrellas unidas) en banner y fondo.
-   ========================================================================== */
-[data-theme="mystic-night"] {
-    --color-background: #06101F;
-    --color-surface: #0B1D3A;
-    --color-surface-secondary: #102A4C;
-    --color-surface-elevated: #1B4167;
-    --color-surface-hover: rgba(110, 136, 163, 0.08);
-    --color-surface-active: rgba(110, 136, 163, 0.14);
-
-    --color-primary-dark: #102A4C;
-    --color-primary: #2E5B96;
-    --color-primary-light: #6E88A3;
-    --color-primary-glow: rgba(110, 136, 163, 0.40);
-
-    --color-secondary: #8FA9C4;
-    --color-secondary-glow: rgba(143, 169, 196, 0.30);
-
-    --color-text: #EDF1F7;
-    --color-text-secondary: #B9C5D6;
-    --color-text-muted: #7C8AA0;
-    --color-text-inverse: #06101F;
-
-    --color-border: #1E3A5C;
-    --color-border-subtle: #12294A;
-    --color-border-focus: #6E88A3;
-
-    --color-badge-bg: rgba(110, 136, 163, 0.14);
-    --color-badge-text: #C9D5E3;
-    --color-accent-gold: #D4AF37;
-
-    --banner-gradient: linear-gradient(135deg, #06101F 0%, #0B1D3A 55%, #102A4C 100%);
-    --banner-border: rgba(110, 136, 163, 0.35);
-
-    --reader-bg: #081426;
-    --reader-text: #E9EDF4;
-
-    --brand-eyebrow-color: #E5B869;
-    --brand-rule-color: rgba(212, 175, 55, 0.4);
-    --brand-star-color: #D4AF37;
-    --brand-icon-color: #D4AF37;
-    --brand-icon-ribbon: #F5E8C7;
-
-    --brand-title-gradient: linear-gradient(135deg, #FFFFFF 0%, #F5E8C7 45%, #D4AF37 80%, #C29543 100%);
-    --brand-title-shadow: rgba(212, 175, 55, 0.45);
-
-    --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='%23D7E1EC'%3E%3Ccircle cx='12' cy='30' r='1' opacity='0.45'/%3E%3Ccircle cx='38' cy='85' r='0.8' opacity='0.35'/%3E%3Ccircle cx='64' cy='22' r='1.3' opacity='0.55'/%3E%3Ccircle cx='91' cy='60' r='0.9' opacity='0.4'/%3E%3Ccircle cx='118' cy='18' r='1.1' opacity='0.5'/%3E%3Ccircle cx='145' cy='55' r='0.8' opacity='0.35'/%3E%3Ccircle cx='172' cy='28' r='1.2' opacity='0.55'/%3E%3Ccircle cx='198' cy='70' r='0.9' opacity='0.4'/%3E%3Ccircle cx='225' cy='35' r='1.1' opacity='0.5'/%3E%3Ccircle cx='248' cy='90' r='0.8' opacity='0.35'/%3E%3Ccircle cx='25' cy='130' r='1.1' opacity='0.45'/%3E%3Ccircle cx='52' cy='165' r='0.8' opacity='0.35'/%3E%3Ccircle cx='80' cy='120' r='1.4' opacity='0.6'/%3E%3Ccircle cx='105' cy='155' r='0.9' opacity='0.4'/%3E%3Ccircle cx='132' cy='110' r='1.1' opacity='0.45'/%3E%3Ccircle cx='158' cy='150' r='0.8' opacity='0.35'/%3E%3Ccircle cx='185' cy='125' r='1.2' opacity='0.55'/%3E%3Ccircle cx='212' cy='160' r='0.9' opacity='0.4'/%3E%3Ccircle cx='238' cy='130' r='1.1' opacity='0.45'/%3E%3Ccircle cx='15' cy='205' r='0.9' opacity='0.4'/%3E%3Ccircle cx='45' cy='235' r='1.2' opacity='0.55'/%3E%3Ccircle cx='72' cy='200' r='0.8' opacity='0.35'/%3E%3Ccircle cx='100' cy='228' r='1.1' opacity='0.45'/%3E%3Ccircle cx='128' cy='195' r='0.9' opacity='0.4'/%3E%3Ccircle cx='155' cy='232' r='1.4' opacity='0.6'/%3E%3Ccircle cx='182' cy='205' r='0.8' opacity='0.35'/%3E%3Ccircle cx='210' cy='235' r='1.1' opacity='0.45'/%3E%3Ccircle cx='236' cy='200' r='0.9' opacity='0.4'/%3E%3Ccircle cx='30' cy='155' r='1' opacity='0.42'/%3E%3Ccircle cx='115' cy='85' r='1' opacity='0.42'/%3E%3Ccircle cx='190' cy='95' r='1' opacity='0.42'/%3E%3Ccircle cx='75' cy='245' r='0.9' opacity='0.4'/%3E%3Ccircle cx='165' cy='20' r='0.9' opacity='0.4'/%3E%3C/g%3E%3Cg fill='%23FFFFFF'%3E%3Ccircle cx='64' cy='22' r='1.3' opacity='0.8'/%3E%3Ccircle cx='80' cy='120' r='1.4' opacity='0.8'/%3E%3Ccircle cx='155' cy='232' r='1.4' opacity='0.8'/%3E%3Ccircle cx='185' cy='125' r='1.2' opacity='0.75'/%3E%3Ccircle cx='225' cy='35' r='1.1' opacity='0.75'/%3E%3C/g%3E%3Cg fill='%238FA9C4'%3E%3Ccircle cx='50' cy='48' r='0.9' opacity='0.45'/%3E%3Ccircle cx='135' cy='75' r='0.9' opacity='0.45'/%3E%3Ccircle cx='218' cy='105' r='0.9' opacity='0.45'/%3E%3Ccircle cx='98' cy='185' r='0.9' opacity='0.45'/%3E%3Ccircle cx='188' cy='215' r='0.9' opacity='0.45'/%3E%3Ccircle cx='22' cy='110' r='0.8' opacity='0.4'/%3E%3C/g%3E%3C/svg%3E");
-    --banner-bg-pattern: radial-gradient(circle at 20% 30%, rgba(110, 136, 163, 0.12) 0%, transparent 40%), var(--starfield);
-    --banner-bg-size: 100% 100%, 260px 260px;
-
-    --theme-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 260 260'%3E%3Cg fill='%23D7E1EC'%3E%3Ccircle cx='20' cy='40' r='0.9' opacity='0.28'/%3E%3Ccircle cx='70' cy='90' r='0.7' opacity='0.22'/%3E%3Ccircle cx='120' cy='35' r='1' opacity='0.3'/%3E%3Ccircle cx='170' cy='80' r='0.7' opacity='0.22'/%3E%3Ccircle cx='220' cy='45' r='0.9' opacity='0.28'/%3E%3Ccircle cx='45' cy='140' r='0.9' opacity='0.26'/%3E%3Ccircle cx='95' cy='180' r='0.7' opacity='0.22'/%3E%3Ccircle cx='145' cy='135' r='1' opacity='0.3'/%3E%3Ccircle cx='195' cy='175' r='0.7' opacity='0.22'/%3E%3Ccircle cx='235' cy='130' r='0.9' opacity='0.26'/%3E%3Ccircle cx='30' cy='220' r='0.7' opacity='0.22'/%3E%3Ccircle cx='85' cy='240' r='0.9' opacity='0.26'/%3E%3Ccircle cx='140' cy='210' r='0.7' opacity='0.22'/%3E%3Ccircle cx='190' cy='235' r='0.9' opacity='0.26'/%3E%3Ccircle cx='230' cy='205' r='0.7' opacity='0.22'/%3E%3Ccircle cx='110' cy='150' r='0.7' opacity='0.22'/%3E%3Ccircle cx='160' cy='110' r='0.7' opacity='0.22'/%3E%3Ccircle cx='210' cy='155' r='0.7' opacity='0.22'/%3E%3C/g%3E%3C/svg%3E");
-    --theme-bg-size: 320px 320px;
-}
-
-/* Muestras del modal para Midnight Blue */
-.swatch-mn-1 { background-color: #06101F; }
-.swatch-mn-2 { background-color: #0B1D3A; }
-.swatch-mn-3 { background-color: #1B4167; }
-.swatch-mn-4 { background-color: #6E88A3; }
-
-/* ==========================================================================
-   10. SERENITY MIST — reemplazo total de Vino & Poesía según paleta
-      niebla rosada · gris lavanda · rosa empolvado · malva tenue
-   ========================================================================== */
-[data-theme="wine-poetry"] {
-    --color-background: #F6F0F1;
-    --color-surface: #FDF9FA;
-    --color-surface-secondary: #F0E5E8;
-    --color-surface-elevated: #FFFFFF;
-    --color-surface-hover: rgba(154, 117, 133, 0.07);
-    --color-surface-active: rgba(154, 117, 133, 0.12);
-
-    --color-primary-dark: #6E5560;
-    --color-primary: #8A6573;
-    --color-primary-light: #A98391;
-    --color-primary-glow: rgba(154, 117, 133, 0.28);
-
-    --color-secondary: #7E93A6;
-    --color-secondary-glow: rgba(126, 147, 166, 0.25);
-
-    --color-text: #4A3E44;
-    --color-text-secondary: #7A6E74;
-    --color-text-muted: #A89AA0;
-    --color-text-inverse: #FFFFFF;
-
-    --color-border: #E3D3D8;
-    --color-border-subtle: #EFE2E5;
-    --color-border-focus: #A98391;
-
-    --color-badge-bg: rgba(154, 117, 133, 0.10);
-    --color-badge-text: #7A5A66;
-    --color-accent-gold: #C2A3B0;
-
-    --banner-gradient: linear-gradient(135deg, #FAF3F4 0%, #F1DEE3 55%, #E4C9D2 100%);
-    --banner-border: rgba(154, 117, 133, 0.30);
-
-    --reader-bg: #FAF5F6;
-    --reader-text: #4A3E44;
-
-    --brand-eyebrow-color: #8A6414;
-    --brand-rule-color: rgba(213, 161, 93, 0.35);
-    --brand-star-color: #D5A15D;
-    --brand-icon-color: #D5A15D;
-    --brand-icon-ribbon: #8A6414;
-
-    --brand-title-gradient: linear-gradient(135deg, #4A2834 0%, #7A4958 35%, #D5A15D 80%, #A67332 100%);
-    --brand-title-shadow: rgba(213, 161, 93, 0.25);
-
-    --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='%23C2A3B0'%3E%3Ccircle cx='60' cy='70' r='1.4' opacity='0.5'/%3E%3Ccircle cx='230' cy='50' r='1.6' opacity='0.55'/%3E%3Ccircle cx='190' cy='220' r='1.4' opacity='0.5'/%3E%3Ccircle cx='90' cy='250' r='1.2' opacity='0.45'/%3E%3Ccircle cx='150' cy='130' r='1.3' opacity='0.5'/%3E%3Ccircle cx='40' cy='160' r='1.1' opacity='0.45'/%3E%3C/g%3E%3C/svg%3E");
-    --banner-bg-pattern: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.55) 0%, transparent 45%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg fill='%23EACBD6' opacity='0.5'%3E%3Cg transform='translate(55,75) rotate(-25) scale(1.3)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(235,60) rotate(22) scale(1.35)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(185,225) rotate(-12) scale(1.3)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%23D8A9B8' opacity='0.6'%3E%3Cg transform='translate(60,70) rotate(-30)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(230,50) rotate(25)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(190,220) rotate(-15)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(90,250) rotate(35)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(260,150) rotate(-40)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%23C2A3B0' opacity='0.65'%3E%3Ccircle cx='120' cy='120' r='2.8'/%3E%3Ccircle cx='200' cy='160' r='3'/%3E%3Ccircle cx='75' cy='200' r='2.6'/%3E%3C/g%3E%3Cg fill='%239A7585'%3E%3Ccircle cx='120' cy='120' r='1' opacity='0.7'/%3E%3Ccircle cx='200' cy='160' r='1.1' opacity='0.7'/%3E%3Ccircle cx='75' cy='200' r='1' opacity='0.7'/%3E%3C/g%3E%3Cg fill='%23B98A99'%3E%3Ccircle cx='150' cy='130' r='1.4' opacity='0.5'/%3E%3Ccircle cx='40' cy='160' r='1.2' opacity='0.45'/%3E%3Ccircle cx='250' cy='250' r='1.3' opacity='0.45'/%3E%3Ccircle cx='110' cy='30' r='1' opacity='0.4'/%3E%3C/g%3E%3C/svg%3E");
-    --banner-bg-size: 100% 100%, 300px 300px;
-
-    --theme-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='340' viewBox='0 0 300 300'%3E%3Cg fill='%23EACBD6' opacity='0.28'%3E%3Cg transform='translate(60,70) rotate(-30) scale(1.2)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(230,50) rotate(25) scale(1.25)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%23D8A9B8' opacity='0.32'%3E%3Cg transform='translate(140,150) rotate(15)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(90,250) rotate(35)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(200,60) rotate(-15)'%3E%3Cpath d='M0 0 C7 -9 17 -9 23 0 C17 9 7 9 0 0 Z'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%23C2A3B0' opacity='0.4'%3E%3Ccircle cx='200' cy='160' r='2.8'/%3E%3Ccircle cx='75' cy='200' r='2.5'/%3E%3C/g%3E%3C/svg%3E");
-    --theme-bg-size: 340px 340px;
-}
-
-
-/* Muestras del modal para Serenity Mist */
-.swatch-wp-1 { background-color: #F7F1F1; border: 1px solid #E3D3D8; }
-.swatch-wp-2 { background-color: #B9B3C0; }
-.swatch-wp-3 { background-color: #C2A3B0; }
-.swatch-wp-4 { background-color: #9A7585; }
-
-/* ==========================================================================
-   11. MORNING FOREST — reemplazo de Bosque Encantado según paleta
-      #E4EBDD · #CFE1C9 · #B7C9B2 · #A3B9A1 · #D8DEE3
-      Hojas de acuarela + banner claro con letras musgo oscuras.
-   ========================================================================== */
-[data-theme="enchanted-forest"] {
-    --color-background: #EDF2EA;
-    --color-surface: #F7FAF6;
-    --color-surface-secondary: #E4EBDD;
-    --color-surface-elevated: #FFFFFF;
-    --color-surface-hover: rgba(84, 111, 82, 0.07);
-    --color-surface-active: rgba(84, 111, 82, 0.12);
-
-    --color-primary-dark: #3C4C3B;
-    --color-primary: #546F52;
-    --color-primary-light: #6E8F6B;
-    --color-primary-glow: rgba(84, 111, 82, 0.28);
-
-    --color-secondary: #647E89;
-    --color-secondary-glow: rgba(100, 126, 137, 0.25);
-
-    --color-text: #3E4A3E;
-    --color-text-secondary: #6B7568;
-    --color-text-muted: #9AA398;
-    --color-text-inverse: #FFFFFF;
-
-    --color-border: #D3DCCF;
-    --color-border-subtle: #E7EDE3;
-    --color-border-focus: #6E8F6B;
-
-    --color-badge-bg: rgba(84, 111, 82, 0.10);
-    --color-badge-text: #4F6B4D;
-    --color-accent-gold: #8AA383;
-
-    --banner-gradient: linear-gradient(135deg, #F4F8F1 0%, #E2EBDA 55%, #CCDFC2 100%);
-    --banner-border: rgba(84, 111, 82, 0.30);
-
-    --reader-bg: #F4F7F2;
-    --reader-text: #3E4A3E;
-
-    --brand-eyebrow-color: #8A6414;
-    --brand-rule-color: rgba(197, 138, 58, 0.35);
-    --brand-star-color: #C58A3A;
-    --brand-icon-color: #C58A3A;
-    --brand-icon-ribbon: #8A6414;
-
-    --brand-title-gradient: linear-gradient(135deg, #1C3824 0%, #2D5838 45%, #C58A3A 85%, #8A6414 100%);
-    --brand-title-shadow: rgba(197, 138, 58, 0.25);
-
-    --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='%237A9A76'%3E%3Ccircle cx='60' cy='70' r='1.4' opacity='0.5'/%3E%3Ccircle cx='230' cy='80' r='1.6' opacity='0.55'/%3E%3Ccircle cx='180' cy='220' r='1.4' opacity='0.5'/%3E%3Ccircle cx='80' cy='240' r='1.2' opacity='0.45'/%3E%3Ccircle cx='150' cy='130' r='1.3' opacity='0.5'/%3E%3Ccircle cx='40' cy='160' r='1.1' opacity='0.45'/%3E%3C/g%3E%3C/svg%3E");
-    --banner-bg-pattern: radial-gradient(circle at 15% 70%, rgba(255, 255, 255, 0.5) 0%, transparent 45%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cg fill='%23C3D2BE' opacity='0.35'%3E%3Cg transform='translate(50,70) rotate(-25) scale(1.3)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(215,60) rotate(20) scale(1.35)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z'/%3E%3C/g%3E%3Cg transform='translate(160,220) rotate(-12) scale(1.3)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z'/%3E%3C/g%3E%3C/g%3E%3Cg transform='translate(70,60) rotate(-30)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z' fill='%239DB49A' opacity='0.55'/%3E%3Cpath d='M3 0 L31 0' stroke='%235F7F5C' stroke-width='1' opacity='0.5' fill='none'/%3E%3C/g%3E%3Cg transform='translate(230,80) rotate(25)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z' fill='%239DB49A' opacity='0.55'/%3E%3Cpath d='M3 0 L31 0' stroke='%235F7F5C' stroke-width='1' opacity='0.5' fill='none'/%3E%3C/g%3E%3Cg transform='translate(180,220) rotate(-15)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z' fill='%239DB49A' opacity='0.55'/%3E%3Cpath d='M3 0 L31 0' stroke='%235F7F5C' stroke-width='1' opacity='0.5' fill='none'/%3E%3C/g%3E%3Cg transform='translate(80,240) rotate(30)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z' fill='%239DB49A' opacity='0.55'/%3E%3Cpath d='M3 0 L31 0' stroke='%235F7F5C' stroke-width='1' opacity='0.5' fill='none'/%3E%3C/g%3E%3Cg transform='translate(140,150) rotate(15) scale(0.7)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z' fill='%237A9A76' opacity='0.6'/%3E%3C/g%3E%3Cg transform='translate(45,170) rotate(-20) scale(0.65)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z' fill='%237A9A76' opacity='0.6'/%3E%3C/g%3E%3Cg fill='%23FFFFFF'%3E%3Ccircle cx='66' cy='58' r='1.1' opacity='0.65'/%3E%3Ccircle cx='226' cy='78' r='1.2' opacity='0.65'/%3E%3Ccircle cx='176' cy='218' r='1' opacity='0.6'/%3E%3Ccircle cx='258' cy='168' r='1' opacity='0.6'/%3E%3C/g%3E%3Cg fill='%235F7F5C'%3E%3Ccircle cx='150' cy='130' r='1.4' opacity='0.5'/%3E%3Ccircle cx='40' cy='160' r='1.2' opacity='0.45'/%3E%3Ccircle cx='250' cy='250' r='1.3' opacity='0.45'/%3E%3Ccircle cx='110' cy='30' r='1' opacity='0.4'/%3E%3C/g%3E%3C/svg%3E");
-    --banner-bg-size: 100% 100%, 300px 300px;
-
-    --theme-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='340' viewBox='0 0 300 300'%3E%3Cg transform='translate(70,60) rotate(-30) scale(1.2)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z' fill='%23C3D2BE' opacity='0.2'/%3E%3C/g%3E%3Cg transform='translate(230,80) rotate(25) scale(1.25)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z' fill='%23C3D2BE' opacity='0.2'/%3E%3C/g%3E%3Cg transform='translate(140,150) rotate(15)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z' fill='%239DB49A' opacity='0.28'/%3E%3Cpath d='M3 0 L31 0' stroke='%235F7F5C' stroke-width='1' opacity='0.22' fill='none'/%3E%3C/g%3E%3Cg transform='translate(80,240) rotate(30)'%3E%3Cpath d='M0 0 C10 -11 24 -11 34 0 C24 11 10 11 0 0 Z' fill='%239DB49A' opacity='0.28'/%3E%3Cpath d='M3 0 L31 0' stroke='%235F7F5C' stroke-width='1' opacity='0.22' fill='none'/%3E%3C/g%3E%3Cg fill='%235F7F5C'%3E%3Ccircle cx='250' cy='250' r='1.2' opacity='0.18'/%3E%3Ccircle cx='40' cy='160' r='1.1' opacity='0.15'/%3E%3Ccircle cx='110' cy='30' r='1' opacity='0.15'/%3E%3C/g%3E%3C/svg%3E");
-    --theme-bg-size: 340px 340px;
-}
-
-
-/* Muestras del modal para Morning Forest */
-.swatch-ef-1 { background-color: #E4EBDD; border: 1px solid #D3DCCF; }
-.swatch-ef-2 { background-color: #B7C9B2; }
-.swatch-ef-3 { background-color: #546F52; }
-.swatch-ef-4 { background-color: #A3B9A1; }
-
-/* Muestras del modal para Morning Forest */
-.swatch-ef-1 { background-color: #E4EBDD; border: 1px solid #D3DCCF; }
-.swatch-ef-2 { background-color: #B7C9B2; }
-.swatch-ef-3 { background-color: #546F52; }
-.swatch-ef-4 { background-color: #A3B9A1; }
-
-/* ==========================================================================
-   13. DESTELLOS EN BANNERS — 4 y 8 puntas pequeñas en los 5 temas.
-   ========================================================================== */
-[data-theme="mystic-night"] {
-    --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cdefs%3E%3Cpath id='s8' d='M0,-7 1.6,-1.6 5,-5 1.6,1.6 7,0 1.6,1.6 5,5 1.6,1.6 0,7 -1.6,1.6 -5,5 -1.6,1.6 -7,0 -1.6,-1.6 -5,-5 -1.6,-1.6 Z'/%3E%3C/defs%3E%3Cg fill='%23E9EFF7'%3E%3Cuse href='%23s8' transform='translate(130,100) scale(1.9)' opacity='0.85'/%3E%3Cuse href='%23s8' transform='translate(80,152) scale(0.85)' opacity='0.75'/%3E%3Cuse href='%23s8' transform='translate(180,152) scale(0.85)' opacity='0.75'/%3E%3C/g%3E%3Cg fill='%238FA9C4'%3E%3Ccircle cx='35' cy='60' r='1.1' opacity='0.5'/%3E%3Ccircle cx='220' cy='50' r='1' opacity='0.45'/%3E%3Ccircle cx='60' cy='210' r='1' opacity='0.45'/%3E%3Ccircle cx='200' cy='210' r='1.1' opacity='0.5'/%3E%3Ccircle cx='130' cy='30' r='0.9' opacity='0.4'/%3E%3Ccircle cx='25' cy='150' r='0.9' opacity='0.4'/%3E%3Ccircle cx='235' cy='150' r='0.9' opacity='0.4'/%3E%3C/g%3E%3C/svg%3E");
-}
-
-[data-theme="lavender-light"] {
-    --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cdefs%3E%3Cpath id='s8' d='M0,-7 1.6,-1.6 5,-5 1.6,1.6 7,0 1.6,1.6 5,5 1.6,1.6 0,7 -1.6,1.6 -5,5 -1.6,1.6 -7,0 -1.6,-1.6 -5,-5 -1.6,-1.6 Z'/%3E%3C/defs%3E%3Cg fill='%236E5FD0'%3E%3Cuse href='%23s8' transform='translate(130,100) scale(1.9)' opacity='0.8'/%3E%3Cuse href='%23s8' transform='translate(80,152) scale(0.85)' opacity='0.7'/%3E%3Cuse href='%23s8' transform='translate(180,152) scale(0.85)' opacity='0.7'/%3E%3C/g%3E%3Cg fill='%23A79EDD'%3E%3Ccircle cx='35' cy='60' r='1.1' opacity='0.55'/%3E%3Ccircle cx='220' cy='50' r='1' opacity='0.5'/%3E%3Ccircle cx='60' cy='210' r='1' opacity='0.5'/%3E%3Ccircle cx='200' cy='210' r='1.1' opacity='0.55'/%3E%3Ccircle cx='130' cy='30' r='0.9' opacity='0.45'/%3E%3Ccircle cx='25' cy='150' r='0.9' opacity='0.45'/%3E%3Ccircle cx='235' cy='150' r='0.9' opacity='0.45'/%3E%3C/g%3E%3C/svg%3E");
-}
-
-[data-theme="clear-sky"] {
-    --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cdefs%3E%3Cpath id='s8' d='M0,-7 1.6,-1.6 5,-5 1.6,1.6 7,0 1.6,1.6 5,5 1.6,1.6 0,7 -1.6,1.6 -5,5 -1.6,1.6 -7,0 -1.6,-1.6 -5,-5 -1.6,-1.6 Z'/%3E%3C/defs%3E%3Cg fill='%233E7FC8'%3E%3Cuse href='%23s8' transform='translate(130,100) scale(1.9)' opacity='0.8'/%3E%3Cuse href='%23s8' transform='translate(80,152) scale(0.85)' opacity='0.7'/%3E%3Cuse href='%23s8' transform='translate(180,152) scale(0.85)' opacity='0.7'/%3E%3C/g%3E%3Cg fill='%237FB3E0'%3E%3Ccircle cx='35' cy='60' r='1.1' opacity='0.55'/%3E%3Ccircle cx='220' cy='50' r='1' opacity='0.5'/%3E%3Ccircle cx='60' cy='210' r='1' opacity='0.5'/%3E%3Ccircle cx='200' cy='210' r='1.1' opacity='0.55'/%3E%3Ccircle cx='130' cy='30' r='0.9' opacity='0.45'/%3E%3Ccircle cx='25' cy='150' r='0.9' opacity='0.45'/%3E%3Ccircle cx='235' cy='150' r='0.9' opacity='0.45'/%3E%3C/g%3E%3C/svg%3E");
-}
-
-[data-theme="enchanted-forest"] {
-    --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cdefs%3E%3Cpath id='s8' d='M0,-7 1.6,-1.6 5,-5 1.6,1.6 7,0 1.6,1.6 5,5 1.6,1.6 0,7 -1.6,1.6 -5,5 -1.6,1.6 -7,0 -1.6,-1.6 -5,-5 -1.6,-1.6 Z'/%3E%3C/defs%3E%3Cg fill='%2350674C'%3E%3Cuse href='%23s8' transform='translate(130,100) scale(1.9)' opacity='0.75'/%3E%3Cuse href='%23s8' transform='translate(80,152) scale(0.85)' opacity='0.65'/%3E%3Cuse href='%23s8' transform='translate(180,152) scale(0.85)' opacity='0.65'/%3E%3C/g%3E%3Cg fill='%238AA383'%3E%3Ccircle cx='35' cy='60' r='1.1' opacity='0.55'/%3E%3Ccircle cx='220' cy='50' r='1' opacity='0.5'/%3E%3Ccircle cx='60' cy='210' r='1' opacity='0.5'/%3E%3Ccircle cx='200' cy='210' r='1.1' opacity='0.55'/%3E%3Ccircle cx='130' cy='30' r='0.9' opacity='0.45'/%3E%3Ccircle cx='25' cy='150' r='0.9' opacity='0.45'/%3E%3Ccircle cx='235' cy='150' r='0.9' opacity='0.45'/%3E%3C/g%3E%3C/svg%3E");
-}
-
-[data-theme="wine-poetry"] {
-    --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cdefs%3E%3Cpath id='s8' d='M0,-7 1.6,-1.6 5,-5 1.6,1.6 7,0 1.6,1.6 5,5 1.6,1.6 0,7 -1.6,1.6 -5,5 -1.6,1.6 -7,0 -1.6,-1.6 -5,-5 -1.6,-1.6 Z'/%3E%3C/defs%3E%3Cg fill='%23A27688'%3E%3Cuse href='%23s8' transform='translate(130,100) scale(1.9)' opacity='0.75'/%3E%3Cuse href='%23s8' transform='translate(80,152) scale(0.85)' opacity='0.65'/%3E%3Cuse href='%23s8' transform='translate(180,152) scale(0.85)' opacity='0.65'/%3E%3C/g%3E%3Cg fill='%23CDA9B6'%3E%3Ccircle cx='35' cy='60' r='1.1' opacity='0.55'/%3E%3Ccircle cx='220' cy='50' r='1' opacity='0.5'/%3E%3Ccircle cx='60' cy='210' r='1' opacity='0.5'/%3E%3Ccircle cx='200' cy='210' r='1.1' opacity='0.55'/%3E%3Ccircle cx='130' cy='30' r='0.9' opacity='0.45'/%3E%3Ccircle cx='25' cy='150' r='0.9' opacity='0.45'/%3E%3Ccircle cx='235' cy='150' r='0.9' opacity='0.45'/%3E%3C/g%3E%3C/svg%3E");
-}
-
-/* ==========================================================================
-   12. BANNERS CLAROS — fondo luminoso con degradado y letras oscuras.
-      Night-mystic conserva su banner oscuro intacto.
-   ========================================================================== */
-[data-theme="lavender-light"] {
-    --banner-gradient: linear-gradient(135deg, #F4F0FD 0%, #E4D8F6 55%, #D3C2F0 100%);
-    --banner-border: rgba(108, 92, 231, 0.30);
-}
-
-[data-theme="clear-sky"] {
-    --banner-gradient: linear-gradient(135deg, #F2F8FE 0%, #DCEBF9 55%, #C2DDF3 100%);
-    --banner-border: rgba(37, 99, 235, 0.28);
-}
-
-/* ==========================================================================
-   15. CIELO ESTRELLADO EN EL BANNER DE FRASES — destellos dispersos
-       de 4 y 8 puntas con tinte propio en los 5 temas.
-   ========================================================================== */
-[data-theme="mystic-night"] {
-    --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cdefs%3E%3Cpath id='s4' d='M0,-8 1.4,-1.4 8,0 1.4,1.4 0,8 -1.4,1.4 -8,0 -1.4,-1.4 Z'/%3E%3C/defs%3E%3Cg fill='%23E9EFF7'%3E%3Cuse href='%23s4' transform='translate(36,54) scale(0.55)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(214,86) scale(0.5)' opacity='0.75'/%3E%3Cuse href='%23s4' transform='translate(130,204) scale(0.6)' opacity='0.85'/%3E%3Cuse href='%23s4' transform='translate(234,214) scale(0.5)' opacity='0.75'/%3E%3Cuse href='%23s4' transform='translate(94,124) scale(0.7)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(174,40) scale(0.6)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(30,174) scale(0.65)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(250,150) scale(0.7)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(84,244) scale(0.6)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(194,252) scale(0.6)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(124,94) scale(0.45)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(204,184) scale(0.4)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(58,224) scale(0.45)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(18,104) scale(0.4)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(248,64) scale(0.45)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(154,154) scale(0.4)' opacity='0.7'/%3E%3C/g%3E%3Cg fill='%239DB4FF'%3E%3Ccircle cx='62' cy='32' r='1.1' opacity='0.7'/%3E%3Ccircle cx='112' cy='62' r='0.9' opacity='0.6'/%3E%3Ccircle cx='232' cy='32' r='1' opacity='0.65'/%3E%3Ccircle cx='22' cy='142' r='1' opacity='0.65'/%3E%3Ccircle cx='152' cy='122' r='0.9' opacity='0.6'/%3E%3Ccircle cx='102' cy='172' r='1' opacity='0.65'/%3E%3Ccircle cx='222' cy='122' r='0.9' opacity='0.6'/%3E%3Ccircle cx='42' cy='212' r='1.1' opacity='0.7'/%3E%3Ccircle cx='162' cy='232' r='1' opacity='0.65'/%3E%3Ccircle cx='242' cy='242' r='0.9' opacity='0.6'/%3E%3Ccircle cx='12' cy='62' r='0.9' opacity='0.6'/%3E%3Ccircle cx='132' cy='22' r='0.9' opacity='0.6'/%3E%3C/g%3E%3C/svg%3E");
-}
-
-[data-theme="lavender-light"] {
-    --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cdefs%3E%3Cpath id='s4' d='M0,-8 1.4,-1.4 8,0 1.4,1.4 0,8 -1.4,1.4 -8,0 -1.4,-1.4 Z'/%3E%3C/defs%3E%3Cg fill='%236E5FD0'%3E%3Cuse href='%23s4' transform='translate(36,54) scale(0.55)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(214,86) scale(0.5)' opacity='0.75'/%3E%3Cuse href='%23s4' transform='translate(130,204) scale(0.6)' opacity='0.85'/%3E%3Cuse href='%23s4' transform='translate(234,214) scale(0.5)' opacity='0.75'/%3E%3Cuse href='%23s4' transform='translate(94,124) scale(0.7)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(174,40) scale(0.6)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(30,174) scale(0.65)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(250,150) scale(0.7)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(84,244) scale(0.6)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(194,252) scale(0.6)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(124,94) scale(0.45)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(204,184) scale(0.4)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(58,224) scale(0.45)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(18,104) scale(0.4)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(248,64) scale(0.45)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(154,154) scale(0.4)' opacity='0.7'/%3E%3C/g%3E%3Cg fill='%23A79EDD'%3E%3Ccircle cx='62' cy='32' r='1.1' opacity='0.7'/%3E%3Ccircle cx='112' cy='62' r='0.9' opacity='0.6'/%3E%3Ccircle cx='232' cy='32' r='1' opacity='0.65'/%3E%3Ccircle cx='22' cy='142' r='1' opacity='0.65'/%3E%3Ccircle cx='152' cy='122' r='0.9' opacity='0.6'/%3E%3Ccircle cx='102' cy='172' r='1' opacity='0.65'/%3E%3Ccircle cx='222' cy='122' r='0.9' opacity='0.6'/%3E%3Ccircle cx='42' cy='212' r='1.1' opacity='0.7'/%3E%3Ccircle cx='162' cy='232' r='1' opacity='0.65'/%3E%3Ccircle cx='242' cy='242' r='0.9' opacity='0.6'/%3E%3Ccircle cx='12' cy='62' r='0.9' opacity='0.6'/%3E%3Ccircle cx='132' cy='22' r='0.9' opacity='0.6'/%3E%3C/g%3E%3C/svg%3E");
-}
-
-[data-theme="clear-sky"] {
-    --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cdefs%3E%3Cpath id='s4' d='M0,-8 1.4,-1.4 8,0 1.4,1.4 0,8 -1.4,1.4 -8,0 -1.4,-1.4 Z'/%3E%3C/defs%3E%3Cg fill='%233E7FC8'%3E%3Cuse href='%23s4' transform='translate(36,54) scale(0.55)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(214,86) scale(0.5)' opacity='0.75'/%3E%3Cuse href='%23s4' transform='translate(130,204) scale(0.6)' opacity='0.85'/%3E%3Cuse href='%23s4' transform='translate(234,214) scale(0.5)' opacity='0.75'/%3E%3Cuse href='%23s4' transform='translate(94,124) scale(0.7)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(174,40) scale(0.6)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(30,174) scale(0.65)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(250,150) scale(0.7)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(84,244) scale(0.6)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(194,252) scale(0.6)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(124,94) scale(0.45)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(204,184) scale(0.4)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(58,224) scale(0.45)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(18,104) scale(0.4)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(248,64) scale(0.45)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(154,154) scale(0.4)' opacity='0.7'/%3E%3C/g%3E%3Cg fill='%237FB3E0'%3E%3Ccircle cx='62' cy='32' r='1.1' opacity='0.7'/%3E%3Ccircle cx='112' cy='62' r='0.9' opacity='0.6'/%3E%3Ccircle cx='232' cy='32' r='1' opacity='0.65'/%3E%3Ccircle cx='22' cy='142' r='1' opacity='0.65'/%3E%3Ccircle cx='152' cy='122' r='0.9' opacity='0.6'/%3E%3Ccircle cx='102' cy='172' r='1' opacity='0.65'/%3E%3Ccircle cx='222' cy='122' r='0.9' opacity='0.6'/%3E%3Ccircle cx='42' cy='212' r='1.1' opacity='0.7'/%3E%3Ccircle cx='162' cy='232' r='1' opacity='0.65'/%3E%3Ccircle cx='242' cy='242' r='0.9' opacity='0.6'/%3E%3Ccircle cx='12' cy='62' r='0.9' opacity='0.6'/%3E%3Ccircle cx='132' cy='22' r='0.9' opacity='0.6'/%3E%3C/g%3E%3C/svg%3E");
-}
-
-[data-theme="enchanted-forest"] {
-    --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cdefs%3E%3Cpath id='s4' d='M0,-8 1.4,-1.4 8,0 1.4,1.4 0,8 -1.4,1.4 -8,0 -1.4,-1.4 Z'/%3E%3C/defs%3E%3Cg fill='%2350674C'%3E%3Cuse href='%23s4' transform='translate(36,54) scale(0.55)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(214,86) scale(0.5)' opacity='0.75'/%3E%3Cuse href='%23s4' transform='translate(130,204) scale(0.6)' opacity='0.85'/%3E%3Cuse href='%23s4' transform='translate(234,214) scale(0.5)' opacity='0.75'/%3E%3Cuse href='%23s4' transform='translate(94,124) scale(0.7)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(174,40) scale(0.6)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(30,174) scale(0.65)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(250,150) scale(0.7)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(84,244) scale(0.6)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(194,252) scale(0.6)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(124,94) scale(0.45)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(204,184) scale(0.4)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(58,224) scale(0.45)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(18,104) scale(0.4)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(248,64) scale(0.45)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(154,154) scale(0.4)' opacity='0.7'/%3E%3C/g%3E%3Cg fill='%238AA383'%3E%3Ccircle cx='62' cy='32' r='1.1' opacity='0.7'/%3E%3Ccircle cx='112' cy='62' r='0.9' opacity='0.6'/%3E%3Ccircle cx='232' cy='32' r='1' opacity='0.65'/%3E%3Ccircle cx='22' cy='142' r='1' opacity='0.65'/%3E%3Ccircle cx='152' cy='122' r='0.9' opacity='0.6'/%3E%3Ccircle cx='102' cy='172' r='1' opacity='0.65'/%3E%3Ccircle cx='222' cy='122' r='0.9' opacity='0.6'/%3E%3Ccircle cx='42' cy='212' r='1.1' opacity='0.7'/%3E%3Ccircle cx='162' cy='232' r='1' opacity='0.65'/%3E%3Ccircle cx='242' cy='242' r='0.9' opacity='0.6'/%3E%3Ccircle cx='12' cy='62' r='0.9' opacity='0.6'/%3E%3Ccircle cx='132' cy='22' r='0.9' opacity='0.6'/%3E%3C/g%3E%3C/svg%3E");
-    --banner-bg-pattern: radial-gradient(circle at 15% 70%, rgba(255, 255, 255, 0.5) 0%, transparent 45%), var(--starfield);
-    --banner-bg-size: 100% 100%, 260px 260px;
-}
-
-[data-theme="wine-poetry"] {
-    --starfield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cdefs%3E%3Cpath id='s4' d='M0,-8 1.4,-1.4 8,0 1.4,1.4 0,8 -1.4,1.4 -8,0 -1.4,-1.4 Z'/%3E%3C/defs%3E%3Cg fill='%23A27688'%3E%3Cuse href='%23s4' transform='translate(36,54) scale(0.55)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(214,86) scale(0.5)' opacity='0.75'/%3E%3Cuse href='%23s4' transform='translate(130,204) scale(0.6)' opacity='0.85'/%3E%3Cuse href='%23s4' transform='translate(234,214) scale(0.5)' opacity='0.75'/%3E%3Cuse href='%23s4' transform='translate(94,124) scale(0.7)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(174,40) scale(0.6)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(30,174) scale(0.65)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(250,150) scale(0.7)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(84,244) scale(0.6)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(194,252) scale(0.6)' opacity='0.8'/%3E%3Cuse href='%23s4' transform='translate(124,94) scale(0.45)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(204,184) scale(0.4)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(58,224) scale(0.45)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(18,104) scale(0.4)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(248,64) scale(0.45)' opacity='0.7'/%3E%3Cuse href='%23s4' transform='translate(154,154) scale(0.4)' opacity='0.7'/%3E%3C/g%3E%3Cg fill='%23CDA9B6'%3E%3Ccircle cx='62' cy='32' r='1.1' opacity='0.7'/%3E%3Ccircle cx='112' cy='62' r='0.9' opacity='0.6'/%3E%3Ccircle cx='232' cy='32' r='1' opacity='0.65'/%3E%3Ccircle cx='22' cy='142' r='1' opacity='0.65'/%3E%3Ccircle cx='152' cy='122' r='0.9' opacity='0.6'/%3E%3Ccircle cx='102' cy='172' r='1' opacity='0.65'/%3E%3Ccircle cx='222' cy='122' r='0.9' opacity='0.6'/%3E%3Ccircle cx='42' cy='212' r='1.1' opacity='0.7'/%3E%3Ccircle cx='162' cy='232' r='1' opacity='0.65'/%3E%3Ccircle cx='242' cy='242' r='0.9' opacity='0.6'/%3E%3Ccircle cx='12' cy='62' r='0.9' opacity='0.6'/%3E%3Ccircle cx='132' cy='22' r='0.9' opacity='0.6'/%3E%3C/g%3E%3C/svg%3E");
-    --banner-bg-pattern: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.55) 0%, transparent 45%), var(--starfield);
-    --banner-bg-size: 100% 100%, 260px 260px;
-}
+.swatch-sys-accent { background-color: #3B6FD6; }

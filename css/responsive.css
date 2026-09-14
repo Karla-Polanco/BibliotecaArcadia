@@ -13,19 +13,25 @@
   left: 0;
   width: 100%;
   z-index: var(--z-sticky);
-  padding: 0 12px;
+  padding: 0 var(--space-sm);
   align-items: center;
   justify-content: space-between;
+  gap: var(--space-xs);
+  box-sizing: border-box;
 }
 
 .mobile-nav-toggle {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-sm);
   color: var(--color-text);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .mobile-nav-toggle:active {
@@ -33,94 +39,151 @@
 }
 
 .mobile-logo-wrap {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   white-space: nowrap;
   pointer-events: none;
+  flex: 1;
+  min-width: 0;
 }
 
-.brand-emblem-mobile {
-  height: 26px;
-  width: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 6px rgba(212, 175, 55, 0.45));
+.mobile-diamond {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gold, #F59E0B);
+  opacity: 1;
+  filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.7));
+  flex-shrink: 0;
+}
+
+.mobile-diamond svg {
   display: block;
+  width: 22px;
+  height: 22px;
 }
 
 #mobile-upload-trigger {
-  padding: 6px 14px !important;
-  font-size: 0.78rem !important;
+  min-height: 36px !important;
+  height: 36px !important;
+  max-height: 36px !important;
+  padding: 0 10px !important;
+  font-size: 0.76rem !important;
   font-weight: 600 !important;
-  border-radius: var(--radius-full, 9999px) !important;
-  gap: 5px !important;
-  box-shadow: 0 2px 8px var(--color-primary-glow, rgba(0, 0, 0, 0.15)) !important;
+  border-radius: var(--radius-md) !important;
+  gap: 4px !important;
+  flex: 0 0 auto !important;
+  max-width: 85px !important;
+  width: auto !important;
 }
 
-/* Bottom Navigation Bar fija (Móvil) */
+/* Bottom Navigation Bar fija (Móvil) — glass premium con safe-area */
 .mobile-bottom-nav {
   display: none;
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: var(--mobile-nav-height);
-  background-color: var(--color-surface);
+  min-height: var(--mobile-nav-height);
+  background-color: color-mix(in srgb, var(--color-surface) 88%, transparent);
   border-top: 1px solid var(--color-border);
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.22);
   z-index: var(--z-mobile-nav);
-  padding: 0 var(--space-sm);
+  padding: 6px var(--space-xs) calc(6px + env(safe-area-inset-bottom));
   justify-content: space-around;
-  align-items: center;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  align-items: stretch;
+  gap: 4px;
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
 }
 
 .mobile-nav-link {
+  position: relative;
   display: flex;
+  flex: 1 1 0;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 3px;
   color: var(--color-text-muted);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: var(--weight-medium);
-  padding: 6px 12px;
-  min-height: 48px;
-  min-width: 64px;
-  border-radius: var(--radius-sm);
-  position: relative;
-  transition: all var(--transition-fast);
+  letter-spacing: 0.01em;
+  padding: 9px 6px 8px;
+  min-height: 56px;
+  min-width: 60px;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
   font-family: inherit;
-  border: none;
   background: transparent;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Píldora indicadora superior animada */
+.mobile-nav-link::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  width: 22px;
+  height: 3px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--color-primary-light), var(--color-secondary));
+  box-shadow: 0 0 8px var(--color-primary-glow);
+  opacity: 0;
+  transform: translateX(-50%) scaleX(0.4);
+  transition: opacity 0.22s ease, transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .mobile-nav-link svg {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.8;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+}
+
+.mobile-nav-link:hover {
+  color: var(--color-text);
+  background-color: var(--color-surface-hover);
+}
+
+.mobile-nav-link:active {
+  transform: scale(0.93);
+  background-color: var(--color-surface-secondary);
+  transition-duration: 0.08s;
 }
 
 .mobile-nav-link.active {
-  color: var(--color-primary-light);
+  color: var(--color-text);
   font-weight: var(--weight-semibold);
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--color-primary-light) 14%, transparent),
+    color-mix(in srgb, var(--color-primary-light) 7%, transparent));
+  border-color: color-mix(in srgb, var(--color-primary-light) 22%, transparent);
+}
+
+.mobile-nav-link.active::after {
+  opacity: 1;
+  transform: translateX(-50%) scaleX(1);
+}
+
+.mobile-nav-link.active svg {
+  color: var(--color-primary-light);
+  transform: translateY(-1px);
+}
+
+.mobile-nav-link:focus-visible {
+  outline: 3px solid var(--color-primary-light);
+  outline-offset: 1px;
 }
 
 .mobile-nav-badge {
-  position: absolute;
-  top: 2px;
-  right: 8px;
-  background-color: var(--color-primary-light);
-  color: #FFFFFF;
-  font-size: 0.65rem;
-  font-weight: var(--weight-bold);
-  padding: 1px 5px;
-  border-radius: var(--radius-full);
+  display: none !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -182,34 +245,39 @@
   }
 
   .library-header {
-    gap: 14px;
-    margin-bottom: 18px;
+    gap: 16px;
+    margin-bottom: 22px;
   }
 
   .library-header-top {
     flex-wrap: wrap;
     gap: var(--space-xs);
-    padding-bottom: 0;
+    padding-bottom: 2px;
+    margin-bottom: 6px;
   }
 
   .library-title {
-    font-size: 1.45rem;
+    font-size: 1.35rem;
     font-weight: 700;
     letter-spacing: -0.01em;
+    line-height: 1.25;
+    margin: 0;
   }
 
   .library-controls {
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
+    gap: 12px;
   }
 
   .search-box {
     max-width: 100%;
     min-width: unset;
-    height: 36px !important;
-    min-height: 36px !important;
+    height: 40px !important;
+    min-height: 40px !important;
     padding: 0 14px !important;
+    border-radius: var(--radius-md) !important;
+    gap: 10px !important;
   }
 
   /* Acciones de filtro y vista compactas y elegantes para móvil */
@@ -418,6 +486,121 @@
   .theme-options-grid {
     grid-template-columns: 1fr;
   }
+
+  /* ========================================================================
+     PANELES DE CABECERA Y TARJETAS EN MÓVIL (VOCABULARIO Y NOTAS)
+     ======================================================================== */
+  .annotations-header-panel,
+  .vocab-header-panel {
+    padding: 14px 16px !important;
+    border-radius: var(--radius-md) !important;
+    margin-bottom: 16px !important;
+    gap: 12px !important;
+  }
+
+  .annotations-header-top,
+  .vocab-header-top {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .panel-heading {
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    margin: 2px 0 4px 0 !important;
+    line-height: 1.25 !important;
+  }
+
+  .panel-category-tag {
+    font-size: 0.64rem !important;
+    margin-bottom: 2px !important;
+  }
+
+  .panel-description {
+    font-size: 0.76rem !important;
+    line-height: 1.4 !important;
+    color: var(--color-text-secondary) !important;
+  }
+
+  .panel-actions-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    flex-wrap: wrap !important;
+  }
+
+  .panel-actions-row select,
+  #select-filter-book,
+  #select-filter-type {
+    flex: 1 1 140px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    font-size: 0.8rem !important;
+    padding: 0 10px !important;
+  }
+
+  #btn-add-word-manual {
+    height: 34px !important;
+    padding: 0 14px !important;
+    font-size: 0.76rem !important;
+  }
+
+  .panel-search-bar {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 0 12px !important;
+  }
+
+  .panel-search-input {
+    font-size: 0.82rem !important;
+  }
+
+  /* Cuadrícula de tarjetas en 1 columna limpia y espaciosa para móvil */
+  .annotations-cards-grid,
+  .vocab-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .annotation-card,
+  .vocab-card {
+    padding: 16px 14px !important;
+    gap: 12px !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .annotation-quote {
+    font-size: 0.88rem !important;
+    padding: 10px 12px !important;
+    line-height: 1.5 !important;
+  }
+
+  .annotation-user-note {
+    padding: 10px 12px !important;
+    font-size: 0.78rem !important;
+  }
+
+  .vocab-word-title {
+    font-size: 1.15rem !important;
+  }
+
+  .vocab-definition-box {
+    padding: 10px 12px !important;
+  }
+
+  .vocab-definition-text {
+    font-size: 0.78rem !important;
+    line-height: 1.45 !important;
+  }
+
+  .vocab-context-box {
+    padding: 8px 10px !important;
+    font-size: 0.72rem !important;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -435,7 +618,7 @@
     align-items: stretch;
   }
 
-  .btn-upload-epub {
+  .library-header-top .btn-upload-epub {
     width: 100%;
     justify-content: center;
     min-height: 44px;
@@ -443,6 +626,16 @@
 
   .mobile-topbar {
     padding: 0 8px;
+  }
+
+  .mobile-brand-wordmark {
+    font-size: 1.08rem !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  .mobile-diamond svg {
+    width: 15px !important;
+    height: 15px !important;
   }
 
   .reader-header {

@@ -38,8 +38,8 @@
   background-color: color-mix(in srgb, var(--color-surface) 82%, transparent);
   backdrop-filter: blur(12px) saturate(1.2);
   -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  border-bottom: 1px solid var(--color-border);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -125,22 +125,52 @@
   min-height: 44px;
   width: 44px;
   height: 44px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   color: var(--color-text-secondary);
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease, box-shadow 0.22s ease;
+}
+
+.btn-reader-action svg {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-reader-action:hover {
   background-color: var(--color-surface-hover);
+  border-color: var(--color-border-subtle, transparent);
   color: var(--color-text);
+  transform: translateY(-1px);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+}
+
+.btn-reader-action:hover svg {
+  transform: scale(1.12);
+}
+
+.btn-reader-action:active {
+  transform: scale(0.9);
+  background-color: var(--color-surface-secondary);
+  box-shadow: none;
+  transition-duration: 0.08s;
 }
 
 .btn-reader-action.active,
 .btn-reader-action[aria-expanded="true"] {
   color: var(--color-primary-light);
-  background-color: var(--color-surface-secondary);
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--color-primary-light) 16%, var(--color-surface-secondary)),
+    var(--color-surface-secondary));
+  border-color: color-mix(in srgb, var(--color-primary-light) 35%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-primary-light) 25%, transparent),
+    0 1px 6px rgba(0,0,0,0.08);
 }
 
 .btn-reader-action:focus-visible {
@@ -226,7 +256,7 @@ html.reader-open {
   width: 44px;
   height: 60px;
   background-color: var(--color-surface-hover);
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(255,255,255,0.05);
   color: var(--color-text-muted);
   border-radius: var(--radius-md);
   z-index: 10;
@@ -294,7 +324,7 @@ html.reader-open {
   backdrop-filter: blur(12px) saturate(1.2);
   -webkit-backdrop-filter: blur(12px) saturate(1.2);
   border-top: 1px solid var(--color-border);
-  box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.05);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -336,7 +366,7 @@ html.reader-open {
   align-items: center;
   gap: 6px;
   background-color: var(--color-surface-secondary);
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(255,255,255,0.05);
   border-radius: var(--radius-sm);
   padding: 5px 12px;
   color: var(--color-text-secondary);
@@ -376,7 +406,7 @@ html.reader-open {
   flex-direction: column;
   transform: translateX(-100%);
   transition: transform var(--transition-normal);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
 }
 
 .reader-toc-drawer.open {
@@ -385,7 +415,7 @@ html.reader-open {
 
 .toc-header {
   padding: var(--space-lg);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -551,9 +581,9 @@ html.reader-open {
    overscroll-behavior: contain;
    overflow-x: hidden;
   background-color: var(--color-surface-elevated, #1E1C2E);
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(255,255,255,0.05);
   border-radius: var(--radius-lg, 16px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   z-index: 220;
   padding: 20px;
   display: flex;
@@ -625,7 +655,7 @@ html.reader-open {
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
   transition: all var(--transition-fast);
 }
 
@@ -646,7 +676,7 @@ html.reader-open {
   border-color: var(--color-primary-light);
   color: #FFFFFF;
   font-weight: 700;
-  box-shadow: 0 3px 10px var(--color-primary-glow);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
 /* Control de Tamaño de Fuente [ A- ] [ 18px ] [ A+ ] */
@@ -720,7 +750,7 @@ html.reader-open {
   border-color: var(--color-gold, #D4AF37) !important;
   background-color: var(--color-surface-hover) !important;
   color: var(--color-text) !important;
-  box-shadow: 0 0 0 2px var(--color-gold, #D4AF37), 0 3px 12px rgba(212, 175, 55, 0.25) !important;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-gold) 25%, transparent), 0 2px 8px rgba(212,175,55,0.08) !important;
   transform: translateY(-1px);
 }
 
@@ -734,13 +764,13 @@ html.reader-open {
   height: 16px;
   border-radius: 50%;
   flex-shrink: 0;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
   pointer-events: none;
 }
 
 .reader-theme-swatch.swatch-auto {
   background: linear-gradient(135deg, #FFFFFF 50%, #151522 50%);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
 .reader-theme-name {
@@ -810,7 +840,7 @@ html.reader-open {
   background-color: var(--color-surface);
   color: var(--color-primary-light);
   font-weight: var(--weight-bold);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 /* --------------------------------------------------------------------------
@@ -828,9 +858,9 @@ html.reader-open {
   max-height: calc(100dvh - 40px);
   background-color: var(--color-surface, #1E1C2E);
   background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
-  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.14));
+  border: 1px solid rgba(255,255,255,0.05);
   border-radius: var(--radius-xl, 20px);
-  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(212, 175, 55, 0.12);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03), 0 0 0 1px rgba(212,175,55,0.05);
   z-index: 250;
   display: flex;
   flex-direction: column;
@@ -849,7 +879,7 @@ html.reader-open {
 
 .search-panel-header {
   padding: 16px 20px;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -869,7 +899,7 @@ html.reader-open {
 
 .search-input-wrapper:focus-within {
   border-color: var(--color-primary-light) !important;
-  box-shadow: 0 0 0 3px var(--color-primary-glow) !important;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-primary-light) 25%, transparent), 0 2px 8px rgba(0,0,0,0.05) !important;
 }
 
 .search-input-wrapper input,
@@ -911,7 +941,7 @@ html.reader-open {
   padding: 12px 14px;
   border-radius: var(--radius-sm, 8px);
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(255,255,255,0.05);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
@@ -988,14 +1018,16 @@ html.reader-open {
   }
 
   .btn-reader-action {
-    width: 32px;
-    height: 32px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
     padding: 0;
   }
 
   .btn-reader-action svg {
-    width: 16px;
-    height: 16px;
+    width: 19px;
+    height: 19px;
   }
 
   #btn-reader-fullscreen {
@@ -1067,6 +1099,128 @@ html.reader-open {
   #btn-submit-reader-search {
     padding: 6px 14px;
     font-size: 0.78rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9. BARRA FLOTANTE DE SELECCIÓN DE TEXTO — sistema táctil premium
+   -------------------------------------------------------------------------- */
+.reader-floating-menu {
+  position: fixed;
+  z-index: 250;
+  background-color: color-mix(in srgb, var(--color-surface-elevated, #242424) 92%, transparent);
+  backdrop-filter: blur(16px) saturate(1.25);
+  -webkit-backdrop-filter: blur(16px) saturate(1.25);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: var(--radius-full, 9999px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.05), 0 0 0 1px rgba(212,175,55,0.05);
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -100%) scale(0.92);
+  transition: opacity 0.18s ease, transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.floating-colors {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 10px;
+  border-right: 1px solid var(--color-border);
+}
+
+.menu-color-btn {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: var(--radius-full);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.menu-color-btn:hover {
+  transform: scale(1.15);
+  border-color: #FFF;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.menu-color-btn:active {
+  transform: scale(1.02);
+}
+
+.floating-btn {
+  min-width: 40px;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--color-text);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.18s ease, color 0.18s ease,
+    border-color 0.18s ease, box-shadow 0.2s ease;
+}
+
+.floating-btn:hover {
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-border-subtle, transparent);
+  color: var(--color-text);
+  transform: translateY(-1px);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+}
+
+.floating-btn:active {
+  transform: scale(0.92);
+  background-color: var(--color-surface-secondary);
+  box-shadow: none;
+  transition-duration: 0.08s;
+}
+
+.floating-btn:focus-visible,
+.menu-color-btn:focus-visible {
+  outline: 3px solid var(--color-primary-light);
+  outline-offset: 2px;
+}
+
+.floating-btn--icon {
+  color: var(--color-text-secondary);
+}
+
+.floating-btn--close {
+  color: var(--color-text-secondary);
+  border-left: 1px solid var(--color-border);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-left: 2px;
+  padding-left: 12px;
+}
+
+/* Táctil: diana completa de 44px en punteros gruesos */
+@media (hover: none) and (pointer: coarse) {
+  .floating-btn {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px 12px;
+  }
+  .menu-color-btn {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
   }
 }
 

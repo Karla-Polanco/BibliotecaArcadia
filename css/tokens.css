@@ -6,16 +6,18 @@
   /* Tipografía General */
   --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-serif: 'Literata', 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-display: 'Cinzel', Georgia, serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
 
-  /* Escala Tipográfica (Más grande y legible) */
-  --text-xs: 0.82rem;    /* ~13.5px */
-  --text-sm: 0.92rem;    /* ~15px */
-  --text-base: 1.02rem;  /* ~16.5px */
-  --text-md: 1.15rem;    /* ~18.5px */
-  --text-lg: 1.35rem;    /* ~22px */
-  --text-xl: 1.65rem;    /* ~26.5px */
-  --text-2xl: 2.05rem;   /* ~33px */
+  /* Escala Tipográfica Proporcional */
+  --text-2xs: 0.68rem;   /* ~11px */
+  --text-xs: 0.78rem;    /* ~13px */
+  --text-sm: 0.88rem;    /* ~14.5px */
+  --text-base: 0.98rem;  /* ~16px */
+  --text-md: 1.12rem;    /* ~18.5px */
+  --text-lg: 1.3rem;     /* ~21.5px */
+  --text-xl: 1.6rem;     /* ~26.5px */
+  --text-2xl: 2rem;      /* ~33px */
 
   /* Pesos de Fuente */
   --weight-regular: 400;
@@ -23,44 +25,44 @@
   --weight-semibold: 600;
   --weight-bold: 700;
 
-  /* Espaciado */
+  /* Escala de Espaciado Armónica */
   --space-2xs: 0.25rem; /* 4px */
   --space-xs: 0.5rem;   /* 8px */
   --space-sm: 0.75rem;  /* 12px */
   --space-md: 1rem;     /* 16px */
   --space-lg: 1.5rem;   /* 24px */
   --space-xl: 2rem;     /* 32px */
-  --space-2xl: 3rem;    /* 48px */
+  --space-2xl: 2.75rem; /* 44px */
+  --space-3xl: 3.5rem;  /* 56px */
 
-  /* Radios de Curvatura */
+  /* Radios de Curvatura Cohesivos */
   --radius-xs: 4px;
   --radius-sm: 8px;
   --radius-md: 12px;
-  --radius-lg: 18px;
-  --radius-xl: 24px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
   --radius-full: 9999px;
 
-  /* Elevación y Sombras */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.35);
-  --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  /* Elevación y Sombras Multicapa */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 12px 28px -4px rgba(0, 0, 0, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --shadow-card-soft: 0 4px 16px rgba(0, 0, 0, 0.06);
 
-  /* Transiciones */
-  --transition-fast: 0.15s ease;
-  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Transiciones y Físicas Suaves */
+  --transition-fast: 0.14s cubic-bezier(0.2, 0, 0, 1);
+  --transition-normal: 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Dimensiones Estructurales */
   --sidebar-width: 260px;
-  --mobile-nav-height: 64px;
-  --header-height: 60px;
-  --reading-banner-height: 72px;
+  --mobile-nav-height: 60px;
+  --header-height: 56px;
+  --control-height: 42px;
 
-  /* Altura unificada de controles de biblioteca (select + Grid/Lista) */
-  --control-height: 44px;
-
-  /* Z-Index (usar siempre estas variables, sin literales en componentes) */
+  /* Z-Index Jerárquico */
   --z-sidebar: 40;
   --z-sticky: 30;
   --z-mobile-nav: 50;
@@ -71,22 +73,18 @@
   --z-modal: 200;
   --z-toast: 300;
 
-  /* Foco accesible */
+  /* Accesibilidad y Foco */
   --color-border-focus: var(--color-primary-light);
   --focus-ring: 0 0 0 3px var(--color-primary-glow);
 
-  /* Sombra suave para temas claros */
-  --shadow-card-soft: 0 10px 30px -12px rgba(30, 27, 75, 0.18);
-
-  /* Identidad Dorada Arcadia (Libro, Estrellas y Luna) */
+  /* Acentos Dorados Arcadia */
   --color-gold: #D4AF37;
   --color-gold-light: #F7E7A0;
   --color-gold-dark: #9A7214;
-  --color-gold-glow: rgba(212, 175, 55, 0.35);
+  --color-gold-glow: rgba(212, 175, 55, 0.28);
 
-  /* Tokens de Libro Estilo Kindle / Apple Books 3D */
+  /* Tokens de Libro Editorial */
   --book-aspect-ratio: 2 / 3;
-  --shadow-book: 0 10px 28px -6px rgba(0, 0, 0, 0.48), 0 3px 8px -2px rgba(0, 0, 0, 0.3), inset -1px 0 0 rgba(255, 255, 255, 0.08);
-  --shadow-book-hover: 0 22px 48px -10px rgba(0, 0, 0, 0.65), 0 8px 20px -3px rgba(0, 0, 0, 0.4), inset -1px 0 0 rgba(255, 255, 255, 0.15);
-  --shadow-book-spine: inset 5px 0 10px -2px rgba(0, 0, 0, 0.55), inset -1px 0 3px rgba(255, 255, 255, 0.15);
+  --shadow-book: 0 8px 24px -4px rgba(0, 0, 0, 0.28), 0 2px 6px -1px rgba(0, 0, 0, 0.14);
+  --shadow-book-hover: 0 16px 36px -6px rgba(0, 0, 0, 0.35), 0 4px 12px -2px rgba(0, 0, 0, 0.18);
 }

@@ -123,7 +123,7 @@ input:focus, input:focus-visible,
 select:focus, select:focus-visible,
 textarea:focus, textarea:focus-visible {
   border-color: var(--color-primary-light);
-  box-shadow: 0 0 0 3px var(--color-primary-glow);
+  box-shadow: 0 0 0 1px var(--color-primary-glow), 0 2px 8px rgba(0,0,0,0.05);
 }
 
 /* Excepciones para inputs integrados en cajas compuestas */
@@ -161,23 +161,45 @@ select option {
   font-size: 0.9rem;
 }
 
-img, svg {
+img {
   display: block;
   max-width: 100%;
+}
+
+svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Iconos de interfaz estandarizados */
+.icon {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 ul, ol {
   list-style: none;
 }
 
-/* Scrollbar Personalizado */
+/* Scrollbar Personalizado Limpio y Moderno (sin flechas ni botones nativos) */
+*::-webkit-scrollbar-button,
+::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-background);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -217,7 +239,7 @@ ul, ol {
 }
 
 /* --------------------------------------------------------------------------
-   SISTEMA UNIVERSAL DE VENTANAS MODALES (CENTRADO Y ALTO Z-INDEX)
+   SISTEMA UNIVERSAL DE VENTANAS MODALES — cristal premium + entrada elástica
    -------------------------------------------------------------------------- */
 .theme-modal-overlay,
 .modal-overlay,
@@ -229,20 +251,21 @@ ul, ol {
   width: 100vw !important;
   height: 100vh !important;
   height: 100dvh !important;
-  background: rgba(0, 0, 0, 0.76) !important;
+  background: rgba(0, 0, 0, 0.72) !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
   z-index: 99999 !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  padding: 20px !important;
+  padding: 24px !important;
+  padding-top: max(24px, env(safe-area-inset-top)) !important;
+  padding-bottom: max(24px, env(safe-area-inset-bottom)) !important;
   box-sizing: border-box !important;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  /* El overlay nunca genera scroll horizontal; si el card excede la altura
-     (teclado móvil, landscape), el overlay absorbe el scroll y no el body */
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    backdrop-filter 0.28s ease;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   overscroll-behavior: contain !important;
@@ -261,29 +284,42 @@ ul, ol {
 .arcadia-modal-card {
   background-color: var(--color-surface, #1E1C2E) !important;
   background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.05) 0%, transparent 70%) !important;
-  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.14)) !important;
-  border-radius: var(--radius-xl, 22px) !important;
-  box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(212, 175, 55, 0.12) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05), 0 0 0 1px rgba(212,175,55,0.05) !important;
   color: var(--color-text, #FFFFFF) !important;
   position: relative !important;
   width: 100% !important;
   max-width: 500px;
   max-height: 90vh !important;
-  /* Descuenta el padding del overlay (20px por lado): el card + su scrollbar
-     nunca tocan el borde del viewport ni se salen del container */
-  max-height: min(90vh, calc(100dvh - 40px)) !important;
+  max-height: min(90vh, calc(100dvh - 48px)) !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   box-sizing: border-box !important;
   isolation: isolate !important;
   margin: auto !important;
-  transform: scale(0.95);
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease;
-  /* Scroll contenido: evita propagar el scroll al fondo y suaviza el gesto táctil */
+  padding: 28px !important;
+  transform: scale(0.96) translateY(10px);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.24s ease;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   scrollbar-color: var(--color-border, rgba(255, 255, 255, 0.18)) transparent;
+}
+
+/* Entrada / salida — el JS solo alterna .active en el overlay */
+.theme-modal-overlay.active .theme-modal-dialog,
+.modal-overlay.active .modal-card,
+.arcadia-modal-overlay.active .arcadia-modal-card {
+  transform: scale(1) translateY(0) !important;
+  opacity: 1 !important;
+}
+
+/* Salida suave cuando el JS quita .active (usa transición de opacity del overlay) */
+.theme-modal-overlay:not(.active) .theme-modal-dialog,
+.modal-overlay:not(.active) .modal-card,
+.arcadia-modal-overlay:not(.active) .arcadia-modal-card {
+  transform: scale(0.97) translateY(6px);
 }
 
 /* --------------------------------------------------------------------------
@@ -409,26 +445,43 @@ ul, ol {
 #theme-modal .modal-card,
 .modal-card.modal-wide,
 .theme-modal-dialog.wide {
-  /* 100% del content-box del overlay (no vw): en móviles estrechos el card
-     no desborda y su scrollbar no queda fuera del viewport */
   width: 100% !important;
   max-width: min(960px, 100%) !important;
+  padding: 28px !important;
 }
 
-.theme-modal-overlay.active .theme-modal-dialog,
-.modal-overlay.active .modal-card,
-.arcadia-modal-overlay.active .arcadia-modal-card {
-  transform: scale(1) !important;
+@media (max-width: 768px) {
+  .theme-modal-overlay,
+  .modal-overlay,
+  .arcadia-modal-overlay {
+    padding: 16px !important;
+    align-items: flex-end !important;
+  }
+  .theme-modal-dialog,
+  .modal-card,
+  .arcadia-modal-card {
+    padding: 22px 18px !important;
+    border-radius: 22px !important;
+    max-height: min(92vh, calc(100dvh - 24px)) !important;
+  }
 }
 
 .theme-modal-header {
   display: flex !important;
-  align-items: center !important;
+  align-items: flex-start !important;
   justify-content: space-between !important;
   gap: 14px !important;
   margin-bottom: 20px !important;
   padding-bottom: 14px !important;
-  border-bottom: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.07)) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+}
+
+.modal-header {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  margin-bottom: 20px !important;
 }
 
 .theme-modal-title {
@@ -442,16 +495,19 @@ ul, ol {
 
 .theme-modal-close,
 .modal-close-btn {
-  width: 34px !important;
-  height: 34px !important;
+  width: 36px !important;
+  height: 36px !important;
   border-radius: var(--radius-full, 999px) !important;
   background: var(--color-surface-hover, rgba(255, 255, 255, 0.05)) !important;
-  border: 1px solid var(--color-border, rgba(255, 255, 255, 0.12)) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   color: var(--color-text-secondary) !important;
   cursor: pointer !important;
+  flex-shrink: 0 !important;
+  margin-top: -6px !important;
+  margin-right: -4px !important;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
@@ -463,12 +519,121 @@ ul, ol {
   border-color: var(--color-primary-light) !important;
 }
 
+/* Estructura interna moderna para .arcadia-modal-card (reemplaza inline) */
+.arcadia-modal-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.arcadia-modal-card--sm { max-width: 440px !important; }
+.arcadia-modal-card--md { max-width: 460px !important; }
+.arcadia-modal-card--lg { max-width: 480px !important; }
+
+.arcadia-modal-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.arcadia-modal-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background-color: var(--color-surface-hover, rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.arcadia-modal-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  color: var(--color-text);
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+}
+
+.arcadia-modal-text {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.arcadia-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.arcadia-modal-btn {
+  padding: 10px 20px;
+  border-radius: var(--radius-md, 12px);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.arcadia-modal-btn:active { transform: scale(0.97); }
+
+.arcadia-modal-btn--ghost {
+  background: var(--color-surface-hover);
+  border-color: var(--color-border);
+  color: var(--color-text-secondary);
+}
+
+.arcadia-modal-btn--ghost:hover {
+  background: var(--color-surface);
+  color: var(--color-text);
+  transform: translateY(-1px);
+}
+
+.arcadia-modal-btn--primary {
+  background: linear-gradient(135deg, var(--color-primary, #30256F), var(--color-primary-light, #5B4CC4));
+  color: #FFF;
+  border-color: transparent;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.arcadia-modal-btn--primary:hover {
+  filter: brightness(1.07);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+}
+
+.arcadia-modal-btn--danger {
+  background: linear-gradient(135deg, #DC2626, #B91C1C);
+  color: #FFF;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+}
+
+.arcadia-modal-form { display: flex; flex-direction: column; gap: 14px; }
+.arcadia-modal-field label {
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+
 /* Botones con estilo noble / Kindle Paperwhite */
 .btn-setting-action:hover {
   border-color: var(--color-primary-light) !important;
   background-color: var(--color-surface-hover) !important;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px var(--color-primary-glow, rgba(0, 0, 0, 0.15));
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 /* Controles de Formulario Universales en Modales */
@@ -494,7 +659,7 @@ ul, ol {
 .theme-modal-dialog input:focus,
 .theme-modal-dialog textarea:focus {
   border-color: var(--color-gold, #D4AF37) !important;
-  box-shadow: 0 0 0 3px var(--color-gold-glow, rgba(212, 175, 55, 0.25)) !important;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-gold) 25%, transparent), 0 2px 8px rgba(212,175,55,0.08) !important;
   outline: none !important;
 }
 

@@ -29,104 +29,45 @@ export class Modal {
   }) {
     return new Promise((resolve) => {
       const overlay = document.createElement('div');
-      overlay.className = 'arcadia-modal-overlay active';
-      overlay.style.cssText = `
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-        background: rgba(0, 0, 0, 0.72);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        opacity: 0;
-        transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      `;
+      overlay.className = 'arcadia-modal-overlay';
 
-      const confirmBtnBg = danger
-        ? 'background: linear-gradient(135deg, #DC2626, #B91C1C); color: #FFF; box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4);'
-        : 'background: linear-gradient(135deg, var(--color-primary, #30256F), var(--color-primary-light, #5B4CC4)); color: #FFF; box-shadow: 0 4px 14px var(--color-primary-glow);';
+      const confirmClass = danger ? 'arcadia-modal-btn arcadia-modal-btn--danger' : 'arcadia-modal-btn arcadia-modal-btn--primary';
 
       const defaultIcon = danger
         ? `<svg style="width: 22px; height: 22px; color: #EF4444;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>`
         : `<svg style="width: 22px; height: 22px; color: var(--color-gold, #D4AF37);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
 
       overlay.innerHTML = `
-        <div class="arcadia-modal-card" style="
-          width: 100%;
-          max-width: 440px;
-          padding: 24px;
-          display: flex;
-          flex-direction: column;
-          gap: 18px;
-        ">
-          <div style="display: flex; gap: 14px; align-items: flex-start;">
-            <div style="
-              width: 44px;
-              height: 44px;
-              border-radius: 12px;
-              background-color: var(--color-surface-hover, rgba(255, 255, 255, 0.05));
-              border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              flex-shrink: 0;
-            ">
+        <div class="arcadia-modal-card arcadia-modal-card--sm">
+          <div class="arcadia-modal-row">
+            <div class="arcadia-modal-icon">
               ${icon || defaultIcon}
             </div>
-            <div style="flex: 1;">
-              <h3 style="font-family: 'Cinzel', serif; font-size: 1.15rem; font-weight: 700; margin: 0 0 6px 0; color: var(--color-text); letter-spacing: 0.02em;">${this.escapeHtml(title)}</h3>
-              <p style="font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.5; margin: 0; white-space: pre-line;">${this.escapeHtml(message)}</p>
+            <div style="flex: 1; min-width: 0;">
+              <h3 class="arcadia-modal-title">${this.escapeHtml(title)}</h3>
+              <p class="arcadia-modal-text">${this.escapeHtml(message)}</p>
             </div>
           </div>
 
-          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 6px;">
-            <button id="modal-cancel-btn" style="
-              padding: 9px 18px;
-              border-radius: var(--radius-sm, 8px);
-              background: var(--color-surface-hover);
-              border: 1px solid var(--color-border);
-              color: var(--color-text-secondary);
-              font-size: 0.85rem;
-              font-weight: 600;
-              cursor: pointer;
-              transition: all 0.18s ease;
-            ">${this.escapeHtml(cancelText)}</button>
-
-            <button id="modal-confirm-btn" style="
-              padding: 9px 22px;
-              border-radius: var(--radius-sm, 8px);
-              border: none;
-              font-size: 0.85rem;
-              font-weight: 600;
-              cursor: pointer;
-              transition: all 0.18s ease;
-              ${confirmBtnBg}
-            ">${this.escapeHtml(confirmText)}</button>
+          <div class="arcadia-modal-actions">
+            <button id="modal-cancel-btn" class="arcadia-modal-btn arcadia-modal-btn--ghost">${this.escapeHtml(cancelText)}</button>
+            <button id="modal-confirm-btn" class="${confirmClass}">${this.escapeHtml(confirmText)}</button>
           </div>
         </div>
       `;
 
       document.body.appendChild(overlay);
 
-      // Trigger animaciones de entrada
-      requestAnimationFrame(() => {
-        overlay.style.opacity = '1';
-        const card = overlay.querySelector('.arcadia-modal-card');
-        if (card) card.style.transform = 'scale(1)';
-      });
+      // Entrada: el CSS anima opacity + blur del overlay y scale del card
+      requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('active')));
 
       const close = (result) => {
-        overlay.style.opacity = '0';
-        const card = overlay.querySelector('.arcadia-modal-card');
-        if (card) card.style.transform = 'scale(0.95)';
+        overlay.classList.remove('active');
         setTimeout(() => {
           overlay.remove();
           window.removeEventListener('keydown', keyHandler);
           resolve(result);
-        }, 180);
+        }, 260);
       };
 
       const keyHandler = (e) => {
@@ -168,101 +109,34 @@ export class Modal {
   }) {
     return new Promise((resolve) => {
       const overlay = document.createElement('div');
-      overlay.className = 'arcadia-modal-overlay active';
-      overlay.style.cssText = `
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-        background: rgba(0, 0, 0, 0.72);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        opacity: 0;
-        transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      `;
+      overlay.className = 'arcadia-modal-overlay';
 
       const inputElement = multiline
-        ? `<textarea id="modal-prompt-input" rows="3" placeholder="${this.escapeHtml(placeholder)}" style="
-            width: 100%;
-            padding: 12px 14px;
-            border-radius: var(--radius-sm, 8px);
-            background-color: var(--color-surface-elevated, #161522);
-            border: 1px solid var(--color-border, rgba(255, 255, 255, 0.12));
-            color: var(--color-text, #FFF);
-            font-size: 0.9rem;
-            outline: none;
-            resize: vertical;
-            font-family: inherit;
-            line-height: 1.45;
-          ">${this.escapeHtml(defaultValue)}</textarea>`
-        : `<input type="text" id="modal-prompt-input" value="${this.escapeHtml(defaultValue)}" placeholder="${this.escapeHtml(placeholder)}" autocomplete="off" style="
-            width: 100%;
-            padding: 12px 14px;
-            border-radius: var(--radius-sm, 8px);
-            background-color: var(--color-surface-elevated, #161522);
-            border: 1px solid var(--color-border, rgba(255, 255, 255, 0.12));
-            color: var(--color-text, #FFF);
-            font-size: 0.9rem;
-            outline: none;
-            font-family: inherit;
-          ">`;
+        ? `<textarea id="modal-prompt-input" rows="3" placeholder="${this.escapeHtml(placeholder)}">${this.escapeHtml(defaultValue)}</textarea>`
+        : `<input type="text" id="modal-prompt-input" value="${this.escapeHtml(defaultValue)}" placeholder="${this.escapeHtml(placeholder)}" autocomplete="off">`;
 
       overlay.innerHTML = `
-        <div class="arcadia-modal-card" style="
-          width: 100%;
-          max-width: 460px;
-          padding: 24px;
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-        ">
+        <div class="arcadia-modal-card arcadia-modal-card--md">
           <div>
-            <h3 style="font-family: 'Cinzel', serif; font-size: 1.15rem; font-weight: 700; margin: 0 0 6px 0; color: var(--color-text); letter-spacing: 0.02em;">${this.escapeHtml(title)}</h3>
-            <p style="font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.45; margin: 0; white-space: pre-line;">${this.escapeHtml(message)}</p>
+            <h3 class="arcadia-modal-title">${this.escapeHtml(title)}</h3>
+            <p class="arcadia-modal-text">${this.escapeHtml(message)}</p>
           </div>
 
           <div>
             ${inputElement}
           </div>
 
-          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 4px;">
-            <button id="modal-cancel-btn" style="
-              padding: 9px 18px;
-              border-radius: var(--radius-sm, 8px);
-              background: var(--color-surface-hover);
-              border: 1px solid var(--color-border);
-              color: var(--color-text-secondary);
-              font-size: 0.85rem;
-              font-weight: 600;
-              cursor: pointer;
-              transition: all 0.18s ease;
-            ">${this.escapeHtml(cancelText)}</button>
-
-            <button id="modal-confirm-btn" style="
-              padding: 9px 22px;
-              border-radius: var(--radius-sm, 8px);
-              border: none;
-              font-size: 0.85rem;
-              font-weight: 600;
-              cursor: pointer;
-              background: linear-gradient(135deg, var(--color-primary, #30256F), var(--color-primary-light, #5B4CC4));
-              color: #FFF;
-              box-shadow: 0 4px 14px var(--color-primary-glow);
-              transition: all 0.18s ease;
-            ">${this.escapeHtml(confirmText)}</button>
+          <div class="arcadia-modal-actions">
+            <button id="modal-cancel-btn" class="arcadia-modal-btn arcadia-modal-btn--ghost">${this.escapeHtml(cancelText)}</button>
+            <button id="modal-confirm-btn" class="arcadia-modal-btn arcadia-modal-btn--primary">${this.escapeHtml(confirmText)}</button>
           </div>
         </div>
       `;
 
       document.body.appendChild(overlay);
 
+      requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('active')));
       requestAnimationFrame(() => {
-        overlay.style.opacity = '1';
-        const card = overlay.querySelector('.arcadia-modal-card');
-        if (card) card.style.transform = 'scale(1)';
         const input = overlay.querySelector('#modal-prompt-input');
         if (input) {
           input.focus();
@@ -271,14 +145,12 @@ export class Modal {
       });
 
       const close = (result) => {
-        overlay.style.opacity = '0';
-        const card = overlay.querySelector('.arcadia-modal-card');
-        if (card) card.style.transform = 'scale(0.95)';
+        overlay.classList.remove('active');
         setTimeout(() => {
           overlay.remove();
           window.removeEventListener('keydown', keyHandler);
           resolve(result);
-        }, 180);
+        }, 260);
       };
 
       const keyHandler = (e) => {
@@ -307,79 +179,29 @@ export class Modal {
   static editBookDetails(book) {
     return new Promise((resolve) => {
       const overlay = document.createElement('div');
-      overlay.className = 'arcadia-modal-overlay active';
-      overlay.style.cssText = `
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-        background: rgba(0, 0, 0, 0.72);
-        backdrop-filter: blur(8px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        opacity: 0;
-        transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      `;
+      overlay.className = 'arcadia-modal-overlay';
 
       overlay.innerHTML = `
-        <div class="arcadia-modal-card" style="
-          width: 100%;
-          max-width: 460px;
-          padding: 24px;
-          display: flex;
-          flex-direction: column;
-          gap: 18px;
-        ">
+        <div class="arcadia-modal-card arcadia-modal-card--md">
           <div>
-            <h3 style="font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700; margin: 0 0 4px 0; color: var(--color-text); letter-spacing: 0.02em;">Editar información del libro</h3>
-            <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin: 0;">Modifica los metadatos visibles de este ejemplar en tu biblioteca.</p>
+            <h3 class="arcadia-modal-title" style="font-size: 1.2rem;">Editar información del libro</h3>
+            <p class="arcadia-modal-text">Modifica los metadatos visibles de este ejemplar en tu biblioteca.</p>
           </div>
 
-          <form id="edit-book-form" style="display: flex; flex-direction: column; gap: 14px;">
-            <div>
-              <label style="display: block; font-size: 0.72rem; text-transform: uppercase; font-weight: 700; color: var(--color-text-muted); margin-bottom: 6px; letter-spacing: 0.04em;">Título del libro</label>
-              <input type="text" id="edit-book-title" value="${this.escapeHtml(book.title)}" required style="
-                width: 100%;
-                padding: 10px 14px;
-                font-size: 0.9rem;
-              ">
+          <form id="edit-book-form" class="arcadia-modal-form">
+            <div class="arcadia-modal-field">
+              <label>Título del libro</label>
+              <input type="text" id="edit-book-title" value="${this.escapeHtml(book.title)}" required>
             </div>
 
-            <div>
-              <label style="display: block; font-size: 0.72rem; text-transform: uppercase; font-weight: 700; color: var(--color-text-muted); margin-bottom: 6px; letter-spacing: 0.04em;">Autor</label>
-              <input type="text" id="edit-book-author" value="${this.escapeHtml(book.author)}" required style="
-                width: 100%;
-                padding: 10px 14px;
-                font-size: 0.9rem;
-              ">
+            <div class="arcadia-modal-field">
+              <label>Autor</label>
+              <input type="text" id="edit-book-author" value="${this.escapeHtml(book.author)}" required>
             </div>
 
-            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px;">
-              <button type="button" id="modal-cancel-btn" style="
-                padding: 9px 18px;
-                border-radius: var(--radius-sm, 8px);
-                background: var(--color-surface-hover);
-                border: 1px solid var(--color-border);
-                color: var(--color-text-secondary);
-                font-size: 0.85rem;
-                font-weight: 600;
-                cursor: pointer;
-                transition: all 0.18s ease;
-              ">Cancelar</button>
-
-              <button type="submit" style="
-                padding: 9px 22px;
-                border-radius: var(--radius-sm, 8px);
-                border: none;
-                font-size: 0.85rem;
-                font-weight: 600;
-                cursor: pointer;
-                background: linear-gradient(135deg, var(--color-primary, #30256F), var(--color-primary-light, #5B4CC4));
-                color: #FFF;
-                box-shadow: 0 4px 14px var(--color-primary-glow);
-                transition: all 0.18s ease;
-              ">Guardar cambios</button>
+            <div class="arcadia-modal-actions">
+              <button type="button" id="modal-cancel-btn" class="arcadia-modal-btn arcadia-modal-btn--ghost">Cancelar</button>
+              <button type="submit" class="arcadia-modal-btn arcadia-modal-btn--primary">Guardar cambios</button>
             </div>
           </form>
         </div>
@@ -387,21 +209,15 @@ export class Modal {
 
       document.body.appendChild(overlay);
 
-      requestAnimationFrame(() => {
-        overlay.style.opacity = '1';
-        const card = overlay.querySelector('.arcadia-modal-card');
-        if (card) card.style.transform = 'scale(1)';
-        overlay.querySelector('#edit-book-title')?.focus();
-      });
+      requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('active')));
+      requestAnimationFrame(() => overlay.querySelector('#edit-book-title')?.focus());
 
       const close = (result) => {
-        overlay.style.opacity = '0';
-        const card = overlay.querySelector('.arcadia-modal-card');
-        if (card) card.style.transform = 'scale(0.95)';
+        overlay.classList.remove('active');
         setTimeout(() => {
           overlay.remove();
           resolve(result);
-        }, 180);
+        }, 260);
       };
 
       overlay.querySelector('#modal-cancel-btn').addEventListener('click', () => close(null));
@@ -423,83 +239,44 @@ export class Modal {
   static collectionActionModal(collection) {
     return new Promise((resolve) => {
       const overlay = document.createElement('div');
-      overlay.className = 'arcadia-modal-overlay active';
-      overlay.style.cssText = `
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-        background: rgba(0, 0, 0, 0.72);
-        backdrop-filter: blur(8px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        opacity: 0;
-        transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      `;
+      overlay.className = 'arcadia-modal-overlay';
 
       overlay.innerHTML = `
-        <div class="arcadia-modal-card" style="
-          width: 100%;
-          max-width: 420px;
-          padding: 24px;
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-        ">
+        <div class="arcadia-modal-card arcadia-modal-card--sm">
           <div style="display: flex; align-items: center; gap: 10px;">
             <span style="width: 12px; height: 12px; border-radius: 50%; background-color: ${collection.color || '#5B4CC4'}; box-shadow: 0 0 0 2px rgba(255,255,255,0.15); flex-shrink: 0;"></span>
-            <h3 style="font-family: 'Cinzel', serif; font-size: 1.15rem; font-weight: 700; margin: 0; color: var(--color-text); letter-spacing: 0.02em;">${this.escapeHtml(collection.name)}</h3>
+            <h3 class="arcadia-modal-title">${this.escapeHtml(collection.name)}</h3>
           </div>
-          <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin: 0;">Selecciona la acción que deseas realizar con esta colección:</p>
+          <p class="arcadia-modal-text">Selecciona la acción que deseas realizar con esta colección:</p>
 
           <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 4px;">
-            <button id="btn-col-action-edit" style="
-              display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: var(--radius-sm, 8px);
-              background: var(--color-surface-hover); border: 1px solid var(--color-border);
-              color: var(--color-text); font-size: 0.88rem; font-weight: 600; cursor: pointer; text-align: left;
-              transition: all 0.18s ease;
-            ">
+            <button id="btn-col-action-edit" class="arcadia-modal-btn" style="justify-content: flex-start; background: var(--color-surface-hover); border: 1px solid var(--color-border); color: var(--color-text);">
               <svg style="width: 16px; height: 16px; color: var(--color-primary-light); flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
               <span>Editar nombre, color o descripción</span>
             </button>
 
-            <button id="btn-col-action-delete" style="
-              display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: var(--radius-sm, 8px);
-              background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.25);
-              color: #F87171; font-size: 0.88rem; font-weight: 600; cursor: pointer; text-align: left;
-              transition: all 0.18s ease;
-            ">
+            <button id="btn-col-action-delete" class="arcadia-modal-btn" style="justify-content: flex-start; background: rgba(220, 38, 38, 0.1); border-color: rgba(220, 38, 38, 0.25); color: #F87171;">
               <svg style="width: 16px; height: 16px; color: #EF4444; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
               <span>Eliminar colección</span>
             </button>
           </div>
 
-          <div style="display: flex; justify-content: flex-end; margin-top: 4px;">
-            <button id="btn-col-action-cancel" style="
-              padding: 8px 18px; border-radius: var(--radius-sm, 8px); background: transparent; border: none;
-              color: var(--color-text-secondary); font-size: 0.82rem; font-weight: 600; cursor: pointer;
-            ">Cerrar</button>
+          <div class="arcadia-modal-actions">
+            <button id="btn-col-action-cancel" class="arcadia-modal-btn arcadia-modal-btn--ghost" style="border: none; background: transparent;">Cerrar</button>
           </div>
         </div>
       `;
 
       document.body.appendChild(overlay);
 
-      requestAnimationFrame(() => {
-        overlay.style.opacity = '1';
-        const card = overlay.querySelector('.arcadia-modal-card');
-        if (card) card.style.transform = 'scale(1)';
-      });
+      requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('active')));
 
       const close = (action) => {
-        overlay.style.opacity = '0';
-        const card = overlay.querySelector('.arcadia-modal-card');
-        if (card) card.style.transform = 'scale(0.95)';
+        overlay.classList.remove('active');
         setTimeout(() => {
           overlay.remove();
           resolve(action);
-        }, 180);
+        }, 260);
       };
 
       overlay.querySelector('#btn-col-action-edit').addEventListener('click', () => close('edit'));
@@ -519,31 +296,10 @@ export class Modal {
       const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
       const overlay = document.createElement('div');
-      overlay.className = 'arcadia-modal-overlay active';
-      overlay.style.cssText = `
-        position: fixed !important;
-        inset: 0 !important;
-        z-index: 99999 !important;
-        background: rgba(0, 0, 0, 0.75) !important;
-        backdrop-filter: blur(8px) !important;
-        -webkit-backdrop-filter: blur(8px) !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        padding: 20px !important;
-        opacity: 0;
-        transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      `;
+      overlay.className = 'arcadia-modal-overlay';
 
       overlay.innerHTML = `
-        <div class="arcadia-modal-card" style="
-          width: 100%;
-          max-width: 480px;
-          padding: 28px 24px;
-          display: flex;
-          flex-direction: column;
-          gap: 18px;
-        ">
+        <div class="arcadia-modal-card arcadia-modal-card--lg">
           <!-- Encabezado con Icono -->
           <div style="display: flex; gap: 16px; align-items: center;">
             <div style="
@@ -611,34 +367,10 @@ export class Modal {
           <div id="install-instruction-box" style="display: none; font-size: 0.82rem; color: var(--color-text-secondary); background: rgba(91, 76, 196, 0.08); border: 1px solid var(--color-primary-glow); border-radius: 8px; padding: 12px 14px; line-height: 1.5;"></div>
 
           <!-- Botones de Acción -->
-          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 4px;">
-            <button id="btn-cancel-install" style="
-              padding: 9px 18px;
-              border-radius: var(--radius-md, 8px);
-              background: var(--color-surface-hover);
-              border: 1px solid var(--color-border);
-              color: var(--color-text-secondary);
-              font-size: 0.85rem;
-              font-weight: 600;
-              cursor: pointer;
-              transition: all 0.18s ease;
-            ">Cancelar</button>
+          <div class="arcadia-modal-actions">
+            <button id="btn-cancel-install" class="arcadia-modal-btn arcadia-modal-btn--ghost">Cancelar</button>
 
-            <button id="btn-confirm-install" style="
-              padding: 9px 22px;
-              border-radius: var(--radius-md, 8px);
-              border: none;
-              font-size: 0.85rem;
-              font-weight: 600;
-              cursor: pointer;
-              background: linear-gradient(135deg, var(--color-primary, #30256F), var(--color-primary-light, #5B4CC4));
-              color: #FFF;
-              box-shadow: 0 4px 14px var(--color-primary-glow);
-              transition: all 0.18s ease;
-              display: inline-flex;
-              align-items: center;
-              gap: 6px;
-            ">
+            <button id="btn-confirm-install" class="arcadia-modal-btn arcadia-modal-btn--primary" style="display: inline-flex; align-items: center; gap: 6px;">
               <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
@@ -650,20 +382,14 @@ export class Modal {
 
       document.body.appendChild(overlay);
 
-      requestAnimationFrame(() => {
-        overlay.style.opacity = '1';
-        const card = overlay.querySelector('.arcadia-modal-card');
-        if (card) card.style.transform = 'scale(1)';
-      });
+      requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('active')));
 
       const close = (result) => {
-        overlay.style.opacity = '0';
-        const card = overlay.querySelector('.arcadia-modal-card');
-        if (card) card.style.transform = 'scale(0.95)';
+        overlay.classList.remove('active');
         setTimeout(() => {
           overlay.remove();
           resolve(result);
-        }, 180);
+        }, 260);
       };
 
       overlay.querySelector('#btn-cancel-install').addEventListener('click', () => close(false));

@@ -60,29 +60,28 @@ export class VocabularyView {
     const totalCount = this.words.length;
 
     this.container.innerHTML = `
-      <div class="vocab-header-panel" style="width: 100%; margin-bottom: 18px; padding: 20px; border-radius: var(--radius-lg); background: linear-gradient(135deg, var(--color-surface-elevated), var(--color-surface) 60%, var(--color-surface-secondary)); border: 1px solid var(--color-border); position: relative; overflow: hidden; box-sizing: border-box;">
-        <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--color-primary-light), var(--color-secondary), transparent);"></div>
-        <div style="display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-bottom: 16px;">
-          <div style="flex: 1 1 220px;">
-            <span style="font-size: 0.7rem; text-transform: uppercase; font-weight: bold; color: var(--color-primary-light); letter-spacing: 0.05em;">Cuaderno léxico</span>
-            <h1 style="font-size: var(--text-lg); font-weight: bold; color: var(--color-text); margin: 4px 0;">Vocabulario y Fonética</h1>
-            <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin: 0;">Tus palabras, tus definiciones. Añádelas aquí o con «Definir» mientras lees.</p>
+      <div class="vocab-header-panel">
+        <div class="vocab-header-top">
+          <div>
+            <span class="panel-category-tag">Cuaderno léxico</span>
+            <h1 class="panel-heading">Vocabulario y Fonética</h1>
+            <p class="panel-description">Tus palabras, tus definiciones. Añádelas aquí o con «Definir» mientras lees.</p>
           </div>
-          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-            <span style="font-size: 0.72rem; font-weight: bold; color: var(--color-text-secondary); background-color: var(--color-surface-hover); border: 1px solid var(--color-border); padding: 6px 12px; border-radius: 999px; white-space: nowrap;">${totalCount} ${totalCount === 1 ? 'palabra' : 'palabras'}</span>
+          <div class="panel-actions-row">
+            <span style="font-size: 0.72rem; font-weight: 600; color: var(--color-text-secondary); background-color: var(--color-surface-hover); border: 1px solid var(--color-border); padding: 5px 12px; border-radius: var(--radius-full); white-space: nowrap;">${totalCount} ${totalCount === 1 ? 'palabra' : 'palabras'}</span>
             <button id="btn-add-word-manual" style="
               padding: 6px 14px;
-              border-radius: 999px;
+              border-radius: var(--radius-full);
               font-size: var(--text-xs);
-              font-weight: bold;
-              background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+              font-weight: 600;
+              background: var(--color-primary-light);
               color: #FFFFFF;
               cursor: pointer;
               display: flex;
               align-items: center;
               gap: 5px;
               border: none;
-              box-shadow: 0 2px 8px var(--color-primary-glow, rgba(123, 107, 240, 0.4));
+              box-shadow: 0 1px 4px var(--color-primary-glow);
             ">
               <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
               <span>Añadir palabra</span>
@@ -91,16 +90,14 @@ export class VocabularyView {
         </div>
 
         <!-- Buscador -->
-        <div style="position: relative; flex: 1 1 180px; min-width: 150px; max-width: 240px; display: flex; align-items: center;">
-          <svg style="position: absolute; left: 9px; width: 14px; height: 14px; color: var(--color-text-muted); pointer-events: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-          <input type="text" id="input-vocab-search" value="${this.escapeHtml(this.searchQuery)}" placeholder="Buscar en tu cuaderno..." style="
-            width: 100%; padding: 5px 10px 5px 28px; border-radius: var(--radius-sm); background-color: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: var(--text-xs); outline: none; box-sizing: border-box;
-          ">
+        <div class="panel-search-bar">
+          <svg style="width: 14px; height: 14px; color: var(--color-text-muted); flex-shrink: 0; pointer-events: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input type="text" id="input-vocab-search" class="panel-search-input" value="${this.escapeHtml(this.searchQuery)}" placeholder="Buscar en tu cuaderno...">
         </div>
       </div>
 
       <!-- Tarjetas de Vocabulario -->
-      <div class="vocab-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; width: 100%;">
+      <div class="vocab-cards-grid">
         ${filtered.length === 0 ? `
           <div style="grid-column: 1 / -1; text-align: center; padding: 56px 20px; color: var(--color-text-muted); background-color: var(--color-surface); border: 1px dashed var(--color-border); border-radius: var(--radius-md);">
             <svg style="width: 46px; height: 46px; margin: 0 auto 14px; opacity: 0.35;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
@@ -113,89 +110,59 @@ export class VocabularyView {
           const bookTitle = book ? book.title : 'Nota personal';
           const escAttr = (v) => this.escapeHtml(v).replace(/"/g, '&quot;');
           return `
-            <div class="vocab-card" data-word-id="${w.id}" style="
-              background-color: var(--color-surface);
-              border: 1px solid var(--color-border);
-              border-radius: var(--radius-md);
-              padding: 14px;
-              display: flex;
-              flex-direction: column;
-              gap: 10px;
-            ">
-              <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px;">
+            <div class="vocab-card" data-word-id="${w.id}">
+              <div class="vocab-card-header">
                 <div style="min-width: 0;">
                   <div style="display: flex; align-items: center; gap: 8px;">
-                    <h3 style="font-family: var(--font-serif); font-size: 1.1rem; font-weight: 700; color: var(--color-text); margin: 0; overflow: hidden; text-overflow: ellipsis;">${this.escapeHtml(w.word)}</h3>
+                    <h3 class="vocab-word-title">${this.escapeHtml(w.word)}</h3>
                     <button class="btn-card-speak" data-word="${this.escapeHtml(w.word)}" title="Escuchar pronunciación" style="
-                      width: 24px; height: 24px; border-radius: 50%; background-color: var(--color-surface-hover); color: var(--color-primary-light); display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; flex-shrink: 0; transition: background-color 0.15s ease;
+                      width: 28px; height: 28px; border-radius: 50%; background-color: var(--color-surface-hover); color: var(--color-primary-light); display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid var(--color-border); flex-shrink: 0; transition: all 0.18s ease;
                     ">
-                      <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+                      <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
                     </button>
                   </div>
-                  ${w.phonetic ? `<span style="font-family: monospace; font-size: 0.7rem; color: var(--color-primary-light); background-color: var(--color-surface-hover); padding: 2px 8px; border-radius: 999px; display: inline-block; margin-top: 3px;">${this.escapeHtml(w.phonetic)}</span>` : ''}
+                  ${w.phonetic ? `<span class="vocab-phonetic-badge">${this.escapeHtml(w.phonetic)}</span>` : ''}
                 </div>
 
-                <div style="display: flex; align-items: center; gap: 2px; flex-shrink: 0;">
-                  <button class="btn-card-edit" data-action="edit-word" data-id="${w.id}" title="Editar término" style="
-                    color: var(--color-text-muted); padding: 6px; border-radius: 4px; cursor: pointer; background: transparent; border: none;
-                  ">
-                    <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                  <button class="btn-card-edit btn-card-action" data-action="edit-word" data-id="${w.id}" title="Editar término">
+                    <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                   </button>
 
-                  <button class="btn-card-del" data-action="delete-word" data-id="${w.id}" title="Eliminar término" style="
-                    color: var(--color-text-muted); padding: 6px; border-radius: 4px; cursor: pointer; background: transparent; border: none;
-                  ">
-                    <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  <button class="btn-card-del btn-card-action" data-action="delete-word" data-id="${w.id}" title="Eliminar término">
+                    <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                   </button>
                 </div>
               </div>
 
               <!-- Definición -->
-              <p style="font-size: var(--text-sm); line-height: 1.5; color: var(--color-text); margin: 0; background-color: var(--color-surface-elevated); padding: 10px; border-radius: var(--radius-sm);">
-                ${this.escapeHtml(w.definition)}
-              </p>
+              <div class="vocab-definition-box">
+                <p class="vocab-definition-text">
+                  ${this.escapeHtml(w.definition)}
+                </p>
+              </div>
 
               <!-- Cita de contexto si existe -->
               ${w.contextSentence ? `
-                <div style="font-size: 0.72rem; line-height: 1.5; color: var(--color-text-secondary); font-style: italic; border-left: 3px solid var(--color-secondary); padding-left: 10px; margin: 0;">
+                <div class="vocab-context-box">
                   «${this.escapeHtml(w.contextSentence)}»
                 </div>
               ` : ''}
 
               <!-- Pie: libro y fecha -->
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 0.7rem; color: var(--color-text-muted); padding-top: 8px; margin-top: auto;">
+              <div class="vocab-card-footer">
                 <span title="${this.escapeHtml(bookTitle)}" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 190px;">📖 ${this.escapeHtml(bookTitle)}</span>
                 <span style="flex-shrink: 0;">${new Date(w.dateAdded).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}</span>
               </div>
 
-              <!-- Acciones inferiores (como en Frases y Citas) -->
-              <div style="display: flex; align-items: center; justify-content: flex-end; border-top: 1px solid var(--color-border); padding-top: 8px; gap: 8px;">
-                <button class="btn-listen-word" data-action="speak-word" data-word="${escAttr(w.word)}" title="Escuchar pronunciación" style="
-                  background: none;
-                  border: none;
-                  color: var(--color-text-muted);
-                  font-size: var(--text-xs);
-                  font-weight: 500;
-                  cursor: pointer;
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 4px;
-                ">
-                  <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+              <!-- Acciones inferiores -->
+              <div class="vocab-card-actions">
+                <button class="btn-listen-word vocab-action-btn" data-action="speak-word" data-word="${escAttr(w.word)}" title="Escuchar pronunciación">
+                  <svg style="width: 13px; height: 13px; color: var(--color-primary-light);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
                   <span>Escuchar</span>
                 </button>
-                <button class="btn-copy-word" data-action="copy-word" data-word="${escAttr(w.word)}" data-definition="${escAttr(w.definition || '')}" title="Copiar palabra y definición" style="
-                  background: none;
-                  border: none;
-                  color: var(--color-text-muted);
-                  font-size: var(--text-xs);
-                  font-weight: 500;
-                  cursor: pointer;
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 4px;
-                ">
-                  <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                <button class="btn-copy-word vocab-action-btn" data-action="copy-word" data-word="${escAttr(w.word)}" data-definition="${escAttr(w.definition || '')}" title="Copiar palabra y definición">
+                  <svg style="width: 13px; height: 13px; color: var(--color-text-muted);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
                   <span>Copiar</span>
                 </button>
               </div>

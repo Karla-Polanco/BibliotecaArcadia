@@ -27,75 +27,43 @@ export class FloatingMenu {
     this.menuEl.className = 'reader-floating-menu';
     this.menuEl.setAttribute('role', 'toolbar');
     this.menuEl.setAttribute('aria-label', 'Acciones de texto');
-    this.menuEl.style.cssText = `
-      position: fixed;
-      z-index: 250;
-      background-color: var(--color-surface-elevated, #242424);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--color-border, #303030);
-      border-radius: var(--radius-full, 9999px);
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(212, 175, 55, 0.15);
-      padding: 6px 12px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      opacity: 0;
-      pointer-events: none;
-      transform: translate(-50%, -100%) scale(0.92);
-      transition: opacity 0.15s ease, transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-    `;
+    // El aspecto visual vive en reader.css (.reader-floating-menu);
+    // aquí solo se posiciona vía showAt/hide.
 
-    // Botones de colores para resaltar
+    // Botones de colores para resaltar (el color es dinámico, el tamaño va por clase)
     const colorsHtml = Object.entries(AnnotationManager.COLORS).map(([name, conf]) => `
-      <button class="menu-color-btn" data-color="${name}" title="Resaltar en ${conf.name}" style="
-        width: 22px;
-        height: 22px;
-        border-radius: 50%;
-        background-color: ${conf.border};
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        cursor: pointer;
-        transition: transform 0.15s ease;
-      " aria-label="Resaltar ${conf.name}"></button>
+      <button class="menu-color-btn" data-color="${name}" title="Resaltar en ${conf.name}" style="background-color: ${conf.border};"
+        aria-label="Resaltar ${conf.name}"></button>
     `).join('');
 
     this.menuEl.innerHTML = `
-      <div style="display: flex; align-items: center; gap: 5px; padding-right: 6px; border-right: 1px solid var(--color-border, #303030);">
+      <div class="floating-colors">
         ${colorsHtml}
       </div>
 
       <!-- Subrayar -->
-      <button class="floating-btn" id="btn-float-underline" title="Subrayar" aria-label="Subrayar texto" style="
-        padding: 6px 8px; border-radius: 6px; color: var(--color-text); cursor: pointer; font-size: 13px; font-weight: bold; text-decoration: underline;
-      ">U</button>
+      <button class="floating-btn" id="btn-float-underline" title="Subrayar" aria-label="Subrayar texto"
+        style="font-size: 13px; font-weight: bold; text-decoration: underline;">U</button>
 
       <!-- Nota -->
-      <button class="floating-btn" id="btn-float-note" title="Añadir nota" aria-label="Añadir nota" style="
-        padding: 6px 8px; border-radius: 6px; color: var(--color-text); cursor: pointer; display: flex; align-items: center; gap: 4px; font-size: 12px;
-      ">
+      <button class="floating-btn" id="btn-float-note" title="Añadir nota" aria-label="Añadir nota">
         <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
         <span>Nota</span>
       </button>
 
       <!-- Definir Vocabulario -->
-      <button class="floating-btn" id="btn-float-define" title="Definición y fonética" aria-label="Definir palabra" style="
-        padding: 6px 8px; border-radius: 6px; color: var(--color-text); cursor: pointer; display: flex; align-items: center; gap: 4px; font-size: 12px;
-      ">
+      <button class="floating-btn" id="btn-float-define" title="Definición y fonética" aria-label="Definir palabra">
         <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
         <span>Definir</span>
       </button>
 
       <!-- Copiar -->
-      <button class="floating-btn" id="btn-float-copy" title="Copiar texto" aria-label="Copiar texto" style="
-        padding: 6px 8px; border-radius: 6px; color: var(--color-text-secondary); cursor: pointer;
-      ">
+      <button class="floating-btn floating-btn--icon" id="btn-float-copy" title="Copiar texto" aria-label="Copiar texto">
         <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
       </button>
 
       <!-- Cerrar -->
-      <button class="floating-btn" id="btn-float-close" title="Cerrar barra" aria-label="Cerrar barra" style="
-        padding: 6px 8px 6px 10px; border-radius: 0 6px 6px 0; color: var(--color-text-secondary); cursor: pointer; border-left: 1px solid var(--color-border); margin-left: 2px;
-      ">
+      <button class="floating-btn floating-btn--close" id="btn-float-close" title="Cerrar barra" aria-label="Cerrar barra">
         <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
     `;

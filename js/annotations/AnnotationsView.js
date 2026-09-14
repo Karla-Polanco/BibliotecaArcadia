@@ -126,46 +126,24 @@ export class AnnotationsView {
 
     this.container.className = 'annotations-feed-view';
     this.container.innerHTML = `
-      <!-- Panel de Encabezado Superior (Igual al Cuaderno de Vocabulario) -->
-      <div class="annotations-header-panel" style="width: 100%; margin-bottom: 16px; padding: 16px; border-radius: var(--radius-md); background: linear-gradient(135deg, var(--color-surface), var(--color-surface-secondary)); border: 1px solid var(--color-border); border-left: 5px solid var(--color-primary-light);">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+      <!-- Panel de Encabezado Superior -->
+      <div class="annotations-header-panel">
+        <div class="annotations-header-top">
           <div>
-            <span style="font-size: 0.7rem; text-transform: uppercase; font-weight: bold; color: var(--color-primary-light); letter-spacing: 0.05em;">Cuaderno de Lectura</span>
-            <h1 style="font-size: var(--text-lg); font-weight: bold; color: var(--color-text); margin: 4px 0;">Notas y Subrayados</h1>
-            <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin: 0;">Citas destacadas, pasajes subrayados y anotaciones personales recopiladas durante tus lecturas.</p>
+            <span class="panel-category-tag">Cuaderno de Lectura</span>
+            <h1 class="panel-heading">Notas y Subrayados</h1>
+            <p class="panel-description">Citas destacadas, pasajes subrayados y anotaciones personales recopiladas durante tus lecturas.</p>
           </div>
 
-          <!-- Filtros junto al título (como el botón Añadir de los cuadernos) -->
-          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-width: 0; max-width: 100%;">
-            <select id="select-filter-book" style="
-              padding: 5px 10px;
-              border-radius: var(--radius-sm);
-              background-color: var(--color-surface);
-              border: 1px solid var(--color-border);
-              color: var(--color-text);
-              font-size: var(--text-xs);
-              font-weight: 500;
-              outline: none;
-              cursor: pointer;
-              min-width: 0;
-              max-width: 100%;
-            ">
+          <!-- Filtros junto al título -->
+          <div class="panel-actions-row">
+            <select id="select-filter-book">
               <option value="all">Todos los libros</option>
               ${this.books.map(b => `<option value="${b.id}" ${b.id === this.selectedBookId ? 'selected' : ''}>${this.escapeHtml(b.title)}</option>`).join('')}
             </select>
 
             <!-- Filtro de Tipo por Select -->
-            <select id="select-filter-type" style="
-              padding: 5px 10px;
-              border-radius: var(--radius-sm);
-              background-color: var(--color-surface);
-              border: 1px solid var(--color-border);
-              color: var(--color-text);
-              font-size: var(--text-xs);
-              font-weight: 500;
-              outline: none;
-              cursor: pointer;
-            ">
+            <select id="select-filter-type">
               <option value="all" ${this.activeType === 'all' ? 'selected' : ''}>Todos (${totalCount})</option>
               <option value="highlight" ${this.activeType === 'highlight' ? 'selected' : ''}>Resaltados (${highlightCount})</option>
               <option value="underline" ${this.activeType === 'underline' ? 'selected' : ''}>Subrayados (${underlineCount})</option>
@@ -176,17 +154,15 @@ export class AnnotationsView {
 
         <div style="display: flex; align-items: center; gap: 12px;">
           <!-- Buscador de Notas y Citas -->
-          <div style="position: relative; flex: 1 1 100%; min-width: 0; display: flex; align-items: center;">
-            <svg style="position: absolute; left: 9px; width: 14px; height: 14px; color: var(--color-text-muted); pointer-events: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <input type="text" id="input-annot-search" value="${this.escapeHtml(this.searchQuery)}" placeholder="Buscar en notas y citas..." style="
-              width: 100%; padding: 5px 10px 5px 28px; border-radius: var(--radius-sm); background-color: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); font-size: var(--text-xs); outline: none; box-sizing: border-box;
-            ">
+          <div class="panel-search-bar">
+            <svg style="width: 14px; height: 14px; color: var(--color-text-muted); flex-shrink: 0; pointer-events: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" id="input-annot-search" class="panel-search-input" value="${this.escapeHtml(this.searchQuery)}" placeholder="Buscar en notas y citas...">
           </div>
         </div>
       </div>
 
       <!-- Cuadrícula de Tarjetas de Anotaciones -->
-      <div class="annotations-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; width: 100%;">
+      <div class="annotations-cards-grid">
         ${filtered.length === 0 ? `
           <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--color-text-muted);">
             <svg style="width: 48px; height: 48px; margin: 0 auto 16px; opacity: 0.4;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -207,76 +183,46 @@ export class AnnotationsView {
     const bookTitle = book ? book.title : 'Libro general';
     const dateStr = item.date ? new Date(item.date).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
     const colorConf = AnnotationManager.COLORS[item.color] || AnnotationManager.COLORS.yellow;
+    const accentHex = colorConf.border || '#D4AF37';
 
     return `
-      <article class="annotation-card" data-item-id="${item.id}" data-kind="${item.kind}" data-book-id="${item.bookId}" data-cfi="${item.cfi || ''}" style="
-        background-color: var(--color-surface);
-        border: 1px solid var(--color-border);
-        border-left: 4px solid ${colorConf.border};
-        border-radius: var(--radius-md);
-        padding: 18px;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-        transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-      ">
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="
-              font-size: 0.68rem;
-              text-transform: uppercase;
-              font-weight: bold;
-              padding: 2px 8px;
-              border-radius: var(--radius-full, 999px);
-              background-color: ${item.kind === 'note' ? 'rgba(123, 107, 240, 0.15)' : 'var(--color-surface-hover)'};
-              color: ${item.kind === 'note' ? 'var(--color-primary-light)' : colorConf.border};
-              border: 1px solid ${item.kind === 'note' ? 'rgba(123, 107, 240, 0.3)' : colorConf.border};
-            ">${this.getKindLabel(item.kind)}</span>
-            <span style="font-size: var(--text-xs); color: var(--color-text-muted); font-weight: 500;">${dateStr}</span>
+      <article class="annotation-card" data-item-id="${item.id}" data-kind="${item.kind}" data-book-id="${item.bookId}" data-cfi="${item.cfi || ''}" style="--card-accent-color: ${accentHex};">
+        <div class="annotation-card-header">
+          <div class="annotation-tag-group">
+            <span class="annotation-type-badge" style="background-color: ${item.kind === 'note' ? 'color-mix(in srgb, var(--color-primary-light) 18%, transparent)' : 'color-mix(in srgb, ' + accentHex + ' 18%, transparent)'}; color: ${item.kind === 'note' ? 'var(--color-primary-light)' : accentHex}; border: 1px solid ${item.kind === 'note' ? 'color-mix(in srgb, var(--color-primary-light) 35%, transparent)' : accentHex};">
+              ${item.kind === 'note' ? `
+                <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+              ` : `
+                <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+              `}
+              <span>${this.getKindLabel(item.kind)}</span>
+            </span>
+            <span class="annotation-date">${dateStr}</span>
           </div>
 
-          <button class="btn-delete-annot" data-action="delete" data-id="${item.id}" data-kind="${item.kind}" title="Eliminar" style="
-            color: var(--color-text-muted); padding: 4px; border-radius: 4px; cursor: pointer; background: transparent; border: none;
-          ">
-            <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+          <button class="btn-delete-annot btn-card-action" data-action="delete" data-id="${item.id}" data-kind="${item.kind}" title="Eliminar cita/nota">
+            <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
           </button>
         </div>
 
         ${item.text ? `
-          <blockquote style="
-            font-family: var(--font-serif, Georgia, serif);
-            font-size: var(--text-sm);
-            color: var(--color-text);
-            line-height: 1.5;
-            font-style: italic;
-            background-color: var(--color-surface-hover);
-            padding: 10px 14px;
-            border-radius: var(--radius-sm);
-            margin: 0;
-            border-left: 3px solid ${colorConf.border};
-          ">«${this.escapeHtml(item.text)}»</blockquote>
+          <blockquote class="annotation-quote" style="--card-accent-color: ${accentHex};">«${this.escapeHtml(item.text)}»</blockquote>
         ` : ''}
 
         ${item.noteContent ? `
-          <div style="
-            font-size: var(--text-xs);
-            color: var(--color-text);
-            line-height: 1.4;
-            padding: 8px 10px;
-            background-color: var(--color-surface-secondary);
-            border-radius: var(--radius-sm);
-            border: 1px dashed var(--color-border);
-          ">
-            <strong style="color: var(--color-primary-light); display: block; margin-bottom: 2px;">Nota:</strong>
+          <div class="annotation-user-note">
+            <div class="annotation-user-note-label">
+              <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>
+              <span>Anotación personal</span>
+            </div>
             ${this.escapeHtml(item.noteContent)}
           </div>
         ` : ''}
 
-        <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--color-border); padding-top: 10px; margin-top: auto; gap: 8px; flex-wrap: wrap;">
-          <div style="display: flex; flex-direction: column; min-width: 0;">
-            <span style="font-size: var(--text-xs); font-weight: bold; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${this.escapeHtml(bookTitle)}</span>
-            <span style="font-size: 0.7rem; color: var(--color-text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${this.escapeHtml(item.chapter || '')}</span>
+        <div class="annotation-card-footer">
+          <div style="display: flex; flex-direction: column; min-width: 0; gap: 2px;">
+            <span style="font-size: var(--text-xs); font-weight: 600; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">📖 ${this.escapeHtml(bookTitle)}</span>
+            ${item.chapter ? `<span style="font-size: 0.7rem; color: var(--color-text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${this.escapeHtml(item.chapter)}</span>` : ''}
           </div>
 
           ${item.cfi ? `
@@ -284,9 +230,9 @@ export class AnnotationsView {
               background-color: var(--color-surface-hover);
               color: var(--color-primary-light);
               font-size: var(--text-xs);
-              font-weight: bold;
-              padding: 6px 12px;
-              border-radius: var(--radius-full, 999px);
+              font-weight: 600;
+              padding: 6px 14px;
+              border-radius: var(--radius-full);
               border: 1px solid var(--color-border);
               cursor: pointer;
               display: inline-flex;
