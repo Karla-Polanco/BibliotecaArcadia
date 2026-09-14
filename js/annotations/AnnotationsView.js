@@ -70,7 +70,7 @@ export class AnnotationsView {
         cfi: a.cfiRange,
         text: a.text,
         noteContent: null,
-        color: a.color || 'yellow',
+        color: a.color || 'amber',
         chapter: a.chapterTitle,
         date: a.createdAt
       });
@@ -84,7 +84,7 @@ export class AnnotationsView {
         cfi: n.cfiRange,
         text: n.selectedText,
         noteContent: n.content,
-        color: n.color || 'purple',
+        color: n.color || 'lavender',
         chapter: n.title,
         date: n.createdAt
       });
@@ -164,12 +164,17 @@ export class AnnotationsView {
       <!-- Cuadrícula de Tarjetas de Anotaciones -->
       <div class="annotations-cards-grid">
         ${filtered.length === 0 ? `
-          <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--color-text-muted);">
-            <svg style="width: 48px; height: 48px; margin: 0 auto 16px; opacity: 0.4;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-            </svg>
-            <h3 style="font-size: var(--text-md); color: var(--color-text); margin-bottom: 8px;">No hay notas ni subrayados</h3>
-            <p style="font-size: var(--text-sm);">Selecciona texto mientras lees en el visor para resaltar pasajes o añadir notas personales.</p>
+          <div class="library-empty-state">
+            <div class="empty-state-icon">
+              <svg style="width: 36px; height: 36px; color: var(--color-primary-light);" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+            </div>
+            <h3 class="empty-state-title">${this.searchQuery ? 'Sin resultados' : 'Aún no hay notas'}</h3>
+            <p class="empty-state-desc">
+              ${this.searchQuery ? `No se encontraron notas ni subrayados que coincidan con «<strong>${this.escapeHtml(this.searchQuery)}</strong>». Prueba con otro término de búsqueda.` : 'Selecciona texto mientras lees en cualquier libro para resaltar pasajes o añadir notas personales. Tus citas aparecerán aquí.'}
+            </p>
+            ${this.searchQuery ? `<button id="btn-annot-clear-search" class="arcadia-modal-btn arcadia-modal-btn--ghost"><span>Limpiar búsqueda</span></button>` : `<button id="btn-annot-go-library" class="arcadia-modal-btn arcadia-modal-btn--ghost"><span>Ver toda la biblioteca</span></button>`}
           </div>
         ` : filtered.map(item => this.renderCard(item)).join('')}
       </div>
@@ -182,8 +187,9 @@ export class AnnotationsView {
     const book = this.books.find(b => b.id === item.bookId);
     const bookTitle = book ? book.title : 'Libro general';
     const dateStr = item.date ? new Date(item.date).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
-    const colorConf = AnnotationManager.COLORS[item.color] || AnnotationManager.COLORS.yellow;
-    const accentHex = colorConf.border || '#D4AF37';
+    const resolvedColor = AnnotationManager.LEGACY_COLOR_MAP[item.color] || item.color;
+    const colorConf = AnnotationManager.COLORS[resolvedColor] || AnnotationManager.COLORS.amber;
+    const accentHex = colorConf.border || '#B89248';
 
     return `
       <article class="annotation-card" data-item-id="${item.id}" data-kind="${item.kind}" data-book-id="${item.bookId}" data-cfi="${item.cfi || ''}" style="--card-accent-color: ${accentHex};">
@@ -282,6 +288,30 @@ export class AnnotationsView {
           newSearchInput.focus();
           newSearchInput.setSelectionRange(this.searchQuery.length, this.searchQuery.length);
         }
+      });
+    }
+
+    // 3b. Botones del estado vacío (mismo diseño que Colecciones)
+    const btnClearAnnot = this.container.querySelector('#btn-annot-clear-search');
+    if (btnClearAnnot) {
+      btnClearAnnot.addEventListener('click', () => {
+        this.searchQuery = '';
+        this.render();
+        const newInput = this.container.querySelector('#input-annot-search');
+        if (newInput) newInput.focus();
+      });
+    }
+    const btnGoLibrary = this.container.querySelector('#btn-annot-go-library');
+    if (btnGoLibrary) {
+      btnGoLibrary.addEventListener('click', () => {
+        this.searchQuery = '';
+        appState.set('activeFilter', 'all');
+        document.querySelectorAll('[data-nav-filter]').forEach(el => {
+          el.classList.toggle('active', el.dataset.navFilter === 'all');
+        });
+        document.querySelectorAll('.mobile-nav-link[data-nav-filter]').forEach(el => {
+          el.classList.toggle('active', el.dataset.navFilter === 'all');
+        });
       });
     }
 

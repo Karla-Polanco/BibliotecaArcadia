@@ -9,11 +9,10 @@ export class ThemeManager {
   static THEMES = {
     MYSTIC_NIGHT: 'mystic-night',
     LAVENDER_LIGHT: 'lavender-light',
-    WINE_POETRY: 'wine-poetry',
+    WINE_POETRY: 'serene-fog',
     DEEP_TWILIGHT: 'deep-twilight',
     ENCHANTED_FOREST: 'enchanted-forest',
-    CLEAR_SKY: 'clear-sky',
-    SYSTEM: 'system'
+    CLEAR_SKY: 'clear-sky'
   };
 
   static STORAGE_KEY = 'arcadia_theme';
@@ -47,19 +46,17 @@ export class ThemeManager {
     }
     themeName = themeName.trim();
 
-    // Normalizar temas inexistentes en CSS hacia el más cercano
+    // Normalizar temas legacy: 'system' y 'deep-twilight' ya no existen
+    if (themeName === 'system' || themeName === ThemeManager.THEMES.DEEP_TWILIGHT) {
+      themeName = ThemeManager.THEMES.MYSTIC_NIGHT;
+    }
     const knownThemes = new Set([
       ThemeManager.THEMES.MYSTIC_NIGHT,
       ThemeManager.THEMES.LAVENDER_LIGHT,
       ThemeManager.THEMES.WINE_POETRY,
       ThemeManager.THEMES.ENCHANTED_FOREST,
-      ThemeManager.THEMES.CLEAR_SKY,
-      ThemeManager.THEMES.SYSTEM
+      ThemeManager.THEMES.CLEAR_SKY
     ]);
-    if (themeName === ThemeManager.THEMES.DEEP_TWILIGHT) {
-      // 'deep-twilight' nunca tuvo tarjeta CSS: mapear a mystic-night
-      themeName = ThemeManager.THEMES.MYSTIC_NIGHT;
-    }
     if (!knownThemes.has(themeName)) {
       console.warn(`[ThemeManager] Tema desconocido "${themeName}", usando mystic-night`);
       themeName = ThemeManager.THEMES.MYSTIC_NIGHT;
@@ -68,15 +65,8 @@ export class ThemeManager {
     this.currentTheme = themeName;
     localStorage.setItem(ThemeManager.STORAGE_KEY, themeName);
 
-    if (themeName === ThemeManager.THEMES.SYSTEM) {
-      // Detección en tiempo real: si el SO es oscuro -> mystic-night, si es claro -> lavender-light
-      const effectiveTheme = this.mediaQuery.matches ? ThemeManager.THEMES.MYSTIC_NIGHT : ThemeManager.THEMES.LAVENDER_LIGHT;
-      document.documentElement.setAttribute('data-theme', effectiveTheme);
-      this._updateFavicon(effectiveTheme);
-    } else {
-      document.documentElement.setAttribute('data-theme', themeName);
-      this._updateFavicon(themeName);
-    }
+    document.documentElement.setAttribute('data-theme', themeName);
+    this._updateFavicon(themeName);
 
     // Despachar evento para componentes que requieran sincronizarse
     window.dispatchEvent(new CustomEvent('arcadia:themechange', {
@@ -92,18 +82,9 @@ export class ThemeManager {
   }
 
   /**
-   * Manejador para cambios en prefers-color-scheme cuando el tema es 'system'.
+   * Manejador para cambios en prefers-color-scheme (ya no hay tema system, no-op)
    */
-  _handleSystemThemeChange(e) {
-    if (this.currentTheme === ThemeManager.THEMES.SYSTEM) {
-      const effectiveTheme = e.matches ? ThemeManager.THEMES.MYSTIC_NIGHT : ThemeManager.THEMES.LAVENDER_LIGHT;
-      document.documentElement.setAttribute('data-theme', effectiveTheme);
-      this._updateFavicon(effectiveTheme);
-      window.dispatchEvent(new CustomEvent('arcadia:themechange', {
-        detail: { theme: ThemeManager.THEMES.SYSTEM, effectiveTheme }
-      }));
-    }
-  }
+  _handleSystemThemeChange(e) {}
 
   /**
    * Actualiza dinámicamente el favicon de la pestaña con la paleta de colores del tema.
@@ -111,13 +92,12 @@ export class ThemeManager {
    */
   _updateFavicon(themeName) {
     const themePalettes = {
-      'mystic-night': { bg: '#0B1D3A', bg2: '#06101F', star1: '#D7E1EC', star2: '#8FA9C4', star3: '#1B4167' },
+      'mystic-night': { bg: '#E8ECEF', bg2: '#C4D8E5', star1: '#A7C7E7', star2: '#8EB1D1', star3: '#5A7FAF' },
       'deep-twilight': { bg: '#0B1D3A', bg2: '#06101F', star1: '#D7E1EC', star2: '#8FA9C4', star3: '#1B4167' },
-      'system': { bg: '#0B1D3A', bg2: '#06101F', star1: '#D7E1EC', star2: '#8FA9C4', star3: '#1B4167' },
       'clear-sky': { bg: '#0F2338', bg2: '#061322', star1: '#E0F2FE', star2: '#60A5FA', star3: '#2563EB' },
       'enchanted-forest': { bg: '#0D2818', bg2: '#04120A', star1: '#DCFCE7', star2: '#4ADE80', star3: '#227D48' },
       'lavender-light': { bg: '#271E56', bg2: '#130C33', star1: '#DDD6FE', star2: '#A78BFA', star3: '#6C5CE7' },
-      'wine-poetry': { bg: '#F6F0F1', bg2: '#E4C9D2', star1: '#FFFFFF', star2: '#C2A3B0', star3: '#8A6573' },
+      'serene-fog': { bg: '#F6F0F1', bg2: '#E4C9D2', star1: '#FFFFFF', star2: '#C2A3B0', star3: '#8A6573' },
       'paper': { bg: '#F4F1EA', bg2: '#E4C9A2', star1: '#FFFFFF', star2: '#C2A36B', star3: '#8B6914' },
       'neutral': { bg: '#252525', bg2: '#101010', star1: '#FFFFFF', star2: '#A0A0A0', star3: '#555555' }
     };

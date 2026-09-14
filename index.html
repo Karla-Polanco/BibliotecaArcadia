@@ -6,13 +6,9 @@
     (function () {
       try {
         var savedTheme = localStorage.getItem('arcadia_theme') || 'mystic-night';
-        // 'system' se resuelve a claro/oscuro según el SO para evitar FOUC
-        if (savedTheme === 'system') {
-          var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-          savedTheme = dark ? 'mystic-night' : 'lavender-light';
-        }
+        // 'system' ahora es un tema real con @media (prefers-color-scheme), no se resuelve aquí
         // Normalizar temas legacy inexistentes
-        var known = ['mystic-night','lavender-light','wine-poetry','enchanted-forest','clear-sky'];
+        var known = ['mystic-night','lavender-light','wine-poetry','serene-fog','enchanted-forest','clear-sky'];
         if (known.indexOf(savedTheme) === -1) savedTheme = 'mystic-night';
         document.documentElement.setAttribute('data-theme', savedTheme);
         var savedScale = localStorage.getItem('arcadia_ui_scale');
@@ -49,25 +45,38 @@
     rel="stylesheet">
 
   <!-- Hojas de Estilo Modulares -->
-  <link rel="stylesheet" href="css/tokens.css?v=104">
-  <link rel="stylesheet" href="css/themes.css?v=104">
-  <link rel="stylesheet" href="css/main.css?v=104">
-  <link rel="stylesheet" href="css/layout.css?v=104">
-  <link rel="stylesheet" href="css/library.css?v=104">
-  <link rel="stylesheet" href="css/reader.css?v=104">
-  <link rel="stylesheet" href="css/responsive.css?v=104">
+  <link rel="stylesheet" href="css/tokens.css?v=110">
+  <link rel="stylesheet" href="css/themes.css?v=110">
+  <link rel="stylesheet" href="css/main.css?v=110">
+  <link rel="stylesheet" href="css/layout.css?v=110">
+  <link rel="stylesheet" href="css/library.css?v=110">
+  <link rel="stylesheet" href="css/reader.css?v=110">
+  <link rel="stylesheet" href="css/responsive.css?v=110">
 </head>
 
 <body>
-  <!-- Sprite único del emblema Arcadia (gradiente + estrella reutilizados en topbar y sidebar) -->
+  <!-- Sprite único del emblema Arcadia (gradiente + estrella facetada reutilizados en topbar y sidebar) -->
   <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">
     <defs>
-      <linearGradient id="arcStarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="var(--color-primary-light)"/>
-        <stop offset="55%" stop-color="var(--color-secondary)"/>
-        <stop offset="100%" stop-color="var(--color-primary)"/>
-      </linearGradient>
-      <polygon id="arcStar8" points="245,170 164.8,163.9 187.5,132.5 156.1,155.2 150,75 143.9,155.2 112.5,132.5 135.2,163.9 55,170 135.2,176.1 112.5,207.5 143.9,184.8 150,265 156.1,184.8 187.5,207.5 164.8,176.1"/>
+      <!-- Estrella facetada de 8 puntas armónica con el tema -->
+      <g id="arcStarFacet">
+        <!-- Rayos cardinales con bisel de luz y sombra dinámicos del tema -->
+        <polygon points="12,2 12,12 9.5,9.5" fill="var(--star-color-light, #FCD34D)"/>
+        <polygon points="12,2 14.5,9.5 12,12" fill="var(--star-color-dark, #D97706)"/>
+        <polygon points="22,12 12,12 14.5,9.5" fill="var(--star-color-light, #FCD34D)"/>
+        <polygon points="22,12 14.5,14.5 12,12" fill="var(--star-color-dark, #D97706)"/>
+        <polygon points="12,22 12,12 14.5,14.5" fill="var(--star-color-light, #FCD34D)"/>
+        <polygon points="12,22 9.5,14.5 12,12" fill="var(--star-color-dark, #D97706)"/>
+        <polygon points="2,12 12,12 9.5,14.5" fill="var(--star-color-light, #FCD34D)"/>
+        <polygon points="2,12 9.5,9.5 12,12" fill="var(--star-color-dark, #D97706)"/>
+        <!-- Rayos diagonales intermedios -->
+        <polygon points="19,5 12,12 14.5,9.5" fill="var(--star-color-light, #FCD34D)"/>
+        <polygon points="19,19 12,12 14.5,14.5" fill="var(--star-color-dark, #D97706)"/>
+        <polygon points="5,19 12,12 9.5,14.5" fill="var(--star-color-light, #FCD34D)"/>
+        <polygon points="5,5 12,12 9.5,9.5" fill="var(--star-color-dark, #D97706)"/>
+        <!-- Núcleo central luminoso -->
+        <polygon points="12,8.5 15.5,12 12,15.5 8.5,12" fill="var(--star-color-center, #FEF08A)"/>
+      </g>
     </defs>
   </svg>
   <!-- ========================================================================
@@ -79,10 +88,8 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
     </button>
-    <div class="mobile-logo-wrap">
-      <span class="brand-diamond mobile-diamond" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><polygon points="22.5,12 14.2,11.1 16.2,7.8 12.9,9.8 12,1.5 11.1,9.8 7.8,7.8 9.8,11.1 1.5,12 9.8,12.9 7.8,16.2 11.1,14.2 12,22.5 12.9,14.2 16.2,16.2 14.2,12.9" fill="currentColor"/></svg></span>
+    <div class="mobile-logo-wrap" style="display:flex; align-items:center; justify-content:center; width:100%;">
       <span class="brand-wordmark mobile-brand-wordmark">ARCADIA</span>
-      <span class="brand-diamond mobile-diamond" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><polygon points="22.5,12 14.2,11.1 16.2,7.8 12.9,9.8 12,1.5 11.1,9.8 7.8,7.8 9.8,11.1 1.5,12 9.8,12.9 7.8,16.2 11.1,14.2 12,22.5 12.9,14.2 16.2,16.2 14.2,12.9" fill="currentColor"/></svg></span>
     </div>
     <button class="btn-upload-epub" id="mobile-upload-trigger" aria-label="Subir libro">
       <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -104,14 +111,15 @@
       <!-- Header / Marca Tipográfica Emblemática -->
       <div class="sidebar-header">
         <div class="brand-typography">
-          <div class="brand-ornament-top emblem-glow">
-            <img src="assets/icons/logo-transparent.png" alt="Arcadia Emblem" class="brand-logo-img" width="70" height="49">
-          </div>
           <div class="brand-eyebrow-row">
             <span class="brand-rule"></span>
-            <span class="brand-diamond" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><polygon points="22.5,12 14.2,11.1 16.2,7.8 12.9,9.8 12,1.5 11.1,9.8 7.8,7.8 9.8,11.1 1.5,12 9.8,12.9 7.8,16.2 11.1,14.2 12,22.5 12.9,14.2 16.2,16.2 14.2,12.9" fill="currentColor"/></svg></span>
+            <span class="brand-diamond" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24"><use href="#arcStarFacet"/></svg>
+            </span>
             <span class="brand-eyebrow">BIBLIOTECA</span>
-            <span class="brand-diamond" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><polygon points="22.5,12 14.2,11.1 16.2,7.8 12.9,9.8 12,1.5 11.1,9.8 7.8,7.8 9.8,11.1 1.5,12 9.8,12.9 7.8,16.2 11.1,14.2 12,22.5 12.9,14.2 16.2,16.2 14.2,12.9" fill="currentColor"/></svg></span>
+            <span class="brand-diamond" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24"><use href="#arcStarFacet"/></svg>
+            </span>
             <span class="brand-rule"></span>
           </div>
           <h1 class="brand-wordmark">ARCADIA</h1>
@@ -205,19 +213,16 @@
 
         <!-- Colecciones Personalizadas -->
         <div class="nav-group" aria-label="Colecciones personalizadas">
-          <div
-            style="display: flex; align-items: center; justify-content: space-between; padding-right: 8px; margin-bottom: 6px;">
-            <span class="nav-group-title" style="margin-bottom: 0;">Colecciones</span>
-            <button id="btn-create-collection" title="Nueva colección" style="
-              width: 22px; height: 22px; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--color-text-muted); cursor: pointer;
-            ">
+          <div class="collections-header">
+            <span class="nav-group-title">Colecciones</span>
+            <button id="btn-create-collection" class="btn-create-col" title="Nueva colección" aria-label="Crear nueva colección">
               <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
               </svg>
             </button>
           </div>
 
-          <div id="custom-collections-list" style="display: flex; flex-direction: column; gap: 2px;"></div>
+          <div id="custom-collections-list" class="custom-collections-list"></div>
         </div>
       </div>
 
@@ -395,20 +400,20 @@
 
         <div class="theme-options-grid">
 
-          <!-- 1. Nocturno Místico -->
+          <!-- 1. Cerúleo Claro (antes Nocturno Místico) -->
           <div class="theme-option-card" data-theme-value="mystic-night">
             <div class="theme-card-body">
               <div class="theme-card-header">
-                <span class="theme-badge-tag tag-mn">✦ Nocturno místico</span>
+                <span class="theme-badge-tag tag-mn">✦ Cerúleo claro</span>
                 <span class="theme-active-pill">✓ Activo</span>
               </div>
-              <p class="theme-card-desc">Fondo oscuro y profundo con acentos azul y violeta. Elegante, inmersivo y cómodo para leer de noche.</p>
+              <p class="theme-card-desc">Paleta helada clara con acentos cerúleos. Luminosa, serena y elegante para el día.</p>
               <div class="theme-swatches-wrap">
                 <div class="theme-swatches">
-                  <div class="color-swatch swatch-mn-1" title="Fondo Oscuro (#02040B)"></div>
-                  <div class="color-swatch swatch-mn-2" title="Azul Profundo (#101A45)"></div>
-                  <div class="color-swatch swatch-mn-3" title="Violeta Místico (#7356D8)"></div>
-                  <div class="color-swatch swatch-mn-4" title="Azul Acento (#3156C9)"></div>
+                  <div class="color-swatch swatch-mn-1" title="Platinum (#E8ECEF)"></div>
+                  <div class="color-swatch swatch-mn-2" title="Blanco (#FFFFFF)"></div>
+                  <div class="color-swatch swatch-mn-3" title="Cerúleo Suave (#5A7FAF)"></div>
+                  <div class="color-swatch swatch-mn-4" title="Cool Cerulean (#8EB1D1)"></div>
                 </div>
               </div>
             </div>
@@ -425,16 +430,16 @@
               <div class="theme-swatches-wrap">
                 <div class="theme-swatches">
                   <div class="color-swatch swatch-ll-1" title="Blanco Puro (#FFFFFF)"></div>
-                  <div class="color-swatch swatch-ll-2" title="Lavanda Suave (#F0ECF9)"></div>
-                  <div class="color-swatch swatch-ll-3" title="Violeta Principal (#6C5CE7)"></div>
-                  <div class="color-swatch swatch-ll-4" title="Acento (#8B5CF6)"></div>
+                  <div class="color-swatch swatch-ll-2" title="Perla Lavanda (#F0ECF9)"></div>
+                  <div class="color-swatch swatch-ll-3" title="Amatista Atenuado (#5E4FA2)"></div>
+                  <div class="color-swatch swatch-ll-4" title="Glicina Suave (#7D6FB5)"></div>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- 3. Niebla Serena -->
-          <div class="theme-option-card" data-theme-value="wine-poetry">
+          <div class="theme-option-card" data-theme-value="serene-fog">
             <div class="theme-card-body">
               <div class="theme-card-header">
                 <span class="theme-badge-tag tag-wp">✦ Niebla Serena</span>
@@ -443,10 +448,10 @@
               <p class="theme-card-desc">Acuarela suave en rosa niebla, lavanda y malva. Serena, luminosa y delicada para leer de día.</p>
               <div class="theme-swatches-wrap">
                 <div class="theme-swatches">
-                  <div class="color-swatch swatch-wp-1" title="Niebla Rosada (#F7F1F1)"></div>
-                  <div class="color-swatch swatch-wp-2" title="Gris Lavanda (#B9B3C0)"></div>
-                  <div class="color-swatch swatch-wp-3" title="Rosa Empolvado (#C2A3B0)"></div>
-                  <div class="color-swatch swatch-wp-4" title="Malva Tenue (#9A7585)"></div>
+                  <div class="color-swatch swatch-wp-1" title="Rosa Niebla (#F8F3F5)"></div>
+                  <div class="color-swatch swatch-wp-2" title="Niebla Rosada (#F3E9EC)"></div>
+                  <div class="color-swatch swatch-wp-3" title="Ciruela Empolvada (#754157)"></div>
+                  <div class="color-swatch swatch-wp-4" title="Malva Tenue (#955B73)"></div>
                 </div>
               </div>
             </div>
@@ -462,50 +467,35 @@
               <p class="theme-card-desc">Acuarela de verdes salvia y rocío matinal. Fresca, serena y luminosa para leer de día.</p>
               <div class="theme-swatches-wrap">
                 <div class="theme-swatches">
-                  <div class="color-swatch swatch-ef-1" title="Niebla Salvia (#E4EBDD)"></div>
-                  <div class="color-swatch swatch-ef-2" title="Salvia Gris (#B7C9B2)"></div>
-                  <div class="color-swatch swatch-ef-3" title="Verde Musgo (#546F52)"></div>
-                  <div class="color-swatch swatch-ef-4" title="Salvia Serena (#A3B9A1)"></div>
+                  <div class="color-swatch swatch-ef-1" title="Salvia Brumoso (#F1F5F2)"></div>
+                  <div class="color-swatch swatch-ef-2" title="Rocío Salvia (#E9F0EB)"></div>
+                  <div class="color-swatch swatch-ef-3" title="Laurel Noble (#2C6343)"></div>
+                  <div class="color-swatch swatch-ef-4" title="Salvia Suave (#4E8565)"></div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- 5. Cielo Claro -->
+          <!-- 5. Beige Cálido (antes Cielo Claro) -->
           <div class="theme-option-card" data-theme-value="clear-sky">
             <div class="theme-card-body">
               <div class="theme-card-header">
-                <span class="theme-badge-tag tag-cs">✦ Cielo claro</span>
+                <span class="theme-badge-tag tag-cs">✦ Beige cálido</span>
                 <span class="theme-active-pill">✓ Activo</span>
               </div>
-              <p class="theme-card-desc">Paleta luminosa de celeste y azul ultramar. Fresca, ligera y con óptima legibilidad durante el día.</p>
+              <p class="theme-card-desc">Paleta cálida de lino, avena y vainilla. Acogedora, luminosa y perfecta para lectura diurna.</p>
               <div class="theme-swatches-wrap">
                 <div class="theme-swatches">
-                  <div class="color-swatch swatch-cs-1" title="Celeste Pálido (#F0F6FD)"></div>
-                  <div class="color-swatch swatch-cs-2" title="Celeste Suave (#E7F0F8)"></div>
-                  <div class="color-swatch swatch-cs-3" title="Azul Real (#2563EB)"></div>
-                  <div class="color-swatch swatch-cs-4" title="Azul Marino (#1D5C96)"></div>
+                  <div class="color-swatch swatch-cs-1" title="Ivory Whisper (#FAF7F2)"></div>
+                  <div class="color-swatch swatch-cs-2" title="Soft Linen (#F6F0E6)"></div>
+                  <div class="color-swatch swatch-cs-3" title="Sandy Beige (#C8B39A)"></div>
+                  <div class="color-swatch swatch-cs-4" title="Warm Taupe (#9A8472)"></div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- 6. Tema del Sistema -->
-          <div class="theme-option-card" data-theme-value="system">
-            <div class="theme-card-body">
-              <div class="theme-card-header">
-                <span class="theme-badge-tag tag-sys">✦ Tema del sistema</span>
-                <span class="theme-active-pill">✓ Activo</span>
-              </div>
-              <p class="theme-card-desc">Adapta automáticamente la apariencia de la biblioteca según la preferencia clara u oscura de tu dispositivo.</p>
-              <div class="theme-swatches-wrap">
-                <div class="theme-swatches">
-                  <div class="color-swatch swatch-sys-auto" title="Automático (Claro / Oscuro)"></div>
-                  <div class="color-swatch swatch-sys-accent" title="Acento Inteligente"></div>
-                </div>
-              </div>
-            </div>
-          </div>
+
         </div>
       </div>
 
@@ -783,27 +773,27 @@
             <span class="reader-theme-name">Auto</span>
           </button>
           <button type="button" class="reader-theme-chip" data-reader-theme="paper" title="Tema Sepia" role="radio" aria-checked="false">
-            <span class="reader-theme-swatch" style="background-color: #F7F1E3; border: 1px solid #DFD7C7;"></span>
+            <span class="reader-theme-swatch" style="background-color: #F4EFE6; border: 1px solid #E0D9C6;"></span>
             <span class="reader-theme-name">Sepia</span>
           </button>
-          <button type="button" class="reader-theme-chip" data-reader-theme="lavender-light" title="Tema Blanco" role="radio" aria-checked="false">
-            <span class="reader-theme-swatch" style="background-color: #FFFFFF; border: 1px solid #DFDFDF;"></span>
-            <span class="reader-theme-name">Blanco</span>
+          <button type="button" class="reader-theme-chip" data-reader-theme="lavender-light" title="Tema Alabastro" role="radio" aria-checked="false">
+            <span class="reader-theme-swatch" style="background-color: #F9F8F6; border: 1px solid #E6E2DD;"></span>
+            <span class="reader-theme-name">Alabastro</span>
           </button>
           <button type="button" class="reader-theme-chip" data-reader-theme="neutral" title="Tema Carbón" role="radio" aria-checked="false">
-            <span class="reader-theme-swatch" style="background-color: #222222; border: 1px solid #444444;"></span>
+            <span class="reader-theme-swatch" style="background-color: #1D2128; border: 1px solid #2E3440;"></span>
             <span class="reader-theme-name">Carbón</span>
           </button>
-          <button type="button" class="reader-theme-chip" data-reader-theme="oled" title="Tema OLED Negro Puro" role="radio" aria-checked="false">
-            <span class="reader-theme-swatch" style="background-color: #000000; border: 1px solid #333333;"></span>
+          <button type="button" class="reader-theme-chip" data-reader-theme="oled" title="Tema OLED Negro Reposado" role="radio" aria-checked="false">
+            <span class="reader-theme-swatch" style="background-color: #07090D; border: 1px solid #1C1F26;"></span>
             <span class="reader-theme-name">OLED</span>
           </button>
-          <button type="button" class="reader-theme-chip" data-reader-theme="mint" title="Tema Menta" role="radio" aria-checked="false">
-            <span class="reader-theme-swatch" style="background-color: #EAF0E8; border: 1px solid #CFDCCF;"></span>
-            <span class="reader-theme-name">Menta</span>
+          <button type="button" class="reader-theme-chip" data-reader-theme="mint" title="Tema Salvia Rocío" role="radio" aria-checked="false">
+            <span class="reader-theme-swatch" style="background-color: #EDF3EE; border: 1px solid #CBDDCF;"></span>
+            <span class="reader-theme-name">Salvia</span>
           </button>
-          <button type="button" class="reader-theme-chip" data-reader-theme="mystic-night" title="Tema Noche Mística" role="radio" aria-checked="false">
-            <span class="reader-theme-swatch" style="background-color: #0B132B; border: 1px solid #1C274C;"></span>
+          <button type="button" class="reader-theme-chip" data-reader-theme="mystic-night" title="Tema Noche Profunda" role="radio" aria-checked="false">
+            <span class="reader-theme-swatch" style="background-color: #1C2B48; border: 1px solid #2E4A6A;"></span>
             <span class="reader-theme-name">Noche</span>
           </button>
         </div>

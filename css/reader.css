@@ -717,40 +717,56 @@ html.reader-open {
 .reader-theme-swatches {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
+  gap: 6px;
 }
 
 .reader-theme-chip {
   width: 100%;
-  min-height: 42px;
+  min-height: 36px;
   box-sizing: border-box;
-  padding: 8px 12px;
-  border-radius: var(--radius-md, 10px);
+  padding: 6px 10px;
+  border-radius: 10px;
   background-color: var(--color-surface);
   border: 1.5px solid var(--color-border);
   color: var(--color-text-secondary);
   display: inline-flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 10px;
+  justify-content: center;
+  gap: 6px;
   cursor: pointer;
   transition: all var(--transition-fast);
   font-family: inherit;
   user-select: none;
+  font-size: 0.80rem;
+}
+
+/* Fondos como Tipografía: cada chip lleva el color de su tema */
+.reader-theme-chip[data-reader-theme="paper"] { background-color: #F4EFE6; color: #4A342A; border-color: #E0D1B8; }
+.reader-theme-chip[data-reader-theme="lavender-light"] { background-color: #F9F8F6; color: #3A2A1E; border-color: #E6E2DD; }
+.reader-theme-chip[data-reader-theme="neutral"] { background-color: #1D2128; color: #E8ECEF; border-color: #2E3440; }
+.reader-theme-chip[data-reader-theme="oled"] { background-color: #07090D; color: #E8ECEF; border-color: #1C1F26; }
+.reader-theme-chip[data-reader-theme="mint"] { background-color: #EDF3EE; color: #1A2E1E; border-color: #CBDDCF; }
+.reader-theme-chip[data-reader-theme="mystic-night"] { background-color: #1C2B48; color: #E8ECEF; border-color: #2E4A6A; }
+.reader-theme-chip[data-reader-theme="inherit"] { background-color: var(--color-surface); color: var(--color-text-secondary); }
+
+/* Ocultar el puntito cuando el fondo ya es el color del tema (como Tipografía) */
+.reader-theme-chip[data-reader-theme="paper"] .reader-theme-swatch,
+.reader-theme-chip[data-reader-theme="lavender-light"] .reader-theme-swatch,
+.reader-theme-chip[data-reader-theme="neutral"] .reader-theme-swatch,
+.reader-theme-chip[data-reader-theme="oled"] .reader-theme-swatch,
+.reader-theme-chip[data-reader-theme="mint"] .reader-theme-swatch,
+.reader-theme-chip[data-reader-theme="mystic-night"] .reader-theme-swatch {
+  display: none;
 }
 
 .reader-theme-chip:hover {
-  background-color: var(--color-surface-hover);
-  color: var(--color-text);
-  border-color: var(--color-primary-light);
+  filter: brightness(0.98);
   transform: translateY(-1px);
 }
 
 .reader-theme-chip.active {
-  border-color: var(--color-gold, #D4AF37) !important;
-  background-color: var(--color-surface-hover) !important;
-  color: var(--color-text) !important;
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-gold) 25%, transparent), 0 2px 8px rgba(212,175,55,0.08) !important;
+  border-color: #C8B39A !important;
+  box-shadow: 0 0 0 1px rgba(200, 179, 154, 0.35), 0 2px 8px rgba(200, 179, 154, 0.12) !important;
   transform: translateY(-1px);
 }
 
@@ -774,7 +790,7 @@ html.reader-open {
 }
 
 .reader-theme-name {
-  font-size: 0.84rem;
+  font-size: 0.78rem;
   font-weight: 600;
   color: inherit;
   white-space: nowrap;
@@ -1075,9 +1091,9 @@ html.reader-open {
   }
 
   .reader-theme-chip {
-    min-height: 42px;
-    padding: 8px 10px;
-    gap: 8px;
+    min-height: 34px;
+    padding: 6px 8px;
+    gap: 6px;
   }
 
   .reader-theme-name {
@@ -1122,6 +1138,16 @@ html.reader-open {
   pointer-events: none;
   transform: translate(-50%, -100%) scale(0.92);
   transition: opacity 0.18s ease, transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  max-width: min(560px, calc(100vw - 16px));
+  box-sizing: border-box;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  flex-wrap: nowrap;
+}
+
+.reader-floating-menu::-webkit-scrollbar {
+  display: none;
 }
 
 .floating-colors {
@@ -1209,6 +1235,39 @@ html.reader-open {
   padding-left: 12px;
 }
 
+/* Menú flotante compacto en pantallas estrechas para evitar recorte */
+@media (max-width: 640px) {
+  .reader-floating-menu {
+    max-width: calc(100vw - 12px);
+    padding: 4px 6px;
+    gap: 2px;
+    border-radius: 22px;
+  }
+  .floating-colors {
+    gap: 4px;
+    padding-right: 5px;
+  }
+  .menu-color-btn {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    border-width: 1.5px !important;
+  }
+  .floating-btn {
+    padding: 5px 6px;
+    font-size: 11px;
+    min-width: 28px;
+    min-height: 28px;
+    gap: 2px;
+  }
+  /* En móvil ocultar etiquetas de texto para ahorrar ancho, mantener solo iconos + U */
+  .floating-btn#btn-float-note span,
+  .floating-btn#btn-float-define span {
+    display: none;
+  }
+}
+
 /* Táctil: diana completa de 44px en punteros gruesos */
 @media (hover: none) and (pointer: coarse) {
   .floating-btn {
@@ -1221,6 +1280,20 @@ html.reader-open {
     height: 32px;
     min-width: 32px;
     min-height: 32px;
+  }
+}
+
+@media (max-width: 640px) and (hover: none) and (pointer: coarse) {
+  .menu-color-btn {
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    min-height: 26px !important;
+  }
+  .floating-btn {
+    min-width: 32px;
+    min-height: 32px;
+    padding: 6px 7px;
   }
 }
 

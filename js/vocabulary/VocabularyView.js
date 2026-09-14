@@ -99,11 +99,17 @@ export class VocabularyView {
       <!-- Tarjetas de Vocabulario -->
       <div class="vocab-cards-grid">
         ${filtered.length === 0 ? `
-          <div style="grid-column: 1 / -1; text-align: center; padding: 56px 20px; color: var(--color-text-muted); background-color: var(--color-surface); border: 1px dashed var(--color-border); border-radius: var(--radius-md);">
-            <svg style="width: 46px; height: 46px; margin: 0 auto 14px; opacity: 0.35;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-            <p style="font-size: var(--text-sm); font-weight: bold; color: var(--color-text-secondary); margin: 0 0 6px 0;">${this.searchQuery ? 'Sin resultados para tu búsqueda.' : 'Tu cuaderno está vacío.'}</p>
-            <span style="font-size: 0.75rem; display: block; margin-bottom: 16px;">${this.searchQuery ? 'Prueba con otro término.' : 'Crea tu primera palabra o usa «Definir» mientras lees.'}</span>
-            ${this.searchQuery ? '' : `<button id="btn-add-word-empty" style="padding: 9px 20px; border-radius: var(--radius-sm); background-color: var(--color-primary-light); color: #FFF; font-size: var(--text-xs); font-weight: bold; border: none; cursor: pointer;">Añadir mi primera palabra</button>`}
+          <div class="library-empty-state">
+            <div class="empty-state-icon">
+              <svg style="width: 36px; height: 36px; color: var(--color-primary-light);" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <h3 class="empty-state-title">${this.searchQuery ? 'Sin resultados' : 'Tu cuaderno está vacío'}</h3>
+            <p class="empty-state-desc">
+              ${this.searchQuery ? `No se encontraron palabras que coincidan con «<strong>${this.escapeHtml(this.searchQuery)}</strong>». Prueba con otro término.` : 'Crea tu primera palabra o usa «Definir» mientras lees. Tus términos aparecerán aquí.'}
+            </p>
+            ${this.searchQuery ? `<button id="btn-vocab-clear-search" class="arcadia-modal-btn arcadia-modal-btn--ghost"><span>Limpiar búsqueda</span></button>` : `<button id="btn-add-word-empty" class="arcadia-modal-btn arcadia-modal-btn--primary"><svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg><span>Añadir mi primera palabra</span></button>`}
           </div>
         ` : filtered.map(w => {
           const book = this.books.find(b => b.id === w.bookId);
@@ -209,10 +215,22 @@ export class VocabularyView {
       addManualBtn.addEventListener('click', () => this.promptAddWord());
     }
 
-    // Botón de estado vacío
+    // Botón de estado vacío (mismo diseño que Colecciones - primario)
     const addEmptyBtn = this.container.querySelector('#btn-add-word-empty');
     if (addEmptyBtn) {
       addEmptyBtn.addEventListener('click', () => this.promptAddWord());
+    }
+
+    // Botón limpiar búsqueda del estado vacío (mismo diseño que Colecciones - ghost)
+    const btnClearVocab = this.container.querySelector('#btn-vocab-clear-search');
+    if (btnClearVocab) {
+      btnClearVocab.addEventListener('click', () => {
+        this.searchQuery = '';
+        this.render();
+        // Restaurar foco en el buscador principal del panel
+        const newInput = this.container.querySelector('#input-vocab-search');
+        if (newInput) newInput.focus();
+      });
     }
 
     // Botones de pronunciación fonética (círculo junto a la palabra)

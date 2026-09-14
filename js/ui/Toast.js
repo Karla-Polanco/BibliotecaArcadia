@@ -46,13 +46,13 @@ export class Toast {
     const toastEl = document.createElement('div');
     toastEl.className = `toast-message toast-${type}`;
     toastEl.style.cssText = `
-      background-color: var(--color-surface-elevated, #242424);
-      color: var(--color-text, #F2F0F7);
-      border: 1px solid var(--color-border, #303030);
+      background-color: var(--toast-bg, var(--color-surface-elevated, var(--color-surface)));
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
       border-left: 4px solid ${this._getTypeColor(type)};
       padding: 12px 16px;
       border-radius: var(--radius-md, 12px);
-      box-shadow: var(--shadow-card, 0 10px 30px rgba(0,0,0,0.5));
+      box-shadow: var(--shadow-xl, 0 10px 30px rgba(0,0,0,0.35));
       font-size: var(--text-sm, 14px);
       display: flex;
       align-items: center;

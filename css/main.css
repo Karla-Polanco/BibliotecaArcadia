@@ -23,7 +23,7 @@ html {
 [data-theme="lavender-light"],
 [data-theme="clear-sky"],
 [data-theme="enchanted-forest"],
-[data-theme="wine-poetry"] {
+[data-theme="serene-fog"] {
   color-scheme: light;
 }
 
@@ -82,10 +82,12 @@ textarea:focus-visible {
 
 /* Botones de navegación reseteados (sidebar / móvil / estados) */
 button.nav-item,
+button.collection-nav-link,
 button.mobile-nav-link,
 button.state-option-card {
   font-family: inherit;
   text-align: left;
+  justify-content: flex-start;
   width: 100%;
   background: transparent;
   border: none;
@@ -132,7 +134,17 @@ textarea:focus, textarea:focus-visible {
 .search-box input:focus-visible,
 .search-input,
 .search-input:focus,
-.search-input:focus-visible {
+.search-input:focus-visible,
+.panel-search-bar input,
+.panel-search-bar input:focus,
+.panel-search-bar input:focus-visible,
+.panel-search-input,
+.panel-search-input:focus,
+.panel-search-input:focus-visible,
+#input-vocab-search,
+#input-vocab-search:focus,
+#input-annot-search,
+#input-annot-search:focus {
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
@@ -169,15 +181,6 @@ img {
 svg {
   display: block;
   flex-shrink: 0;
-}
-
-/* Iconos de interfaz estandarizados */
-.icon {
-  width: 18px;
-  height: 18px;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
 }
 
 ul, ol {
@@ -221,7 +224,7 @@ ul, ol {
 [data-theme="lavender-light"] ::selection,
 [data-theme="clear-sky"] ::selection,
 [data-theme="enchanted-forest"] ::selection,
-[data-theme="wine-poetry"] ::selection {
+[data-theme="serene-fog"] ::selection {
   background-color: var(--color-primary, #5B4CC4);
   color: #FFFFFF;
 }
@@ -251,10 +254,10 @@ ul, ol {
   width: 100vw !important;
   height: 100vh !important;
   height: 100dvh !important;
-  background: rgba(0, 0, 0, 0.72) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-  z-index: 99999 !important;
+  background: var(--modal-backdrop, rgba(0, 0, 0, 0.65)) !important;
+  backdrop-filter: blur(12px) saturate(1.1) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(1.1) !important;
+  z-index: var(--z-modal, 200) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -264,8 +267,8 @@ ul, ol {
   box-sizing: border-box !important;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-    backdrop-filter 0.28s ease;
+  transition: opacity var(--transition-normal),
+    backdrop-filter var(--transition-normal);
   overflow-y: auto !important;
   overflow-x: hidden !important;
   overscroll-behavior: contain !important;
@@ -282,12 +285,12 @@ ul, ol {
 .theme-modal-dialog,
 .modal-card,
 .arcadia-modal-card {
-  background-color: var(--color-surface, #1E1C2E) !important;
-  background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.05) 0%, transparent 70%) !important;
-  border: 1px solid rgba(255,255,255,0.08) !important;
-  border-radius: 24px !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05), 0 0 0 1px rgba(212,175,55,0.05) !important;
-  color: var(--color-text, #FFFFFF) !important;
+  background-color: var(--color-surface) !important;
+  background-image: var(--theme-bg-pattern, none) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-xl), 0 0 0 1px var(--color-border-subtle) !important;
+  color: var(--color-text) !important;
   position: relative !important;
   width: 100% !important;
   max-width: 500px;
@@ -299,12 +302,12 @@ ul, ol {
   isolation: isolate !important;
   margin: auto !important;
   padding: 28px !important;
-  transform: scale(0.96) translateY(10px);
-  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.24s ease;
+  transform: scale(0.96) translateY(8px);
+  transition: transform var(--transition-normal), opacity var(--transition-fast);
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
-  scrollbar-color: var(--color-border, rgba(255, 255, 255, 0.18)) transparent;
+  scrollbar-color: var(--color-border) transparent;
 }
 
 /* Entrada / salida — el JS solo alterna .active en el overlay */
@@ -568,72 +571,123 @@ ul, ol {
 
 .arcadia-modal-actions {
   display: flex;
+  align-items: center;
   justify-content: flex-end;
-  gap: 10px;
-  margin-top: 6px;
+  gap: 8px;
+  margin-top: 14px;
 }
 
 .arcadia-modal-btn {
-  padding: 10px 20px;
-  border-radius: var(--radius-md, 12px);
-  font-size: 0.85rem;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  font-weight: var(--weight-medium);
   cursor: pointer;
   border: 1px solid transparent;
-  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
-    background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  white-space: nowrap;
+  transition: transform var(--transition-fast),
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.arcadia-modal-btn:active { transform: scale(0.97); }
+.arcadia-modal-btn:active {
+  transform: scale(0.97);
+}
 
 .arcadia-modal-btn--ghost {
-  background: var(--color-surface-hover);
+  background: var(--color-surface);
   border-color: var(--color-border);
   color: var(--color-text-secondary);
 }
 
 .arcadia-modal-btn--ghost:hover {
-  background: var(--color-surface);
+  background: var(--color-surface-hover);
+  border-color: var(--color-text-secondary);
   color: var(--color-text);
-  transform: translateY(-1px);
 }
 
 .arcadia-modal-btn--primary {
-  background: linear-gradient(135deg, var(--color-primary, #30256F), var(--color-primary-light, #5B4CC4));
-  color: #FFF;
+  background-color: var(--color-primary-light);
+  color: #FFFFFF;
   border-color: transparent;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 4px var(--color-primary-glow);
+  font-weight: var(--weight-semibold);
+  padding: 6px 18px;
 }
 
 .arcadia-modal-btn--primary:hover {
-  filter: brightness(1.07);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+  filter: brightness(1.08);
+  box-shadow: 0 3px 10px var(--color-primary-glow);
 }
 
 .arcadia-modal-btn--danger {
-  background: linear-gradient(135deg, #DC2626, #B91C1C);
-  color: #FFF;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+  border-color: rgba(239, 68, 68, 0.25);
+  box-shadow: none;
 }
 
-.arcadia-modal-form { display: flex; flex-direction: column; gap: 14px; }
+.arcadia-modal-btn--danger:hover {
+  background-color: rgba(239, 68, 68, 0.18);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #DC2626;
+}
+
+.arcadia-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.arcadia-modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
 .arcadia-modal-field label {
   display: block;
-  font-size: 0.72rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: var(--weight-bold);
   color: var(--color-text-muted);
-  margin-bottom: 6px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
 }
 
-/* Botones con estilo noble / Kindle Paperwhite */
+/* Botones de acción en ajustes */
+.btn-setting-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
 .btn-setting-action:hover {
   border-color: var(--color-primary-light) !important;
   background-color: var(--color-surface-hover) !important;
+  color: var(--color-text) !important;
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-setting-action:active {
+  transform: scale(0.97);
 }
 
 /* Controles de Formulario Universales en Modales */
@@ -645,11 +699,24 @@ ul, ol {
 .arcadia-modal-card textarea,
 .theme-modal-dialog input[type="text"],
 .theme-modal-dialog textarea {
-  border-radius: var(--radius-sm, 10px) !important;
-  border: 1.5px solid var(--color-border, rgba(255, 255, 255, 0.14)) !important;
-  background-color: var(--color-surface-elevated, rgba(0, 0, 0, 0.25)) !important;
-  color: var(--color-text, #FFF) !important;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
+  border-radius: var(--radius-sm) !important;
+  border: 1px solid var(--color-border) !important;
+  background-color: var(--color-surface-secondary) !important;
+  color: var(--color-text) !important;
+  font-family: inherit !important;
+  font-size: var(--text-sm) !important;
+  padding: 10px 14px !important;
+  outline: none !important;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast) !important;
+}
+
+.modal-card input:hover,
+.modal-card textarea:hover,
+.arcadia-modal-card input:hover,
+.arcadia-modal-card textarea:hover,
+.theme-modal-dialog input:hover,
+.theme-modal-dialog textarea:hover {
+  border-color: var(--color-text-secondary) !important;
 }
 
 .modal-card input:focus,
@@ -658,9 +725,71 @@ ul, ol {
 .arcadia-modal-card textarea:focus,
 .theme-modal-dialog input:focus,
 .theme-modal-dialog textarea:focus {
-  border-color: var(--color-gold, #D4AF37) !important;
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-gold) 25%, transparent), 0 2px 8px rgba(212,175,55,0.08) !important;
+  border-color: var(--color-primary-light) !important;
+  box-shadow: var(--focus-ring) !important;
   outline: none !important;
+}
+
+/* Menú Contextual Flotante Universal (Opciones de libro, etc.) */
+.context-menu-floating {
+  position: fixed;
+  background-color: var(--color-surface-elevated, var(--color-surface));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-dropdown);
+  padding: 6px;
+  z-index: var(--z-floating-menu, 120);
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: contextMenuPop 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: top left;
+}
+
+@keyframes contextMenuPop {
+  0% { opacity: 0; transform: scale(0.92) translateY(-4px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.menu-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: var(--radius-xs);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.menu-action-btn:hover {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.menu-action-btn:active {
+  transform: scale(0.98);
+}
+
+.menu-action-btn--primary {
+  color: var(--color-primary-light);
+  font-weight: var(--weight-semibold);
+}
+
+.menu-action-btn--danger {
+  color: var(--state-danger, #EF4444);
+}
+
+.menu-action-btn--danger:hover {
+  background-color: var(--state-danger-bg, rgba(239, 68, 68, 0.12));
+  color: var(--state-danger, #EF4444);
 }
 
 /* Tipografía Serena para Títulos de Modales */

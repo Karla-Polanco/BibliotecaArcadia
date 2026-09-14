@@ -193,7 +193,7 @@ export class ReaderSettings {
       }
 
       ::selection {
-        background: rgba(212, 175, 55, 0.38) !important;
+        background: rgba(200, 162, 97, 0.28) !important;
         color: inherit !important;
       }
 
@@ -350,78 +350,78 @@ export class ReaderSettings {
    * Obtiene la paleta de colores para el lector.
    */
   static _getThemeColors(themeName) {
-    // Alias legacy: 'wine' → 'wine-poetry'
-    if (themeName === 'wine') themeName = 'wine-poetry';
+    // Alias legacy: 'wine' → 'serene-fog'
+    if (themeName === 'wine') themeName = 'serene-fog';
     if (themeName === 'lavender-light') {
       return {
-        bg: '#FAF8FC',
-        text: '#242032',
-        heading: '#161324',
-        accent: '#6454D6'
+        bg: '#F9F8F6',
+        text: '#23222B',
+        heading: '#1B1A27',
+        accent: '#6A58A3'
       };
     }
     if (themeName === 'oled') {
       return {
-        bg: '#000000',
-        text: '#D5D8DE',
-        heading: '#FFFFFF',
-        accent: '#D4AF37'
+        bg: '#07090D',
+        text: '#CCD1DC',
+        heading: '#E8EAF0',
+        accent: '#C8A261'
       };
     }
     if (themeName === 'mint') {
       return {
-        bg: '#EAF0E8',
-        text: '#1C2E1E',
-        heading: '#122013',
-        accent: '#2D7A4D'
+        bg: '#EDF3EE',
+        text: '#203328',
+        heading: '#15261C',
+        accent: '#457356'
       };
     }
     if (themeName === 'paper') {
       return {
-        bg: '#F7F1E3',
-        text: '#2D251E',
-        heading: '#1C1714',
-        accent: '#8C6630'
+        bg: '#F4EFE6',
+        text: '#322921',
+        heading: '#1E1812',
+        accent: '#8C653C'
       };
     }
     if (themeName === 'neutral') {
       return {
-        bg: '#222222',
-        text: '#E8EAED',
+        bg: '#1D2128',
+        text: '#E0E3E8',
         heading: '#FFFFFF',
-        accent: '#B3ADA2'
+        accent: '#B5ADA0'
       };
     }
     if (themeName === 'enchanted-forest') {
       return {
-        bg: '#F2F6F3',
-        text: '#22382B',
+        bg: '#EDF3EE',
+        text: '#203328',
         heading: '#15261C',
-        accent: '#2D7A4D'
+        accent: '#457356'
       };
     }
     if (themeName === 'clear-sky') {
       return {
-        bg: '#EFF5FB',
-        text: '#16283D',
-        heading: '#0F1D2E',
-        accent: '#2A6EE8'
+        bg: '#FAF7F2',
+        text: '#4A342A',
+        heading: '#3A2A1E',
+        accent: '#9A8472'
       };
     }
-    if (themeName === 'wine' || themeName === 'wine-poetry') {
+    if (themeName === 'wine' || themeName === 'serene-fog') {
       return {
-        bg: '#F8F3F4',
-        text: '#36222B',
+        bg: '#F8F3F5',
+        text: '#2D1A23',
         heading: '#25151C',
-        accent: '#8A4363'
+        accent: '#955B73'
       };
     }
-    // mystic-night por defecto
+    // mystic-night por defecto — noche profunda (lectura oscura)
     return {
-      bg: '#080D1D',
-      text: '#E2E7F5',
+      bg: '#1C2B48',
+      text: '#E8ECEF',
       heading: '#FFFFFF',
-      accent: '#849DFF'
+      accent: '#8EB1D1'
     };
   }
 }

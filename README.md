@@ -43,7 +43,7 @@
 - **Sistema de 6 apariencias:**
   - *Nocturno Místico* (por defecto, oscuro y profundo)
   - *Lavanda Claro* (luminoso y suave)
-  - *Niebla Serena (`wine-poetry`)* (acuarela rosa/lavanda diurna)
+  - *Niebla Serena (`serene-fog`)* (acuarela rosa/lavanda diurna)
   - *Bosque de la Mañana (`enchanted-forest`)* (verdes salvia diurnos)
   - *Cielo Claro (`clear-sky`)* (celeste/azul diurno)
   - *Tema del Sistema* (resuelve automáticamente a Nocturno o Lavanda según el SO)

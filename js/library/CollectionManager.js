@@ -11,12 +11,14 @@ import { appState } from '../state.js';
 
 export class CollectionManager {
   static PRESET_COLORS = [
-    { name: 'Amatista', value: '#8B5CF6' },
-    { name: 'Zafiro', value: '#2563EB' },
-    { name: 'Esmeralda', value: '#059669' },
-    { name: 'Ámbar', value: '#D97706' },
-    { name: 'Rubí', value: '#E11D48' },
-    { name: 'Turquesa', value: '#0D9488' }
+    { name: 'Espresso', value: '#4A342A' },
+    { name: 'Forest Green', value: '#3E4924' },
+    { name: 'Dusty Rose', value: '#7D0531' },
+    { name: 'Dark Blue', value: '#0D243B' },
+    { name: 'Deep Amethyst', value: '#7356A6' },
+    { name: 'Azure Breese', value: '#6FA8E5' },
+    { name: 'Botanist', value: '#89D385' },
+    { name: 'Golden Glamor', value: '#EFBB55' }
   ];
 
   /**

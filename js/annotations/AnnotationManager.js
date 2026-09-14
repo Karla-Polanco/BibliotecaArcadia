@@ -11,12 +11,22 @@ import { appState } from '../state.js';
 
 export class AnnotationManager {
   static COLORS = {
-    gold:   { bg: 'rgba(212, 175, 55, 0.45)', border: '#D4AF37', name: 'Oro Arcadia' },
-    yellow: { bg: 'rgba(254, 240, 138, 0.55)', border: '#EAB308', name: 'Ámbar Cálido' },
-    green:  { bg: 'rgba(167, 243, 208, 0.55)', border: '#10B981', name: 'Menta / Esmeralda' },
-    blue:   { bg: 'rgba(186, 230, 253, 0.55)', border: '#0284C7', name: 'Azul Celeste' },
-    purple: { bg: 'rgba(221, 214, 254, 0.55)', border: '#8B5CF6', name: 'Lavanda' },
-    pink:   { bg: 'rgba(251, 207, 232, 0.55)', border: '#EC4899', name: 'Rosa Empolvado' }
+    amber:     { bg: 'rgba(255, 195, 77, 0.38)', border: '#FFC34D', name: 'Ámbar Suave' },      // BUTTER YELLOW 4th #FFC34D
+    sage:      { bg: 'rgba(143, 181, 119, 0.38)', border: '#8FB577', name: 'Verde Salvia' },   // MATCHA LATTE 4th #8FB577
+    slate:     { bg: 'rgba(122, 182, 245, 0.38)', border: '#7AB6F5', name: 'Azul Pizarra' },   // SKY DAYDREAM 4th #7AB6F5
+    lavender:  { bg: 'rgba(167, 139, 250, 0.38)', border: '#A78BFA', name: 'Lavanda Tenue' },  // LAVENDER FOG 4th #A78BFA
+    rose:      { bg: 'rgba(179, 90, 109, 0.38)', border: '#B35A6D', name: 'Rosa Empolvado' },   // MOODY ROSE 4th #B35A6D (polvo editorial)
+    terracotta:{ bg: 'rgba(255, 142, 107, 0.38)', border: '#FF8E6B', name: 'Terracota Cálida' } // PEACH GLOW 4th #FF8E6B
+  };
+
+  // Mapa de compatibilidad para anotaciones antiguas (yellow→amber, etc.)
+  static LEGACY_COLOR_MAP = {
+    yellow: 'amber',
+    gold: 'terracotta',
+    green: 'sage',
+    blue: 'slate',
+    purple: 'lavender',
+    pink: 'rose'
   };
 
   constructor() {
@@ -73,7 +83,7 @@ export class AnnotationManager {
    * @param {string} color - Nombre del color (yellow, green, blue, purple, orange, pink)
    * @param {string} chapterTitle - Título del capítulo
    */
-  async addHighlight(cfiRange, text, color = 'yellow', chapterTitle = '') {
+  async addHighlight(cfiRange, text, color = 'amber', chapterTitle = '') {
     return await this._createAnnotation(cfiRange, text, 'highlight', color, chapterTitle);
   }
 
@@ -84,7 +94,7 @@ export class AnnotationManager {
    * @param {string} color - Nombre del color
    * @param {string} chapterTitle - Título del capítulo
    */
-  async addUnderline(cfiRange, text, color = 'purple', chapterTitle = '') {
+  async addUnderline(cfiRange, text, color = 'terracotta', chapterTitle = '') {
     return await this._createAnnotation(cfiRange, text, 'underline', color, chapterTitle);
   }
 
@@ -125,7 +135,12 @@ export class AnnotationManager {
   _renderOnRendition(annot) {
     if (!this.rendition) return;
 
-    const colorConfig = AnnotationManager.COLORS[annot.color] || AnnotationManager.COLORS.yellow;
+    // Resolver color legacy → nuevo
+    let colorKey = annot.color;
+    if (AnnotationManager.LEGACY_COLOR_MAP[colorKey]) {
+      colorKey = AnnotationManager.LEGACY_COLOR_MAP[colorKey];
+    }
+    const colorConfig = AnnotationManager.COLORS[colorKey] || AnnotationManager.COLORS.amber;
 
     try {
       if (annot.type === 'underline') {
@@ -142,7 +157,7 @@ export class AnnotationManager {
           { id: annot.id },
           () => this.onAnnotationClicked(annot),
           'arcadia-highlight',
-          { 'fill': colorConfig.bg, 'fill-opacity': '0.75', 'mix-blend-mode': 'multiply' }
+          { 'fill': colorConfig.bg, 'fill-opacity': '0.95', 'mix-blend-mode': 'multiply' }
         );
       }
     } catch (err) {

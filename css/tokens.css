@@ -4,20 +4,21 @@
 
 :root {
   /* Tipografía General */
-  --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-serif: 'Literata', 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-serif: 'Literata', 'Source Serif 4', Lora, Georgia, serif;
   --font-display: 'Cinzel', Georgia, serif;
+  --font-brand: 'Cinzel Decorative', 'Cinzel', Georgia, serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
 
-  /* Escala Tipográfica Proporcional */
-  --text-2xs: 0.68rem;   /* ~11px */
-  --text-xs: 0.78rem;    /* ~13px */
-  --text-sm: 0.88rem;    /* ~14.5px */
-  --text-base: 0.98rem;  /* ~16px */
+  /* Escala Tipográfica Proporcional y Nítida */
+  --text-2xs: 0.70rem;   /* ~11.5px */
+  --text-xs: 0.80rem;    /* ~13px */
+  --text-sm: 0.90rem;    /* ~14.8px */
+  --text-base: 1.00rem;  /* ~16.5px */
   --text-md: 1.12rem;    /* ~18.5px */
-  --text-lg: 1.3rem;     /* ~21.5px */
-  --text-xl: 1.6rem;     /* ~26.5px */
-  --text-2xl: 2rem;      /* ~33px */
+  --text-lg: 1.28rem;    /* ~21px */
+  --text-xl: 1.55rem;    /* ~25.5px */
+  --text-2xl: 1.95rem;   /* ~32px */
 
   /* Pesos de Fuente */
   --weight-regular: 400;
@@ -26,17 +27,18 @@
   --weight-bold: 700;
 
   /* Escala de Espaciado Armónica */
+  --space-3xs: 0.15rem; /* ~2.5px */
   --space-2xs: 0.25rem; /* 4px */
-  --space-xs: 0.5rem;   /* 8px */
+  --space-xs: 0.50rem;  /* 8px */
   --space-sm: 0.75rem;  /* 12px */
-  --space-md: 1rem;     /* 16px */
-  --space-lg: 1.5rem;   /* 24px */
-  --space-xl: 2rem;     /* 32px */
-  --space-2xl: 2.75rem; /* 44px */
-  --space-3xl: 3.5rem;  /* 56px */
+  --space-md: 1.00rem;  /* 16px */
+  --space-lg: 1.50rem;  /* 24px */
+  --space-xl: 2.00rem;  /* 32px */
+  --space-2xl: 2.75rem; /* 45px */
+  --space-3xl: 3.50rem; /* 58px */
 
   /* Radios de Curvatura Cohesivos */
-  --radius-xs: 4px;
+  --radius-xs: 6px;
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -44,30 +46,37 @@
   --radius-2xl: 24px;
   --radius-full: 9999px;
 
-  /* Elevación y Sombras Multicapa */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 12px 28px -4px rgba(0, 0, 0, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.05);
-  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(255, 255, 255, 0.05);
-  --shadow-card-soft: 0 4px 16px rgba(0, 0, 0, 0.06);
+  /* Elevación y Sombras Multicapa Naturales */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 6px 16px -2px rgba(0, 0, 0, 0.07), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 14px 28px -4px rgba(0, 0, 0, 0.10), 0 4px 10px -2px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 22px 44px -8px rgba(0, 0, 0, 0.16), 0 8px 18px -4px rgba(0, 0, 0, 0.06);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--color-border-subtle);
+  --shadow-card-hover: 0 12px 24px -4px rgba(0, 0, 0, 0.08), 0 0 0 1px var(--color-border);
+  --shadow-dropdown: 0 10px 30px -4px rgba(0, 0, 0, 0.18), 0 2px 6px -1px rgba(0, 0, 0, 0.08);
 
   /* Transiciones y Físicas Suaves */
-  --transition-fast: 0.14s cubic-bezier(0.2, 0, 0, 1);
+  --transition-fast: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-normal: 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-slow: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  /* Dimensiones Estructurales */
+  /* Dimensiones Estructurales Estandarizadas */
   --sidebar-width: 260px;
-  --mobile-nav-height: 60px;
+  --mobile-nav-height: 62px;
   --header-height: 56px;
-  --control-height: 42px;
+  --control-height: 40px;
+  --control-height-sm: 34px;
+  --touch-target-min: 44px;
 
   /* Z-Index Jerárquico */
-  --z-sidebar: 40;
+  --z-base: 1;
   --z-sticky: 30;
+  --z-sidebar: 40;
   --z-mobile-nav: 50;
   --z-drawer: 100;
-  --z-floating-menu: 110;
+  --z-floating-menu: 120;
   --z-reader: 150;
   --z-search: 190;
   --z-modal: 200;
@@ -77,14 +86,30 @@
   --color-border-focus: var(--color-primary-light);
   --focus-ring: 0 0 0 3px var(--color-primary-glow);
 
-  /* Acentos Dorados Arcadia */
-  --color-gold: #D4AF37;
-  --color-gold-light: #F7E7A0;
-  --color-gold-dark: #9A7214;
-  --color-gold-glow: rgba(212, 175, 55, 0.28);
+  /* Acentos Dorados Arcadia — champán y oro antiguo (paleta editorial) */
+  --color-gold: #C8A261;
+  --color-gold-light: #EBD9A8;
+  --color-gold-dark: #8C6A2F;
+  --color-gold-glow: rgba(200, 162, 97, 0.22);
+
+  /* Estrellas del Emblema por Tema */
+  --star-color-light: #6E9BFF;
+  --star-color-dark: #2B57B0;
+  --star-color-center: #B9CEFF;
+  --star-glow: rgba(110, 155, 255, 0.18);
 
   /* Tokens de Libro Editorial */
   --book-aspect-ratio: 2 / 3;
-  --shadow-book: 0 8px 24px -4px rgba(0, 0, 0, 0.28), 0 2px 6px -1px rgba(0, 0, 0, 0.14);
-  --shadow-book-hover: 0 16px 36px -6px rgba(0, 0, 0, 0.35), 0 4px 12px -2px rgba(0, 0, 0, 0.18);
+  --shadow-book: 0 6px 18px -3px rgba(0, 0, 0, 0.22), 0 2px 6px -1px rgba(0, 0, 0, 0.12);
+  --shadow-book-hover: 0 16px 32px -6px rgba(0, 0, 0, 0.32), 0 4px 12px -2px rgba(0, 0, 0, 0.16);
+
+  /* Estados de Interacción — tonos orgánicos desaturados (salvia, ámbar ocre, terracota) */
+  --state-success: #4D8B6F;
+  --state-success-bg: rgba(77, 139, 111, 0.12);
+  --state-warning: #C68A3C;
+  --state-warning-bg: rgba(198, 138, 60, 0.12);
+  --state-danger: #C85A54;
+  --state-danger-bg: rgba(200, 90, 84, 0.12);
+  --state-info: var(--color-primary-light);
+  --state-info-bg: var(--color-badge-bg);
 }

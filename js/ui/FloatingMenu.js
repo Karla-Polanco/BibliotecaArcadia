@@ -102,10 +102,10 @@ export class FloatingMenu {
             await annotationManager.addUnderline(
               this.activeSelection.cfiRange,
               this.activeSelection.text,
-              'gold',
+              'terracotta',
               this.activeSelection.chapterTitle
             );
-            Toast.success('Texto subrayado en oro.');
+            Toast.success('Texto subrayado.');
           } catch (err) {
             console.warn('Error al subrayar:', err);
             Toast.error('No se pudo guardar el subrayado.');
@@ -292,9 +292,9 @@ export class FloatingMenu {
         title: cleanTitle,
         content: noteText.trim()
       });
-      // También agregar un resaltado suave en amarillo (sin bloquear si falla)
+      // También agregar un resaltado suave en tono ámbar (sin bloquear si falla)
       try {
-        await annotationManager.addHighlight(selection.cfiRange, selection.text, 'yellow', selection.chapterTitle);
+        await annotationManager.addHighlight(selection.cfiRange, selection.text, 'amber', selection.chapterTitle);
       } catch (_) {}
       Toast.success('Nota guardada con éxito.');
     } catch (err) {
@@ -332,28 +332,10 @@ export class FloatingMenu {
     const defData = await VocabularyManager.lookupDefinition(rawWord);
 
     const overlay = document.createElement('div');
-    overlay.className = 'theme-modal-overlay active';
-    overlay.style.cssText = `
-      position: fixed;
-      inset: 0;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      height: 100dvh;
-      z-index: 99999;
-      background: rgba(0, 0, 0, 0.78);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      box-sizing: border-box;
-    `;
+    overlay.className = 'theme-modal-overlay';
 
     overlay.innerHTML = `
-      <div class="theme-modal-dialog" style="max-width: 440px; padding: 24px;">
+      <div class="theme-modal-dialog" style="max-width: 440px;">
         <div class="theme-modal-header" style="margin-bottom: 16px;">
           <div>
             <div style="display: flex; align-items: center; gap: 10px;">
@@ -371,41 +353,23 @@ export class FloatingMenu {
           </button>
         </div>
 
-        <div style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 12px;">
+        <div style="margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px;">
           <!-- Definición editable -->
-          <div style="padding: 12px; border-radius: var(--radius-sm, 10px); background-color: var(--color-surface); border: 1px solid var(--color-border);">
-            <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; font-weight: bold; color: var(--color-gold, #D4AF37); display: block; margin-bottom: 6px;">Definición</span>
-            <textarea id="def-modal-definition" style="
-              width: 100%; min-height: 70px;
-              color: var(--color-text); padding: 10px; font-size: var(--text-sm, 0.875rem);
-              line-height: 1.5; resize: vertical; box-sizing: border-box; font-family: inherit;
-            ">${this.escapeHtml(defData.definition)}</textarea>
+          <div class="arcadia-modal-field" style="margin-bottom: 0;">
+            <label style="color: var(--color-gold, #D4AF37);">Definición</label>
+            <textarea id="def-modal-definition" rows="3" style="width: 100%; min-height: 70px; resize: vertical; box-sizing: border-box;">${this.escapeHtml(defData.definition)}</textarea>
           </div>
 
           <!-- Contexto en el libro (siempre visible y editable) -->
-          <div style="padding: 12px; border-radius: var(--radius-sm, 10px); background-color: var(--color-surface); border: 1px solid var(--color-border);">
-            <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; font-weight: bold; color: var(--color-text-muted); display: block; margin-bottom: 6px;">Contexto en el libro</span>
-            <textarea id="def-modal-context" style="
-              width: 100%; min-height: 50px;
-              color: var(--color-text-secondary); padding: 10px; font-size: var(--text-xs, 0.8rem);
-              line-height: 1.4; resize: vertical; box-sizing: border-box; font-family: inherit;
-              font-style: italic;
-            ">${this.escapeHtml(selection.text)}</textarea>
+          <div class="arcadia-modal-field" style="margin-bottom: 0;">
+            <label>Contexto en el libro</label>
+            <textarea id="def-modal-context" rows="2" style="width: 100%; min-height: 50px; font-style: italic; resize: vertical; box-sizing: border-box; color: var(--color-text-secondary);">${this.escapeHtml(selection.text)}</textarea>
           </div>
         </div>
 
-        <div style="display: flex; justify-content: flex-end; gap: 10px;">
-          <button id="btn-cancel-def" style="
-            padding: 9px 18px; border-radius: var(--radius-sm, 8px); font-size: 0.82rem; font-weight: 600;
-            color: var(--color-text-secondary); background: var(--color-surface-hover); border: 1px solid var(--color-border);
-            cursor: pointer; transition: all 0.18s ease;
-          ">Cerrar</button>
-          <button id="btn-save-vocab" style="
-            padding: 9px 22px; border-radius: var(--radius-sm, 8px); font-size: 0.82rem; font-weight: 600;
-            background: linear-gradient(135deg, var(--color-primary, #30256F), var(--color-primary-light, #5B4CC4));
-            color: #FFFFFF; border: none; box-shadow: 0 4px 14px var(--color-primary-glow);
-            cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.18s ease;
-          ">
+        <div class="arcadia-modal-actions">
+          <button id="btn-cancel-def" class="arcadia-modal-btn arcadia-modal-btn--ghost">Cerrar</button>
+          <button id="btn-save-vocab" class="arcadia-modal-btn arcadia-modal-btn--primary" style="display: inline-flex; align-items: center; gap: 6px;">
             <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 4v16m8-8H4"/></svg>
             <span>Guardar</span>
           </button>
@@ -414,6 +378,7 @@ export class FloatingMenu {
     `;
 
     document.body.appendChild(overlay);
+    requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('active')));
 
     const closeModal = () => overlay.remove();
     overlay.querySelector('#btn-close-def-modal').addEventListener('click', closeModal);

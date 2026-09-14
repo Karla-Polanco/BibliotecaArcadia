@@ -220,9 +220,12 @@ class App {
       document.querySelectorAll('[data-nav-filter]').forEach(el => {
         const isActive = el.dataset.navFilter === filter;
         el.classList.toggle('active', isActive);
-        // Para colecciones renderizadas como .nav-item wrapper
+        // Para colecciones renderizadas en el sidebar
         if (el.classList.contains('nav-item-link')) {
           el.closest('.nav-item')?.classList.toggle('active', isActive);
+        }
+        if (el.classList.contains('collection-nav-link')) {
+          el.closest('.collection-nav-item')?.classList.toggle('active', isActive);
         }
       });
 

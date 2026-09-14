@@ -590,11 +590,11 @@ export class ReaderView {
       btn.classList.toggle('active', parseFloat(btn.dataset.lh) === settings.lineHeight);
     });
 
-    // 5. Tema del lector (soporta alias legacy 'wine' → 'wine-poetry')
+    // 5. Tema del lector (soporta alias legacy 'wine' → 'serene-fog')
     document.querySelectorAll('#reader-theme-options [data-reader-theme]').forEach(chip => {
       const themeVal = (settings.theme || 'inherit');
-      const normalizedChip = chip.dataset.readerTheme === 'wine' ? 'wine-poetry' : chip.dataset.readerTheme;
-      const normalizedTheme = themeVal === 'wine' ? 'wine-poetry' : themeVal;
+      const normalizedChip = chip.dataset.readerTheme === 'wine' ? 'serene-fog' : chip.dataset.readerTheme;
+      const normalizedTheme = themeVal === 'wine' ? 'serene-fog' : themeVal;
       const isActive = normalizedChip === normalizedTheme;
       chip.classList.toggle('active', isActive);
       if (chip.getAttribute('role') === 'radio') {

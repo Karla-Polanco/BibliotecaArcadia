@@ -168,16 +168,23 @@ export class LibraryView {
     listEl.innerHTML = collections.map(col => {
       const isColActive = activeFilter === `collection:${col.id}`;
       const count = counts[col.id] || 0;
+      const colColor = col.color || '#5B4CC4';
       return `
-        <div style="display: flex; align-items: center; justify-content: space-between; border-radius: var(--radius-sm); padding-right: 4px;" class="nav-item ${isColActive ? 'active' : ''}">
-          <button type="button" class="nav-item-link" data-nav-filter="collection:${col.id}" style="display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; padding: 6px 8px; text-decoration: none; color: inherit; background: transparent; border: none; cursor: pointer; font: inherit; text-align: left;" aria-label="Abrir colección ${this.escapeAttr(col.name)}">
-            <span style="width: 8px; height: 8px; border-radius: 50%; background-color: ${col.color || '#5B4CC4'}; flex-shrink: 0;" aria-hidden="true"></span>
-            <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: var(--text-xs);">${this.escapeHtml(col.name)}</span>
+        <div class="collection-nav-item ${isColActive ? 'active' : ''}" style="--col-accent: ${colColor};" data-col-item-id="${col.id}">
+          <button type="button" class="collection-nav-link" data-nav-filter="collection:${col.id}" aria-label="Abrir colección ${this.escapeAttr(col.name)}">
+            <span class="collection-badge-icon" aria-hidden="true">
+              <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
+            </span>
+            <span class="collection-nav-name">${this.escapeHtml(col.name)}</span>
           </button>
-          <div style="display: flex; align-items: center; gap: 4px;">
-            <span class="nav-badge" style="font-size: 0.65rem; padding: 1px 5px;">${count}</span>
-            <button class="btn-col-options" data-col-id="${col.id}" title="Opciones" style="color: var(--color-text-muted); cursor: pointer; padding: 2px; border-radius: 3px;">
-              <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/></svg>
+          <div class="collection-nav-right">
+            <span class="collection-count-badge">${count}</span>
+            <button class="btn-col-options" data-col-id="${col.id}" title="Opciones de colección" aria-label="Opciones de colección ${this.escapeAttr(col.name)}">
+              <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+              </svg>
             </button>
           </div>
         </div>
@@ -185,13 +192,13 @@ export class LibraryView {
     }).join('');
 
     // Eventos de selección de colección (delegados en App.initNavigation;
-    // aquí solo se refuerza el estado visual del wrapper .nav-item)
+    // aquí solo se refuerza el estado visual del wrapper .collection-nav-item)
     listEl.querySelectorAll('[data-nav-filter]').forEach(item => {
       item.addEventListener('click', () => {
         // El filtro real lo aplica la delegación global en app.js.
         // Solo sincronizamos la clase del contenedor para feedback inmediato.
-        listEl.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-        item.closest('.nav-item')?.classList.add('active');
+        listEl.querySelectorAll('.collection-nav-item').forEach(el => el.classList.remove('active'));
+        item.closest('.collection-nav-item')?.classList.add('active');
       });
     });
 
@@ -231,9 +238,14 @@ export class LibraryView {
   /**
    * Aplica filtros de texto, categoría y ordenamiento.
    */
-  async applyFiltersAndRender() {
+  async applyFiltersAndRender(renderColHeader = true) {
     const filter = appState.get('activeFilter') || 'all';
     const libraryHeader = document.querySelector('.library-header');
+
+    if (this._lastAppliedFilter !== filter) {
+      this.collectionSearchQuery = '';
+      this._lastAppliedFilter = filter;
+    }
 
     // Si el filtro activo es "Notas y subrayados", ocultar el encabezado de biblioteca y delegar a AnnotationsView
     if (filter === 'annotations') {
@@ -256,17 +268,6 @@ export class LibraryView {
     // En vistas de catálogo o colección, mostrar siempre el encabezado de biblioteca
     if (libraryHeader) libraryHeader.style.display = 'block';
 
-    const libraryTitleEl = document.querySelector('.library-title');
-    if (libraryTitleEl) {
-      if (filter === 'all') libraryTitleEl.textContent = 'Biblioteca';
-      else if (filter === 'reading') libraryTitleEl.textContent = 'Leyendo actualmente';
-      else if (filter === 'to_read') libraryTitleEl.textContent = 'Por leer';
-      else if (filter === 'completed') libraryTitleEl.textContent = 'Libros leídos';
-      else if (filter === 'favorites') libraryTitleEl.textContent = 'Mis favoritos';
-      else if (filter.startsWith('collection:')) libraryTitleEl.textContent = 'Colección';
-      else libraryTitleEl.textContent = 'Biblioteca';
-    }
-
     let books = [];
     let isCustomCollection = false;
 
@@ -278,6 +279,88 @@ export class LibraryView {
     } else {
       books = this.bookManager.getAllBooks();
       this.activeCollectionData = null;
+    }
+
+    const headerTop = document.querySelector('.library-header-top');
+    const uploadBtn = document.getElementById('btn-upload-trigger');
+    const libraryControls = document.querySelector('.library-controls');
+
+    if (headerTop) {
+      if (isCustomCollection && this.activeCollectionData) {
+        if (libraryHeader) libraryHeader.classList.add('in-collection-view');
+        const col = this.activeCollectionData;
+        const colColor = col.color || 'var(--color-primary-light)';
+        if (uploadBtn) uploadBtn.style.display = 'none';
+        if (libraryControls) libraryControls.style.display = 'none';
+
+        let colWrap = headerTop.querySelector('#col-header-custom-wrap');
+        if (!colWrap) {
+          colWrap = document.createElement('div');
+          colWrap.id = 'col-header-custom-wrap';
+          headerTop.appendChild(colWrap);
+        }
+        colWrap.className = 'collection-header-panel';
+        colWrap.style.cssText = '';
+        colWrap.style.display = 'flex';
+        colWrap.style.setProperty('--col-accent', colColor);
+
+        const stdTitle = headerTop.querySelector('.library-title');
+        if (stdTitle) stdTitle.style.display = 'none';
+
+        if (renderColHeader || !colWrap.innerHTML.trim()) {
+          colWrap.innerHTML = `
+            <div class="collection-header-top">
+              <div>
+                <span class="panel-category-tag" style="color: ${this.escapeAttr(colColor)};">✦ Colección</span>
+                <h1 class="panel-heading" style="margin: 2px 0 4px 0;">${this.escapeHtml(col.name)}</h1>
+                <p class="panel-description">${col.description ? this.escapeHtml(col.description) : 'Libros asignados a esta colección personal.'}</p>
+              </div>
+              <div class="panel-actions-row">
+                <span class="collection-count-pill">${books.length} ${books.length === 1 ? 'libro' : 'libros'}</span>
+                <button type="button" id="btn-edit-active-col" class="btn-col-header-action" title="Editar colección">
+                  <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                  <span>Editar</span>
+                </button>
+                <button type="button" id="btn-delete-active-col" class="btn-col-header-action btn-col-header-action--danger" title="Eliminar colección">
+                  <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  <span>Eliminar</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="panel-search-bar">
+              <svg style="width: 14px; height: 14px; color: var(--color-text-muted); flex-shrink: 0; pointer-events: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              <input type="text" id="input-col-search" class="panel-search-input" value="${this.escapeHtml(this.collectionSearchQuery || '')}" placeholder="Buscar en esta colección...">
+            </div>
+          `;
+
+          const inputColSearch = colWrap.querySelector('#input-col-search');
+          if (inputColSearch) {
+            inputColSearch.addEventListener('input', (e) => {
+              this.collectionSearchQuery = e.target.value.trim().toLowerCase();
+              this.applyFiltersAndRender(false);
+            });
+          }
+        }
+      } else {
+        if (libraryHeader) libraryHeader.classList.remove('in-collection-view');
+        const colWrap = headerTop.querySelector('#col-header-custom-wrap');
+        if (colWrap) colWrap.style.display = 'none';
+
+        const stdTitle = headerTop.querySelector('.library-title');
+        if (stdTitle) {
+          stdTitle.style.display = '';
+          if (filter === 'all') stdTitle.textContent = 'Biblioteca';
+          else if (filter === 'reading') stdTitle.textContent = 'Leyendo actualmente';
+          else if (filter === 'to_read') stdTitle.textContent = 'Por leer';
+          else if (filter === 'completed') stdTitle.textContent = 'Libros leídos';
+          else if (filter === 'favorites') stdTitle.textContent = 'Mis favoritos';
+          else stdTitle.textContent = 'Biblioteca';
+        }
+
+        if (uploadBtn) uploadBtn.style.display = '';
+        if (libraryControls) libraryControls.style.display = '';
+      }
     }
 
     const query = (appState.get('searchQuery') || '').trim().toLowerCase();
@@ -292,7 +375,12 @@ export class LibraryView {
     });
 
     // 2. Filtrar por texto de búsqueda (título o autor)
-    if (query) {
+    if (isCustomCollection && this.collectionSearchQuery) {
+      result = result.filter(book =>
+        (book.title || '').toLowerCase().includes(this.collectionSearchQuery) ||
+        (book.author || '').toLowerCase().includes(this.collectionSearchQuery)
+      );
+    } else if (query && !isCustomCollection) {
       result = result.filter(book =>
         (book.title || '').toLowerCase().includes(query) ||
         (book.author || '').toLowerCase().includes(query)
@@ -324,21 +412,7 @@ export class LibraryView {
    * Genera el encabezado banner para la colección activa.
    */
   renderCollectionHeader() {
-    if (!this.activeCollectionData) return '';
-    const col = this.activeCollectionData;
-    return `
-      <div class="collection-header-banner" style="grid-column: 1 / -1; width: 100%; margin-bottom: 20px; padding: 18px 24px; border-radius: var(--radius-md); background-color: var(--color-surface); border: 1px solid var(--color-border); border-left: 5px solid ${col.color || 'var(--color-primary-light)'}; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
-        <div>
-          <span style="font-size: 0.75rem; text-transform: uppercase; font-weight: bold; color: ${col.color || 'var(--color-primary-light)'};">Colección personalizada</span>
-          <h2 style="font-size: var(--text-lg); font-weight: bold; color: var(--color-text); margin: 4px 0;">${this.escapeHtml(col.name)}</h2>
-          ${col.description ? `<p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin: 0;">${this.escapeHtml(col.description)}</p>` : ''}
-        </div>
-        <div style="display: flex; align-items: center; gap: 10px;">
-          <button id="btn-edit-active-col" style="padding: 8px 16px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: bold; background-color: var(--color-surface-hover); color: var(--color-text); cursor: pointer;">Editar</button>
-          <button id="btn-delete-active-col" style="padding: 8px 16px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: bold; background-color: rgba(220, 38, 38, 0.12); color: #EF4444; border: 1px solid rgba(220, 38, 38, 0.25); cursor: pointer;">Eliminar colección</button>
-        </div>
-      </div>
-    `;
+    return '';
   }
 
   /**
@@ -356,9 +430,10 @@ export class LibraryView {
       let showUploadBtn = true;
       let showResetBtn = false;
 
-      if (query) {
+      if (query || (filter.startsWith('collection:') && this.collectionSearchQuery)) {
+        const activeQ = filter.startsWith('collection:') ? this.collectionSearchQuery : query;
         emptyTitle = 'Sin resultados';
-        emptyDesc = `No se encontraron libros que coincidan con la búsqueda «<strong>${this.escapeHtml(query)}</strong>».`;
+        emptyDesc = `No se encontraron libros que coincidan con la búsqueda «<strong>${this.escapeHtml(activeQ)}</strong>».`;
         showUploadBtn = false;
         showResetBtn = true;
       } else if (filter === 'reading') {
@@ -390,30 +465,24 @@ export class LibraryView {
 
       this.container.innerHTML = `
         ${this.renderCollectionHeader()}
-        <div style="grid-column: 1 / -1; text-align: center; padding: 70px 20px; color: var(--color-text-muted);">
-          <div style="width: 72px; height: 72px; margin: 0 auto 20px; border-radius: 50%; background: var(--color-surface-hover); display: flex; align-items: center; justify-content: center;">
+        <div class="library-empty-state">
+          <div class="empty-state-icon">
             <svg style="width: 36px; height: 36px; color: var(--color-primary-light);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
           </div>
-          <h3 style="font-size: var(--text-lg); font-weight: bold; color: var(--color-text); margin-bottom: 8px;">${emptyTitle}</h3>
-          <p style="font-size: var(--text-sm); color: var(--color-text-secondary); max-width: 440px; margin: 0 auto 20px; line-height: 1.5;">
+          <h3 class="empty-state-title">${emptyTitle}</h3>
+          <p class="empty-state-desc">
             ${emptyDesc}
           </p>
           ${showUploadBtn ? `
-            <button id="btn-empty-upload" style="
-              display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: var(--radius-sm);
-              background-color: var(--color-primary-light); color: #FFF; font-size: var(--text-xs); font-weight: bold; cursor: pointer; border: none;
-            ">
+            <button id="btn-empty-upload" class="arcadia-modal-btn arcadia-modal-btn--primary">
               <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
               <span>Subir libro (EPUB)</span>
             </button>
           ` : ''}
           ${showResetBtn ? `
-            <button id="btn-empty-reset" style="
-              display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: var(--radius-sm);
-              background-color: var(--color-surface-hover); color: var(--color-text); font-size: var(--text-xs); font-weight: bold; cursor: pointer; border: 1px solid var(--color-border);
-            ">
+            <button id="btn-empty-reset" class="arcadia-modal-btn arcadia-modal-btn--ghost">
               <span>Ver toda la biblioteca</span>
             </button>
           ` : ''}
@@ -564,24 +633,27 @@ export class LibraryView {
    * Vincula interactividad de clics, favoritos y opciones en tarjetas.
    */
   attachCardEvents() {
-    // Botón de editar colección activa en el banner
-    const btnEditCol = this.container.querySelector('#btn-edit-active-col');
+    // Botón de editar colección activa en el encabezado
+    const btnEditCol = document.getElementById('btn-edit-active-col');
     if (btnEditCol && this.activeCollectionData) {
-      btnEditCol.addEventListener('click', () => {
-        CollectionModal.openEditModal(this.activeCollectionData, () => this.updateBadges());
-      });
+      btnEditCol.onclick = () => {
+        CollectionModal.openEditModal(this.activeCollectionData, async () => {
+          await this.updateBadges();
+          await this.applyFiltersAndRender();
+        });
+      };
     }
 
-    // Botón de eliminar colección activa en el banner
-    const btnDeleteCol = this.container.querySelector('#btn-delete-active-col');
+    // Botón de eliminar colección activa en el encabezado
+    const btnDeleteCol = document.getElementById('btn-delete-active-col');
     if (btnDeleteCol && this.activeCollectionData) {
-      btnDeleteCol.addEventListener('click', async () => {
+      btnDeleteCol.onclick = async () => {
         const col = this.activeCollectionData;
         const confirmed = await Modal.confirm({
           title: 'Eliminar colección',
           message: `¿Estás seguro de que deseas eliminar la colección «${col.name}»?\n\nLos libros continuarán intactos en tu biblioteca.`,
           danger: true,
-          confirmText: 'Eliminar colección'
+          confirmText: 'Eliminar'
         });
 
         if (confirmed) {
@@ -591,7 +663,7 @@ export class LibraryView {
           await this.updateBadges();
           await this.applyFiltersAndRender();
         }
-      });
+      };
     }
     // Favoritos
     this.container.querySelectorAll('[data-action="toggle-fav"]').forEach(btn => {
@@ -641,43 +713,30 @@ export class LibraryView {
 
     const menu = document.createElement('div');
     menu.className = 'context-menu-floating';
-    menu.style.cssText = `
-      position: fixed;
-      background-color: var(--color-surface-elevated, #242424);
-      border: 1px solid var(--color-border, #303030);
-      border-radius: var(--radius-md, 12px);
-      box-shadow: var(--shadow-card);
-      padding: 6px;
-      z-index: var(--z-floating-menu, 110);
-      min-width: 160px;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    `;
 
     const rect = triggerEl.getBoundingClientRect();
     menu.style.top = `${rect.bottom + 6}px`;
-    menu.style.left = `${Math.min(window.innerWidth - 180, rect.left)}px`;
+    menu.style.left = `${Math.min(window.innerWidth - 190, Math.max(10, rect.left))}px`;
 
     menu.innerHTML = `
-      <button class="menu-action-btn" data-opt="read" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; border-radius: 6px; font-size: var(--text-xs); color: var(--color-primary-light); cursor: pointer;">
-        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+      <button class="menu-action-btn menu-action-btn--primary" data-opt="read">
+        <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
         <span>Leer libro</span>
       </button>
-      <button class="menu-action-btn" data-opt="edit" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; border-radius: 6px; font-size: var(--text-xs); color: var(--color-text); cursor: pointer;">
-        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+      <button class="menu-action-btn" data-opt="edit">
+        <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
         <span>Editar detalles</span>
       </button>
-      <button class="menu-action-btn" data-opt="collections" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; border-radius: 6px; font-size: var(--text-xs); color: var(--color-text); cursor: pointer;">
-        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+      <button class="menu-action-btn" data-opt="collections">
+        <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
         <span>Colecciones...</span>
       </button>
-      <button class="menu-action-btn" data-opt="download" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; border-radius: 6px; font-size: var(--text-xs); color: var(--color-text); cursor: pointer;">
-        <svg style="width: 14px; height: 14px; color: var(--color-primary-light);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+      <button class="menu-action-btn" data-opt="download">
+        <svg style="width: 15px; height: 15px; color: var(--color-primary-light);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
         <span>Descargar EPUB</span>
       </button>
-      <button class="menu-action-btn" data-opt="delete" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 12px; border-radius: 6px; font-size: var(--text-xs); color: #EF4444; cursor: pointer;">
-        <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+      <button class="menu-action-btn menu-action-btn--danger" data-opt="delete">
+        <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
         <span>Eliminar libro</span>
       </button>
     `;
