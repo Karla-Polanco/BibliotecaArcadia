@@ -4,6 +4,14 @@
 /* NOTA: tokens.css y themes.css ya se cargan vía <link> en index.html.
    No se usa @import aquí para evitar doble petición y bloqueo de render. */
 
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('https://cdn.jsdelivr.net/gh/antijingoist/opendyslexic@master/compiled/OpenDyslexic-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Reset Moderno */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -35,10 +43,10 @@ body {
   font-family: var(--font-sans);
   background-color: var(--color-background);
   background-image: var(--theme-bg-pattern, none);
-  background-size: var(--theme-bg-size, 200px 200px);
-  background-position: center top;
+  background-size: 100% 100%;
+  background-position: center center;
   background-attachment: fixed;
-  background-repeat: repeat;
+  background-repeat: no-repeat;
   color: var(--color-text);
   min-height: 100vh;
   min-height: 100dvh;
@@ -286,7 +294,7 @@ ul, ol {
 .modal-card,
 .arcadia-modal-card {
   background-color: var(--color-surface) !important;
-  background-image: var(--theme-bg-pattern, none) !important;
+  background-image: none !important;
   border: 1px solid var(--color-border) !important;
   border-radius: var(--radius-xl) !important;
   box-shadow: var(--shadow-xl), 0 0 0 1px var(--color-border-subtle) !important;

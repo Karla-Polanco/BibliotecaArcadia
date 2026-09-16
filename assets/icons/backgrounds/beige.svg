@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1680 944" preserveAspectRatio="none">
+  <defs>
+    <!-- Fondo principal -->
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FAF7F2"/>
+      <stop offset="52%" stop-color="#F6F0E6"/>
+      <stop offset="100%" stop-color="#EFE3CE"/>
+    </linearGradient>
+    <!-- Gradientes sutiles para las formas principales -->
+    <linearGradient id="shapeSubtle" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#E0D1B8" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="shapeSubtleBottom" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#E0D1B8" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <!-- FONDO -->
+  <rect width="1680" height="944" fill="url(#background)"/>
+  <!-- FORMA SUPERIOR IZQUIERDA -->
+  <path d="M 0 0 H 610 C 585 45, 555 103, 510 135 C 455 175, 390 186, 330 202 C 260 220, 220 252, 178 296 C 120 357, 67 382, 0 386 Z" fill="url(#shapeSubtle)" />
+  <!-- CURVA INTERIOR SUPERIOR IZQUIERDA -->
+  <path d="M 0 0 H 535 C 505 56, 470 113, 418 141 C 360 173, 298 182, 243 207 C 181 235, 135 276, 93 314 C 58 346, 27 360, 0 360 Z" fill="#C8B39A" opacity="0.15" />
+  <!-- FORMA INFERIOR IZQUIERDA -->
+  <path d="M 0 716 C 73 650, 143 615, 208 625 C 291 638, 328 704, 386 753 C 451 808, 524 827, 606 849 C 673 867, 712 899, 735 944 H 0 Z" fill="url(#shapeSubtleBottom)" />
+  <!-- CURVA INTERIOR INFERIOR -->
+  <path d="M 0 760 C 76 688, 142 654, 205 652 C 279 650, 319 706, 370 751 C 429 803, 492 826, 570 850 C 640 871, 690 903, 710 944 H 0 Z" fill="#C8B39A" opacity="0.12" />
+  <!-- FORMA GRANDE DEL LADO DERECHO -->
+  <path d="M 1680 282 C 1605 312, 1545 351, 1505 399 C 1460 452, 1434 518, 1418 586 C 1404 648, 1400 706, 1370 746 C 1337 790, 1275 807, 1218 823 C 1156 840, 1107 867, 1081 908 C 1067 929, 1061 944, 1061 944 H 1680 Z" fill="url(#shapeSubtle)" />
+  <!-- CURVA INTERIOR DERECHA -->
+  <path d="M 1680 557 C 1617 557, 1563 574, 1524 607 C 1482 643, 1465 688, 1451 733 C 1435 784, 1409 813, 1365 834 C 1318 857, 1261 862, 1218 879 C 1167 899, 1134 923, 1118 944 H 1680 Z" fill="#E0D1B8" opacity="0.25" />
+  <!-- LÍNEA CURVA FINA DERECHA -->
+  <path d="M 1680 288 C 1607 322, 1550 360, 1513 410 C 1473 463, 1451 529, 1437 597 C 1425 659, 1420 710, 1392 752 C 1358 802, 1296 820, 1236 839 C 1178 857, 1125 889, 1095 931 C 1089 940, 1085 944, 1085 944" fill="none" stroke="#C8B39A" stroke-width="2" stroke-linecap="round" opacity="0.3" />
+</svg>

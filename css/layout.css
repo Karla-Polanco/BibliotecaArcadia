@@ -422,19 +422,6 @@
   outline-offset: 1px;
 }
 
-.nav-item--pwa {
-  width: 100%;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  text-align: left;
-}
-
-.badge--pwa {
-  background-color: var(--color-primary-light);
-  color: #FFF;
-  font-size: 0.65rem;
-}
 
 .nav-item-content {
   display: flex;
@@ -569,7 +556,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  background-color: var(--color-background);
+  background-color: transparent;
   transition: margin-left var(--transition-normal);
   min-width: 0;
   width: 100%;

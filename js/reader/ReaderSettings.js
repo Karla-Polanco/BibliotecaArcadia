@@ -80,9 +80,10 @@ export class ReaderSettings {
     const customCss = `
       @font-face {
         font-family: 'OpenDyslexic';
-        src: url('https://cdn.jsdelivr.net/npm/opendyslexic@1.0.3/dist/OpenDyslexic-Regular.otf') format('opentype');
+        src: url('https://cdn.jsdelivr.net/gh/antijingoist/opendyslexic@master/compiled/OpenDyslexic-Regular.otf') format('opentype');
         font-weight: normal;
         font-style: normal;
+        font-display: swap;
       }
 
       html {
@@ -100,11 +101,11 @@ export class ReaderSettings {
 
       body {
         margin: 0 auto !important;
-        max-width: 880px !important;
-        padding-top: 72px !important;
-        padding-left: 20px !important;
-        padding-right: 20px !important;
-        padding-bottom: 68px !important;
+        max-width: 900px !important;
+        padding-top: 48px !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        padding-bottom: 48px !important;
         font-family: ${fontStack} !important;
         font-size: ${settings.fontSize}px !important;
         font-weight: ${fontWeightVal} !important;
@@ -242,11 +243,12 @@ export class ReaderSettings {
           'overflow-x': 'hidden'
         },
         'body': {
-          'margin': '0',
-          'padding-top': '72px',
-          'padding-bottom': '68px',
-          'padding-left': '20px',
-          'padding-right': '20px',
+          'margin': '0 auto',
+          'max-width': '900px',
+          'padding-top': '48px',
+          'padding-bottom': '48px',
+          'padding-left': '16px',
+          'padding-right': '16px',
           'color': themeColors.text,
           'background': themeColors.bg,
           'font-family': fontStack,
@@ -277,13 +279,17 @@ export class ReaderSettings {
       contents.forEach(content => {
         if (!content || !content.document) return;
 
-        // Inyectar enlace a Google Fonts curado en el head del iframe si no existe
-        if (!content.document.getElementById('arcadia-google-fonts')) {
-          const fontLink = content.document.createElement('link');
+        // Inyectar enlace a Google Fonts curado en el head del iframe
+        const fontsHref = 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;0,7..72,800;1,7..72,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600;700;800&family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400&family=Lexend:wght@400;500;600;700&family=Cinzel:wght@600;700&display=swap';
+        let fontLink = content.document.getElementById('arcadia-google-fonts');
+        if (!fontLink) {
+          fontLink = content.document.createElement('link');
           fontLink.id = 'arcadia-google-fonts';
           fontLink.rel = 'stylesheet';
-          fontLink.href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Atkinson+Hyperlegible:wght@400;700&family=Cinzel:wght@600;700&display=swap';
           content.document.head.appendChild(fontLink);
+        }
+        if (fontLink.href !== fontsHref) {
+          fontLink.href = fontsHref;
         }
 
         let styleTag = content.document.getElementById('arcadia-reader-custom-style');
@@ -316,31 +322,31 @@ export class ReaderSettings {
         return "'Literata', Georgia, serif";
       case 'Source Serif':
       case 'SourceSerif':
+      case 'Source Serif 4':
         return "'Source Serif 4', Georgia, serif";
       case 'Merriweather':
         return "'Source Serif 4', Georgia, serif";
       case 'Lora':
-        // Curado: Lora migra a Literata (serif literaria curada)
-        return "'Literata', Georgia, serif";
+        return "'Lora', Georgia, serif";
       case 'EB Garamond':
       case 'EBGaramond':
       case 'Garamond':
-        return "'Source Serif 4', Georgia, serif";
+        return "'EB Garamond', Garamond, Georgia, serif";
       case 'Playfair':
       case 'Playfair Display':
-        return "'Cinzel', Georgia, serif";
+        return "'Playfair Display', Georgia, serif";
       case 'Atkinson':
       case 'Atkinson Hyperlegible':
         return "'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
       case 'Poppins':
         return "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
       case 'Inter':
+        return "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
       case 'Roboto':
-        // Curado: Inter/Roboto migran a Poppins (sans UI curado)
-        return "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+        return "'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
       case 'OpenDyslexic':
       case 'Dyslexic':
-        return "'OpenDyslexic', 'Comic Sans MS', sans-serif";
+        return "'OpenDyslexic', 'Lexend', sans-serif";
       default:
         return "'Literata', Georgia, serif";
     }

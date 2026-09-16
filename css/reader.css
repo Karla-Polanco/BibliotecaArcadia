@@ -186,9 +186,9 @@
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 16px 12px;
-  scroll-padding-top: 72px;
-  scroll-padding-bottom: 68px;
+  padding: 0;
+  scroll-padding-top: 48px;
+  scroll-padding-bottom: 48px;
   scrollbar-width: none;
   -ms-overflow-style: none;
   box-sizing: border-box;
@@ -222,7 +222,7 @@ html.reader-open {
 
 #reader-content {
   width: 100%;
-  max-width: 880px;
+  max-width: 900px;
   min-height: 100%;
   position: relative;
   box-sizing: border-box;
@@ -247,41 +247,7 @@ html.reader-open {
   -ms-overflow-style: none;
 }
 
-/* Flechas de Navegación Lateral (Desktop) — reservadas para modo paginado futuro.
-   En modo desplazamiento continuo (scrolled-doc) permanecen ocultas a propósito. */
-.btn-reader-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 44px;
-  height: 60px;
-  background-color: var(--color-surface-hover);
-  border: 1px solid rgba(255,255,255,0.05);
-  color: var(--color-text-muted);
-  border-radius: var(--radius-md);
-  z-index: 10;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.25;
-  transition: all var(--transition-fast);
-  cursor: pointer;
-}
 
-.btn-reader-nav:hover {
-  opacity: 1;
-  background-color: var(--color-surface-secondary);
-  color: var(--color-text);
-  border-color: var(--color-primary-light);
-}
-
-.btn-reader-nav.nav-prev {
-  left: 10px;
-}
-
-.btn-reader-nav.nav-next {
-  right: 10px;
-}
 
 /* Spinner de Carga del Lector */
 .reader-loading-spinner {
@@ -421,11 +387,6 @@ html.reader-open {
   justify-content: space-between;
 }
 
-.toc-title {
-  font-size: var(--text-md);
-  font-weight: var(--weight-bold);
-  color: var(--color-text);
-}
 
 .toc-close-btn {
   width: 32px;
@@ -506,12 +467,6 @@ html.reader-open {
   transform: translateY(110%);
 }
 
-.reader-view.bars-hidden .btn-reader-nav {
-  opacity: 0 !important;
-  pointer-events: none !important;
-  visibility: hidden !important;
-  transform: translateY(-50%) scale(0.8) !important;
-}
 
 /* Overlay persistente de datos del libro (solo visible cuando las barras están ocultas y en modo paginado) */
 .reader-paginated-info {
@@ -550,9 +505,6 @@ html.reader-open {
 
 /* Adaptación Móvil y Modo App */
 @media (max-width: 768px) {
-  #columns-settings-group {
-    display: none !important;
-  }
   .reader-header {
     padding: 0 var(--space-sm);
   }
@@ -630,10 +582,6 @@ html.reader-open {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-}
-
-#columns-options {
-  grid-template-columns: repeat(2, 1fr);
 }
 
 #font-family-options {
@@ -1054,10 +1002,7 @@ html.reader-open {
     padding: 4px 6px;
   }
 
-  /* Botones laterales eliminados - solo desplazamiento */
-  .btn-reader-nav {
-    display: none !important;
-  }
+
 
   .reader-footer {
     height: 44px;

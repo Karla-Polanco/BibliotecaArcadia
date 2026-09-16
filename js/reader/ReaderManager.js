@@ -305,8 +305,8 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
     const vw = (viewportEl?.clientWidth || window.innerWidth || 800);
     const vh = (viewportEl?.clientHeight || window.innerHeight || 600);
     return {
-      width: Math.min(Math.max(280, vw - 24), 880),
-      height: Math.max(320, vh - 32)
+      width: Math.min(Math.max(280, vw), 900),
+      height: Math.max(320, vh)
     };
   }
 
