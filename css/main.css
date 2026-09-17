@@ -27,7 +27,7 @@ html {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
   scroll-behavior: smooth;
-  color-scheme: light dark;
+  color-scheme: light;
 }
 
 [data-theme="lavender-light"],
