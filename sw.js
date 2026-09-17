@@ -6,7 +6,7 @@
  * mediante caché Cache-First del App Shell y limpieza de versiones obsoletas.
  */
 
-const CACHE_NAME = 'arcadia-pwa-v117';
+const CACHE_NAME = 'arcadia-pwa-v118';
 
 // Recursos esenciales del App Shell a precachear
 const APP_SHELL_ASSETS = [
