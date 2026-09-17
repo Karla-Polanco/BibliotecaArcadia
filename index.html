@@ -2,15 +2,22 @@
 <html lang="es">
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Biblioteca Arcadia - Biblioteca virtual y lector EPUB personal local-first, inspirado en la experiencia Kindle.">
+  <meta name="theme-color" content="#E8ECEF">
   <script>
     (function () {
       try {
         var savedTheme = localStorage.getItem('arcadia_theme') || 'mystic-night';
-        // 'system' ahora es un tema real con @media (prefers-color-scheme), no se resuelve aquí
-        // Normalizar temas legacy inexistentes
         var known = ['mystic-night','lavender-light','wine-poetry','serene-fog','enchanted-forest','clear-sky'];
         if (known.indexOf(savedTheme) === -1) savedTheme = 'mystic-night';
         document.documentElement.setAttribute('data-theme', savedTheme);
+        var themeColors = { 'mystic-night':'#E8ECEF','lavender-light':'#FBF9FF','clear-sky':'#FAF7F2','enchanted-forest':'#F5F9F6','serene-fog':'#FBF8F9','wine-poetry':'#FBF8F9' };
+        var tc = themeColors[savedTheme] || '#E8ECEF';
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', tc);
         var savedScale = localStorage.getItem('arcadia_ui_scale');
         if (savedScale && !isNaN(parseInt(savedScale))) {
           var scale = Math.max(80, Math.min(130, parseInt(savedScale)));
@@ -19,11 +26,6 @@
       } catch (e) { }
     })();
   </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description"
-    content="Biblioteca Arcadia - Biblioteca virtual y lector EPUB personal local-first, inspirado en la experiencia Kindle.">
-  <meta name="theme-color" content="#0B1D3A">
   <title>Biblioteca Arcadia · App de lectura</title>
 
   <!-- PWA Web App Manifest e Iconos PNG -->
@@ -34,7 +36,7 @@
   <link rel="apple-touch-icon" sizes="512x512" href="assets/icons/icon-512.png">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Arcadia">
 
   <!-- Fuentes Tipográficas Literarias y de Marca (Poppins, Literata, Source Serif 4, Lora, EB Garamond, Playfair, Atkinson Hyperlegible, Inter, Roboto, Lexend, Cinzel) -->
@@ -45,13 +47,13 @@
     rel="stylesheet">
 
   <!-- Hojas de Estilo Modulares -->
-  <link rel="stylesheet" href="css/tokens.css?v=115">
-  <link rel="stylesheet" href="css/themes.css?v=115">
-  <link rel="stylesheet" href="css/main.css?v=115">
-  <link rel="stylesheet" href="css/layout.css?v=115">
-  <link rel="stylesheet" href="css/library.css?v=115">
-  <link rel="stylesheet" href="css/reader.css?v=115">
-  <link rel="stylesheet" href="css/responsive.css?v=115">
+  <link rel="stylesheet" href="css/tokens.css?v=117">
+  <link rel="stylesheet" href="css/themes.css?v=117">
+  <link rel="stylesheet" href="css/main.css?v=117">
+  <link rel="stylesheet" href="css/layout.css?v=117">
+  <link rel="stylesheet" href="css/library.css?v=117">
+  <link rel="stylesheet" href="css/reader.css?v=117">
+  <link rel="stylesheet" href="css/responsive.css?v=117">
 </head>
 
 <body>

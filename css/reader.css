@@ -222,11 +222,23 @@ html.reader-open {
 
 #reader-content {
   width: 100%;
-  max-width: 900px;
+  max-width: 1024px;
   min-height: 100%;
   position: relative;
   box-sizing: border-box;
   margin: 0 auto;
+}
+
+/* Desktop web: aprovechar mejor el ancho y reducir gutters oscuros */
+@media (min-width: 1280px) {
+  #reader-content {
+    max-width: 1120px;
+  }
+}
+@media (min-width: 1600px) {
+  #reader-content {
+    max-width: 1200px;
+  }
 }
 
 /* Prevenir scroll horizontal en epub.js (modo scrolled-doc) y ocultar barra de desplazamiento */
@@ -1184,14 +1196,16 @@ html.reader-open {
   padding: 6px 10px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   opacity: 0;
   pointer-events: none;
   transform: translate(-50%, -100%) scale(0.92);
   transition: opacity 0.18s ease, transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
-  max-width: min(560px, calc(100vw - 16px));
+  max-width: min(700px, calc(100vw - 16px));
+  width: max-content;
   box-sizing: border-box;
   overflow-x: auto;
+  overflow-y: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
   flex-wrap: nowrap;
@@ -1207,18 +1221,20 @@ html.reader-open {
   gap: 8px;
   padding-right: 10px;
   border-right: 1px solid var(--color-border);
+  flex-shrink: 0;
 }
 
 .menu-color-btn {
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  min-height: 32px;
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  min-height: 30px;
   border-radius: var(--radius-full);
   border: 2px solid rgba(255, 255, 255, 0.4);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  flex-shrink: 0;
 }
 
 .menu-color-btn:hover {
@@ -1235,6 +1251,7 @@ html.reader-open {
 .line-color-btn {
   min-width: 40px;
   padding: 8px 9px;
+  flex-shrink: 0;
 }
 
 .line-color-preview {
@@ -1303,10 +1320,17 @@ html.reader-open {
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
+  flex-shrink: 0;
   -webkit-tap-highlight-color: transparent;
   transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
     background-color 0.18s ease, color 0.18s ease,
     border-color 0.18s ease, box-shadow 0.2s ease;
+}
+
+.floating-btn#btn-float-note,
+.floating-btn#btn-float-define {
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .floating-btn:hover {
@@ -1342,6 +1366,19 @@ html.reader-open {
   padding-left: 12px;
 }
 
+/* Evitar choque Nota/Definir en tablets y portátiles estrechos: ocultar texto y dejar solo icono */
+@media (max-width: 880px) {
+  .floating-btn#btn-float-note span,
+  .floating-btn#btn-float-define span {
+    display: none;
+  }
+  .floating-btn#btn-float-note,
+  .floating-btn#btn-float-define {
+    min-width: 36px;
+    padding: 6px 8px;
+  }
+}
+
 /* Menú flotante compacto en pantallas estrechas para evitar recorte */
 @media (max-width: 640px) {
   .reader-floating-menu {
@@ -1367,11 +1404,6 @@ html.reader-open {
     min-width: 28px;
     min-height: 28px;
     gap: 2px;
-  }
-  /* En móvil ocultar etiquetas de texto para ahorrar ancho, mantener solo iconos + U */
-  .floating-btn#btn-float-note span,
-  .floating-btn#btn-float-define span {
-    display: none;
   }
 }
 

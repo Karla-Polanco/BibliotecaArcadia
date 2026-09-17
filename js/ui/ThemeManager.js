@@ -67,6 +67,7 @@ export class ThemeManager {
 
     document.documentElement.setAttribute('data-theme', themeName);
     this._updateFavicon(themeName);
+    this._updateThemeColor(themeName);
 
     // Despachar evento para componentes que requieran sincronizarse
     window.dispatchEvent(new CustomEvent('arcadia:themechange', {
@@ -87,19 +88,41 @@ export class ThemeManager {
   _handleSystemThemeChange(e) {}
 
   /**
+   * Sincroniza el color de la barra del navegador / splash con el tema claro.
+   * @param {string} themeName
+   */
+  _updateThemeColor(themeName) {
+    const themeColors = {
+      'mystic-night': '#E8ECEF',
+      'lavender-light': '#FBF9FF',
+      'clear-sky': '#FAF7F2',
+      'enchanted-forest': '#F5F9F6',
+      'serene-fog': '#FBF8F9'
+    };
+    const color = themeColors[themeName] || '#E8ECEF';
+    try {
+      let meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', color);
+      // Para PWA en iOS / standalone
+      let meta2 = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+      if (meta2) meta2.setAttribute('content', color);
+    } catch (_) {}
+  }
+
+  /**
    * Actualiza dinámicamente el favicon de la pestaña con la paleta de colores del tema.
    * @param {string} themeName 
    */
   _updateFavicon(themeName) {
     const themePalettes = {
       'mystic-night': { bg: '#E8ECEF', bg2: '#C4D8E5', star1: '#A7C7E7', star2: '#8EB1D1', star3: '#5A7FAF' },
-      'deep-twilight': { bg: '#0B1D3A', bg2: '#06101F', star1: '#D7E1EC', star2: '#8FA9C4', star3: '#1B4167' },
-      'clear-sky': { bg: '#0F2338', bg2: '#061322', star1: '#E0F2FE', star2: '#60A5FA', star3: '#2563EB' },
-      'enchanted-forest': { bg: '#0D2818', bg2: '#04120A', star1: '#DCFCE7', star2: '#4ADE80', star3: '#227D48' },
-      'lavender-light': { bg: '#271E56', bg2: '#130C33', star1: '#DDD6FE', star2: '#A78BFA', star3: '#6C5CE7' },
-      'serene-fog': { bg: '#F6F0F1', bg2: '#E4C9D2', star1: '#FFFFFF', star2: '#C2A3B0', star3: '#8A6573' },
-      'paper': { bg: '#F4F1EA', bg2: '#E4C9A2', star1: '#FFFFFF', star2: '#C2A36B', star3: '#8B6914' },
-      'neutral': { bg: '#252525', bg2: '#101010', star1: '#FFFFFF', star2: '#A0A0A0', star3: '#555555' }
+      'deep-twilight': { bg: '#E8ECEF', bg2: '#C4D8E5', star1: '#A7C7E7', star2: '#8EB1D1', star3: '#5A7FAF' },
+      'clear-sky': { bg: '#FAF7F2', bg2: '#EFE3CE', star1: '#EFE3CE', star2: '#C8B39A', star3: '#9A8472' },
+      'enchanted-forest': { bg: '#F5F9F6', bg2: '#D5E8DB', star1: '#6EE7B7', star2: '#4E8565', star3: '#2C6343' },
+      'lavender-light': { bg: '#FBF9FF', bg2: '#E2DAF3', star1: '#C4B5FD', star2: '#7D6FB5', star3: '#5E4FA2' },
+      'serene-fog': { bg: '#FBF8F9', bg2: '#F2E6EB', star1: '#F9A8D4', star2: '#955B73', star3: '#754157' },
+      'paper': { bg: '#FAF7F2', bg2: '#E0D1B8', star1: '#FFFFFF', star2: '#C8B39A', star3: '#9A8472' },
+      'neutral': { bg: '#EDF3EE', bg2: '#D5E8DB', star1: '#FFFFFF', star2: '#A0A0A0', star3: '#555555' }
     };
 
     const p = themePalettes[themeName] || themePalettes['mystic-night'];

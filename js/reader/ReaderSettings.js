@@ -104,10 +104,10 @@ export class ReaderSettings {
 
       body {
         margin: 0 auto !important;
-        max-width: 850px !important;
+        max-width: 920px !important;
         padding-top: 48px !important;
-        padding-left: 24px !important;
-        padding-right: 24px !important;
+        padding-left: 32px !important;
+        padding-right: 32px !important;
         padding-bottom: 48px !important;
         font-family: ${fontStack} !important;
         font-size: ${settings.fontSize}px !important;
@@ -267,6 +267,28 @@ export class ReaderSettings {
       html, body {
         scrollbar-width: none !important;
       }
+
+      @media (max-width: 768px) {
+        body {
+          max-width: 100% !important;
+          padding-left: 20px !important;
+          padding-right: 20px !important;
+          padding-top: 24px !important;
+          padding-bottom: 24px !important;
+        }
+      }
+      @media (min-width: 1280px) {
+        body {
+          max-width: 1020px !important;
+          padding-left: 40px !important;
+          padding-right: 40px !important;
+        }
+      }
+      @media (min-width: 1600px) {
+        body {
+          max-width: 1100px !important;
+        }
+      }
     `;
 
     // 3. Registrar en rendition.themes de epub.js
@@ -283,11 +305,11 @@ export class ReaderSettings {
         },
         'body': {
           'margin': '0 auto',
-          'max-width': '850px',
+          'max-width': '920px',
           'padding-top': '48px',
           'padding-bottom': '48px',
-          'padding-left': '24px',
-          'padding-right': '24px',
+          'padding-left': '32px',
+          'padding-right': '32px',
           'color': themeColors.text,
           'background': themeColors.bg,
           'font-family': fontStack,

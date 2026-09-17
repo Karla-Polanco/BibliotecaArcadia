@@ -347,8 +347,10 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
     const viewportEl = document.getElementById('reader-viewport');
     const vw = (viewportEl?.clientWidth || window.innerWidth || 800);
     const vh = (viewportEl?.clientHeight || window.innerHeight || 600);
+    // Desktop web: permitir columna más ancha para reducir gutters vacíos
+    const cap = window.innerWidth >= 1600 ? 1200 : (window.innerWidth >= 1280 ? 1120 : 1024);
     return {
-      width: Math.min(Math.max(280, vw), 900),
+      width: Math.min(Math.max(280, vw), cap),
       height: Math.max(320, vh)
     };
   }

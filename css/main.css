@@ -33,12 +33,9 @@ html {
 [data-theme="lavender-light"],
 [data-theme="clear-sky"],
 [data-theme="enchanted-forest"],
-[data-theme="serene-fog"] {
-  color-scheme: light;
-}
-
+[data-theme="serene-fog"],
 [data-theme="mystic-night"] {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
