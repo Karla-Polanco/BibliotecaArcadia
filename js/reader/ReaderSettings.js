@@ -13,6 +13,7 @@ export class ReaderSettings {
     fontSize: 18,
     fontWeight: 'normal', // 'normal' (400), 'medium' (600), 'bold' (800)
     lineHeight: 1.6,
+    textAlign: 'left',    // 'left', 'justify', 'center', 'right'
     columns: 1,           // 1 o 2 columnas
     flowMode: 'scrolled-doc', // Desplazamiento continuo (scroll)
     theme: 'inherit'      // 'inherit', 'mystic-night', 'lavender-light', 'paper', 'neutral', 'enchanted-forest', 'clear-sky', 'wine'
@@ -75,6 +76,7 @@ export class ReaderSettings {
     const fontStack = this._getFontStack(settings.fontFamily);
     // Peso de fuente: Normal (400), Medio (600), Negrita (800)
     const fontWeightVal = settings.fontWeight === 'bold' ? '800' : (settings.fontWeight === 'medium' ? '600' : '400');
+    const alignVal = settings.textAlign || 'left';
 
     // 2. Generar bloque CSS optimizado para el motor de paginación de epub.js
     const customCss = `
@@ -97,20 +99,21 @@ export class ReaderSettings {
         color: ${themeColors.text} !important;
         -webkit-font-smoothing: antialiased !important;
         text-rendering: optimizeLegibility !important;
+        -webkit-touch-callout: none !important;
       }
 
       body {
         margin: 0 auto !important;
-        max-width: 900px !important;
+        max-width: 850px !important;
         padding-top: 48px !important;
-        padding-left: 16px !important;
-        padding-right: 16px !important;
+        padding-left: 24px !important;
+        padding-right: 24px !important;
         padding-bottom: 48px !important;
         font-family: ${fontStack} !important;
         font-size: ${settings.fontSize}px !important;
         font-weight: ${fontWeightVal} !important;
         line-height: ${settings.lineHeight} !important;
-        text-align: justify !important;
+        text-align: ${alignVal} !important;
         box-sizing: border-box !important;
         overflow-x: hidden !important;
         word-break: normal !important;
@@ -118,6 +121,7 @@ export class ReaderSettings {
         -webkit-hyphens: auto !important;
         -ms-hyphens: auto !important;
         hyphens: auto !important;
+        -webkit-touch-callout: none !important;
       }
 
       *, p, span, div, li, em, strong, b, i, blockquote, a {
@@ -130,7 +134,7 @@ export class ReaderSettings {
         font-size: inherit !important;
         line-height: ${settings.lineHeight} !important;
         font-weight: ${fontWeightVal} !important;
-        text-align: justify !important;
+        text-align: ${alignVal} !important;
         margin-top: 0 !important;
         margin-bottom: 1.15em !important;
         -webkit-hyphens: auto !important;
@@ -209,15 +213,50 @@ export class ReaderSettings {
         filter: brightness(1.15) !important;
       }
 
-      .arcadia-underline {
-        text-decoration: underline !important;
-        text-underline-offset: 3px !important;
-        text-decoration-thickness: 2.5px !important;
+      /* NOTA: el overlay SVG de anotaciones de epub.js vive en el documento
+         principal, así que su estilo real está en css/reader.css (apartado 10).
+         Estas reglas solo quedan como respaldo dentro del iframe. */
+      /* 1. Subrayado Recto */
+      .arcadia-underline,
+      svg .arcadia-underline,
+      svg line.arcadia-underline,
+      svg rect.arcadia-underline,
+      svg polygon.arcadia-underline {
+        fill: none !important;
+        stroke-width: 2.5px !important;
+        stroke-dasharray: none !important;
         cursor: pointer !important;
-        transition: filter 0.15s ease !important;
       }
 
-      .arcadia-underline:hover {
+      /* 2. Tachado (Line-through / Strikethrough) */
+      .arcadia-strikethrough,
+      svg .arcadia-strikethrough,
+      svg line.arcadia-strikethrough,
+      svg rect.arcadia-strikethrough,
+      svg polygon.arcadia-strikethrough {
+        fill: none !important;
+        stroke-width: 2.5px !important;
+        stroke-dasharray: none !important;
+        transform: translateY(-0.45em) !important;
+        transform-box: fill-box !important;
+        transform-origin: center !important;
+        cursor: pointer !important;
+      }
+
+      /* 3. Subrayado Ondulado / Punteado */
+      .arcadia-wavy-underline,
+      svg .arcadia-wavy-underline,
+      svg line.arcadia-wavy-underline,
+      svg rect.arcadia-wavy-underline,
+      svg polygon.arcadia-wavy-underline {
+        fill: none !important;
+        stroke-width: 2.5px !important;
+        stroke-dasharray: 4, 3 !important;
+        stroke-linecap: round !important;
+        cursor: pointer !important;
+      }
+
+      .arcadia-underline:hover, .arcadia-strikethrough:hover, .arcadia-wavy-underline:hover {
         filter: brightness(1.25) !important;
       }
 
@@ -244,18 +283,18 @@ export class ReaderSettings {
         },
         'body': {
           'margin': '0 auto',
-          'max-width': '900px',
+          'max-width': '850px',
           'padding-top': '48px',
           'padding-bottom': '48px',
-          'padding-left': '16px',
-          'padding-right': '16px',
+          'padding-left': '24px',
+          'padding-right': '24px',
           'color': themeColors.text,
           'background': themeColors.bg,
           'font-family': fontStack,
           'font-size': `${settings.fontSize}px`,
           'font-weight': fontWeightVal,
           'line-height': settings.lineHeight,
-          'text-align': 'justify',
+          'text-align': alignVal,
           'box-sizing': 'border-box',
           'overflow-x': 'hidden',
           'word-break': 'normal',
@@ -264,7 +303,7 @@ export class ReaderSettings {
         'p, span, div, li, em, strong, b, i, blockquote, a': {
           'font-family': fontStack,
           'font-weight': fontWeightVal,
-          'text-align': 'justify',
+          'text-align': alignVal,
           'color': themeColors.text
         },
         'h1, h2, h3, h4, h5, h6': {

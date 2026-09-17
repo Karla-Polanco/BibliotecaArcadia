@@ -195,6 +195,11 @@ export class Modal {
             </div>
 
             <div class="arcadia-modal-field">
+              <label>Saga <span style="font-weight: 400; opacity: 0.7;">(opcional)</span></label>
+              <input type="text" id="edit-book-saga" value="${this.escapeHtml(book.saga || '')}" placeholder="Ej: Trono de Cristal" autocomplete="off">
+            </div>
+
+            <div class="arcadia-modal-field">
               <label>Autor</label>
               <input type="text" id="edit-book-author" value="${this.escapeHtml(book.author)}" required>
             </div>
@@ -224,8 +229,9 @@ export class Modal {
       overlay.querySelector('#edit-book-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const title = overlay.querySelector('#edit-book-title').value.trim();
+        const saga = overlay.querySelector('#edit-book-saga')?.value.trim() || '';
         const author = overlay.querySelector('#edit-book-author').value.trim();
-        close({ title, author });
+        close({ title, saga, author });
       });
       overlay.addEventListener('click', (e) => {
         if (e.target === overlay) close(null);

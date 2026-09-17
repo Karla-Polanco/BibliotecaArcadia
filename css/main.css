@@ -13,7 +13,9 @@
 }
 
 /* Reset Moderno */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -43,7 +45,7 @@ body {
   font-family: var(--font-sans);
   background-color: var(--color-background);
   background-image: var(--theme-bg-pattern, none);
-  background-size: 100% 100%;
+  background-size: cover;
   background-position: center center;
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -113,7 +115,9 @@ button.state-option-card {
 
 
 /* Inputs, Selects y Textareas Estilizados Globalmente */
-input, select, textarea {
+input,
+select,
+textarea {
   font-family: inherit;
   font-size: var(--text-sm, 0.92rem);
   color: var(--color-text);
@@ -125,15 +129,20 @@ input, select, textarea {
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
-input:hover, select:hover, textarea:hover {
+input:hover,
+select:hover,
+textarea:hover {
   border-color: var(--color-text-secondary);
 }
 
-input:focus, input:focus-visible,
-select:focus, select:focus-visible,
-textarea:focus, textarea:focus-visible {
+input:focus,
+input:focus-visible,
+select:focus,
+select:focus-visible,
+textarea:focus,
+textarea:focus-visible {
   border-color: var(--color-primary-light);
-  box-shadow: 0 0 0 1px var(--color-primary-glow), 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 0 0 1px var(--color-primary-glow), 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 /* Excepciones para inputs integrados en cajas compuestas */
@@ -191,7 +200,8 @@ svg {
   flex-shrink: 0;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
@@ -386,9 +396,9 @@ ul, ol {
 }
 
 /* Cabecera estática: el título hace scroll con el contenido, no se queda fijo */
-.modal-card > .modal-header,
-.theme-modal-dialog > .theme-modal-header,
-#theme-modal .modal-card > .modal-header {
+.modal-card>.modal-header,
+.theme-modal-dialog>.theme-modal-header,
+#theme-modal .modal-card>.modal-header {
   position: static !important;
   top: auto !important;
   z-index: auto !important;
@@ -434,16 +444,19 @@ ul, ol {
 
 /* En táctil la barra se adelgaza y no molesta visualmente */
 @media (hover: none) and (pointer: coarse) {
+
   .theme-modal-dialog,
   .modal-card,
   .arcadia-modal-card {
     scrollbar-width: thin;
   }
+
   .theme-modal-dialog::-webkit-scrollbar,
   .modal-card::-webkit-scrollbar,
   .arcadia-modal-card::-webkit-scrollbar {
     width: 6px;
   }
+
   .theme-modal-dialog::-webkit-scrollbar-thumb,
   .modal-card::-webkit-scrollbar-thumb,
   .arcadia-modal-card::-webkit-scrollbar-thumb {
@@ -462,12 +475,19 @@ ul, ol {
 }
 
 @media (max-width: 768px) {
+  body {
+    background-size: auto 100%;
+    background-position: center top;
+    background-attachment: scroll;
+  }
+
   .theme-modal-overlay,
   .modal-overlay,
   .arcadia-modal-overlay {
     padding: 16px !important;
     align-items: flex-end !important;
   }
+
   .theme-modal-dialog,
   .modal-card,
   .arcadia-modal-card {
@@ -484,7 +504,7 @@ ul, ol {
   gap: 14px !important;
   margin-bottom: 20px !important;
   padding-bottom: 14px !important;
-  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
 .modal-header {
@@ -510,7 +530,7 @@ ul, ol {
   height: 36px !important;
   border-radius: var(--radius-full, 999px) !important;
   background: var(--color-surface-hover, rgba(255, 255, 255, 0.05)) !important;
-  border: 1px solid rgba(255,255,255,0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -537,9 +557,17 @@ ul, ol {
   gap: 18px;
 }
 
-.arcadia-modal-card--sm { max-width: 440px !important; }
-.arcadia-modal-card--md { max-width: 460px !important; }
-.arcadia-modal-card--lg { max-width: 480px !important; }
+.arcadia-modal-card--sm {
+  max-width: 440px !important;
+}
+
+.arcadia-modal-card--md {
+  max-width: 460px !important;
+}
+
+.arcadia-modal-card--lg {
+  max-width: 480px !important;
+}
 
 .arcadia-modal-row {
   display: flex;
@@ -552,7 +580,7 @@ ul, ol {
   height: 44px;
   border-radius: 12px;
   background-color: var(--color-surface-hover, rgba(255, 255, 255, 0.05));
-  border: 1px solid rgba(255,255,255,0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -756,8 +784,15 @@ ul, ol {
 }
 
 @keyframes contextMenuPop {
-  0% { opacity: 0; transform: scale(0.92) translateY(-4px); }
-  100% { opacity: 1; transform: scale(1) translateY(0); }
+  0% {
+    opacity: 0;
+    transform: scale(0.92) translateY(-4px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .menu-action-btn {
@@ -814,7 +849,10 @@ ul, ol {
   html {
     scroll-behavior: auto;
   }
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

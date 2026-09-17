@@ -17,6 +17,8 @@ export class FloatingMenu {
     this.menuEl = null;
     this.noteModalEl = null;
     this.activeSelection = null; // { cfiRange, text, chapterTitle }
+    this.activeColor = 'terracotta'; // color usado por las 3 líneas (recta, tachado, punteada)
+    this._linePopup = null; // mini-paleta de color de línea (vive en el body)
     this._lastContents = null; // último contents del iframe (para limpiar la selección al cerrar)
     this._initElements();
   }
@@ -30,10 +32,16 @@ export class FloatingMenu {
     // El aspecto visual vive en reader.css (.reader-floating-menu);
     // aquí solo se posiciona vía showAt/hide.
 
-    // Botones de colores para resaltar (el color es dinámico, el tamaño va por clase)
+    // Botones de colores: solo resaltan (el color de líneas va aparte)
     const colorsHtml = Object.entries(AnnotationManager.COLORS).map(([name, conf]) => `
       <button class="menu-color-btn" data-color="${name}" title="Resaltar en ${conf.name}" style="background-color: ${conf.border};"
         aria-label="Resaltar ${conf.name}"></button>
+    `).join('');
+
+    // Mini-paleta para el color de las líneas (no resalta, solo elige color)
+    const lineColorsHtml = Object.entries(AnnotationManager.COLORS).map(([name, conf]) => `
+      <button class="line-color-dot" data-color="${name}" title="${conf.name}" style="background-color: ${conf.border};"
+        aria-label="Línea en ${conf.name}"></button>
     `).join('');
 
     this.menuEl.innerHTML = `
@@ -41,9 +49,18 @@ export class FloatingMenu {
         ${colorsHtml}
       </div>
 
-      <!-- Subrayar -->
-      <button class="floating-btn" id="btn-float-underline" title="Subrayar" aria-label="Subrayar texto"
-        style="font-size: 13px; font-weight: bold; text-decoration: underline;">U</button>
+      <!-- Color de línea (propio, no resalta al elegirlo) -->
+      <button class="floating-btn line-color-btn" id="btn-line-color" title="Color de línea" aria-label="Color de línea">
+        <span class="line-color-preview" id="line-color-preview"></span>
+      </button>
+
+      <!-- 3 Opciones de Subrayado / Decoración (Imagen 4) -->
+      <button class="floating-btn floating-btn--underline" id="btn-float-underline" data-style="underline" title="Subrayado recto" aria-label="Subrayado recto"
+        style="font-family: serif; font-size: 14px; font-weight: bold; text-decoration: underline; text-underline-offset: 2px;">T</button>
+      <button class="floating-btn floating-btn--underline" id="btn-float-strikethrough" data-style="strikethrough" title="Tachado" aria-label="Tachado"
+        style="font-family: serif; font-size: 14px; font-weight: bold; text-decoration: line-through;">T</button>
+      <button class="floating-btn floating-btn--underline" id="btn-float-wavy" data-style="wavy" title="Subrayado punteado" aria-label="Subrayado punteado"
+        style="font-family: serif; font-size: 14px; font-weight: bold; text-decoration: underline dotted; text-underline-offset: 3px; text-decoration-thickness: 2.5px;">T</button>
 
       <!-- Nota -->
       <button class="floating-btn" id="btn-float-note" title="Añadir nota" aria-label="Añadir nota">
@@ -70,6 +87,14 @@ export class FloatingMenu {
 
     document.body.appendChild(this.menuEl);
 
+    // Mini-paleta en el body (fuera del menú: el backdrop-filter del menú
+    // rompería su posicionamiento fixed si viviera dentro)
+    this._linePopup = document.createElement('div');
+    this._linePopup.className = 'line-color-popup';
+    this._linePopup.hidden = true;
+    this._linePopup.innerHTML = lineColorsHtml;
+    document.body.appendChild(this._linePopup);
+
     // Eventos de botones
     this.menuEl.querySelectorAll('.menu-color-btn').forEach(btn => {
       btn.addEventListener('click', async (e) => {
@@ -93,25 +118,53 @@ export class FloatingMenu {
       });
     });
 
-    const underlineBtn = this.menuEl.querySelector('#btn-float-underline');
-    if (underlineBtn) {
-      underlineBtn.addEventListener('click', async (e) => {
+    // 3 Estilos de Subrayado (usan el color activo, no un fijo)
+    this.menuEl.querySelectorAll('.floating-btn--underline').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
         e.stopPropagation();
+        const style = btn.dataset.style || 'underline';
         if (this.activeSelection) {
           try {
             await annotationManager.addUnderline(
               this.activeSelection.cfiRange,
               this.activeSelection.text,
-              'terracotta',
-              this.activeSelection.chapterTitle
+              this.activeColor,
+              this.activeSelection.chapterTitle,
+              style
             );
-            Toast.success('Texto subrayado.');
+            const colorName = (AnnotationManager.COLORS[this.activeColor] || {}).name || '';
+            const suffix = colorName ? ` (${colorName})` : '';
+            const msg = style === 'strikethrough' ? `Texto tachado${suffix}.` : (style === 'wavy' ? `Subrayado punteado${suffix}.` : `Subrayado recto${suffix}.`);
+            Toast.success(msg);
           } catch (err) {
             console.warn('Error al subrayar:', err);
             Toast.error('No se pudo guardar el subrayado.');
           }
           this.hide();
         }
+      });
+    });
+
+    // Picker de color de línea: elige color sin resaltar el texto
+    const lineColorBtn = this.menuEl.querySelector('#btn-line-color');
+    const lineColorPopup = this._linePopup;
+    if (lineColorBtn && lineColorPopup) {
+      lineColorBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this._toggleLineColorPopup();
+      });
+      lineColorPopup.querySelectorAll('.line-color-dot').forEach(dot => {
+        dot.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.setActiveColor(dot.dataset.color);
+          this._hideLineColorPopup();
+        });
+      });
+      // Cerrar la paleta al tocar fuera (sin cerrar la barra)
+      document.addEventListener('click', (e) => {
+        if (lineColorPopup.hidden) return;
+        if (lineColorPopup.contains(e.target) || lineColorBtn.contains(e.target)) return;
+        this._hideLineColorPopup();
       });
     }
 
@@ -215,8 +268,77 @@ export class FloatingMenu {
     rendition.on('relocated', () => this.hide());
   }
 
+  /**
+   * Fija el color activo para las líneas y refresca su previsualización.
+   */
+  setActiveColor(color) {
+    if (!AnnotationManager.COLORS[color]) return;
+    this.activeColor = color;
+    this._refreshLineColorUI();
+  }
+
+  /**
+   * Marca el punto de color activo y tiñe las 3 T con ese color para
+   * previsualizar cómo quedará la línea en el texto.
+   * @private
+   */
+  _refreshLineColorUI() {
+    if (!this.menuEl) return;
+    const conf = AnnotationManager.COLORS[this.activeColor] || {};
+    const hex = conf.border || '#FF8E6B';
+    const name = conf.name || '';
+    const preview = this.menuEl.querySelector('#line-color-preview');
+    if (preview) preview.style.backgroundColor = hex;
+    const picker = this.menuEl.querySelector('#btn-line-color');
+    if (picker) {
+      picker.title = name ? `Color de línea: ${name}` : 'Color de línea';
+      picker.setAttribute('aria-label', picker.title);
+    }
+    this._linePopup?.querySelectorAll('.line-color-dot').forEach(b => {
+      b.classList.toggle('selected', b.dataset.color === this.activeColor);
+    });
+    this.menuEl.querySelectorAll('.floating-btn--underline').forEach(b => {
+      b.style.color = hex;
+      b.style.textDecorationColor = hex;
+      const base = b.dataset.style === 'strikethrough' ? 'Tachado' : (b.dataset.style === 'wavy' ? 'Subrayado punteado' : 'Subrayado recto');
+      b.title = name ? `${base} en ${name}` : base;
+      b.setAttribute('aria-label', b.title);
+    });
+  }
+
+  /**
+   * Muestra u oculta la mini-paleta de color de línea junto a la barra.
+   * @private
+   */
+  _toggleLineColorPopup() {
+    const popup = this._linePopup;
+    const picker = this.menuEl?.querySelector('#btn-line-color');
+    if (!popup || !picker) return;
+    if (!popup.hidden) {
+      popup.hidden = true;
+      return;
+    }
+    popup.hidden = false;
+    // Posicionar bajo el botón, centrada y sin salirse de la pantalla
+    const r = picker.getBoundingClientRect();
+    const pw = popup.offsetWidth || 220;
+    const cx = Math.max(pw / 2 + 8, Math.min(window.innerWidth - pw / 2 - 8, r.left + r.width / 2));
+    popup.style.left = `${cx}px`;
+    popup.style.top = `${Math.min(window.innerHeight - 60, r.bottom + 8)}px`;
+  }
+
+  /**
+   * @private
+   */
+  _hideLineColorPopup() {
+    if (this._linePopup) this._linePopup.hidden = true;
+  }
+
   showAt(x, y) {
     if (!this.menuEl) return;
+
+    // Refrescar el color activo de las líneas en cada apertura
+    this._refreshLineColorUI();
 
     // En móvil se oculta la opción de Copiar para no estorbar al subrayar
     const copyBtn = this.menuEl.querySelector('#btn-float-copy');
@@ -248,6 +370,7 @@ export class FloatingMenu {
 
   hide() {
     if (!this.menuEl) return;
+    this._hideLineColorPopup();
     this.menuEl.style.opacity = '0';
     this.menuEl.style.pointerEvents = 'none';
     this.menuEl.style.transform = 'translate(-50%, -100%) scale(0.92)';
@@ -308,9 +431,12 @@ export class FloatingMenu {
   async showAnnotationOptions(annotation) {
     const short = annotation.text ? annotation.text.substring(0, 60) : 'Pasaje seleccionado';
     const quote = annotation.text && annotation.text.length > 60 ? short.trimEnd() + '…' : short;
+    const typeNoun = annotation.type === 'highlight'
+      ? 'resaltado'
+      : (annotation.type === 'strikethrough' ? 'tachado' : 'subrayado');
     const confirmed = await Modal.confirm({
       title: 'Eliminar anotación',
-      message: `Cita: «${quote}»\n\n¿Deseas eliminar este ${annotation.type === 'underline' ? 'subrayado' : 'resaltado'}?`,
+      message: `Cita: «${quote}»\n\n¿Deseas eliminar este ${typeNoun}?`,
       danger: true,
       confirmText: 'Eliminar'
     });

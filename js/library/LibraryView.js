@@ -374,15 +374,17 @@ export class LibraryView {
       return book.status === filter;
     });
 
-    // 2. Filtrar por texto de búsqueda (título o autor)
+    // 2. Filtrar por texto de búsqueda (título, saga o autor)
     if (isCustomCollection && this.collectionSearchQuery) {
       result = result.filter(book =>
         (book.title || '').toLowerCase().includes(this.collectionSearchQuery) ||
+        (book.saga || '').toLowerCase().includes(this.collectionSearchQuery) ||
         (book.author || '').toLowerCase().includes(this.collectionSearchQuery)
       );
     } else if (query && !isCustomCollection) {
       result = result.filter(book =>
         (book.title || '').toLowerCase().includes(query) ||
+        (book.saga || '').toLowerCase().includes(query) ||
         (book.author || '').toLowerCase().includes(query)
       );
     }
@@ -530,9 +532,14 @@ export class LibraryView {
   renderGrid() {
     this.container.className = 'books-grid';
     const headerHtml = this.renderCollectionHeader();
-    const cardsHtml = this.filteredBooks.map(book => `
+    const RING_C = 56.55;
+    const cardsHtml = this.filteredBooks.map(book => {
+      const pct = Math.max(0, Math.min(100, Math.round(book.progress || 0)));
+      const offset = (RING_C * (1 - pct / 100)).toFixed(2);
+      return `
       <article class="book-card" data-book-id="${book.id}">
         <div class="book-cover-container">
+          <div class="book-spine-3d" aria-hidden="true"></div>
           ${book.coverDataUrl ? `
             <img src="${book.coverDataUrl}" alt="${this.escapeHtml(book.title)}" class="book-cover-img" loading="lazy">
           ` : `
@@ -558,66 +565,77 @@ export class LibraryView {
             </svg>
           </button>
 
-          ${book.progress > 0 ? `
-            <div class="card-progress-bar">
-              <div class="card-progress-fill" style="width: ${book.progress}%;"></div>
-            </div>
-          ` : ''}
+
         </div>
 
         <div class="book-meta">
           <h4 class="book-title" title="${this.escapeHtml(book.title)}">${this.escapeHtml(book.title)}</h4>
+          ${book.saga ? `<span class="book-saga">${this.escapeHtml(book.saga)}</span>` : ''}
           <span class="book-author">${this.escapeHtml(book.author)}</span>
           <div class="book-badge-info">
-            <span>${this.getStatusLabel(book.status)}</span>
-            ${book.progress > 0 ? `<span>${book.progress}%</span>` : ''}
+            <span class="book-status">${this.getStatusLabel(book.status)}</span>
+            <span class="grid-progress" title="Progreso de lectura: ${pct}%">
+              <svg class="grid-progress-ring" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" class="ring-track"></circle>
+                <circle cx="12" cy="12" r="9" class="ring-fill" stroke-dasharray="${RING_C}" stroke-dashoffset="${offset}"></circle>
+              </svg>
+              <span class="grid-progress-text">${pct}%</span>
+            </span>
           </div>
         </div>
       </article>
-    `).join('');
+    `;}).join('');
 
     this.container.innerHTML = headerHtml + cardsHtml;
   }
 
   /**
-   * Renderizado en formato Lista (List).
+   * Renderizado en formato Lista (List) según el orden solicitado (Imagen 3).
+   * Estructura: Nombre, autor, estado, barra de progreso, botón de favoritos y menú.
    */
   renderList() {
     this.container.className = 'books-list';
     const headerHtml = this.renderCollectionHeader();
     const itemsHtml = this.filteredBooks.map(book => `
       <div class="book-list-item" data-book-id="${book.id}">
-        <div class="list-item-left">
-          ${book.coverDataUrl ? `
-            <img src="${book.coverDataUrl}" alt="${this.escapeHtml(book.title)}" class="list-cover-thumb" style="object-fit: cover;">
-          ` : `
-            <div class="list-cover-thumb" style="background: ${book.coverGradient || 'var(--banner-gradient)'}; display: flex; align-items: center; justify-content: center;">
-              <img src="assets/icons/logo-transparent.png" alt="" style="width: 24px; height: auto; opacity: 0.92; filter: drop-shadow(0 1px 4px rgba(0,0,0,0.5));">
-            </div>
-          `}
+        <div class="list-item-main">
+          <div class="list-cover-wrapper">
+            <div class="book-spine-3d" aria-hidden="true"></div>
+            ${book.coverDataUrl ? `
+              <img src="${book.coverDataUrl}" alt="${this.escapeHtml(book.title)}" class="list-cover-thumb">
+            ` : `
+              <div class="list-cover-thumb list-cover-placeholder" style="background: ${book.coverGradient || 'var(--banner-gradient)'};">
+                <img src="assets/icons/logo-transparent.png" alt="" style="width: 40px; height: auto; opacity: 0.92; filter: drop-shadow(0 1px 4px rgba(0,0,0,0.5));">
+              </div>
+            `}
+          </div>
+
           <div class="list-info">
             <h4 class="list-title">${this.escapeHtml(book.title)}</h4>
+            ${book.saga ? `<span class="list-saga">${this.escapeHtml(book.saga)}</span>` : ''}
             <span class="list-author">${this.escapeHtml(book.author)}</span>
+            <div class="list-status-wrap">
+              <span class="list-status-badge ${book.status}">${this.getStatusLabel(book.status)}</span>
+            </div>
+            <div class="list-progress-box">
+              <div class="list-progress-bar">
+                <div class="list-progress-fill" style="width: ${book.progress || 0}%;"></div>
+              </div>
+              <span class="list-progress-text">${book.progress || 0}%</span>
+            </div>
           </div>
         </div>
 
-        <div class="list-item-right">
-          <div class="list-progress-box">
-            <div class="list-progress-bar">
-              <div class="list-progress-fill" style="width: ${book.progress || 0}%;"></div>
-            </div>
-            <span class="list-progress-text">${book.progress || 0}%</span>
-          </div>
-
-          <span class="list-status-badge ${book.status}">${this.getStatusLabel(book.status)}</span>
-
-          <button class="btn-book-fav ${book.favorite ? 'is-fav' : ''}" style="position: static; opacity: 1; transform: none;" data-action="toggle-fav" data-id="${book.id}">
+        <div class="list-item-actions-row">
+          <!-- Botón de Favoritos exclusivo -->
+          <button class="btn-list-action ${book.favorite ? 'is-fav' : ''}" data-action="toggle-fav" data-id="${book.id}" aria-label="Favorito" title="Favorito">
             <svg style="width: 18px; height: 18px;" fill="${book.favorite ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
             </svg>
           </button>
 
-          <button class="btn-book-fav" style="position: static; opacity: 1; transform: none;" data-action="book-options" data-id="${book.id}">
+          <!-- Botón Menú 3 puntos exclusivo -->
+          <button class="btn-list-action" data-action="book-options" data-id="${book.id}" aria-label="Menú de opciones" title="Menú de opciones">
             <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
             </svg>
@@ -818,6 +836,7 @@ export class LibraryView {
     try {
       await this.bookManager.updateBook(book.id, {
         title: updated.title || book.title,
+        saga: updated.saga || '',
         author: updated.author || book.author
       });
       Toast.success('Detalles del libro actualizados.');

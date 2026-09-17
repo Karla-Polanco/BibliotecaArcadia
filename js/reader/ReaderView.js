@@ -48,6 +48,9 @@ export class ReaderView {
     this.isOpen = false;
     this.currentBookId = null;
     this.lastTouchTimestamp = 0;
+    this._lastChapterTitle = '';
+    this._lastChapterHref = '';
+    this._unsubRelocated = null;
 
     this.initEvents();
   }
@@ -182,10 +185,8 @@ export class ReaderView {
       });
     }
 
-    // 8. Sincronización de Ubicación
-    readerManager.onRelocated((data) => {
-      this.updateLocationInfo(data);
-    });
+    // 8. Sincronización de Ubicación: ver open(), que (re)crea la suscripción
+    // en cada apertura porque ReaderManager.destroy() limpia los callbacks.
 
     // 9. Inicializar Controles del Panel de Ajustes
     this.initSettingsControls();
@@ -271,12 +272,24 @@ export class ReaderView {
       localStorage.setItem('arcadia_active_view', 'reader');
       localStorage.setItem('arcadia_active_book_id', bookId);
 
+      // (Re)suscribirse a la ubicación en cada apertura: destroy() limpia
+      // los callbacks y la suscripción del constructor quedaría muerta.
+      if (this._unsubRelocated) {
+        try { this._unsubRelocated(); } catch (_) {}
+      }
+      this._unsubRelocated = readerManager.onRelocated((data) => {
+        this.updateLocationInfo(data);
+      });
+
       const result = await readerManager.openBook(bookId, 'reader-content', initialCfi);
 
       if (this.titleEl && result.book) {
         this.titleEl.textContent = result.book.title;
       }
 
+      // Reiniciar la marca de capítulo del libro anterior antes de reconstruir
+      this._lastChapterTitle = '';
+      this._lastChapterHref = '';
       this.renderToc(result.toc);
 
       // Sincronizar UI de ajustes
@@ -306,6 +319,10 @@ export class ReaderView {
     try { document.documentElement.classList.remove('reader-open'); } catch (_) {}
     this.toggleToc(false);
     readerManager.destroy();
+    if (this._unsubRelocated) {
+      try { this._unsubRelocated(); } catch (_) {}
+      this._unsubRelocated = null;
+    }
 
     // Actualizar el estado global y limpiar persistencia del lector
     localStorage.setItem('arcadia_active_view', 'library');
@@ -347,19 +364,78 @@ export class ReaderView {
     }
 
     // Actualizar capítulo activo en el drawer TOC
-    if (this.tocListEl) {
-      const activeItem = this.tocListEl.querySelector('.toc-item.active');
-      if (activeItem) activeItem.classList.remove('active');
+    if (data.chapterTitle) {
+      this._lastChapterTitle = data.chapterTitle;
+    }
+    const href = data.chapterHref || data.location?.start?.href || '';
+    if (href) {
+      this._lastChapterHref = href;
+    }
+    this._markActiveTocItem(false);
 
-      const items = this.tocListEl.querySelectorAll('.toc-item');
+  }
+
+  /**
+   * Normaliza un título para comparar (minúsculas, espacios colapsados).
+   * @private
+   */
+  _normTitle(text) {
+    return String(text || '').toLowerCase().replace(/\s+/g, ' ').trim();
+  }
+
+  /**
+   * Marca el capítulo en curso en el drawer TOC, como el menú lateral.
+   * @param {boolean} scroll - Desplazar la lista hasta el capítulo activo
+   * @private
+   */
+  _markActiveTocItem(scroll = false) {
+    if (!this.tocListEl) return;
+
+    // Normaliza hrefs (los EPUB suelen codificar espacios/acentos: %20, %C3...)
+    const normHref = (h) => {
+      let s = String(h || '').split('#')[0].split('?')[0].trim();
+      try { s = decodeURIComponent(s); } catch (_) {}
+      try { s = decodeURI(s); } catch (_) {}
+      return s;
+    };
+    const currentHref = normHref(this._lastChapterHref);
+    const target = this._normTitle(this._lastChapterTitle);
+    if (!currentHref && !target) return;
+
+    const prev = this.tocListEl.querySelector('.toc-item.active');
+    if (prev) prev.classList.remove('active');
+
+    const items = this.tocListEl.querySelectorAll('.toc-item');
+    let match = null;
+    // 1) Coincidencia por href (la más fiable)
+    if (currentHref) {
       for (const it of items) {
-        if (it.textContent.trim() === (data.chapterTitle || '').trim()) {
-          it.classList.add('active');
+        const itemHref = normHref(it.dataset.href);
+        if (itemHref && (itemHref === currentHref || currentHref.endsWith(itemHref) || itemHref.endsWith(currentHref))) {
+          match = it;
           break;
         }
       }
     }
-
+    // 2) Coincidencia exacta por título normalizado
+    if (!match && target) {
+      for (const it of items) {
+        if (this._normTitle(it.textContent) === target) { match = it; break; }
+      }
+    }
+    // 3) Respaldo: coincidencia parcial (por si el ejemplar abrevia el título)
+    if (!match && target) {
+      for (const it of items) {
+        const label = this._normTitle(it.textContent);
+        if (label && (label.includes(target) || target.includes(label))) { match = it; break; }
+      }
+    }
+    if (match) {
+      match.classList.add('active');
+      if (scroll && typeof match.scrollIntoView === 'function') {
+        match.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
   }
 
   /**
@@ -388,6 +464,9 @@ export class ReaderView {
 
     this.tocListEl.innerHTML = buildItemsHtml(tocItems);
 
+    // Reaplicar la marca del capítulo en curso tras reconstruir la lista
+    this._markActiveTocItem(false);
+
     // Evento de clic en capítulo
     this.tocListEl.querySelectorAll('.toc-item').forEach(itemEl => {
       itemEl.addEventListener('click', () => {
@@ -410,6 +489,16 @@ export class ReaderView {
     if (isOpen) {
       this.tocDrawerEl.classList.add('open');
       this.tocBackdropEl.classList.add('open');
+      // Sincronizar con la ubicación real del rendition (no depende de eventos previos)
+      try {
+        const live = readerManager.getCurrentChapter ? readerManager.getCurrentChapter() : null;
+        if (live) {
+          if (live.href) this._lastChapterHref = live.href;
+          if (live.title) this._lastChapterTitle = live.title;
+        }
+      } catch (_) {}
+      // Llevar la vista hasta el capítulo en curso al abrir
+      requestAnimationFrame(() => this._markActiveTocItem(true));
     } else {
       this.tocDrawerEl.classList.remove('open');
       this.tocBackdropEl.classList.remove('open');
@@ -541,6 +630,11 @@ export class ReaderView {
         readerManager.prevPage();
       }
     });
+
+    // 4. Suprimir menú contextual nativo al seleccionar texto
+    doc.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+    });
   }
 
   /**
@@ -588,6 +682,11 @@ export class ReaderView {
     // 4. Interlineado
     document.querySelectorAll('#line-height-options [data-lh]').forEach(btn => {
       btn.classList.toggle('active', parseFloat(btn.dataset.lh) === settings.lineHeight);
+    });
+
+    // 4b. Alineación de Texto
+    document.querySelectorAll('#font-align-options [data-align]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.align === (settings.textAlign || 'left'));
     });
 
     // 5. Tema del lector (soporta alias legacy 'wine' → 'serene-fog')
@@ -660,6 +759,15 @@ export class ReaderView {
       btn.addEventListener('click', async () => {
         const lh = parseFloat(btn.dataset.lh);
         const updated = await readerManager.updateSettings({ lineHeight: lh });
+        this.syncSettingsUI(updated);
+      });
+    });
+
+    // 4b. Alineación de Texto
+    document.querySelectorAll('#font-align-options [data-align]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const align = btn.dataset.align;
+        const updated = await readerManager.updateSettings({ textAlign: align });
         this.syncSettingsUI(updated);
       });
     });

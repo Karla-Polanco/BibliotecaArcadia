@@ -10,7 +10,7 @@
 import { dbManager } from '../db.js';
 import { appState } from '../state.js';
 import { Toast } from '../ui/Toast.js';
-import { AnnotationManager } from './AnnotationManager.js';
+import { AnnotationManager, annotationManager } from './AnnotationManager.js';
 import { Modal } from '../ui/Modal.js';
 import { CustomSelect } from '../ui/CustomSelect.js';
 
@@ -93,10 +93,10 @@ export class AnnotationsView {
     // Ordenar por fecha descendente
     items.sort((a, b) => (b.date || 0) - (a.date || 0));
 
-    // Conteo por categorías antes del filtro
+    // Conteo por categorías antes del filtro (tachado y ondulado cuentan como subrayados)
     const totalCount = items.length;
     const highlightCount = items.filter(i => i.kind === 'highlight').length;
-    const underlineCount = items.filter(i => i.kind === 'underline').length;
+    const underlineCount = items.filter(i => AnnotationManager.isUnderlineFamily(i.kind)).length;
     const noteCount = items.filter(i => i.kind === 'note').length;
 
     // Filtrar por libro, tipo y búsqueda
@@ -105,7 +105,7 @@ export class AnnotationsView {
       if (this.activeType !== 'all') {
         if (this.activeType === 'note' && item.kind !== 'note') return false;
         if (this.activeType === 'highlight' && item.kind !== 'highlight') return false;
-        if (this.activeType === 'underline' && item.kind !== 'underline') return false;
+        if (this.activeType === 'underline' && !AnnotationManager.isUnderlineFamily(item.kind)) return false;
       }
 
       // Filtro de libro
@@ -341,11 +341,24 @@ export class AnnotationsView {
         if (confirmed) {
           try {
             if (kind === 'note') {
+              // La nota se crea junto a un resaltado ámbar sobre el mismo
+              // pasaje: borrar ambos para no dejar el color fantasma.
+              const card = btn.closest('[data-book-id]');
+              const noteBookId = card?.dataset.bookId || null;
+              const noteCfi = card?.dataset.cfi || null;
+              if (noteBookId && noteCfi) {
+                const linked = this.annotations.filter(a =>
+                  a.bookId === noteBookId && a.cfiRange === noteCfi);
+                for (const h of linked) {
+                  try { await annotationManager.removeAnnotation(h.id); } catch (_) {}
+                }
+              }
               await dbManager.delete('notes', id);
               appState.notify('noteDeleted', id);
             } else {
-              await dbManager.delete('annotations', id);
-              appState.notify('annotationRemoved', id);
+              // Vía el manager: borra de DB y desancla el overlay en vivo
+              // (sin esto el subrayado seguía visible hasta recargar)
+              await annotationManager.removeAnnotation(id);
             }
             Toast.success('Elemento eliminado.');
           } catch (err) {
@@ -362,6 +375,8 @@ export class AnnotationsView {
     switch (kind) {
       case 'highlight': return 'Resaltado';
       case 'underline': return 'Subrayado';
+      case 'strikethrough': return 'Tachado';
+      case 'wavy': return 'Subrayado punteado';
       case 'note': return 'Nota';
       default: return 'Anotación';
     }

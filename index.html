@@ -45,13 +45,13 @@
     rel="stylesheet">
 
   <!-- Hojas de Estilo Modulares -->
-  <link rel="stylesheet" href="css/tokens.css?v=114">
-  <link rel="stylesheet" href="css/themes.css?v=114">
-  <link rel="stylesheet" href="css/main.css?v=114">
-  <link rel="stylesheet" href="css/layout.css?v=114">
-  <link rel="stylesheet" href="css/library.css?v=114">
-  <link rel="stylesheet" href="css/reader.css?v=114">
-  <link rel="stylesheet" href="css/responsive.css?v=114">
+  <link rel="stylesheet" href="css/tokens.css?v=115">
+  <link rel="stylesheet" href="css/themes.css?v=115">
+  <link rel="stylesheet" href="css/main.css?v=115">
+  <link rel="stylesheet" href="css/layout.css?v=115">
+  <link rel="stylesheet" href="css/library.css?v=115">
+  <link rel="stylesheet" href="css/reader.css?v=115">
+  <link rel="stylesheet" href="css/responsive.css?v=115">
 </head>
 
 <body>
@@ -659,9 +659,7 @@
     <div class="reader-toc-backdrop" id="reader-toc-backdrop"></div>
     <aside class="reader-toc-drawer" id="reader-toc-drawer" aria-label="Navegación del libro">
       <div class="toc-header">
-        <div class="drawer-tab-nav">
-          <button class="drawer-tab-btn active" id="tab-toc-chapters">Capítulos</button>
-        </div>
+        <h3 class="toc-title">Capítulos</h3>
         <button class="toc-close-btn" id="toc-close-btn" aria-label="Cerrar panel">
           <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12" />
@@ -761,6 +759,25 @@
           <button class="setting-pill-btn" data-lh="1.3">Compacto</button>
           <button class="setting-pill-btn active" data-lh="1.6">Normal</button>
           <button class="setting-pill-btn" data-lh="1.9">Amplio</button>
+        </div>
+      </div>
+
+      <!-- Alineación de Texto (4 opciones) -->
+      <div class="settings-group">
+        <span class="settings-group-label">Alineación de Texto</span>
+        <div class="settings-align-grid" id="font-align-options">
+          <button class="align-pill-btn active" data-align="left" title="Alinear a la izquierda" aria-label="Alinear a la izquierda">
+            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h10M4 14h14M4 18h8"/></svg>
+          </button>
+          <button class="align-pill-btn" data-align="justify" title="Justificar texto" aria-label="Justificar texto">
+            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+          </button>
+          <button class="align-pill-btn" data-align="center" title="Centrar texto" aria-label="Centrar texto">
+            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M6 10h12M5 14h14M8 18h8"/></svg>
+          </button>
+          <button class="align-pill-btn" data-align="right" title="Alinear a la derecha" aria-label="Alinear a la derecha">
+            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M10 10h10M6 14h14M12 18h8"/></svg>
+          </button>
         </div>
       </div>
 

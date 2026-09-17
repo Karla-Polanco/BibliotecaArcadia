@@ -84,6 +84,7 @@ export class EPUBParser {
     return {
       id: bookId,
       title: title.trim(),
+      saga: '',
       author: author.trim(),
       description: description.trim(),
       publisher: publisher.trim(),

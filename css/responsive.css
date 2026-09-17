@@ -393,13 +393,19 @@
     flex: 1 1 auto;
   }
 
-  .list-cover-thumb {
-    width: 38px;
-    height: 57px;
-    border-radius: 6px;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  .list-cover-wrapper {
+    width: 72px;
+    height: 108px;
     flex-shrink: 0;
+  }
+
+  .list-cover-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+    border: none;
+    box-shadow: none;
   }
 
   .list-info {
@@ -426,19 +432,19 @@
     text-overflow: ellipsis;
   }
 
-  .list-item-right {
-    gap: 4px;
-    flex-shrink: 0;
+  .list-saga {
+    font-size: 0.64rem;
   }
 
   .list-progress-box {
-    min-width: unset;
-    gap: 4px;
+    width: 100%;
+    max-width: 100%;
+    gap: 8px;
   }
 
   .list-progress-bar {
-    width: 32px;
-    flex: none;
+    flex: 1;
+    height: 8px;
   }
 
   .list-progress-text {

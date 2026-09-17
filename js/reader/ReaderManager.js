@@ -22,6 +22,8 @@ export class ReaderManager {
     this.currentBookData = null;
     this.currentSettings = null;
     this.currentCfi = null;
+    this.currentChapterHref = '';
+    this.currentChapterTitle = '';
     this.toc = [];
     this.saveProgressTimeout = null;
     this.onRelocatedCallbacks = new Set();
@@ -110,18 +112,59 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
     await annotationManager.attach(this.rendition, bookId);
     floatingMenu.attach(this.rendition);
 
-    // 10. Mostrar el libro en la posición correspondiente
-    await this.rendition.display(targetCfi);
-
-    // 11. Vincular oyente de cambio de ubicación (relocated)
+    // 10. Vincular oyente de cambio de ubicación ANTES de mostrar (si no,
+    // el primer evento 'relocated' del display inicial se pierde y la
+    // cabecera, el progreso y el capítulo activo quedan sin sincronizar)
     this.rendition.on('relocated', (location) => {
       this._handleRelocated(location);
     });
+
+    // 11. Mostrar el libro en la posición correspondiente.
+    // Si el CFI guardado está obsoleto y deja el visor vacío, reintentar desde el inicio.
+    let displayed = false;
+    let displayError = null;
+    if (targetCfi) {
+      try {
+        await this.rendition.display(targetCfi);
+        displayed = true;
+      } catch (err) {
+        displayError = err;
+      }
+      if (displayed && this._isRenditionBlank()) {
+        displayed = false;
+      }
+    }
+    if (!displayed) {
+      try {
+        await this.rendition.display();
+      } catch (err) {
+        if (displayError) throw displayError;
+        throw err;
+      }
+    }
 
     return {
       book: this.currentBookData,
       toc: this.toc
     };
+  }
+
+  /**
+   * Detecta si el rendition quedó sin contenido visible (p. ej. por un CFI
+   * guardado obsoleto). Revisa el texto real de las vistas activas.
+   * @private
+   */
+  _isRenditionBlank() {
+    try {
+      const contents = this.rendition && this.rendition.getContents ? this.rendition.getContents() : [];
+      if (!contents || contents.length === 0) return true;
+      return !contents.some(c => {
+        try {
+          const txt = (c.document && c.document.body && c.document.body.textContent || '').trim();
+          return txt.length > 0;
+        } catch (_) { return false; }
+      });
+    } catch (_) { return false; }
   }
 
   /**
@@ -366,6 +409,8 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
     // Obtener título de capítulo si está disponible
     const chapterHref = location.start.href;
     const chapterTitle = this._findChapterTitle(chapterHref) || 'Capítulo actual';
+    this.currentChapterHref = chapterHref || '';
+    this.currentChapterTitle = chapterTitle;
 
     // Calcular porcentaje
     let percentage = 0;
@@ -384,6 +429,7 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
     // Notificar a los observadores suscritos de la UI
     const locationPayload = {
       cfi: startCfi,
+      chapterHref: chapterHref || '',
       chapterTitle,
       percentage,
       location
@@ -459,11 +505,20 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
    */
   _findChapterTitle(href) {
     if (!href || !this.toc) return '';
-    const cleanHref = href.split('#')[0];
+    const decode = (s) => {
+      let out = String(s || '').split('#')[0].split('?')[0].trim();
+      try { out = decodeURIComponent(out); } catch (_) {}
+      return out;
+    };
+    const cleanHref = decode(href);
 
     const searchToc = (items) => {
       for (const item of items) {
-        if (item.href && item.href.includes(cleanHref)) {
+        const itemHref = decode(item.href);
+        if (itemHref && cleanHref &&
+            (itemHref === cleanHref || itemHref.includes(cleanHref) ||
+             cleanHref.includes(itemHref) ||
+             itemHref.endsWith(cleanHref) || cleanHref.endsWith(itemHref))) {
           return item.label ? item.label.trim() : '';
         }
         if (item.subitems && item.subitems.length > 0) {
@@ -510,6 +565,35 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
   }
 
   /**
+   * Devuelve el capítulo en curso. Prioriza la ubicación EN VIVO del
+   * rendition (fiable al abrir el drawer tras leer con scroll) y usa
+   * la última registrada como respaldo.
+   * @returns {{href: string, title: string}}
+   */
+  getCurrentChapter() {
+    let href = '';
+    let title = '';
+    try {
+      const loc = this.rendition && this.rendition.currentLocation
+        ? this.rendition.currentLocation()
+        : null;
+      href = (loc && loc.start && loc.start.href) || '';
+    } catch (_) {}
+    if (!href) href = this.currentChapterHref || '';
+    if (href) {
+      try {
+        title = this._findChapterTitle(href) || '';
+      } catch (_) {}
+    }
+    if (!title || title === 'Capítulo actual') {
+      title = (this.currentChapterTitle && this.currentChapterTitle !== 'Capítulo actual')
+        ? this.currentChapterTitle
+        : title;
+    }
+    return { href, title };
+  }
+
+  /**
    * Destruye el renderizador y libera recursos en memoria.
    */
   destroy() {
@@ -525,6 +609,8 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
     this.currentBookId = null;
     this.currentBookData = null;
     this.currentCfi = null;
+    this.currentChapterHref = '';
+    this.currentChapterTitle = '';
     this.toc = [];
     clearTimeout(this.saveProgressTimeout);
     this.onRelocatedCallbacks.clear();

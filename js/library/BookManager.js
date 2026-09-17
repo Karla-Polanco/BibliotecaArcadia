@@ -14,6 +14,16 @@ export class BookManager {
   constructor(storageWidget = null) {
     this.storageWidget = storageWidget;
     this.books = [];
+
+    // Sincronizar en tiempo real cuando un libro se actualiza (ej. progreso de lectura)
+    appState.subscribe('bookUpdated', (updatedBook) => {
+      if (updatedBook && updatedBook.id) {
+        const idx = this.books.findIndex(b => b.id === updatedBook.id);
+        if (idx !== -1) {
+          this.books[idx] = updatedBook;
+        }
+      }
+    });
   }
 
   /**
