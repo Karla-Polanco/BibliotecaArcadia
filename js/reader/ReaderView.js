@@ -50,6 +50,7 @@ export class ReaderView {
     this.lastTouchTimestamp = 0;
     this._lastChapterTitle = '';
     this._lastChapterHref = '';
+    this._markedKey = '';
     this._unsubRelocated = null;
 
     this.initEvents();
@@ -290,6 +291,7 @@ export class ReaderView {
       // Reiniciar la marca de capítulo del libro anterior antes de reconstruir
       this._lastChapterTitle = '';
       this._lastChapterHref = '';
+      this._markedKey = '';
       this.renderToc(result.toc);
 
       // Sincronizar UI de ajustes
@@ -402,6 +404,17 @@ export class ReaderView {
     const target = this._normTitle(this._lastChapterTitle);
     if (!currentHref && !target) return;
 
+    // Atajo: si ya está marcado este capítulo, solo desplazar si se pide
+    const markKey = `${currentHref}|${target}`;
+    if (markKey === this._markedKey) {
+      if (scroll) {
+        const active = this.tocListEl.querySelector('.toc-item.active');
+        try { active && active.scrollIntoView({ block: 'nearest', behavior: 'auto' }); } catch (_) {}
+      }
+      return;
+    }
+    this._markedKey = markKey;
+
     const prev = this.tocListEl.querySelector('.toc-item.active');
     if (prev) prev.classList.remove('active');
 
@@ -433,7 +446,8 @@ export class ReaderView {
     if (match) {
       match.classList.add('active');
       if (scroll && typeof match.scrollIntoView === 'function') {
-        match.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        // Salto instantáneo: el 'smooth' a lo largo de listas grandes se percibe como retardo
+        match.scrollIntoView({ block: 'nearest', behavior: 'auto' });
       }
     }
   }
@@ -463,6 +477,7 @@ export class ReaderView {
     };
 
     this.tocListEl.innerHTML = buildItemsHtml(tocItems);
+    this._markedKey = '';
 
     // Reaplicar la marca del capítulo en curso tras reconstruir la lista
     this._markActiveTocItem(false);
@@ -472,6 +487,11 @@ export class ReaderView {
       itemEl.addEventListener('click', () => {
         const href = itemEl.dataset.href;
         if (href) {
+          // Marca optimista inmediata: el relocated tarda en llegar
+          this._lastChapterHref = href;
+          const label = (itemEl.textContent || '').trim();
+          if (label) this._lastChapterTitle = label;
+          this._markActiveTocItem(false);
           readerManager.goTo(href);
           this.toggleToc(false);
         }
