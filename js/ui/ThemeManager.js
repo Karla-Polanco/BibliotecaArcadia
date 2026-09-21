@@ -113,7 +113,7 @@ export class ThemeManager {
       if (meta) meta.setAttribute('content', color);
       // Para PWA en iOS / standalone
       let meta2 = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-      if (meta2) meta2.setAttribute('content', themeName === 'abyss-dark' ? 'black-translucent' : 'default');
+      if (meta2) meta2.setAttribute('content', color);
     } catch (_) {}
   }
 

@@ -28,7 +28,6 @@ html {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
   scroll-behavior: smooth;
-  background-color: var(--color-background);
   color-scheme: light;
 }
 
