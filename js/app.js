@@ -101,26 +101,6 @@ class App {
       try {
         Toast.error('Error al iniciar la biblioteca. Recarga la página.');
       } catch (_) {}
-    } finally {
-      this.hideSplashScreen();
-    }
-  }
-
-  /**
-   * Oculta suavemente la pantalla de carga inicial sin saltos ni desplazamientos.
-   */
-  hideSplashScreen() {
-    const splash = document.getElementById('app-splash');
-    if (splash) {
-      splash.style.opacity = '0';
-      setTimeout(() => {
-        if (splash) {
-          splash.style.visibility = 'hidden';
-          if (splash.parentNode) {
-            splash.parentNode.removeChild(splash);
-          }
-        }
-      }, 360);
     }
   }
 
