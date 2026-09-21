@@ -100,14 +100,18 @@ export class ThemeManager {
    */
   _updateThemeColor(themeName) {
     const themeColors = {
-      'cerulean-light': '#EEF4F8',
-      'lavender-light': '#F8F6FC',
-      'clear-sky': '#F8F4EC',
-      'enchanted-forest': '#F2F7F3',
-      'serene-fog': '#FBF7F8',
-      'abyss-dark': '#0F1216'
+      'cerulean-light': { bg: '#EEF4F8', surface: '#FFFFFF', dark: false },
+      'lavender-light': { bg: '#F8F6FC', surface: '#FFFFFF', dark: false },
+      'clear-sky': { bg: '#F8F4EC', surface: '#FFFFFF', dark: false },
+      'enchanted-forest': { bg: '#F2F7F3', surface: '#FFFFFF', dark: false },
+      'serene-fog': { bg: '#FBF7F8', surface: '#FFFFFF', dark: false },
+      'abyss-dark': { bg: '#0F1216', surface: '#161B22', dark: true }
     };
-    const color = themeColors[themeName] || '#EEF4F8';
+    const current = themeColors[themeName] || themeColors['cerulean-light'];
+    const color = current.bg;
+    const isDark = current.dark;
+    const navColor = current.surface || color;
+
     try {
       const metaTags = document.querySelectorAll('meta[name="theme-color"]');
       if (metaTags && metaTags.length > 0) {
@@ -117,6 +121,25 @@ export class ThemeManager {
         meta.name = 'theme-color';
         meta.content = color;
         document.head.appendChild(meta);
+      }
+    } catch (_) {}
+
+    // Sincronización nativa para contenedores Android APK / WebView / Capacitor / Cordova
+    try {
+      if (window.Android && typeof window.Android.setNavigationBarColor === 'function') {
+        window.Android.setNavigationBarColor(navColor, isDark);
+      }
+      if (window.Android && typeof window.Android.setStatusBarColor === 'function') {
+        window.Android.setStatusBarColor(color, isDark);
+      }
+      if (window.Capacitor?.Plugins?.StatusBar) {
+        window.Capacitor.Plugins.StatusBar.setBackgroundColor({ color });
+      }
+      if (window.Capacitor?.Plugins?.NavigationBar) {
+        window.Capacitor.Plugins.NavigationBar.setColor({ color: navColor, darkButtons: !isDark });
+      }
+      if (window.NavigationBar && typeof window.NavigationBar.backgroundColorByHexString === 'function') {
+        window.NavigationBar.backgroundColorByHexString(navColor, !isDark);
       }
     } catch (_) {}
   }
