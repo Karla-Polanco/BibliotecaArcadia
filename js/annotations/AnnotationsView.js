@@ -128,22 +128,29 @@ export class AnnotationsView {
     this.container.innerHTML = `
       <!-- Panel de Encabezado Superior -->
       <div class="annotations-header-panel">
-        <div class="annotations-header-top">
-          <div>
-            <span class="panel-category-tag">Cuaderno de Lectura</span>
-            <h1 class="panel-heading">Notas y Subrayados</h1>
-            <p class="panel-description">Citas destacadas, pasajes subrayados y anotaciones personales recopiladas durante tus lecturas.</p>
+        <div class="header-card-top">
+          <div class="header-card-brand-group">
+            <div class="header-card-icon-box header-card-icon-box--notes">
+              <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+            </div>
+            <div class="header-card-text">
+              <span class="panel-category-tag">CUADERNO DE LECTURA</span>
+              <h1 class="panel-heading">Notas y Subrayados</h1>
+              <p class="panel-description">Citas destacadas, pasajes subrayados y anotaciones personales recopiladas durante tus lecturas.</p>
+            </div>
           </div>
 
           <!-- Filtros junto al título -->
           <div class="panel-actions-row">
-            <select id="select-filter-book">
+            <select id="select-filter-book" class="header-card-select">
               <option value="all">Todos los libros</option>
               ${this.books.map(b => `<option value="${b.id}" ${b.id === this.selectedBookId ? 'selected' : ''}>${this.escapeHtml(b.title)}</option>`).join('')}
             </select>
 
             <!-- Filtro de Tipo por Select -->
-            <select id="select-filter-type">
+            <select id="select-filter-type" class="header-card-select">
               <option value="all" ${this.activeType === 'all' ? 'selected' : ''}>Todos (${totalCount})</option>
               <option value="highlight" ${this.activeType === 'highlight' ? 'selected' : ''}>Resaltados (${highlightCount})</option>
               <option value="underline" ${this.activeType === 'underline' ? 'selected' : ''}>Subrayados (${underlineCount})</option>
@@ -152,12 +159,10 @@ export class AnnotationsView {
           </div>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <!-- Buscador de Notas y Citas -->
-          <div class="panel-search-bar">
-            <svg style="width: 14px; height: 14px; color: var(--color-text-muted); flex-shrink: 0; pointer-events: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <input type="text" id="input-annot-search" class="panel-search-input" value="${this.escapeHtml(this.searchQuery)}" placeholder="Buscar en notas y citas...">
-          </div>
+        <!-- Buscador de Notas y Citas -->
+        <div class="panel-search-bar">
+          <svg style="width: 14px; height: 14px; color: var(--color-text-muted); flex-shrink: 0; pointer-events: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input type="text" id="input-annot-search" class="panel-search-input" value="${this.escapeHtml(this.searchQuery)}" placeholder="Buscar en notas y citas...">
         </div>
       </div>
 

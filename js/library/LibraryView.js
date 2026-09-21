@@ -309,14 +309,24 @@ export class LibraryView {
 
         if (renderColHeader || !colWrap.innerHTML.trim()) {
           colWrap.innerHTML = `
-            <div class="collection-header-top">
-              <div>
-                <span class="panel-category-tag" style="color: ${this.escapeAttr(colColor)};">✦ Colección</span>
-                <h1 class="panel-heading" style="margin: 2px 0 4px 0;">${this.escapeHtml(col.name)}</h1>
-                <p class="panel-description">${col.description ? this.escapeHtml(col.description) : 'Libros asignados a esta colección personal.'}</p>
+            <div class="header-card-top">
+              <div class="header-card-brand-group">
+                <div class="header-card-icon-box">
+                  <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>
+                </div>
+                <div class="header-card-text">
+                  <span class="panel-category-tag" style="color: ${this.escapeAttr(colColor)};">COLECCIÓN</span>
+                  <h1 class="panel-heading">${this.escapeHtml(col.name)}</h1>
+                  <p class="panel-description">${col.description ? this.escapeHtml(col.description) : 'Libros asignados a esta colección personal.'}</p>
+                </div>
               </div>
               <div class="panel-actions-row">
-                <span class="collection-count-pill">${books.length} ${books.length === 1 ? 'libro' : 'libros'}</span>
+                <span class="collection-count-pill">
+                  <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                  ${books.length} ${books.length === 1 ? 'libro' : 'libros'}
+                </span>
                 <button type="button" id="btn-edit-active-col" class="btn-col-header-action" title="Editar colección">
                   <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                   <span>Editar</span>

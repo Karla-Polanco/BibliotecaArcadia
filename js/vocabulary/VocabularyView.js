@@ -61,28 +61,22 @@ export class VocabularyView {
 
     this.container.innerHTML = `
       <div class="vocab-header-panel">
-        <div class="vocab-header-top">
-          <div>
-            <span class="panel-category-tag">Cuaderno léxico</span>
-            <h1 class="panel-heading">Vocabulario y Fonética</h1>
-            <p class="panel-description">Tus palabras, tus definiciones. Añádelas aquí o con «Definir» mientras lees.</p>
+        <div class="header-card-top">
+          <div class="header-card-brand-group">
+            <div class="header-card-icon-box header-card-icon-box--vocab">
+              <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <div class="header-card-text">
+              <span class="panel-category-tag">CUADERNO LÉXICO</span>
+              <h1 class="panel-heading">Vocabulario y Fonética</h1>
+              <p class="panel-description">Tus palabras, tus definiciones. Añádelas aquí o con «Definir» mientras lees.</p>
+            </div>
           </div>
           <div class="panel-actions-row">
-            <span style="font-size: 0.72rem; font-weight: 600; color: var(--color-text-secondary); background-color: var(--color-surface-hover); border: 1px solid var(--color-border); padding: 5px 12px; border-radius: var(--radius-full); white-space: nowrap;">${totalCount} ${totalCount === 1 ? 'palabra' : 'palabras'}</span>
-            <button id="btn-add-word-manual" style="
-              padding: 6px 14px;
-              border-radius: var(--radius-full);
-              font-size: var(--text-xs);
-              font-weight: 600;
-              background: var(--color-primary-light);
-              color: #FFFFFF;
-              cursor: pointer;
-              display: flex;
-              align-items: center;
-              gap: 5px;
-              border: none;
-              box-shadow: 0 1px 4px var(--color-primary-glow);
-            ">
+            <span class="collection-count-pill">${totalCount} ${totalCount === 1 ? 'palabra' : 'palabras'}</span>
+            <button id="btn-add-word-manual" class="btn-col-header-action btn-col-header-action--primary">
               <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
               <span>Añadir palabra</span>
             </button>

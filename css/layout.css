@@ -312,13 +312,14 @@
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 14%, var(--color-surface-secondary));
-  color: var(--col-accent, var(--color-primary-light));
+  background-color: var(--color-surface-hover);
+  color: var(--color-text-secondary);
   font-size: 0.68rem;
   font-weight: 700;
   line-height: 1;
-  border: 1px solid color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 25%, transparent);
+  border: 1px solid var(--color-border);
   text-align: center;
+  box-sizing: border-box;
   transition: all var(--transition-fast);
 }
 
@@ -460,20 +461,22 @@
 
 /* Badges circulares y píldoras como imagen del menú - acorde al tema, excepto PWA */
 .nav-badge {
-  min-width: 22px;
-  height: 22px;
+  min-width: 20px;
+  height: 20px;
   padding: 0 6px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   border-radius: 999px;
-  background-color: color-mix(in srgb, var(--color-primary-light) 12%, var(--color-surface-secondary));
-  color: var(--color-primary-light);
-  font-size: 0.72rem;
+  background-color: var(--color-surface-hover);
+  color: var(--color-text-secondary);
+  font-size: 0.70rem;
   font-weight: 700;
   line-height: 1;
-  border: 1px solid color-mix(in srgb, var(--color-primary-light) 25%, transparent);
+  border: 1px solid var(--color-border);
   font-variant-numeric: tabular-nums;
+  box-sizing: border-box;
   transition: all var(--transition-fast);
 }
 
@@ -482,23 +485,18 @@
 }
 
 #badge-library-total {
-  background-color: var(--color-primary);
-  color: #FFFFFF;
-  border-color: transparent;
-  box-shadow: 0 2px 6px var(--color-primary-glow);
+  background-color: var(--color-surface-hover);
+  color: var(--color-text-secondary);
+  border-color: var(--color-border);
+  box-shadow: none;
 }
 
-.nav-item.active .nav-badge {
-  background-color: var(--color-primary);
-  color: #FFFFFF;
-  border-color: transparent;
-  box-shadow: 0 2px 6px var(--color-primary-glow);
-}
-
+.nav-item.active .nav-badge,
 .nav-item.active #badge-library-total {
   background-color: var(--color-primary);
   color: #FFFFFF;
   border-color: transparent;
+  box-shadow: 0 2px 6px var(--color-primary-glow);
 }
 
 /* PWA badge mantiene diseño pill original */
@@ -514,26 +512,27 @@
   border: none;
   background-color: var(--color-primary-light);
   color: #FFFFFF;
-}
-  color: #FFF;
   font-size: 0.65rem;
 }
 
 /* Footer del Sidebar: Widget de Almacenamiento */
 .sidebar-footer {
-  padding: var(--space-sm) var(--space-md) var(--space-md);
+  padding: 12px 14px calc(14px + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid var(--color-border);
   background-color: var(--color-surface);
+  margin-top: auto;
+  box-sizing: border-box;
 }
 
 .storage-widget {
   background-color: var(--color-surface-secondary);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: 12px 14px;
+  padding: 10px 12px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 7px;
+  box-sizing: border-box;
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
