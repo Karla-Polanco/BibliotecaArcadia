@@ -12,7 +12,8 @@ export class ThemeManager {
     WINE_POETRY: 'serene-fog',
     DEEP_TWILIGHT: 'deep-twilight',
     ENCHANTED_FOREST: 'enchanted-forest',
-    CLEAR_SKY: 'clear-sky'
+    CLEAR_SKY: 'clear-sky',
+    ABYSS_DARK: 'abyss-dark'
   };
 
   static STORAGE_KEY = 'arcadia_theme';
@@ -55,7 +56,8 @@ export class ThemeManager {
       ThemeManager.THEMES.LAVENDER_LIGHT,
       ThemeManager.THEMES.WINE_POETRY,
       ThemeManager.THEMES.ENCHANTED_FOREST,
-      ThemeManager.THEMES.CLEAR_SKY
+      ThemeManager.THEMES.CLEAR_SKY,
+      ThemeManager.THEMES.ABYSS_DARK
     ]);
     if (!knownThemes.has(themeName)) {
       console.warn(`[ThemeManager] Tema desconocido "${themeName}", usando mystic-night`);
@@ -97,7 +99,8 @@ export class ThemeManager {
       'lavender-light': '#FBF9FF',
       'clear-sky': '#FAF7F2',
       'enchanted-forest': '#F5F9F6',
-      'serene-fog': '#FBF8F9'
+      'serene-fog': '#FBF8F9',
+      'abyss-dark': '#141214'
     };
     const color = themeColors[themeName] || '#E8ECEF';
     try {

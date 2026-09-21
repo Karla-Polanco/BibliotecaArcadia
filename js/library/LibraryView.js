@@ -596,45 +596,44 @@ export class LibraryView {
   renderList() {
     this.container.className = 'books-list';
     const headerHtml = this.renderCollectionHeader();
-    const itemsHtml = this.filteredBooks.map(book => `
+    const itemsHtml = this.filteredBooks.map(book => {
+      const pct = Math.max(0, Math.min(100, Math.round(book.progress || 0)));
+      const helper = pct === 0 ? 'Aún no has empezado' : this.getStatusLabel(book.status);
+      return `
       <div class="book-list-item" data-book-id="${book.id}">
-        <div class="list-item-main">
-          <div class="list-cover-wrapper">
-            <div class="book-spine-3d" aria-hidden="true"></div>
-            ${book.coverDataUrl ? `
-              <img src="${book.coverDataUrl}" alt="${this.escapeHtml(book.title)}" class="list-cover-thumb">
-            ` : `
-              <div class="list-cover-thumb list-cover-placeholder" style="background: ${book.coverGradient || 'var(--banner-gradient)'};">
-                <img src="assets/icons/logo-transparent.png" alt="" style="width: 40px; height: auto; opacity: 0.92; filter: drop-shadow(0 1px 4px rgba(0,0,0,0.5));">
-              </div>
-            `}
-          </div>
-
+        <div class="list-cover-wrapper">
+          <div class="book-spine-3d" aria-hidden="true"></div>
+          ${book.coverDataUrl ? `
+            <img src="${book.coverDataUrl}" alt="${this.escapeHtml(book.title)}" class="list-cover-thumb">
+          ` : `
+            <div class="list-cover-thumb list-cover-placeholder" style="background: ${book.coverGradient || 'var(--banner-gradient)'};">
+              <img src="assets/icons/logo-transparent.png" alt="" style="width: 40px; height: auto; opacity: 0.92; filter: drop-shadow(0 1px 4px rgba(0,0,0,0.5));">
+            </div>
+          `}
+        </div>
+        <div class="list-main">
           <div class="list-info">
-            <h4 class="list-title">${this.escapeHtml(book.title)}</h4>
             ${book.saga ? `<span class="list-saga">${this.escapeHtml(book.saga)}</span>` : ''}
+            <h4 class="list-title">${this.escapeHtml(book.title)}</h4>
             <span class="list-author">${this.escapeHtml(book.author)}</span>
-            <div class="list-status-wrap">
-              <span class="list-status-badge ${book.status}">${this.getStatusLabel(book.status)}</span>
+            <div class="list-status-row">
+              <span class="list-status-badge ${book.status}">${book.status==='reading'?`<svg style="width:11px;height:11px;flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>`:''}${this.getStatusLabel(book.status)}</span>
+              <span class="list-status-helper">${helper}</span>
             </div>
-            <div class="list-progress-box">
-              <div class="list-progress-bar">
-                <div class="list-progress-fill" style="width: ${book.progress || 0}%;"></div>
-              </div>
-              <span class="list-progress-text">${book.progress || 0}%</span>
+          </div>
+          <div class="list-progress-area">
+            <div class="list-progress-bar">
+              <div class="list-progress-fill" style="width: ${pct}%;"></div>
             </div>
+            <span class="list-progress-text">${pct}%</span>
           </div>
         </div>
-
         <div class="list-item-actions-row">
-          <!-- Botón de Favoritos exclusivo -->
           <button class="btn-list-action ${book.favorite ? 'is-fav' : ''}" data-action="toggle-fav" data-id="${book.id}" aria-label="Favorito" title="Favorito">
             <svg style="width: 18px; height: 18px;" fill="${book.favorite ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
             </svg>
           </button>
-
-          <!-- Botón Menú 3 puntos exclusivo -->
           <button class="btn-list-action" data-action="book-options" data-id="${book.id}" aria-label="Menú de opciones" title="Menú de opciones">
             <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
@@ -642,8 +641,7 @@ export class LibraryView {
           </button>
         </div>
       </div>
-    `).join('');
-
+    `;}).join('');
     this.container.innerHTML = headerHtml + itemsHtml;
   }
 
@@ -733,8 +731,10 @@ export class LibraryView {
     menu.className = 'context-menu-floating';
 
     const rect = triggerEl.getBoundingClientRect();
+    // Alinear derecha del menú con derecha del botón, como el select
+    const menuWidth = 200;
     menu.style.top = `${rect.bottom + 6}px`;
-    menu.style.left = `${Math.min(window.innerWidth - 190, Math.max(10, rect.left))}px`;
+    menu.style.left = `${Math.min(window.innerWidth - menuWidth - 10, Math.max(10, rect.right - menuWidth))}px`;
 
     menu.innerHTML = `
       <button class="menu-action-btn menu-action-btn--primary" data-opt="read">

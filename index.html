@@ -11,10 +11,10 @@
     (function () {
       try {
         var savedTheme = localStorage.getItem('arcadia_theme') || 'mystic-night';
-        var known = ['mystic-night','lavender-light','wine-poetry','serene-fog','enchanted-forest','clear-sky'];
+        var known = ['mystic-night','lavender-light','wine-poetry','serene-fog','enchanted-forest','clear-sky','abyss-dark'];
         if (known.indexOf(savedTheme) === -1) savedTheme = 'mystic-night';
         document.documentElement.setAttribute('data-theme', savedTheme);
-        var themeColors = { 'mystic-night':'#E8ECEF','lavender-light':'#FBF9FF','clear-sky':'#FAF7F2','enchanted-forest':'#F5F9F6','serene-fog':'#FBF8F9','wine-poetry':'#FBF8F9' };
+        var themeColors = { 'mystic-night':'#E8ECEF','lavender-light':'#FBF9FF','clear-sky':'#FAF7F2','enchanted-forest':'#F5F9F6','serene-fog':'#FBF8F9','wine-poetry':'#FBF8F9','abyss-dark':'#141214' };
         var tc = themeColors[savedTheme] || '#E8ECEF';
         var meta = document.querySelector('meta[name="theme-color"]');
         if (meta) meta.setAttribute('content', tc);
@@ -47,13 +47,13 @@
     rel="stylesheet">
 
   <!-- Hojas de Estilo Modulares -->
-  <link rel="stylesheet" href="css/tokens.css?v=118">
-  <link rel="stylesheet" href="css/themes.css?v=118">
-  <link rel="stylesheet" href="css/main.css?v=118">
-  <link rel="stylesheet" href="css/layout.css?v=118">
-  <link rel="stylesheet" href="css/library.css?v=118">
-  <link rel="stylesheet" href="css/reader.css?v=118">
-  <link rel="stylesheet" href="css/responsive.css?v=118">
+  <link rel="stylesheet" href="css/tokens.css?v=120">
+  <link rel="stylesheet" href="css/themes.css?v=120">
+  <link rel="stylesheet" href="css/main.css?v=120">
+  <link rel="stylesheet" href="css/layout.css?v=120">
+  <link rel="stylesheet" href="css/library.css?v=120">
+  <link rel="stylesheet" href="css/reader.css?v=120">
+  <link rel="stylesheet" href="css/responsive.css?v=120">
 </head>
 
 <body>
@@ -405,18 +405,18 @@
           <!-- 1. Cerúleo Claro (antes Nocturno Místico) -->
           <div class="theme-option-card" data-theme-value="mystic-night">
             <div class="theme-card-body">
-              <div class="theme-card-header">
-                <span class="theme-badge-tag tag-mn">✦ Cerúleo claro</span>
-                <span class="theme-active-pill">✓ Activo</span>
+              <div class="theme-card-left">
+                <h4 class="theme-card-title">Cerúleo claro</h4>
+                <p class="theme-card-desc">Helada y Luminosa, con acentos cerúleos.</p>
               </div>
-              <p class="theme-card-desc">Paleta helada clara con acentos cerúleos. Luminosa, serena y elegante para el día.</p>
-              <div class="theme-swatches-wrap">
+              <div class="theme-card-right">
                 <div class="theme-swatches">
                   <div class="color-swatch swatch-mn-1" title="Platinum (#E8ECEF)"></div>
                   <div class="color-swatch swatch-mn-2" title="Blanco (#FFFFFF)"></div>
                   <div class="color-swatch swatch-mn-3" title="Cerúleo Suave (#5A7FAF)"></div>
                   <div class="color-swatch swatch-mn-4" title="Cool Cerulean (#8EB1D1)"></div>
                 </div>
+                <span class="theme-radio" aria-hidden="true"></span>
               </div>
             </div>
           </div>
@@ -424,18 +424,18 @@
           <!-- 2. Lavanda Claro -->
           <div class="theme-option-card" data-theme-value="lavender-light">
             <div class="theme-card-body">
-              <div class="theme-card-header">
-                <span class="theme-badge-tag tag-ll">✦ Lavanda claro</span>
-                <span class="theme-active-pill">✓ Activo</span>
+              <div class="theme-card-left">
+                <h4 class="theme-card-title">Lavanda claro</h4>
+                <p class="theme-card-desc">Blanco, lavanda y violeta. Limpia y delicada.</p>
               </div>
-              <p class="theme-card-desc">Combinación suave de blanco, lavanda y violeta. Limpio, delicado y agradable para el día a día.</p>
-              <div class="theme-swatches-wrap">
+              <div class="theme-card-right">
                 <div class="theme-swatches">
                   <div class="color-swatch swatch-ll-1" title="Blanco Puro (#FFFFFF)"></div>
                   <div class="color-swatch swatch-ll-2" title="Perla Lavanda (#F0ECF9)"></div>
                   <div class="color-swatch swatch-ll-3" title="Amatista Atenuado (#5E4FA2)"></div>
                   <div class="color-swatch swatch-ll-4" title="Glicina Suave (#7D6FB5)"></div>
                 </div>
+                <span class="theme-radio" aria-hidden="true"></span>
               </div>
             </div>
           </div>
@@ -443,18 +443,18 @@
           <!-- 3. Niebla Serena -->
           <div class="theme-option-card" data-theme-value="serene-fog">
             <div class="theme-card-body">
-              <div class="theme-card-header">
-                <span class="theme-badge-tag tag-wp">✦ Niebla Serena</span>
-                <span class="theme-active-pill">✓ Activo</span>
+              <div class="theme-card-left">
+                <h4 class="theme-card-title">Niebla Serena</h4>
+                <p class="theme-card-desc">Rosa niebla y malva. Suave para leer de día.</p>
               </div>
-              <p class="theme-card-desc">Acuarela suave en rosa niebla, lavanda y malva. Serena, luminosa y delicada para leer de día.</p>
-              <div class="theme-swatches-wrap">
+              <div class="theme-card-right">
                 <div class="theme-swatches">
                   <div class="color-swatch swatch-wp-1" title="Rosa Niebla (#F8F3F5)"></div>
                   <div class="color-swatch swatch-wp-2" title="Niebla Rosada (#F3E9EC)"></div>
                   <div class="color-swatch swatch-wp-3" title="Ciruela Empolvada (#754157)"></div>
                   <div class="color-swatch swatch-wp-4" title="Malva Tenue (#955B73)"></div>
                 </div>
+                <span class="theme-radio" aria-hidden="true"></span>
               </div>
             </div>
           </div>
@@ -462,18 +462,18 @@
           <!-- 4. Bosque de la Mañana -->
           <div class="theme-option-card" data-theme-value="enchanted-forest">
             <div class="theme-card-body">
-              <div class="theme-card-header">
-                <span class="theme-badge-tag tag-ef">✦ Bosque de la mañana</span>
-                <span class="theme-active-pill">✓ Activo</span>
+              <div class="theme-card-left">
+                <h4 class="theme-card-title">Bosque de la mañana</h4>
+                <p class="theme-card-desc">Verdes salvia y rocío matinal. Fresca y serena.</p>
               </div>
-              <p class="theme-card-desc">Acuarela de verdes salvia y rocío matinal. Fresca, serena y luminosa para leer de día.</p>
-              <div class="theme-swatches-wrap">
+              <div class="theme-card-right">
                 <div class="theme-swatches">
                   <div class="color-swatch swatch-ef-1" title="Salvia Brumoso (#F1F5F2)"></div>
                   <div class="color-swatch swatch-ef-2" title="Rocío Salvia (#E9F0EB)"></div>
                   <div class="color-swatch swatch-ef-3" title="Laurel Noble (#2C6343)"></div>
                   <div class="color-swatch swatch-ef-4" title="Salvia Suave (#4E8565)"></div>
                 </div>
+                <span class="theme-radio" aria-hidden="true"></span>
               </div>
             </div>
           </div>
@@ -481,22 +481,40 @@
           <!-- 5. Beige Cálido (antes Cielo Claro) -->
           <div class="theme-option-card" data-theme-value="clear-sky">
             <div class="theme-card-body">
-              <div class="theme-card-header">
-                <span class="theme-badge-tag tag-cs">✦ Beige cálido</span>
-                <span class="theme-active-pill">✓ Activo</span>
+              <div class="theme-card-left">
+                <h4 class="theme-card-title">Beige cálido</h4>
+                <p class="theme-card-desc">Paleta cálida de lino, avena y vainilla. Acogedora, luminosa y perfecta para lectura diurna.</p>
               </div>
-              <p class="theme-card-desc">Paleta cálida de lino, avena y vainilla. Acogedora, luminosa y perfecta para lectura diurna.</p>
-              <div class="theme-swatches-wrap">
+              <div class="theme-card-right">
                 <div class="theme-swatches">
                   <div class="color-swatch swatch-cs-1" title="Ivory Whisper (#FAF7F2)"></div>
                   <div class="color-swatch swatch-cs-2" title="Soft Linen (#F6F0E6)"></div>
                   <div class="color-swatch swatch-cs-3" title="Sandy Beige (#C8B39A)"></div>
                   <div class="color-swatch swatch-cs-4" title="Warm Taupe (#9A8472)"></div>
                 </div>
+                <span class="theme-radio" aria-hidden="true"></span>
               </div>
             </div>
           </div>
 
+          <!-- 6. Abismo Nocturno -->
+          <div class="theme-option-card" data-theme-value="abyss-dark">
+            <div class="theme-card-body">
+              <div class="theme-card-left">
+                <h4 class="theme-card-title">Abismo nocturno</h4>
+                <p class="theme-card-desc">Paleta abisal profunda con grises azulados. Elegante y perfecta para lectura nocturna.</p>
+              </div>
+              <div class="theme-card-right">
+                <div class="theme-swatches">
+                  <div class="color-swatch swatch-ad-1" title="Kettle Black (#141214)"></div>
+                  <div class="color-swatch swatch-ad-2" title="Tap Shoe (#302F33)"></div>
+                  <div class="color-swatch swatch-ad-3" title="Asphalt Blue (#464C55)"></div>
+                  <div class="color-swatch swatch-ad-4" title="Great Falls (#9EA7B3)"></div>
+                </div>
+                <span class="theme-radio" aria-hidden="true"></span>
+              </div>
+            </div>
+          </div>
 
         </div>
       </div>

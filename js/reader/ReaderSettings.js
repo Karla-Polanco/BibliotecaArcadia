@@ -69,9 +69,20 @@ export class ReaderSettings {
   static apply(rendition, settings, effectiveTheme = 'mystic-night') {
     if (!rendition) return;
 
-    // 1. Determinar tema de color (heredado o individual)
-    const readerTheme = settings.theme && settings.theme !== 'inherit' ? settings.theme : effectiveTheme;
-    const themeColors = this._getThemeColors(readerTheme);
+    // 1. Determinar tema de color (heredado lee variables CSS reales)
+    let themeColors;
+    if (!settings.theme || settings.theme === 'inherit') {
+      const cs = getComputedStyle(document.documentElement);
+      themeColors = {
+        bg: cs.getPropertyValue('--reader-bg').trim() || cs.getPropertyValue('--color-background').trim() || '#FFFFFF',
+        text: cs.getPropertyValue('--reader-text').trim() || cs.getPropertyValue('--color-text').trim() || '#1C1C1E',
+        heading: cs.getPropertyValue('--reader-text').trim() || cs.getPropertyValue('--color-text').trim() || '#000',
+        accent: cs.getPropertyValue('--color-primary-light').trim() || '#5A7FAF'
+      };
+    } else {
+      const readerTheme = settings.theme;
+      themeColors = this._getThemeColors(readerTheme);
+    }
 
     const fontStack = this._getFontStack(settings.fontFamily);
     // Peso de fuente: Normal (400), Medio (600), Negrita (800)
@@ -481,6 +492,14 @@ export class ReaderSettings {
         text: '#2D1A23',
         heading: '#25151C',
         accent: '#955B73'
+      };
+    }
+    if (themeName === 'abyss-dark') {
+      return {
+        bg: '#141214',
+        text: '#C2C7CF',
+        heading: '#E8EAF0',
+        accent: '#9EA7B3'
       };
     }
     // mystic-night por defecto — noche profunda (lectura oscura)

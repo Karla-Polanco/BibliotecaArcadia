@@ -1,18 +1,18 @@
 /* ==========================================================================
    ESTILOS GENERALES, RESET Y TIPOGRAFÍA BASE - BIBLIOTECA ARCADIA
    ========================================================================== */
-/* NOTA: tokens.css y themes.css ya se cargan vía <link> en index.html.
-   No se usa @import aquí para evitar doble petición y bloqueo de render. */
 
+/* Carga de fuentes externas - WOFF2 preferente + OTF fallback */
 @font-face {
   font-family: 'OpenDyslexic';
-  src: url('https://cdn.jsdelivr.net/gh/antijingoist/opendyslexic@master/compiled/OpenDyslexic-Regular.otf') format('opentype');
-  font-weight: normal;
+  src: url('https://cdn.jsdelivr.net/gh/antijingoist/opendyslexic@master/compiled/OpenDyslexic-Regular.woff2') format('woff2'),
+       url('https://cdn.jsdelivr.net/gh/antijingoist/opendyslexic@master/compiled/OpenDyslexic-Regular.otf') format('opentype');
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
-/* Reset Moderno */
+/* Reset y modelo de caja */
 *,
 *::before,
 *::after {
@@ -21,6 +21,7 @@
   padding: 0;
 }
 
+/* Configuración raíz y viewport */
 html {
   font-size: 16.5px;
   line-height: 1.5;
@@ -30,6 +31,7 @@ html {
   color-scheme: light;
 }
 
+/* Esquemas de color para temas claros */
 [data-theme="lavender-light"],
 [data-theme="clear-sky"],
 [data-theme="enchanted-forest"],
@@ -37,31 +39,63 @@ html {
 [data-theme="mystic-night"] {
   color-scheme: light;
 }
+[data-theme="abyss-dark"] {
+  color-scheme: dark;
+}
 
+/* Estructura base del cuerpo y renderizado - FIX perf: sin background-attachment:fixed ni overflow-x:hidden */
 body {
-  font-family: var(--font-sans);
+  /* Tipografía y legibilidad */
+  font-family: var(--font-sans, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+
+  /* Fondo - --modal-backdrop no existe en themes.css, se usa fallback rgba(0,0,0,0.65) en overlays */
   background-color: var(--color-background);
   background-image: var(--theme-bg-pattern, none);
   background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
+  background-position: center top;
   background-repeat: no-repeat;
-  color: var(--color-text);
+
+  /* Estructura y viewport */
   min-height: 100vh;
   min-height: 100dvh;
-  overflow-x: hidden;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  transition: background-color var(--transition-normal), color var(--transition-normal);
+
+  /* Transición */
+  transition: background-color var(--transition-normal, 250ms ease),
+              color var(--transition-normal, 250ms ease);
 }
 
-/* Enlaces y Botones */
+/* Elementos multimedia y vectoriales */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Control de contracción de iconos */
+svg {
+  flex-shrink: 0;
+}
+
+/* Listas sin viñetas */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Enlaces limpios */
 a {
   color: inherit;
   text-decoration: none;
 }
 
+/* Botones universales e interacción - transición específica por perf (no all) */
 button {
   font-family: inherit;
   font-size: inherit;
@@ -69,25 +103,24 @@ button {
   background: transparent;
   color: inherit;
   cursor: pointer;
-  outline: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast, 150ms ease),
+              color var(--transition-fast, 150ms ease),
+              border-color var(--transition-fast, 150ms ease),
+              box-shadow var(--transition-fast, 150ms ease),
+              transform var(--transition-fast, 150ms ease);
 }
 
-button:focus-visible,
-a:focus-visible,
-[tabindex]:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-  outline: 3px solid var(--color-primary-light);
+/* Estados de foco accesible - agrupado sin !important */
+:focus-visible {
+  outline: 3px solid var(--color-primary-light, #8B7CF6);
   outline-offset: 2px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm, 6px);
 }
 
-/* Botones de navegación reseteados (sidebar / móvil / estados) */
+/* Botones de navegación y listas */
 button.nav-item,
 button.collection-nav-link,
 button.mobile-nav-link,
@@ -100,9 +133,10 @@ button.state-option-card {
   border: none;
 }
 
+/* Ajustes de navegación en móvil */
 button.mobile-nav-link {
   text-align: center;
-  align-items: center;
+  justify-content: center;
 }
 
 button.state-option-card {
@@ -110,8 +144,7 @@ button.state-option-card {
   display: flex;
 }
 
-
-/* Inputs, Selects y Textareas Estilizados Globalmente */
+/* Controles de formulario base */
 input,
 select,
 textarea {
@@ -122,95 +155,65 @@ textarea {
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-md, 8px);
   padding: 9px 13px;
-  outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
+/* Estados hover en inputs */
 input:hover,
 select:hover,
 textarea:hover {
   border-color: var(--color-text-secondary);
 }
 
+/* Estados de foco en inputs */
 input:focus,
-input:focus-visible,
 select:focus,
-select:focus-visible,
-textarea:focus,
-textarea:focus-visible {
+textarea:focus {
   border-color: var(--color-primary-light);
-  box-shadow: 0 0 0 1px var(--color-primary-glow), 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 0 1px var(--color-primary-glow, rgba(139, 124, 246, 0.35)),
+              0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* Excepciones para inputs integrados en cajas compuestas */
-.search-box input,
-.search-box input:focus,
-.search-box input:focus-visible,
+/* Reset para inputs integrados - especificidad elevada con :is() sin !important */
+:is(.search-box, .panel-search-bar) input,
 .search-input,
-.search-input:focus,
-.search-input:focus-visible,
-.panel-search-bar input,
-.panel-search-bar input:focus,
-.panel-search-bar input:focus-visible,
 .panel-search-input,
-.panel-search-input:focus,
-.panel-search-input:focus-visible,
 #input-vocab-search,
-#input-vocab-search:focus,
-#input-annot-search,
-#input-annot-search:focus {
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-  background: transparent !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
+#input-annot-search {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
 }
 
-/* Select Estilizado con Flecha SVG Elegante */
+/* Selectores desplegables personalizados */
 select {
   appearance: none;
   -webkit-appearance: none;
-  -moz-appearance: none;
   cursor: pointer;
-  padding-right: 32px !important;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238E88A8' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  padding-right: 36px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238E88A8' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 10px center;
+  background-position: right 12px center;
   background-size: 14px 14px;
 }
 
+/* Opciones del menú desplegable */
 select option {
-  background-color: var(--color-surface-elevated, var(--color-surface, #1E1C2E));
-  color: var(--color-text, #FFFFFF);
+  background-color: var(--color-surface-elevated, var(--color-surface, #1e1c2e));
+  color: var(--color-text, #ffffff);
   padding: 10px 14px;
-  font-size: 0.9rem;
 }
 
-img {
-  display: block;
-  max-width: 100%;
+/* Barra de desplazamiento estándar moderno W3C como base */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
 }
 
-svg {
-  display: block;
-  flex-shrink: 0;
-}
-
-ul,
-ol {
-  list-style: none;
-}
-
-/* Scrollbar Personalizado Limpio y Moderno (sin flechas ni botones nativos) */
-*::-webkit-scrollbar-button,
-::-webkit-scrollbar-button {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-  background: transparent !important;
-}
-
+/* Dimensiones del scrollbar webkit - afinado para Chromium/Safari sin deprecated */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -221,29 +224,23 @@ ol {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: var(--radius-full);
+  background-color: var(--color-border);
+  border-radius: var(--radius-full, 9999px);
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-muted);
+  background-color: var(--color-text-muted);
 }
 
-/* Accesibilidad y Selección (contraste seguro en temas claros y oscuros) */
+/* Selección de texto */
 ::selection {
-  background-color: var(--color-primary-light);
-  color: #FFFFFF;
-  text-shadow: none;
-}
-
-[data-theme="lavender-light"] ::selection,
-[data-theme="clear-sky"] ::selection,
-[data-theme="enchanted-forest"] ::selection,
-[data-theme="serene-fog"] ::selection {
   background-color: var(--color-primary, #5B4CC4);
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
+/* Ocultación visual accesible */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -256,314 +253,128 @@ ol {
   border-width: 0;
 }
 
-/* --------------------------------------------------------------------------
-   SISTEMA UNIVERSAL DE VENTANAS MODALES — cristal premium + entrada elástica
-   -------------------------------------------------------------------------- */
-.theme-modal-overlay,
-.modal-overlay,
-.arcadia-modal-overlay {
-  position: fixed !important;
-  inset: 0 !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  height: 100dvh !important;
-  background: var(--modal-backdrop, rgba(0, 0, 0, 0.65)) !important;
-  backdrop-filter: blur(12px) saturate(1.1) !important;
-  -webkit-backdrop-filter: blur(12px) saturate(1.1) !important;
-  z-index: var(--z-modal, 200) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 24px !important;
-  padding-top: max(24px, env(safe-area-inset-top)) !important;
-  padding-bottom: max(24px, env(safe-area-inset-bottom)) !important;
-  box-sizing: border-box !important;
+/* Capa de fondo de modales - sin !important, especificidad vía :is() */
+:is(.theme-modal-overlay, .modal-overlay, .arcadia-modal-overlay) {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal, 200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
+  background: var(--modal-backdrop, rgba(0, 0, 0, 0.65));
+  backdrop-filter: blur(12px) saturate(1.1);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--transition-normal),
-    backdrop-filter var(--transition-normal);
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  overscroll-behavior: contain !important;
-  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  transition: opacity var(--transition-normal, 250ms ease),
+              backdrop-filter var(--transition-normal, 250ms ease);
 }
 
-.theme-modal-overlay.active,
-.modal-overlay.active,
-.arcadia-modal-overlay.active {
-  opacity: 1 !important;
-  pointer-events: auto !important;
+/* Estado activo del overlay */
+:is(.theme-modal-overlay, .modal-overlay, .arcadia-modal-overlay).active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.theme-modal-dialog,
-.modal-card,
-.arcadia-modal-card {
-  background-color: var(--color-surface) !important;
-  background-image: none !important;
-  border: 1px solid var(--color-border) !important;
-  border-radius: var(--radius-xl) !important;
-  box-shadow: var(--shadow-xl), 0 0 0 1px var(--color-border-subtle) !important;
-  color: var(--color-text) !important;
-  position: relative !important;
-  width: 100% !important;
+/* Contenedor y tarjeta del modal - sin !important */
+:is(.theme-modal-dialog, .modal-card, .arcadia-modal-card) {
+  position: relative;
+  width: 100%;
   max-width: 500px;
-  max-height: 90vh !important;
-  max-height: min(90vh, calc(100dvh - 48px)) !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  box-sizing: border-box !important;
-  isolation: isolate !important;
-  margin: auto !important;
-  padding: 28px !important;
+  max-height: min(90vh, calc(100dvh - 48px));
+  margin: auto;
+  padding: 28px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl, 18px);
+  box-shadow: var(--shadow-xl), 0 0 0 1px var(--color-border-subtle);
+  color: var(--color-text);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   transform: scale(0.96) translateY(8px);
-  transition: transform var(--transition-normal), opacity var(--transition-fast);
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
+  transition: transform var(--transition-normal, 250ms cubic-bezier(0.16, 1, 0.3, 1)),
+              opacity var(--transition-fast, 150ms ease);
 }
 
-/* Entrada / salida — el JS solo alterna .active en el overlay */
-.theme-modal-overlay.active .theme-modal-dialog,
-.modal-overlay.active .modal-card,
-.arcadia-modal-overlay.active .arcadia-modal-card {
-  transform: scale(1) translateY(0) !important;
-  opacity: 1 !important;
+/* Animación de entrada de la tarjeta */
+:is(.theme-modal-overlay, .modal-overlay, .arcadia-modal-overlay).active :is(.theme-modal-dialog, .modal-card, .arcadia-modal-card) {
+  transform: scale(1) translateY(0);
 }
 
-/* Salida suave cuando el JS quita .active (usa transición de opacity del overlay) */
-.theme-modal-overlay:not(.active) .theme-modal-dialog,
-.modal-overlay:not(.active) .modal-card,
-.arcadia-modal-overlay:not(.active) .arcadia-modal-card {
-  transform: scale(0.97) translateY(6px);
-}
-
-/* --------------------------------------------------------------------------
-   SCROLL ELEGANTE Y FLOTANTE PARA MODALES (no corta los bordes redondeados)
-   El truco `border: transparente + background-clip` crea una píldora flotante
-   separada del borde, y `margin` en el track evita que toque las esquinas.
-   -------------------------------------------------------------------------- */
-.theme-modal-dialog::-webkit-scrollbar,
-.modal-card::-webkit-scrollbar,
-.arcadia-modal-card::-webkit-scrollbar {
-  width: 10px;
-}
-
-.theme-modal-dialog::-webkit-scrollbar-track,
-.modal-card::-webkit-scrollbar-track,
-.arcadia-modal-card::-webkit-scrollbar-track {
-  background: transparent;
-  margin: 16px 0;
-  border-radius: 999px;
-}
-
-.theme-modal-dialog::-webkit-scrollbar-thumb,
-.modal-card::-webkit-scrollbar-thumb,
-.arcadia-modal-card::-webkit-scrollbar-thumb {
-  background-color: var(--color-border, rgba(255, 255, 255, 0.18));
-  border-radius: 999px;
-  border: 3px solid transparent;
-  background-clip: padding-box;
-  min-height: 48px;
-}
-
-.theme-modal-dialog::-webkit-scrollbar-thumb:hover,
-.modal-card::-webkit-scrollbar-thumb:hover,
-.arcadia-modal-card::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-primary-light, #8B7CF6);
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-
-.theme-modal-dialog::-webkit-scrollbar-button,
-.modal-card::-webkit-scrollbar-button,
-.arcadia-modal-card::-webkit-scrollbar-button {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-  background: transparent !important;
-}
-
-.theme-modal-dialog::-webkit-scrollbar-corner,
-.modal-card::-webkit-scrollbar-corner,
-.arcadia-modal-card::-webkit-scrollbar-corner {
-  background: transparent;
-}
-
-/* Cabecera estática: el título hace scroll con el contenido, no se queda fijo */
-.modal-card>.modal-header,
-.theme-modal-dialog>.theme-modal-header,
-#theme-modal .modal-card>.modal-header {
-  position: static !important;
-  top: auto !important;
-  z-index: auto !important;
-  background: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  margin-bottom: 20px !important;
-}
-
-/* Listas internas con scroll propio (asignar colección, resultados, etc.) */
-.assign-collections-list,
-.search-results-list,
-.toc-content-list {
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border, rgba(255, 255, 255, 0.18)) transparent;
-}
-
-.assign-collections-list::-webkit-scrollbar,
-.search-results-list::-webkit-scrollbar,
-.toc-content-list::-webkit-scrollbar {
-  width: 8px;
-}
-
-.assign-collections-list::-webkit-scrollbar-track,
-.search-results-list::-webkit-scrollbar-track,
-.toc-content-list::-webkit-scrollbar-track {
-  background: transparent;
-  margin: 8px 0;
-}
-
-.assign-collections-list::-webkit-scrollbar-thumb,
-.search-results-list::-webkit-scrollbar-thumb,
-.toc-content-list::-webkit-scrollbar-thumb {
-  background-color: var(--color-border, rgba(255, 255, 255, 0.18));
-  border-radius: 999px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-
-/* En táctil la barra se adelgaza y no molesta visualmente */
-@media (hover: none) and (pointer: coarse) {
-
-  .theme-modal-dialog,
-  .modal-card,
-  .arcadia-modal-card {
-    scrollbar-width: thin;
-  }
-
-  .theme-modal-dialog::-webkit-scrollbar,
-  .modal-card::-webkit-scrollbar,
-  .arcadia-modal-card::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  .theme-modal-dialog::-webkit-scrollbar-thumb,
-  .modal-card::-webkit-scrollbar-thumb,
-  .arcadia-modal-card::-webkit-scrollbar-thumb {
-    border-width: 1px;
-    min-height: 40px;
-  }
-}
-
-/* Modales amplios (Formato Horizontal / Landscape) */
+/* Variantes de tamaño ancho para modales */
 #theme-modal .modal-card,
 .modal-card.modal-wide,
 .theme-modal-dialog.wide {
-  width: 100% !important;
-  max-width: min(960px, 100%) !important;
-  padding: 28px !important;
+  max-width: min(960px, 100%);
 }
 
-@media (max-width: 768px) {
-  body {
-    background-size: auto 100%;
-    background-position: center top;
-    background-attachment: scroll;
-  }
+/* Variantes de ancho específicas para Arcadia */
+.arcadia-modal-card--sm { max-width: 440px; }
+.arcadia-modal-card--md { max-width: 460px; }
+.arcadia-modal-card--lg { max-width: 480px; }
 
-  .theme-modal-overlay,
-  .modal-overlay,
-  .arcadia-modal-overlay {
-    padding: 16px !important;
-    align-items: flex-end !important;
-  }
-
-  .theme-modal-dialog,
-  .modal-card,
-  .arcadia-modal-card {
-    padding: 22px 18px !important;
-    border-radius: 22px !important;
-    max-height: min(92vh, calc(100dvh - 24px)) !important;
-  }
+/* Cabeceras de modales */
+:is(.theme-modal-header, .modal-header) {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 20px;
 }
 
 .theme-modal-header {
-  display: flex !important;
-  align-items: flex-start !important;
-  justify-content: space-between !important;
-  gap: 14px !important;
-  margin-bottom: 20px !important;
-  padding-bottom: 14px !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.modal-header {
-  display: flex !important;
-  align-items: flex-start !important;
-  justify-content: space-between !important;
-  gap: 14px !important;
-  margin-bottom: 20px !important;
+/* Tipografía de títulos de modales */
+:is(.theme-modal-title, .modal-title, .arcadia-modal-title) {
+  font-family: 'Cinzel', var(--font-serif, Georgia, serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: 0.03em;
+  line-height: 1.25;
 }
 
-.theme-modal-title {
-  font-family: 'Cinzel', var(--font-serif, Georgia, serif) !important;
-  font-size: 1.25rem !important;
-  font-weight: 700 !important;
-  color: var(--color-text) !important;
-  letter-spacing: 0.04em !important;
-  margin: 0 !important;
+.arcadia-modal-title {
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  margin: 0 0 6px 0;
 }
 
-.theme-modal-close,
-.modal-close-btn {
-  width: 36px !important;
-  height: 36px !important;
-  border-radius: var(--radius-full, 999px) !important;
-  background: var(--color-surface-hover, rgba(255, 255, 255, 0.05)) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  color: var(--color-text-secondary) !important;
-  cursor: pointer !important;
-  flex-shrink: 0 !important;
-  margin-top: -6px !important;
-  margin-right: -4px !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+/* Botón de cierre en modales */
+:is(.theme-modal-close, .modal-close-btn) {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full, 999px);
+  background: var(--color-surface-hover, rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+  margin-top: -4px;
+  margin-right: -4px;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.2s ease,
+              color 0.2s ease,
+              border-color 0.2s ease;
 }
 
-.theme-modal-close:hover,
-.modal-close-btn:hover {
-  background: var(--color-border) !important;
-  color: var(--color-text) !important;
-  transform: rotate(90deg) scale(1.05) !important;
-  border-color: var(--color-primary-light) !important;
+:is(.theme-modal-close, .modal-close-btn):hover {
+  background: var(--color-border);
+  color: var(--color-text);
+  transform: rotate(90deg) scale(1.05);
+  border-color: var(--color-primary-light);
 }
 
-/* Estructura interna moderna para .arcadia-modal-card (reemplaza inline) */
+/* Estructura vertical del modal Arcadia */
 .arcadia-modal-card {
   display: flex;
   flex-direction: column;
   gap: 18px;
-}
-
-.arcadia-modal-card--sm {
-  max-width: 440px !important;
-}
-
-.arcadia-modal-card--md {
-  max-width: 460px !important;
-}
-
-.arcadia-modal-card--lg {
-  max-width: 480px !important;
 }
 
 .arcadia-modal-row {
@@ -584,22 +395,12 @@ ol {
   flex-shrink: 0;
 }
 
-.arcadia-modal-title {
-  font-family: 'Cinzel', serif;
-  font-size: 1.15rem;
-  font-weight: 700;
-  margin: 0 0 6px 0;
-  color: var(--color-text);
-  letter-spacing: 0.02em;
-  line-height: 1.25;
-}
-
 .arcadia-modal-text {
   font-size: 0.88rem;
   color: var(--color-text-secondary);
   line-height: 1.55;
-  margin: 0;
   white-space: pre-line;
+  margin: 0;
 }
 
 .arcadia-modal-actions {
@@ -607,7 +408,7 @@ ol {
   align-items: center;
   justify-content: flex-end;
   gap: 8px;
-  margin-top: 14px;
+  margin-top: 10px;
 }
 
 .arcadia-modal-btn {
@@ -617,16 +418,15 @@ ol {
   gap: 6px;
   min-height: 36px;
   padding: 6px 14px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-md, 8px);
   font-size: 0.82rem;
-  font-weight: var(--weight-medium);
-  cursor: pointer;
+  font-weight: var(--weight-medium, 500);
   border: 1px solid transparent;
   white-space: nowrap;
   transition: transform var(--transition-fast),
-    background-color var(--transition-fast),
-    border-color var(--transition-fast),
-    box-shadow var(--transition-fast);
+              background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              box-shadow var(--transition-fast);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -649,31 +449,31 @@ ol {
 
 .arcadia-modal-btn--primary {
   background-color: var(--color-primary-light);
-  color: #FFFFFF;
-  border-color: transparent;
-  box-shadow: 0 1px 4px var(--color-primary-glow);
-  font-weight: var(--weight-semibold);
+  color: #ffffff;
+  box-shadow: 0 1px 4px var(--color-primary-glow, rgba(139, 124, 246, 0.35));
+  font-weight: var(--weight-semibold, 600);
   padding: 6px 18px;
+  border-color: transparent;
 }
 
 .arcadia-modal-btn--primary:hover {
   filter: brightness(1.08);
-  box-shadow: 0 3px 10px var(--color-primary-glow);
+  box-shadow: 0 3px 10px var(--color-primary-glow, rgba(139, 124, 246, 0.45));
 }
 
 .arcadia-modal-btn--danger {
   background-color: rgba(239, 68, 68, 0.1);
-  color: #EF4444;
+  color: #ef4444;
   border-color: rgba(239, 68, 68, 0.25);
-  box-shadow: none;
 }
 
 .arcadia-modal-btn--danger:hover {
   background-color: rgba(239, 68, 68, 0.18);
   border-color: rgba(239, 68, 68, 0.4);
-  color: #DC2626;
+  color: #dc2626;
 }
 
+/* Formularios y campos en modales - restaurado sin !important */
 .arcadia-modal-form {
   display: flex;
   flex-direction: column;
@@ -695,7 +495,6 @@ ol {
   letter-spacing: 0.05em;
 }
 
-/* Botones de acción en ajustes */
 .btn-setting-action {
   display: inline-flex;
   align-items: center;
@@ -712,9 +511,9 @@ ol {
 }
 
 .btn-setting-action:hover {
-  border-color: var(--color-primary-light) !important;
-  background-color: var(--color-surface-hover) !important;
-  color: var(--color-text) !important;
+  border-color: var(--color-primary-light);
+  background-color: var(--color-surface-hover);
+  color: var(--color-text);
   transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
 }
@@ -723,7 +522,7 @@ ol {
   transform: scale(0.97);
 }
 
-/* Controles de Formulario Universales en Modales */
+/* Controles de formulario universales en modales */
 .modal-card input[type="text"],
 .modal-card input[type="search"],
 .modal-card textarea,
@@ -732,15 +531,14 @@ ol {
 .arcadia-modal-card textarea,
 .theme-modal-dialog input[type="text"],
 .theme-modal-dialog textarea {
-  border-radius: var(--radius-sm) !important;
-  border: 1px solid var(--color-border) !important;
-  background-color: var(--color-surface-secondary) !important;
-  color: var(--color-text) !important;
-  font-family: inherit !important;
-  font-size: var(--text-sm) !important;
-  padding: 10px 14px !important;
-  outline: none !important;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast) !important;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  padding: 10px 14px;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
 }
 
 .modal-card input:hover,
@@ -749,7 +547,7 @@ ol {
 .arcadia-modal-card textarea:hover,
 .theme-modal-dialog input:hover,
 .theme-modal-dialog textarea:hover {
-  border-color: var(--color-text-secondary) !important;
+  border-color: var(--color-text-secondary);
 }
 
 .modal-card input:focus,
@@ -758,21 +556,21 @@ ol {
 .arcadia-modal-card textarea:focus,
 .theme-modal-dialog input:focus,
 .theme-modal-dialog textarea:focus {
-  border-color: var(--color-primary-light) !important;
-  box-shadow: var(--focus-ring) !important;
-  outline: none !important;
+  border-color: var(--color-primary-light);
+  box-shadow: var(--focus-ring);
+  outline: none;
 }
 
-/* Menú Contextual Flotante Universal (Opciones de libro, etc.) */
+/* Menú contextual flotante - recto como select/nav */
 .context-menu-floating {
   position: fixed;
   background-color: var(--color-surface-elevated, var(--color-surface));
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: 10px;
   box-shadow: var(--shadow-dropdown);
-  padding: 6px;
+  padding: 4px;
   z-index: var(--z-floating-menu, 120);
-  min-width: 180px;
+  min-width: 200px;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -781,33 +579,28 @@ ol {
 }
 
 @keyframes contextMenuPop {
-  0% {
-    opacity: 0;
-    transform: scale(0.92) translateY(-4px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
+  from { opacity: 0; transform: scale(0.92) translateY(-4px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .menu-action-btn {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
-  padding: 8px 12px;
-  border-radius: var(--radius-xs);
-  font-size: var(--text-xs);
-  font-weight: var(--weight-medium);
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: var(--weight-medium, 500);
   color: var(--color-text);
   background: transparent;
   border: none;
   cursor: pointer;
   text-align: left;
+  min-height: 36px;
   transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
 }
+.menu-action-btn svg{width:15px;height:15px;flex-shrink:0}
 
 .menu-action-btn:hover {
   background-color: var(--color-surface-hover);
@@ -820,40 +613,16 @@ ol {
 
 .menu-action-btn--primary {
   color: var(--color-primary-light);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-semibold, 600);
 }
 
 .menu-action-btn--danger {
-  color: var(--state-danger, #EF4444);
+  color: var(--state-danger, #ef4444);
 }
 
 .menu-action-btn--danger:hover {
   background-color: var(--state-danger-bg, rgba(239, 68, 68, 0.12));
-  color: var(--state-danger, #EF4444);
-}
-
-/* Tipografía Serena para Títulos de Modales */
-.modal-header .modal-title,
-.arcadia-modal-card h3,
-.theme-modal-title {
-  font-family: 'Cinzel', var(--font-serif, Georgia, serif) !important;
-  letter-spacing: 0.03em !important;
-  color: var(--color-text) !important;
-}
-
-/* Respeto a movimiento reducido */
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+  color: var(--state-danger, #ef4444);
 }
 
 /* Renderizado eficiente de tarjetas */
@@ -862,4 +631,33 @@ ol {
 .annotation-card {
   content-visibility: auto;
   contain-intrinsic-size: auto 220px;
+}
+
+/* Ajustes adaptativos para dispositivos móviles */
+@media (max-width: 768px) {
+  :is(.theme-modal-overlay, .modal-overlay, .arcadia-modal-overlay) {
+    padding: 16px;
+    align-items: flex-end;
+  }
+
+  :is(.theme-modal-dialog, .modal-card, .arcadia-modal-card) {
+    padding: 22px 18px;
+    border-radius: 22px 22px 12px 12px;
+    max-height: min(92vh, calc(100dvh - 24px));
+  }
+}
+
+/* Reducción de animaciones por accesibilidad - spec recomendada sin !important */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
+  }
 }

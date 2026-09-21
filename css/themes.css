@@ -55,12 +55,12 @@
    --star-color-center: #E8ECEF;
    --star-glow: rgba(90, 127, 175, 0.14);
 
-   /* Fondo */
-   --theme-bg-pattern: url(../assets/icons/backgrounds/cerulean.svg);
+    /* Fondo — linearGradient #bg: #F4F7FA → #E8ECEF (52%) → #C4D8E5 */
+    --theme-pg-pattern: linear-gradient(135deg, #F4F7FA 0%, #E8ECEF 52%, #C4D8E5 100%);
 }
 
 /* --------------------------------------------------------------------------
-   2. TEMA: LAVANDA CLARO (lavender-light)
+    2. TEMA: LAVANDA CLARO (lavender-light)
    Fondo perla lavanda luminoso, superficies níveas y acentos amatista serenos.
    -------------------------------------------------------------------------- */
 [data-theme="lavender-light"] {
@@ -111,12 +111,12 @@
    --star-color-center: #EDE9FE;
    --star-glow: rgba(139, 92, 246, 0.14);
 
-   /* Fondo */
-   --theme-bg-pattern: url(../assets/icons/backgrounds/lavender.svg);
+    /* Fondo — linearGradient #bg: #F4F7FA → #E8ECEF (52%) → #C4D8E5 */
+    --theme-pg-pattern: linear-gradient(135deg, #F4F7FA 0%, #E8ECEF 52%, #C4D8E5 100%);
 }
 
 /* --------------------------------------------------------------------------
-   3. TEMA: CIELO CLARO — reemplazado completamente por BEIGE CÁLIDO
+    3. TEMA: CIELO CLARO — reemplazado completamente por BEIGE CÁLIDO
    Beige editorial: Warm Taupe / Sandy / Oatmeal / Vanilla / Linen / Ivory
    -------------------------------------------------------------------------- */
 [data-theme="clear-sky"] {
@@ -167,12 +167,12 @@
    --star-color-center: #FAF7F2;
    --star-glow: rgba(154, 132, 114, 0.16);
 
-   /* Fondo */
-   --theme-bg-pattern: url(../assets/icons/backgrounds/beige.svg);
+    /* Fondo — linearGradient #bg: #F4F7FA → #E8ECEF (52%) → #C4D8E5 */
+    --theme-pg-pattern: linear-gradient(135deg, #F4F7FA 0%, #E8ECEF 52%, #C4D8E5 100%);
 }
 
 /* --------------------------------------------------------------------------
-   4. TEMA: BOSQUE DE LA MAÑANA (enchanted-forest)
+    4. TEMA: BOSQUE DE LA MAÑANA (enchanted-forest)
    Tonos salvia botánicos, frescura serena y acentos bosque noble.
    -------------------------------------------------------------------------- */
 [data-theme="enchanted-forest"] {
@@ -223,12 +223,12 @@
    --star-color-center: #D1FAE5;
    --star-glow: rgba(52, 211, 153, 0.15);
 
-   /* Fondo */
-   --theme-bg-pattern: url(../assets/icons/backgrounds/forest.svg);
+    /* Fondo — linearGradient #bg: #F4F7FA → #E8ECEF (52%) → #C4D8E5 */
+    --theme-pg-pattern: linear-gradient(135deg, #F4F7FA 0%, #E8ECEF 52%, #C4D8E5 100%);
 }
 
 /* --------------------------------------------------------------------------
-   5. TEMA: NIEBLA SERENA (serene-fog)
+    5. TEMA: NIEBLA SERENA (serene-fog)
    Acuarela delicada en niebla rosada, malva tenue y cálida elegancia.
    -------------------------------------------------------------------------- */
 [data-theme="serene-fog"] {
@@ -279,8 +279,8 @@
    --star-color-center: #FCE7F3;
    --star-glow: rgba(244, 114, 182, 0.15);
 
-   /* Fondo */
-   --theme-bg-pattern: url(../assets/icons/backgrounds/serene.svg);
+    /* Fondo — linearGradient #bg: #F4F7FA → #E8ECEF (52%) → #C4D8E5 */
+    --theme-pg-pattern: linear-gradient(135deg, #F4F7FA 0%, #E8ECEF 52%, #C4D8E5 100%);
 }
 
 /* --------------------------------------------------------------------------
@@ -402,3 +402,46 @@
    /* Topo Cálido */
    background-color: #9A8472;
 }
+
+/* --------------------------------------------------------------------------
+   6. TEMA ABISMO NOCTURNO (abyss-dark) - Paleta Kettle Black
+   -------------------------------------------------------------------------- */
+[data-theme="abyss-dark"] {
+   --color-background: #141214;
+   --color-surface: #302F33;
+   --color-surface-secondary: #464C55;
+   --color-surface-elevated: #302F33;
+   --color-surface-hover: rgba(194,199,207,0.08);
+   --color-surface-active: rgba(194,199,207,0.14);
+   --color-primary-dark: #636D79;
+   --color-primary: #7F8995;
+   --color-primary-light: #9EA7B3;
+   --color-primary-glow: rgba(127,137,149,0.22);
+   --color-secondary: #C2C7CF;
+   --color-secondary-glow: rgba(194,199,207,0.14);
+   --color-text: #C2C7CF;
+   --color-text-secondary: #9EA7B3;
+   --color-text-muted: #7F8995;
+   --color-text-inverse: #141214;
+   --color-border: #464C55;
+   --color-border-subtle: rgba(70,76,85,0.55);
+   --color-border-focus: #9EA7B3;
+   --color-badge-bg: rgba(127,137,149,0.16);
+   --color-badge-text: #C2C7CF;
+   --color-accent-gold: #9EA7B3;
+   --banner-gradient: linear-gradient(135deg, #141214 0%, #302F33 52%, #464C55 100%);
+   --banner-border: rgba(127,137,149,0.18);
+   --reader-bg: #141214;
+   --reader-text: #C2C7CF;
+   --brand-wordmark-color: #C2C7CF;
+   --star-color-light: #9EA7B3;
+   --star-color-dark: #636D79;
+   --star-color-center: #C2C7CF;
+   --star-glow: rgba(127,137,149,0.16);
+   --theme-bg-pattern: none;
+   color-scheme: dark;
+}
+.swatch-ad-1 { background-color: #141214; border: 1px solid #636D79; }
+.swatch-ad-2 { background-color: #302F33; border: 1px solid #636D79; }
+.swatch-ad-3 { background-color: #464C55; }
+.swatch-ad-4 { background-color: #9EA7B3; }

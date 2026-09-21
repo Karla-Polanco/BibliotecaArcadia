@@ -722,8 +722,18 @@ export class ReaderView {
     });
 
     // 6. Actualizar variables CSS del contenedor principal del lector para que coincida con el tema seleccionado
-    const effectiveTheme = settings.theme && settings.theme !== 'inherit' ? settings.theme : (document.documentElement.getAttribute('data-theme') || 'mystic-night');
-    const themeColors = ReaderSettings._getThemeColors(effectiveTheme);
+    let themeColors;
+    if (!settings.theme || settings.theme === 'inherit') {
+      const cs = getComputedStyle(document.documentElement);
+      themeColors = {
+        bg: cs.getPropertyValue('--reader-bg').trim() || cs.getPropertyValue('--color-background').trim(),
+        text: cs.getPropertyValue('--reader-text').trim() || cs.getPropertyValue('--color-text').trim(),
+        heading: cs.getPropertyValue('--reader-text').trim(),
+        accent: cs.getPropertyValue('--color-primary-light').trim()
+      };
+    } else {
+      themeColors = ReaderSettings._getThemeColors(settings.theme);
+    }
     if (this.container) {
       this.container.style.setProperty('--reader-bg', themeColors.bg);
       this.container.style.setProperty('--reader-text', themeColors.text);

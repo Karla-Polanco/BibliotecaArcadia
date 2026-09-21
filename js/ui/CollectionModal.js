@@ -173,31 +173,36 @@ export class CollectionModal {
           </button>
         </div>
 
-        <div class="assign-collections-list" style="display: flex; flex-direction: column; gap: 8px; max-height: 300px; overflow-y: auto; margin-bottom: 20px;">
+        <div class="assign-collections-list" style="display: flex; flex-direction: column; gap: 8px; max-height: 340px; overflow-y: auto; margin-bottom: 20px; padding-right: 2px;">
           ${collections.length === 0 ? `
             <div style="padding: 24px 16px; text-align: center; color: var(--color-text-muted); font-size: var(--text-xs);">
               No hay colecciones creadas. Crea una colección en el menú lateral.
             </div>
-          ` : collections.map(col => `
-            <label style="
+          ` : (await (async ()=>{
+            const counts = await CollectionManager.getCollectionCounts();
+            return collections.map(col => {
+              const isLinked = linkedIds.has(col.id);
+              const count = counts[col.id]||0;
+              return `
+            <label class="assign-item ${isLinked?'selected':''}" style="
               display: flex;
               align-items: center;
-              gap: 12px;
-              padding: 10px 14px;
-              border-radius: var(--radius-md);
-              background-color: var(--color-surface-secondary);
-              border: 1px solid var(--color-border);
+              gap: 10px;
+              padding: 12px 16px;
+              border-radius: 12px;
+              background-color: ${isLinked?'color-mix(in srgb, var(--color-primary) 10%, var(--color-surface))':'var(--color-surface)'};
+              border: 1px solid ${isLinked?'var(--color-primary)':'var(--color-border)'};
               cursor: pointer;
-              transition: background-color var(--transition-fast), border-color var(--transition-fast);
+              transition: all var(--transition-fast);
             ">
-              <input type="checkbox" data-col-id="${col.id}" ${linkedIds.has(col.id) ? 'checked' : ''} style="accent-color: var(--color-primary-light); width: 16px; height: 16px; cursor: pointer;">
-              <span style="width: 12px; height: 12px; border-radius: 50%; background-color: ${col.color || '#5B4CC4'}; box-shadow: 0 0 0 1px rgba(255,255,255,0.2); flex-shrink: 0;"></span>
-              <div style="flex: 1; display: flex; flex-direction: column; min-width: 0;">
-                <span style="font-size: var(--text-xs); font-weight: 600; color: var(--color-text);">${this.escapeHtml(col.name)}</span>
-                ${col.description ? `<span style="font-size: 0.7rem; color: var(--color-text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${this.escapeHtml(col.description)}</span>` : ''}
-              </div>
+              <span class="assign-check" style="width:18px;height:18px;border-radius:6px;border:1.5px solid ${isLinked?'var(--color-primary)':'var(--color-border)'};background:${isLinked?'var(--color-primary)':'transparent'};display:grid;place-items:center;flex-shrink:0;color:#FFF;font-size:11px;font-weight:700;line-height:1;">${isLinked?'✓':''}</span>
+              <input type="checkbox" data-col-id="${col.id}" ${isLinked ? 'checked' : ''} hidden>
+              <span style="width:8px; height:8px; border-radius:50%; background-color:${col.color||'#5B4CC4'}; flex-shrink:0;"></span>
+              <span style="flex:1; font-size:0.82rem; font-weight:700; color:var(--color-text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-transform:uppercase; letter-spacing:0.03em;">${this.escapeHtml(col.name)}</span>
+              <span style="font-size:0.74rem; color:var(--color-text-muted); flex-shrink:0;">${count} libros</span>
             </label>
-          `).join('')}
+          `;}).join('');
+          })())}
         </div>
 
         <div class="arcadia-modal-actions">
@@ -216,19 +221,29 @@ export class CollectionModal {
       if (e.target === overlay) closeModal();
     });
 
-    // Checkbox toggling
+    // Checkbox toggling - actualizar estilo pill
     overlay.querySelectorAll('input[type="checkbox"]').forEach(chk => {
+      const label = chk.closest('.assign-item');
+      const checkEl = label?.querySelector('.assign-check');
       chk.addEventListener('change', async () => {
         const colId = chk.dataset.colId;
         if (chk.checked) {
           await CollectionManager.addBookToCollection(book.id, colId);
           Toast.success('Libro añadido a la colección.');
+          if(label){label.classList.add('selected');label.style.background='color-mix(in srgb, var(--color-primary) 10%, var(--color-surface))';label.style.borderColor='var(--color-primary)';if(checkEl){checkEl.style.background='var(--color-primary)';checkEl.style.borderColor='var(--color-primary)';checkEl.textContent='✓';}}
         } else {
           await CollectionManager.removeBookFromCollection(book.id, colId);
           Toast.info('Libro retirado de la colección.');
+          if(label){label.classList.remove('selected');label.style.background='var(--color-surface)';label.style.borderColor='var(--color-border)';if(checkEl){checkEl.style.background='transparent';checkEl.style.borderColor='var(--color-border)';checkEl.textContent='';}}
         }
         if (onChanged) onChanged();
       });
+      // click en label ya toggles checkbox nativo, pero asegurar
+      if(label){
+        label.addEventListener('click', (e)=>{
+          if(e.target!==chk){ e.preventDefault(); chk.checked=!chk.checked; chk.dispatchEvent(new Event('change',{bubbles:true}));}
+        });
+      }
     });
   }
 
