@@ -113,12 +113,14 @@ class App {
     const splash = document.getElementById('app-splash');
     if (splash) {
       splash.style.opacity = '0';
-      splash.style.visibility = 'hidden';
       setTimeout(() => {
-        if (splash && splash.parentNode) {
-          splash.parentNode.removeChild(splash);
+        if (splash) {
+          splash.style.visibility = 'hidden';
+          if (splash.parentNode) {
+            splash.parentNode.removeChild(splash);
+          }
         }
-      }, 350);
+      }, 360);
     }
   }
 

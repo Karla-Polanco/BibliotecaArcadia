@@ -488,7 +488,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0 0 1px 0;
-  min-height: 2.6em;
 }
 
 .book-author {
@@ -1469,20 +1468,35 @@ body.drag-over-active::after {
 /* Panel Superior Compartido (Header): VOCABULARIO, NOTAS Y COLECCIONES */
 /* Panel Superior Compartido (Header): VOCABULARIO, NOTAS Y COLECCIONES */
 .annotations-header-panel,
-.vocab-header-panel,
-.collection-header-panel {
+.vocab-header-panel {
   width: 100%;
   margin-bottom: 16px;
   padding: 16px 20px;
   border-radius: var(--radius-lg);
-  background-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 6%, var(--color-surface));
+  background-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 12%, var(--color-surface));
   background-image: none !important;
-  border: 1px solid color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 18%, var(--color-border));
+  border: 1px solid color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 25%, var(--color-border));
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   gap: 12px;
   box-sizing: border-box;
+}
+
+.collection-header-panel {
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 18px 22px;
+  border-radius: var(--radius-lg);
+  background-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 22%, var(--color-surface));
+  background-image: none !important;
+  border: 1.5px solid color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 42%, var(--color-border));
+  box-shadow: 0 4px 18px color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 18%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-sizing: border-box;
+  transition: all var(--transition-normal);
 }
 
 .header-card-top {
@@ -1500,6 +1514,34 @@ body.drag-over-active::after {
   gap: 14px;
   flex: 1;
   min-width: 240px;
+}
+
+.collection-header-panel .header-card-icon-box {
+  background-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 28%, var(--color-surface));
+  border: 1.5px solid color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 55%, transparent);
+  color: var(--col-accent, var(--color-primary-light));
+  box-shadow: 0 3px 12px color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 25%, transparent);
+}
+
+.collection-header-panel .panel-search-bar {
+  background-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 14%, var(--color-surface));
+  border: 1px solid color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 38%, var(--color-border));
+}
+
+.collection-header-panel .panel-search-bar:focus-within {
+  border-color: var(--col-accent, var(--color-primary-light));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 30%, transparent);
+}
+
+.collection-header-panel .collection-count-pill,
+.collection-header-panel .btn-col-header-action {
+  background-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 15%, var(--color-surface));
+  border-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 35%, var(--color-border));
+}
+
+.collection-header-panel .btn-col-header-action:hover {
+  background-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 25%, var(--color-surface));
+  border-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 50%, var(--color-border));
 }
 
 .header-card-icon-box {
