@@ -3,7 +3,7 @@
    PWA + OFFLINE CACHE + AUTO UPDATE
    ====================================== */
 
-const CACHE_NAME = 'arcadia-pwa-v125';
+const CACHE_NAME = 'arcadia-pwa-v126';
 
 /*
  * =============================================
@@ -21,9 +21,11 @@ const APP_SHELL_ASSETS = [
     './index.html',
     './manifest.json',
 
-    // Iconos y Favicons (set mínimo libro dorado)
+    // Iconos y Favicons (set completo con iconos estándar y maskables optimizados)
     './assets/icons/icon-192.png',
     './assets/icons/icon-512.png',
+    './assets/icons/icon-192-maskable.png',
+    './assets/icons/icon-512-maskable.png',
     './assets/icons/apple-touch-icon.png',
     './assets/icons/favicon.svg',
     './assets/icons/favicon.ico',
