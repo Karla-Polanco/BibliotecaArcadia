@@ -110,18 +110,10 @@ export class ThemeManager {
     const color = themeColors[themeName] || '#EEF4F8';
     try {
       let meta = document.querySelector('meta[name="theme-color"]');
-      if (!meta) {
-        meta = document.createElement('meta');
-        meta.setAttribute('name', 'theme-color');
-        document.head.appendChild(meta);
-      }
-      meta.setAttribute('content', color);
-
+      if (meta) meta.setAttribute('content', color);
       // Para PWA en iOS / standalone
       let meta2 = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-      if (meta2) {
-        meta2.setAttribute('content', themeName === 'abyss-dark' ? 'black-translucent' : 'default');
-      }
+      if (meta2) meta2.setAttribute('content', themeName === 'abyss-dark' ? 'black-translucent' : 'default');
     } catch (_) {}
   }
 

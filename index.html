@@ -21,6 +21,8 @@
         var tc = themeColors[savedTheme] || '#EEF4F8';
         var meta = document.querySelector('meta[name="theme-color"]');
         if (meta) meta.setAttribute('content', tc);
+        var meta2 = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+        if (meta2) meta2.setAttribute('content', savedTheme === 'abyss-dark' ? 'black-translucent' : 'default');
         var savedScale = localStorage.getItem('arcadia_ui_scale');
         if (savedScale && !isNaN(parseInt(savedScale))) {
           var scale = Math.max(80, Math.min(130, parseInt(savedScale)));
@@ -40,7 +42,7 @@
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Arcadia">
 
   <!-- Fuentes Tipográficas Literarias y de Marca (Poppins, Literata, Source Serif 4, Lora, EB Garamond, Playfair, Atkinson Hyperlegible, Inter, Roboto, Lexend, Cinzel) -->
