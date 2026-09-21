@@ -709,11 +709,17 @@ export class ReaderView {
       btn.classList.toggle('active', btn.dataset.align === (settings.textAlign || 'left'));
     });
 
-    // 5. Tema del lector (soporta alias legacy 'wine' → 'serene-fog')
+    // 5. Tema del lector (soporta alias legacy 'wine'/'mystic-night')
     document.querySelectorAll('#reader-theme-options [data-reader-theme]').forEach(chip => {
       const themeVal = (settings.theme || 'inherit');
-      const normalizedChip = chip.dataset.readerTheme === 'wine' ? 'serene-fog' : chip.dataset.readerTheme;
-      const normalizedTheme = themeVal === 'wine' ? 'serene-fog' : themeVal;
+      const normalize = v => {
+        if (v === 'wine') return 'serene-fog';
+        if (v === 'mystic-night' || v === 'mint') return 'enchanted-forest';
+        if (v === 'paper' || v === 'neutral' || v === 'oled') return v;
+        return v;
+      };
+      const normalizedChip = normalize(chip.dataset.readerTheme);
+      const normalizedTheme = normalize(themeVal);
       const isActive = normalizedChip === normalizedTheme;
       chip.classList.toggle('active', isActive);
       if (chip.getAttribute('role') === 'radio') {

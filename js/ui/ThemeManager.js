@@ -2,15 +2,15 @@
  * ============================================================================
  * THEME MANAGER - CONTROLADOR DE TEMAS CSS
  * ============================================================================
- * Soporta Nocturno Místico, Lavanda Claro, Crepúsculo Profundo y Tema del Sistema.
+ * Soporta Cerúleo Claro, Lavanda Claro, Beige Cálido, Bosque de la Mañana,
+ * Niebla Serena y Abismo Nocturno.
  */
 
 export class ThemeManager {
   static THEMES = {
-    MYSTIC_NIGHT: 'mystic-night',
+    CERULEAN_LIGHT: 'cerulean-light',
     LAVENDER_LIGHT: 'lavender-light',
     WINE_POETRY: 'serene-fog',
-    DEEP_TWILIGHT: 'deep-twilight',
     ENCHANTED_FOREST: 'enchanted-forest',
     CLEAR_SKY: 'clear-sky',
     ABYSS_DARK: 'abyss-dark'
@@ -19,7 +19,7 @@ export class ThemeManager {
   static STORAGE_KEY = 'arcadia_theme';
 
   constructor() {
-    this.currentTheme = localStorage.getItem(ThemeManager.STORAGE_KEY) || ThemeManager.THEMES.MYSTIC_NIGHT;
+    this.currentTheme = localStorage.getItem(ThemeManager.STORAGE_KEY) || ThemeManager.THEMES.CERULEAN_LIGHT;
     this.mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     this._handleSystemThemeChange = this._handleSystemThemeChange.bind(this);
   }
@@ -38,21 +38,25 @@ export class ThemeManager {
 
   /**
    * Aplica un tema al documento raíz.
-   * Normaliza aliases legacy y el tema 'deep-twilight' no existente en CSS.
+   * Normaliza aliases legacy (mystic-night → cerulean-light, deep-twilight, system, wine-poetry).
    * @param {string} themeName - Nombre del tema
    */
   applyTheme(themeName) {
     if (!themeName || typeof themeName !== 'string') {
-      themeName = ThemeManager.THEMES.MYSTIC_NIGHT;
+      themeName = ThemeManager.THEMES.CERULEAN_LIGHT;
     }
     themeName = themeName.trim();
 
-    // Normalizar temas legacy: 'system' y 'deep-twilight' ya no existen
-    if (themeName === 'system' || themeName === ThemeManager.THEMES.DEEP_TWILIGHT) {
-      themeName = ThemeManager.THEMES.MYSTIC_NIGHT;
+    // Normalizar temas legacy
+    if (themeName === 'system' || themeName === 'deep-twilight' || themeName === 'mystic-night' || themeName === 'wine-poetry') {
+      if (themeName === 'wine-poetry') themeName = ThemeManager.THEMES.WINE_POETRY;
+      else themeName = ThemeManager.THEMES.CERULEAN_LIGHT;
     }
+    // Alias adicional: mystic-night ya mapeado arriba, pero por si viene con espacios/casing
+    if (themeName === 'mystic-night') themeName = ThemeManager.THEMES.CERULEAN_LIGHT;
+
     const knownThemes = new Set([
-      ThemeManager.THEMES.MYSTIC_NIGHT,
+      ThemeManager.THEMES.CERULEAN_LIGHT,
       ThemeManager.THEMES.LAVENDER_LIGHT,
       ThemeManager.THEMES.WINE_POETRY,
       ThemeManager.THEMES.ENCHANTED_FOREST,
@@ -60,8 +64,8 @@ export class ThemeManager {
       ThemeManager.THEMES.ABYSS_DARK
     ]);
     if (!knownThemes.has(themeName)) {
-      console.warn(`[ThemeManager] Tema desconocido "${themeName}", usando mystic-night`);
-      themeName = ThemeManager.THEMES.MYSTIC_NIGHT;
+      console.warn(`[ThemeManager] Tema desconocido "${themeName}", usando cerulean-light`);
+      themeName = ThemeManager.THEMES.CERULEAN_LIGHT;
     }
 
     this.currentTheme = themeName;
@@ -90,19 +94,19 @@ export class ThemeManager {
   _handleSystemThemeChange(e) {}
 
   /**
-   * Sincroniza el color de la barra del navegador / splash con el tema claro.
+   * Sincroniza el color de la barra del navegador / splash con el tema.
    * @param {string} themeName
    */
   _updateThemeColor(themeName) {
     const themeColors = {
-      'mystic-night': '#E8ECEF',
-      'lavender-light': '#FBF9FF',
-      'clear-sky': '#FAF7F2',
-      'enchanted-forest': '#F5F9F6',
-      'serene-fog': '#FBF8F9',
-      'abyss-dark': '#141214'
+      'cerulean-light': '#EEF4F8',
+      'lavender-light': '#F8F6FC',
+      'clear-sky': '#F8F4EC',
+      'enchanted-forest': '#F2F7F3',
+      'serene-fog': '#FBF7F8',
+      'abyss-dark': '#0F1216'
     };
-    const color = themeColors[themeName] || '#E8ECEF';
+    const color = themeColors[themeName] || '#EEF4F8';
     try {
       let meta = document.querySelector('meta[name="theme-color"]');
       if (meta) meta.setAttribute('content', color);
@@ -118,17 +122,18 @@ export class ThemeManager {
    */
   _updateFavicon(themeName) {
     const themePalettes = {
-      'mystic-night': { bg: '#E8ECEF', bg2: '#C4D8E5', star1: '#A7C7E7', star2: '#8EB1D1', star3: '#5A7FAF' },
-      'deep-twilight': { bg: '#E8ECEF', bg2: '#C4D8E5', star1: '#A7C7E7', star2: '#8EB1D1', star3: '#5A7FAF' },
-      'clear-sky': { bg: '#FAF7F2', bg2: '#EFE3CE', star1: '#EFE3CE', star2: '#C8B39A', star3: '#9A8472' },
-      'enchanted-forest': { bg: '#F5F9F6', bg2: '#D5E8DB', star1: '#6EE7B7', star2: '#4E8565', star3: '#2C6343' },
-      'lavender-light': { bg: '#FBF9FF', bg2: '#E2DAF3', star1: '#C4B5FD', star2: '#7D6FB5', star3: '#5E4FA2' },
-      'serene-fog': { bg: '#FBF8F9', bg2: '#F2E6EB', star1: '#F9A8D4', star2: '#955B73', star3: '#754157' },
-      'paper': { bg: '#FAF7F2', bg2: '#E0D1B8', star1: '#FFFFFF', star2: '#C8B39A', star3: '#9A8472' },
-      'neutral': { bg: '#EDF3EE', bg2: '#D5E8DB', star1: '#FFFFFF', star2: '#A0A0A0', star3: '#555555' }
+      'cerulean-light': { bg: '#EEF4F8', bg2: '#D5E5EE', star1: '#A8D0E3', star2: '#39789F', star3: '#183B55' },
+      'mystic-night': { bg: '#EEF4F8', bg2: '#D5E5EE', star1: '#A8D0E3', star2: '#39789F', star3: '#183B55' },
+      'clear-sky': { bg: '#F8F4EC', bg2: '#E9DBC8', star1: '#E5D1B4', star2: '#C8A987', star3: '#71523C' },
+      'enchanted-forest': { bg: '#F2F7F3', bg2: '#D7E7DB', star1: '#A9D5B6', star2: '#73A685', star3: '#234E35' },
+      'lavender-light': { bg: '#F8F6FC', bg2: '#E7E0F2', star1: '#D0C4EA', star2: '#A392C8', star3: '#514276' },
+      'serene-fog': { bg: '#FBF7F8', bg2: '#EBDCE3', star1: '#E7B4CA', star2: '#B88BA0', star3: '#633546' },
+      'abyss-dark': { bg: '#0F1216', bg2: '#2C3741', star1: '#B8CAD6', star2: '#A7BBC9', star3: '#536A7D' },
+      'paper': { bg: '#F8F4EC', bg2: '#E9DBC8', star1: '#FFFFFF', star2: '#C8A987', star3: '#71523C' },
+      'neutral': { bg: '#F2F7F3', bg2: '#D7E7DB', star1: '#FFFFFF', star2: '#A0A0A0', star3: '#555555' }
     };
 
-    const p = themePalettes[themeName] || themePalettes['mystic-night'];
+    const p = themePalettes[themeName] || themePalettes['cerulean-light'];
     // Trío de estrellas (grande al centro, dos pequeñas a los lados y abajo),
     // igual que el icono de la app. Tamaño explícito: algunos navegadores
     // no muestran favicons con width/height en porcentaje.

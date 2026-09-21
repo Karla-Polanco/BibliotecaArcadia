@@ -58,7 +58,7 @@ export class BackupManager {
           collections: collections,
           bookCollections: bookCollections,
           words: words,
-          appTheme: localStorage.getItem('arcadia_theme') || 'mystic-night',
+          appTheme: localStorage.getItem('arcadia_theme') || 'cerulean-light',
           readerPrefs: localStorage.getItem('arcadia_reader_prefs') || null
         }
       };
@@ -147,8 +147,11 @@ export class BackupManager {
       }
 
       if (backup.data.appTheme) {
-        localStorage.setItem('arcadia_theme', backup.data.appTheme);
-        document.documentElement.setAttribute('data-theme', backup.data.appTheme);
+        let t = backup.data.appTheme;
+        if (t === 'mystic-night' || t === 'deep-twilight') t = 'cerulean-light';
+        if (t === 'wine-poetry') t = 'serene-fog';
+        localStorage.setItem('arcadia_theme', t);
+        document.documentElement.setAttribute('data-theme', t);
       }
 
       Toast.success('¡Copia de seguridad restaurada con éxito!');

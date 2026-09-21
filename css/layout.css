@@ -305,18 +305,19 @@
 }
 
 .collection-count-badge {
-  min-width: 22px;
-  height: 22px;
-  padding: 0 5px;
-  display: inline-grid;
-  place-items: center;
-  border-radius: 50%;
-  background-color: var(--color-surface);
-  color: var(--color-text-muted);
-  font-size: 0.62rem;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 14%, var(--color-surface-secondary));
+  color: var(--col-accent, var(--color-primary-light));
+  font-size: 0.68rem;
   font-weight: 700;
   line-height: 1;
-  border: 1.5px solid var(--color-border);
+  border: 1px solid color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 25%, transparent);
   text-align: center;
   transition: all var(--transition-fast);
 }
@@ -325,6 +326,7 @@
   background-color: var(--col-accent, var(--color-primary-light));
   color: #FFFFFF;
   border-color: transparent;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 .btn-col-options {
@@ -456,43 +458,51 @@
   opacity: 1;
 }
 
-/* Badges circulares como imagen 4 - acorde al tema, excepto PWA */
+/* Badges circulares y píldoras como imagen del menú - acorde al tema, excepto PWA */
 .nav-badge {
-  min-width: 26px;
-  height: 26px;
-  padding: 0 5px;
-  display: inline-grid;
-  place-items: center;
-  border-radius: 50%;
-  background-color: var(--color-surface);
-  color: var(--color-text-muted);
-  font-size: 0.68rem;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background-color: color-mix(in srgb, var(--color-primary-light) 12%, var(--color-surface-secondary));
+  color: var(--color-primary-light);
+  font-size: 0.72rem;
   font-weight: 700;
   line-height: 1;
-  border: 1.5px solid var(--color-border);
+  border: 1px solid color-mix(in srgb, var(--color-primary-light) 25%, transparent);
   font-variant-numeric: tabular-nums;
   transition: all var(--transition-fast);
 }
-.nav-badge:empty{display:none}
+
+.nav-badge:empty {
+  display: none;
+}
 
 #badge-library-total {
   background-color: var(--color-primary);
-  color: var(--color-text-inverse, #FFFFFF);
+  color: #FFFFFF;
   border-color: transparent;
+  box-shadow: 0 2px 6px var(--color-primary-glow);
 }
 
 .nav-item.active .nav-badge {
-  background-color: var(--color-surface);
-  color: var(--color-primary);
-  border-color: var(--color-primary);
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  border-color: transparent;
+  box-shadow: 0 2px 6px var(--color-primary-glow);
 }
+
 .nav-item.active #badge-library-total {
   background-color: var(--color-primary);
-  color: var(--color-text-inverse, #FFFFFF);
+  color: #FFFFFF;
   border-color: transparent;
 }
+
 /* PWA badge mantiene diseño pill original */
-#btn-pwa-install .nav-badge{
+#btn-pwa-install .nav-badge {
   width: auto;
   height: auto;
   min-width: 22px;
@@ -503,6 +513,8 @@
   justify-content: center;
   border: none;
   background-color: var(--color-primary-light);
+  color: #FFFFFF;
+}
   color: #FFF;
   font-size: 0.65rem;
 }

@@ -84,7 +84,7 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
     });
 
     // 5. Inyectar estilos y temas en el iframe (inicial y en cada nuevo capítulo cargado)
-    const activeGlobalTheme = document.documentElement.getAttribute('data-theme') || 'mystic-night';
+    const activeGlobalTheme = document.documentElement.getAttribute('data-theme') || 'cerulean-light';
     if (this.rendition.hooks && this.rendition.hooks.content) {
       this.rendition.hooks.content.register((contents) => {
         ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
@@ -384,7 +384,7 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
 
     this.currentSettings = await ReaderSettings.save(this.currentBookId, partialSettings);
     if (this.rendition) {
-      const activeGlobalTheme = document.documentElement.getAttribute('data-theme') || 'mystic-night';
+      const activeGlobalTheme = document.documentElement.getAttribute('data-theme') || 'cerulean-light';
       ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
     }
 

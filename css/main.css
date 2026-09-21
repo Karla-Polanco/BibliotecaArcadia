@@ -32,11 +32,11 @@ html {
 }
 
 /* Esquemas de color para temas claros */
+[data-theme="cerulean-light"],
 [data-theme="lavender-light"],
 [data-theme="clear-sky"],
 [data-theme="enchanted-forest"],
-[data-theme="serene-fog"],
-[data-theme="mystic-night"] {
+[data-theme="serene-fog"] {
   color-scheme: light;
 }
 [data-theme="abyss-dark"] {
@@ -52,9 +52,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 
-  /* Fondo - --modal-backdrop no existe en themes.css, se usa fallback rgba(0,0,0,0.65) en overlays */
+  /* Fondo - soporta --theme-pg-pattern (nuevo) y --theme-bg-pattern (legado) */
   background-color: var(--color-background);
-  background-image: var(--theme-bg-pattern, none);
+  background-image: var(--theme-pg-pattern, var(--theme-bg-pattern, none));
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
@@ -561,21 +561,33 @@ select option {
   outline: none;
 }
 
-/* Menú contextual flotante - recto como select/nav */
+/* Menú contextual flotante - exacto imagen */
 .context-menu-floating {
   position: fixed;
   background-color: var(--color-surface-elevated, var(--color-surface));
   border: 1px solid var(--color-border);
-  border-radius: 10px;
-  box-shadow: var(--shadow-dropdown);
-  padding: 4px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08);
+  padding: 6px;
   z-index: var(--z-floating-menu, 120);
-  min-width: 200px;
+  min-width: 220px;
   display: flex;
   flex-direction: column;
   gap: 2px;
   animation: contextMenuPop 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-  transform-origin: top left;
+  transform-origin: top right;
+}
+.context-menu-floating::before{
+  content:'';
+  position:absolute;
+  top:-6px;
+  right:18px;
+  width:12px;
+  height:12px;
+  background:var(--color-surface-elevated, var(--color-surface));
+  border-left:1px solid var(--color-border);
+  border-top:1px solid var(--color-border);
+  transform:rotate(45deg);
 }
 
 @keyframes contextMenuPop {

@@ -16,7 +16,7 @@ export class ReaderSettings {
     textAlign: 'left',    // 'left', 'justify', 'center', 'right'
     columns: 1,           // 1 o 2 columnas
     flowMode: 'scrolled-doc', // Desplazamiento continuo (scroll)
-    theme: 'inherit'      // 'inherit', 'mystic-night', 'lavender-light', 'paper', 'neutral', 'enchanted-forest', 'clear-sky', 'wine'
+    theme: 'inherit'      // 'inherit', 'cerulean-light', 'lavender-light', 'paper', 'neutral', 'enchanted-forest', 'clear-sky', 'serene-fog', 'abyss-dark'
   };
 
   /**
@@ -66,7 +66,7 @@ export class ReaderSettings {
    * @param {Object} settings - Configuración a aplicar
    * @param {string} effectiveTheme - Tema visual activo
    */
-  static apply(rendition, settings, effectiveTheme = 'mystic-night') {
+  static apply(rendition, settings, effectiveTheme = 'cerulean-light') {
     if (!rendition) return;
 
     // 1. Determinar tema de color (heredado lee variables CSS reales)
@@ -428,14 +428,15 @@ export class ReaderSettings {
    * Obtiene la paleta de colores para el lector.
    */
   static _getThemeColors(themeName) {
-    // Alias legacy: 'wine' → 'serene-fog'
+    // Alias legacy: 'wine', 'mystic-night' → nuevos nombres
     if (themeName === 'wine') themeName = 'serene-fog';
+    if (themeName === 'mystic-night') themeName = 'cerulean-light';
     if (themeName === 'lavender-light') {
       return {
-        bg: '#F9F8F6',
-        text: '#23222B',
-        heading: '#1B1A27',
-        accent: '#6A58A3'
+        bg: '#FAF8FC',
+        text: '#302A3B',
+        heading: '#29233A',
+        accent: '#7663A6'
       };
     }
     if (themeName === 'oled') {
@@ -472,42 +473,50 @@ export class ReaderSettings {
     }
     if (themeName === 'enchanted-forest') {
       return {
-        bg: '#EDF3EE',
-        text: '#203328',
-        heading: '#15261C',
-        accent: '#457356'
+        bg: '#F0F5F1',
+        text: '#24372B',
+        heading: '#193024',
+        accent: '#3F7957'
       };
     }
     if (themeName === 'clear-sky') {
       return {
-        bg: '#FAF7F2',
-        text: '#4A342A',
-        heading: '#3A2A1E',
-        accent: '#9A8472'
+        bg: '#FAF5EC',
+        text: '#433229',
+        heading: '#3D2C22',
+        accent: '#A47F5D'
       };
     }
     if (themeName === 'wine' || themeName === 'serene-fog') {
       return {
-        bg: '#F8F3F5',
-        text: '#2D1A23',
-        heading: '#25151C',
-        accent: '#955B73'
+        bg: '#FBF6F7',
+        text: '#39272E',
+        heading: '#35232B',
+        accent: '#915C72'
+      };
+    }
+    if (themeName === 'cerulean-light') {
+      return {
+        bg: '#F1F5F7',
+        text: '#203746',
+        heading: '#193246',
+        accent: '#39789F'
       };
     }
     if (themeName === 'abyss-dark') {
       return {
-        bg: '#141214',
-        text: '#C2C7CF',
-        heading: '#E8EAF0',
-        accent: '#9EA7B3'
+        bg: '#11151A',
+        text: '#D6DEE4',
+        heading: '#D7E0E6',
+        accent: '#A7BBC9'
       };
     }
-    // mystic-night por defecto — noche profunda (lectura oscura)
+    // cerulean-light por defecto
     return {
-      bg: '#1C2B48',
-      text: '#E8ECEF',
-      heading: '#FFFFFF',
-      accent: '#8EB1D1'
+      bg: '#F1F5F7',
+      text: '#203746',
+      heading: '#193246',
+      accent: '#39789F'
     };
   }
 }

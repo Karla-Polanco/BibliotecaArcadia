@@ -808,11 +808,13 @@ html.reader-open {
 
 /* Fondos como Tipografía: cada chip lleva el color de su tema */
 .reader-theme-chip[data-reader-theme="paper"] { background-color: #F4EFE6; color: #4A342A; border-color: #E0D1B8; }
-.reader-theme-chip[data-reader-theme="lavender-light"] { background-color: #F9F8F6; color: #3A2A1E; border-color: #E6E2DD; }
+.reader-theme-chip[data-reader-theme="lavender-light"] { background-color: #F8F6FC; color: #29233A; border-color: #DED7EC; }
 .reader-theme-chip[data-reader-theme="neutral"] { background-color: #1D2128; color: #E8ECEF; border-color: #2E3440; }
 .reader-theme-chip[data-reader-theme="oled"] { background-color: #07090D; color: #E8ECEF; border-color: #1C1F26; }
 .reader-theme-chip[data-reader-theme="mint"] { background-color: #EDF3EE; color: #1A2E1E; border-color: #CBDDCF; }
-.reader-theme-chip[data-reader-theme="mystic-night"] { background-color: #1C2B48; color: #E8ECEF; border-color: #2E4A6A; }
+.reader-theme-chip[data-reader-theme="cerulean-light"] { background-color: #EEF4F8; color: #193246; border-color: #C9DCE8; }
+.reader-theme-chip[data-reader-theme="enchanted-forest"] { background-color: #F2F7F3; color: #193024; border-color: #CBDDCF; }
+.reader-theme-chip[data-reader-theme="mystic-night"] { background-color: #EEF4F8; color: #193246; border-color: #C9DCE8; }
 .reader-theme-chip[data-reader-theme="inherit"] { background-color: var(--color-surface); color: var(--color-text-secondary); }
 
 /* Ocultar el puntito cuando el fondo ya es el color del tema (como Tipografía) */
@@ -821,7 +823,9 @@ html.reader-open {
 .reader-theme-chip[data-reader-theme="neutral"] .reader-theme-swatch,
 .reader-theme-chip[data-reader-theme="oled"] .reader-theme-swatch,
 .reader-theme-chip[data-reader-theme="mint"] .reader-theme-swatch,
-.reader-theme-chip[data-reader-theme="mystic-night"] .reader-theme-swatch {
+.reader-theme-chip[data-reader-theme="mystic-night"] .reader-theme-swatch,
+.reader-theme-chip[data-reader-theme="cerulean-light"] .reader-theme-swatch,
+.reader-theme-chip[data-reader-theme="enchanted-forest"] .reader-theme-swatch {
   display: none;
 }
 

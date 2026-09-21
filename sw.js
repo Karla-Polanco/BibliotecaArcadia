@@ -3,7 +3,7 @@
    PWA + OFFLINE CACHE + AUTO UPDATE
    ====================================== */
 
-const CACHE_NAME = 'arcadia-pwa-v120';
+const CACHE_NAME = 'arcadia-pwa-v121';
 
 /*
  * =============================================

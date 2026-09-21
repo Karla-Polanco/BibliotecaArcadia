@@ -29,7 +29,7 @@ export class AppState {
       sortBy: 'recent',            // 'recent', 'title', 'author', 'progress'
       searchQuery: '',
       currentReadingId: null,  // ID del libro en lectura activa (null = ninguno)
-      selectedTheme: safeGet('arcadia_theme', 'mystic-night') || 'mystic-night'
+      selectedTheme: (()=>{ let t=safeGet('arcadia_theme','cerulean-light')||'cerulean-light'; if(t==='mystic-night'||t==='deep-twilight') t='cerulean-light'; if(t==='wine-poetry') t='serene-fog'; return t; })()
     };
 
     this.subscribers = new Map();

@@ -1,447 +1,584 @@
 /* ==========================================================================
    SISTEMA DE TEMAS DINÁMICOS - BIBLIOTECA ARCADIA
+   PALETAS REFINADAS
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   1. TEMA PREDETERMINADO: NOCTURNO MÍSTICO (mystic-night)
-   Fondo medianoche profundo, superficies cristalinas y acentos azul zafiro y oro.
-   -------------------------------------------------------------------------- */
-:root,
-[data-theme="mystic-night"] {
-   --color-background: #E8ECEF;
-   --color-surface: #FFFFFF;
-   --color-surface-secondary: #DCE6EF;
-   --color-surface-elevated: #FFFFFF;
-   --color-surface-hover: rgba(28, 43, 72, 0.05);
-   --color-surface-active: rgba(28, 43, 72, 0.10);
+/* ==========================================================================
+   1. TEMA: CERÚLEO CLARO (cerulean-light)
+   Azul editorial luminoso, limpio y sofisticado.
+   ========================================================================== */
 
-   /* Acentos Cromáticos — Cool Cerulean desaturado para fondo claro */
-   --color-primary-dark: #1C2B48;
-   --color-primary: #5A7FAF;
-   --color-primary-light: #8EB1D1;
-   --color-primary-glow: rgba(90, 127, 175, 0.22);
+[data-theme="cerulean-light"] {
+  --color-background: #EEF4F8;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #E3EDF4;
+  --color-surface-elevated: #FFFFFF;
 
-   --color-secondary: #A7C7E7;
-   --color-secondary-glow: rgba(167, 199, 231, 0.18);
+  --color-surface-hover: rgba(45, 103, 145, 0.07);
+  --color-surface-active: rgba(45, 103, 145, 0.12);
 
-   /* Tipografía — Midnight sobre Platinum */
-   --color-text: #1C2B48;
-   --color-text-secondary: #4A5E7A;
-   --color-text-muted: #7A8EAA;
-   --color-text-inverse: #FFFFFF;
+  --color-primary-dark: #183B55;
+  --color-primary: #39789F;
+  --color-primary-light: #6FA8C8;
+  --color-primary-glow: rgba(57, 120, 159, 0.20);
 
-   /* Bordes y Divisores */
-   --color-border: #C4D8E5;
-   --color-border-subtle: #E2EAF1;
-   --color-border-focus: #8EB1D1;
+  --color-secondary: #91BCD3;
+  --color-secondary-glow: rgba(145, 188, 211, 0.18);
 
-   /* Badges y Estados */
-   --color-badge-bg: rgba(90, 127, 175, 0.10);
-   --color-badge-text: #3A4A5E;
-   --color-accent-gold: #8EB1D1;
+  --color-text: #193246;
+  --color-text-secondary: #526C7D;
+  --color-text-muted: #8196A4;
+  --color-text-inverse: #FFFFFF;
 
-   /* Banner Literario */
-   --banner-gradient: linear-gradient(135deg, #F4F7FA 0%, #E8ECEF 52%, #C4D8E5 100%);
-   --banner-border: rgba(90, 127, 175, 0.18);
+  --color-border: #C9DCE8;
+  --color-border-subtle: #E1EBF1;
+  --color-border-focus: #6FA8C8;
 
-   /* Lector */
-   --reader-bg: #E8ECEF;
-   --reader-text: #1C2B48;
-   --brand-wordmark-color: #1C2B48;
+  --color-badge-bg: rgba(57, 120, 159, 0.11);
+  --color-badge-text: #28617F;
+  --color-accent-gold: #B58A4A;
 
-   /* Estrellas del Emblema — cerúleo suave sobre claro */
-   --star-color-light: #A7C7E7;
-   --star-color-dark: #4A6B8A;
-   --star-color-center: #E8ECEF;
-   --star-glow: rgba(90, 127, 175, 0.14);
+  --banner-gradient:
+    linear-gradient(
+      135deg,
+      #FFFFFF 0%,
+      #EEF4F8 52%,
+      #D5E5EE 100%
+    );
 
-    /* Fondo — linearGradient #bg: #F4F7FA → #E8ECEF (52%) → #C4D8E5 */
-    --theme-pg-pattern: linear-gradient(135deg, #F4F7FA 0%, #E8ECEF 52%, #C4D8E5 100%);
+  --banner-border: rgba(57, 120, 159, 0.18);
+
+  --reader-bg: #F1F5F7;
+  --reader-text: #203746;
+  --brand-wordmark-color: #183B55;
+
+  --star-color-light: #A8D0E3;
+  --star-color-dark: #39789F;
+  --star-color-center: #F2F8FB;
+  --star-glow: rgba(57, 120, 159, 0.16);
+
+  --theme-bg-pattern:
+    linear-gradient(
+      135deg,
+      #FFFFFF 0%,
+      #EEF4F8 52%,
+      #D5E5EE 100%
+    );
+  --theme-pg-pattern:
+    linear-gradient(
+      135deg,
+      #FFFFFF 0%,
+      #EEF4F8 52%,
+      #D5E5EE 100%
+    );
+
+  color-scheme: light;
 }
 
-/* --------------------------------------------------------------------------
-    2. TEMA: LAVANDA CLARO (lavender-light)
-   Fondo perla lavanda luminoso, superficies níveas y acentos amatista serenos.
-   -------------------------------------------------------------------------- */
+
+/* ==========================================================================
+   2. TEMA: LAVANDA CLARO (lavender-light)
+   Lavanda elegante, amatista suave y sensación editorial.
+   ========================================================================== */
+
 [data-theme="lavender-light"] {
-   --color-background: #FBF9FF;
-   --color-surface: #FFFFFF;
-   --color-surface-secondary: #F5F1FD;
-   --color-surface-elevated: #FFFFFF;
-   --color-surface-hover: rgba(122, 113, 176, 0.06);
-   --color-surface-active: rgba(122, 113, 176, 0.10);
+  --color-background: #F8F6FC;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #F0ECF8;
+  --color-surface-elevated: #FFFFFF;
 
-   /* Acentos Cromáticos — amatista aclarado como cerúleo/beige */
-   --color-primary-dark: #5F5296;
-   --color-primary: #7A71B0;
-   --color-primary-light: #9A91C7;
-   --color-primary-glow: rgba(122, 113, 176, 0.18);
+  --color-surface-hover: rgba(112, 91, 155, 0.07);
+  --color-surface-active: rgba(112, 91, 155, 0.12);
 
-   --color-secondary: #A99BD2;
-   --color-secondary-glow: rgba(169, 155, 210, 0.14);
+  --color-primary-dark: #514276;
+  --color-primary: #7663A6;
+  --color-primary-light: #A392C8;
+  --color-primary-glow: rgba(118, 99, 166, 0.20);
 
-   /* Tipografía y Contraste WCAG AA */
-   --color-text: #1E1A30;
-   --color-text-secondary: #585172;
-   --color-text-muted: #7A7394;
-   --color-text-inverse: #FFFFFF;
+  --color-secondary: #B7A8D4;
+  --color-secondary-glow: rgba(183, 168, 212, 0.18);
 
-   /* Bordes y Divisores — niebla lavanda aclarada */
-   --color-border: #E2DAF3;
-   --color-border-subtle: #F0E9FF;
-   --color-border-focus: #9A91C7;
+  --color-text: #29233A;
+  --color-text-secondary: #625875;
+  --color-text-muted: #8A809A;
+  --color-text-inverse: #FFFFFF;
 
-   /* Badges y Estados */
-   --color-badge-bg: rgba(122, 113, 176, 0.10);
-   --color-badge-text: #6E5CB8;
-   --color-accent-gold: #C8A261;
+  --color-border: #DED7EC;
+  --color-border-subtle: #EEEAF5;
+  --color-border-focus: #A392C8;
 
-   /* Banner Literario */
-   --banner-gradient: linear-gradient(135deg, #FBF9FF 0%, #F2ECFF 52%, #E8E0FF 100%);
-   --banner-border: rgba(122, 113, 176, 0.16);
+  --color-badge-bg: rgba(118, 99, 166, 0.11);
+  --color-badge-text: #665294;
+  --color-accent-gold: #B9965B;
 
-   /* Lector */
-   --reader-bg: #F9F8F6;
-   --reader-text: #23222B;
-   --brand-wordmark-color: #6E5CB8;
+  --banner-gradient:
+    linear-gradient(
+      135deg,
+      #FFFFFF 0%,
+      #F5F1FA 52%,
+      #E7E0F2 100%
+    );
 
-   /* Estrellas del Emblema por Tema (Lavanda: Amatista y Violeta Suave) */
-   --star-color-light: #C4B5FD;
-   --star-color-dark: #6D28D9;
-   --star-color-center: #EDE9FE;
-   --star-glow: rgba(139, 92, 246, 0.14);
+  --banner-border: rgba(118, 99, 166, 0.17);
 
-    /* Fondo — linearGradient #bg: #F4F7FA → #E8ECEF (52%) → #C4D8E5 */
-    --theme-pg-pattern: linear-gradient(135deg, #F4F7FA 0%, #E8ECEF 52%, #C4D8E5 100%);
+  --reader-bg: #FAF8FC;
+  --reader-text: #302A3B;
+  --brand-wordmark-color: #665294;
+
+  --star-color-light: #D0C4EA;
+  --star-color-dark: #7257A5;
+  --star-color-center: #F1ECFA;
+  --star-glow: rgba(118, 99, 166, 0.16);
+
+  --theme-bg-pattern:
+    linear-gradient(
+      135deg,
+      #FFFFFF 0%,
+      #F5F1FA 55%,
+      #E7E0F2 100%
+    );
+  --theme-pg-pattern:
+    linear-gradient(
+      135deg,
+      #FFFFFF 0%,
+      #F5F1FA 55%,
+      #E7E0F2 100%
+    );
+
+  color-scheme: light;
 }
 
-/* --------------------------------------------------------------------------
-    3. TEMA: CIELO CLARO — reemplazado completamente por BEIGE CÁLIDO
-   Beige editorial: Warm Taupe / Sandy / Oatmeal / Vanilla / Linen / Ivory
-   -------------------------------------------------------------------------- */
+
+/* ==========================================================================
+   3. TEMA: CIELO CLARO → BEIGE CÁLIDO (clear-sky)
+   Marfil, lino, arena y espresso.
+   ========================================================================== */
+
 [data-theme="clear-sky"] {
-   --color-background: #FAF7F2;
-   --color-surface: #FFFFFF;
-   --color-surface-secondary: #F6F0E6;
-   --color-surface-elevated: #FFFFFF;
-   --color-surface-hover: rgba(154, 132, 114, 0.06);
-   --color-surface-active: rgba(154, 132, 114, 0.12);
+  --color-background: #F8F4EC;
+  --color-surface: #FFFDF9;
+  --color-surface-secondary: #F1E9DC;
+  --color-surface-elevated: #FFFFFF;
 
-   /* Acentos Cromáticos — beige cálido */
-   --color-primary-dark: #9A8472;
-   --color-primary: #C8B39A;
-   --color-primary-light: #E0D1B8;
-   --color-primary-glow: rgba(154, 132, 114, 0.20);
+  --color-surface-hover: rgba(126, 96, 66, 0.07);
+  --color-surface-active: rgba(126, 96, 66, 0.12);
 
-   --color-secondary: #9A8472;
-   --color-secondary-glow: rgba(154, 132, 114, 0.16);
+  --color-primary-dark: #71523C;
+  --color-primary: #A47F5D;
+  --color-primary-light: #C8A987;
+  --color-primary-glow: rgba(164, 127, 93, 0.20);
 
-   /* Tipografía — Espresso sobre Ivory */
-   --color-text: #4A342A;
-   --color-text-secondary: #7A6252;
-   --color-text-muted: #9A8472;
-   --color-text-inverse: #FFFFFF;
+  --color-secondary: #D2B99A;
+  --color-secondary-glow: rgba(210, 185, 154, 0.18);
 
-   /* Bordes y Divisores — lino / avena */
-   --color-border: #E0D1B8;
-   --color-border-subtle: #EFE3CE;
-   --color-border-focus: #C8B39A;
+  --color-text: #3D2C22;
+  --color-text-secondary: #705746;
+  --color-text-muted: #9A8170;
+  --color-text-inverse: #FFFFFF;
 
-   /* Badges y Estados */
-   --color-badge-bg: rgba(200, 179, 154, 0.14);
-   --color-badge-text: #7A6252;
-   --color-accent-gold: #C8B39A;
+  --color-border: #DDCCB7;
+  --color-border-subtle: #EEE5D8;
+  --color-border-focus: #C8A987;
 
-   /* Banner Literario */
-   --banner-gradient: linear-gradient(135deg, #FAF7F2 0%, #F6F0E6 52%, #EFE3CE 100%);
-   --banner-border: rgba(154, 132, 114, 0.18);
+  --color-badge-bg: rgba(164, 127, 93, 0.12);
+  --color-badge-text: #795C43;
+  --color-accent-gold: #B48A4F;
 
-   /* Lector */
-   --reader-bg: #FAF7F2;
-   --reader-text: #4A342A;
-   --brand-wordmark-color: #4A342A;
+  --banner-gradient:
+    linear-gradient(
+      135deg,
+      #FFFDF9 0%,
+      #F8F2E8 52%,
+      #E9DBC8 100%
+    );
 
-   /* Estrellas — tono arena cálido */
-   --star-color-light: #EFE3CE;
-   --star-color-dark: #9A8472;
-   --star-color-center: #FAF7F2;
-   --star-glow: rgba(154, 132, 114, 0.16);
+  --banner-border: rgba(164, 127, 93, 0.18);
 
-    /* Fondo — linearGradient #bg: #F4F7FA → #E8ECEF (52%) → #C4D8E5 */
-    --theme-pg-pattern: linear-gradient(135deg, #F4F7FA 0%, #E8ECEF 52%, #C4D8E5 100%);
+  --reader-bg: #FAF5EC;
+  --reader-text: #433229;
+  --brand-wordmark-color: #71523C;
+
+  --star-color-light: #E5D1B4;
+  --star-color-dark: #A47F5D;
+  --star-color-center: #FBF5EA;
+  --star-glow: rgba(164, 127, 93, 0.17);
+
+  --theme-bg-pattern:
+    linear-gradient(
+      135deg,
+      #FFFDF9 0%,
+      #F8F2E8 52%,
+      #E9DBC8 100%
+    );
+  --theme-pg-pattern:
+    linear-gradient(
+      135deg,
+      #FFFDF9 0%,
+      #F8F2E8 52%,
+      #E9DBC8 100%
+    );
+
+  color-scheme: light;
 }
 
-/* --------------------------------------------------------------------------
-    4. TEMA: BOSQUE DE LA MAÑANA (enchanted-forest)
-   Tonos salvia botánicos, frescura serena y acentos bosque noble.
-   -------------------------------------------------------------------------- */
+
+/* ==========================================================================
+   4. TEMA: BOSQUE DE LA MAÑANA (enchanted-forest)
+   Salvia, bosque profundo y esmeralda suave.
+   ========================================================================== */
+
 [data-theme="enchanted-forest"] {
-   --color-background: #F5F9F6;
-   --color-surface: #FFFFFF;
-   --color-surface-secondary: #EEF5F0;
-   --color-surface-elevated: #FFFFFF;
-   --color-surface-hover: rgba(79, 125, 94, 0.06);
-   --color-surface-active: rgba(79, 125, 94, 0.10);
+  --color-background: #F2F7F3;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #E5EFE8;
+  --color-surface-elevated: #FFFFFF;
 
-   /* Acentos Cromáticos — salvia aclarado como cerúleo/beige */
-   --color-primary-dark: #2E5A3E;
-   --color-primary: #4F7D5E;
-   --color-primary-light: #6BA88A;
-   --color-primary-glow: rgba(79, 125, 94, 0.18);
+  --color-surface-hover: rgba(45, 105, 70, 0.07);
+  --color-surface-active: rgba(45, 105, 70, 0.12);
 
-   --color-secondary: #8ABBA3;
-   --color-secondary-glow: rgba(138, 187, 163, 0.14);
+  --color-primary-dark: #234E35;
+  --color-primary: #3F7957;
+  --color-primary-light: #73A685;
+  --color-primary-glow: rgba(63, 121, 87, 0.20);
 
-   /* Tipografía y Contraste */
-   --color-text: #152A1E;
-   --color-text-secondary: #4A6354;
-   --color-text-muted: #6E8576;
-   --color-text-inverse: #FFFFFF;
+  --color-secondary: #9BC2A7;
+  --color-secondary-glow: rgba(155, 194, 167, 0.18);
 
-   /* Bordes y Divisores — rocío salvia aclarado */
-   --color-border: #D5E8DB;
-   --color-border-subtle: #E6F2EA;
-   --color-border-focus: #6BA88A;
+  --color-text: #193024;
+  --color-text-secondary: #4F6958;
+  --color-text-muted: #789080;
+  --color-text-inverse: #FFFFFF;
 
-   /* Badges y Estados */
-   --color-badge-bg: rgba(79, 125, 94, 0.10);
-   --color-badge-text: #3A6B4A;
-   --color-accent-gold: #C8A261;
+  --color-border: #CBDDCF;
+  --color-border-subtle: #E1ECE4;
+  --color-border-focus: #73A685;
 
-   /* Banner Literario */
-   --banner-gradient: linear-gradient(135deg, #F5F9F6 0%, #E8F5ED 52%, #D5EADB 100%);
-   --banner-border: rgba(79, 125, 94, 0.14);
+  --color-badge-bg: rgba(63, 121, 87, 0.11);
+  --color-badge-text: #356B4B;
+  --color-accent-gold: #B5965A;
 
-   /* Lector */
-   --reader-bg: #EDF3EE;
-   --reader-text: #203328;
-   --brand-wordmark-color: #3A6B4A;
+  --banner-gradient:
+    linear-gradient(
+      135deg,
+      #FFFFFF 0%,
+      #F0F7F2 52%,
+      #D7E7DB 100%
+    );
 
-   /* Estrellas del Emblema por Tema (Bosque Encantado: Esmeralda y Hoja Dorada) */
-   --star-color-light: #6EE7B7;
-   --star-color-dark: #065F46;
-   --star-color-center: #D1FAE5;
-   --star-glow: rgba(52, 211, 153, 0.15);
+  --banner-border: rgba(63, 121, 87, 0.17);
 
-    /* Fondo — linearGradient #bg: #F4F7FA → #E8ECEF (52%) → #C4D8E5 */
-    --theme-pg-pattern: linear-gradient(135deg, #F4F7FA 0%, #E8ECEF 52%, #C4D8E5 100%);
+  --reader-bg: #F0F5F1;
+  --reader-text: #24372B;
+  --brand-wordmark-color: #356B4B;
+
+  --star-color-light: #A9D5B6;
+  --star-color-dark: #28704A;
+  --star-color-center: #E0F1E5;
+  --star-glow: rgba(63, 121, 87, 0.17);
+
+  --theme-bg-pattern:
+    linear-gradient(
+      135deg,
+      #FFFFFF 0%,
+      #F0F7F2 55%,
+      #D7E7DB 100%
+    );
+  --theme-pg-pattern:
+    linear-gradient(
+      135deg,
+      #FFFFFF 0%,
+      #F0F7F2 55%,
+      #D7E7DB 100%
+    );
+
+  color-scheme: light;
 }
 
-/* --------------------------------------------------------------------------
-    5. TEMA: NIEBLA SERENA (serene-fog)
-   Acuarela delicada en niebla rosada, malva tenue y cálida elegancia.
-   -------------------------------------------------------------------------- */
+
+/* ==========================================================================
+   5. TEMA: NIEBLA SERENA (serene-fog)
+   Rosa empolvado, malva y vino elegante.
+   ========================================================================== */
+
 [data-theme="serene-fog"] {
-   --color-background: #FBF8F9;
-   --color-surface: #FFFFFF;
-   --color-surface-secondary: #F9F0F3;
-   --color-surface-elevated: #FFFFFF;
-   --color-surface-hover: rgba(138, 102, 119, 0.05);
-   --color-surface-active: rgba(138, 102, 119, 0.10);
+  --color-background: #FBF7F8;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #F5EAEE;
+  --color-surface-elevated: #FFFFFF;
 
-   /* Acentos Cromáticos — malva aclarado como cerúleo/beige */
-   --color-primary-dark: #6E4354;
-   --color-primary: #8A6677;
-   --color-primary-light: #B08FA0;
-   --color-primary-glow: rgba(138, 102, 119, 0.18);
+  --color-surface-hover: rgba(139, 83, 105, 0.07);
+  --color-surface-active: rgba(139, 83, 105, 0.12);
 
-   --color-secondary: #C2A0B2;
-   --color-secondary-glow: rgba(194, 160, 178, 0.14);
+  --color-primary-dark: #633546;
+  --color-primary: #915C72;
+  --color-primary-light: #B88BA0;
+  --color-primary-glow: rgba(145, 92, 114, 0.20);
 
-   /* Tipografía y Contraste */
-   --color-text: #2D1A23;
-   --color-text-secondary: #654E57;
-   --color-text-muted: #88727A;
-   --color-text-inverse: #FFFFFF;
+  --color-secondary: #D0AEBB;
+  --color-secondary-glow: rgba(208, 174, 187, 0.18);
 
-   /* Bordes y Divisores — rosa aclarado */
-   --color-border: #E8D5DD;
-   --color-border-subtle: #F2E6EB;
-   --color-border-focus: #B08FA0;
+  --color-text: #35232B;
+  --color-text-secondary: #6B505A;
+  --color-text-muted: #927680;
+  --color-text-inverse: #FFFFFF;
 
-   /* Badges y Estados */
-   --color-badge-bg: rgba(138, 102, 119, 0.10);
-   --color-badge-text: #7F4F64;
-   --color-accent-gold: #C8A261;
+  --color-border: #E5D1D9;
+  --color-border-subtle: #F1E5E9;
+  --color-border-focus: #B88BA0;
 
-   /* Banner Literario */
-   --banner-gradient: linear-gradient(135deg, #FBF8F9 0%, #F5EAF0 52%, #EADCE4 100%);
-   --banner-border: rgba(138, 102, 119, 0.14);
+  --color-badge-bg: rgba(145, 92, 114, 0.11);
+  --color-badge-text: #804B61;
+  --color-accent-gold: #B79560;
 
-   /* Lector */
-   --reader-bg: #FBF8F9;
-   --reader-text: #2D1A23;
-   --brand-wordmark-color: #7F4F64;
+  --banner-gradient:
+    linear-gradient(
+      135deg,
+      #FFFFFF 0%,
+      #FAF0F3 52%,
+      #EBDCE3 100%
+    );
 
-   /* Estrellas del Emblema por Tema (Vino & Poesía: Rubí Rosa y Malva Radiante) */
-   --star-color-light: #F9A8D4;
-   --star-color-dark: #9D174D;
-   --star-color-center: #FCE7F3;
-   --star-glow: rgba(244, 114, 182, 0.15);
+  --banner-border: rgba(145, 92, 114, 0.17);
 
-    /* Fondo — linearGradient #bg: #F4F7FA → #E8ECEF (52%) → #C4D8E5 */
-    --theme-pg-pattern: linear-gradient(135deg, #F4F7FA 0%, #E8ECEF 52%, #C4D8E5 100%);
+  --reader-bg: #FBF6F7;
+  --reader-text: #39272E;
+  --brand-wordmark-color: #804B61;
+
+  --star-color-light: #E7B4CA;
+  --star-color-dark: #9B3E67;
+  --star-color-center: #F9E5ED;
+  --star-glow: rgba(180, 72, 121, 0.17);
+
+  --theme-bg-pattern:
+    linear-gradient(
+      135deg,
+      #FFFFFF 0%,
+      #FAF0F3 55%,
+      #EBDCE3 100%
+    );
+  --theme-pg-pattern:
+    linear-gradient(
+      135deg,
+      #FFFFFF 0%,
+      #FAF0F3 55%,
+      #EBDCE3 100%
+    );
+
+  color-scheme: light;
 }
 
+
+/* ==========================================================================
+   6. TEMA: ABISMO NOCTURNO (abyss-dark)
+   Grafito profundo, acero azulado y plata.
+   ========================================================================== */
+
+[data-theme="abyss-dark"] {
+  --color-background: #0F1216;
+  --color-surface: #191E24;
+  --color-surface-secondary: #242B33;
+  --color-surface-elevated: #1E242B;
+
+  --color-surface-hover: rgba(167, 185, 201, 0.07);
+  --color-surface-active: rgba(167, 185, 201, 0.13);
+
+  --color-primary-dark: #536A7D;
+  --color-primary: #7892A6;
+  --color-primary-light: #A7BBC9;
+  --color-primary-glow: rgba(120, 146, 166, 0.22);
+
+  --color-secondary: #C0CCD5;
+  --color-secondary-glow: rgba(192, 204, 213, 0.15);
+
+  --color-text: #D7E0E6;
+  --color-text-secondary: #A5B3BE;
+  --color-text-muted: #788793;
+  --color-text-inverse: #101419;
+
+  --color-border: #35414C;
+  --color-border-subtle: rgba(53, 65, 76, 0.65);
+  --color-border-focus: #A7BBC9;
+
+  --color-badge-bg: rgba(120, 146, 166, 0.15);
+  --color-badge-text: #C6D2DB;
+  --color-accent-gold: #B9A06A;
+
+  --banner-gradient:
+    linear-gradient(
+      135deg,
+      #0F1216 0%,
+      #191E24 50%,
+      #2C3741 100%
+    );
+
+  --banner-border: rgba(120, 146, 166, 0.20);
+
+  --reader-bg: #11151A;
+  --reader-text: #D6DEE4;
+  --brand-wordmark-color: #D7E0E6;
+
+  --star-color-light: #B8CAD6;
+  --star-color-dark: #5D7588;
+  --star-color-center: #DCE6EC;
+  --star-glow: rgba(120, 146, 166, 0.18);
+
+  --theme-bg-pattern:
+    linear-gradient(
+      135deg,
+      #0F1216 0%,
+      #191E24 52%,
+      #2C3741 100%
+    );
+  --theme-pg-pattern:
+    linear-gradient(
+      135deg,
+      #0F1216 0%,
+      #191E24 52%,
+      #2C3741 100%
+    );
+
+  color-scheme: dark;
+}
+
+
+/* ==========================================================================
+   SWATCHES — MODAL DE APARIENCIA
+   ========================================================================== */
+
+
 /* --------------------------------------------------------------------------
-   6. MUESTRAS DE COLOR PARA EL MODAL DE APARIENCIA (SWATCHES)
+   Cerúleo Claro
    -------------------------------------------------------------------------- */
-/* Nocturno Místico — ahora claro Cerulean (no oscuro) */
+
 .swatch-mn-1 {
-   /* Platinum */
-   background-color: #E8ECEF;
-   border: 1px solid #8EB1D1;
+  background-color: #EEF4F8;
+  border: 1px solid #39789F;
 }
 
 .swatch-mn-2 {
-   /* Blanco Puro */
-   background-color: #FFFFFF;
-   border: 1px solid #8EB1D1;
+  background-color: #FFFFFF;
+  border: 1px solid #6FA8C8;
 }
 
 .swatch-mn-3 {
-   /* Cerúleo Suave */
-   background-color: #5A7FAF;
+  background-color: #39789F;
 }
 
 .swatch-mn-4 {
-   /* Cerúleo Fresco */
-   background-color: #8EB1D1;
+  background-color: #6FA8C8;
 }
 
 
-/* Lavanda Claro — aclarado */
+/* --------------------------------------------------------------------------
+   Lavanda Claro
+   -------------------------------------------------------------------------- */
+
 .swatch-ll-1 {
-   /* Blanco Fresco */
-   background-color: #FFFFFF;
-   border: 1px solid #7D6FB5;
+  background-color: #F8F6FC;
+  border: 1px solid #7663A6;
 }
 
 .swatch-ll-2 {
-   /* Perla Lavanda */
-   background-color: #F0ECF9;
-   border: 1px solid #7D6FB5;
+  background-color: #F0ECF8;
+  border: 1px solid #A392C8;
 }
 
 .swatch-ll-3 {
-   /* Amatista Claro */
-   background-color: #5E4FA2;
+  background-color: #7663A6;
 }
 
 .swatch-ll-4 {
-   /* Glicina Suave */
-   background-color: #7D6FB5;
+  background-color: #A392C8;
 }
 
-/* Niebla Serena — aclarado */
+
+/* --------------------------------------------------------------------------
+   Niebla Serena
+   -------------------------------------------------------------------------- */
+
 .swatch-wp-1 {
-   /* Rosa Niebla */
-   background-color: #F8F3F5;
-   border: 1px solid #B08FA0;
+  background-color: #FBF7F8;
+  border: 1px solid #B88BA0;
 }
 
 .swatch-wp-2 {
-   /* Niebla Rosada */
-   background-color: #F3E9EC;
-   border: 1px solid #955B73;
+  background-color: #F5EAEE;
+  border: 1px solid #915C72;
 }
 
 .swatch-wp-3 {
-   /* Ciruela Empolvada */
-   background-color: #754157;
+  background-color: #633546;
 }
 
 .swatch-wp-4 {
-   /* Malva Tenue */
-   background-color: #955B73;
+  background-color: #915C72;
 }
 
-/* Bosque de la Mañana — aclarado */
+
+/* --------------------------------------------------------------------------
+   Bosque de la Mañana
+   -------------------------------------------------------------------------- */
+
 .swatch-ef-1 {
-   /* Salvia Brumosa */
-   background-color: #F1F5F2;
-   border: 1px solid #4E8565;
+  background-color: #F2F7F3;
+  border: 1px solid #3F7957;
 }
 
 .swatch-ef-2 {
-   /* Rocío Salvia */
-   background-color: #E9F0EB;
-   border: 1px solid #4E8565;
+  background-color: #E5EFE8;
+  border: 1px solid #73A685;
 }
 
 .swatch-ef-3 {
-   /* Laurel Noble */
-   background-color: #2C6343;
+  background-color: #234E35;
 }
 
 .swatch-ef-4 {
-   /* Salvia Suave */
-   background-color: #4E8565;
+  background-color: #3F7957;
 }
 
 
-/* Cielo Claro → Beige Cálido */
+/* --------------------------------------------------------------------------
+   Cielo Claro → Beige Cálido
+   -------------------------------------------------------------------------- */
+
 .swatch-cs-1 {
-   /* Susurro Marfil */
-   background-color: #FAF7F2;
-   border: 1px solid #C8B39A;
+  background-color: #F8F4EC;
+  border: 1px solid #C8A987;
 }
 
 .swatch-cs-2 {
-   /* Lino Suave */
-   background-color: #F6F0E6;
-   border: 1px solid #C8B39A;
+  background-color: #F1E9DC;
+  border: 1px solid #A47F5D;
 }
 
 .swatch-cs-3 {
-   /* Arena Beige */
-   background-color: #C8B39A;
+  background-color: #C8A987;
 }
 
 .swatch-cs-4 {
-   /* Topo Cálido */
-   background-color: #9A8472;
+  background-color: #71523C;
 }
 
+
 /* --------------------------------------------------------------------------
-   6. TEMA ABISMO NOCTURNO (abyss-dark) - Paleta Kettle Black
+   Abismo Nocturno
    -------------------------------------------------------------------------- */
-[data-theme="abyss-dark"] {
-   --color-background: #141214;
-   --color-surface: #302F33;
-   --color-surface-secondary: #464C55;
-   --color-surface-elevated: #302F33;
-   --color-surface-hover: rgba(194,199,207,0.08);
-   --color-surface-active: rgba(194,199,207,0.14);
-   --color-primary-dark: #636D79;
-   --color-primary: #7F8995;
-   --color-primary-light: #9EA7B3;
-   --color-primary-glow: rgba(127,137,149,0.22);
-   --color-secondary: #C2C7CF;
-   --color-secondary-glow: rgba(194,199,207,0.14);
-   --color-text: #C2C7CF;
-   --color-text-secondary: #9EA7B3;
-   --color-text-muted: #7F8995;
-   --color-text-inverse: #141214;
-   --color-border: #464C55;
-   --color-border-subtle: rgba(70,76,85,0.55);
-   --color-border-focus: #9EA7B3;
-   --color-badge-bg: rgba(127,137,149,0.16);
-   --color-badge-text: #C2C7CF;
-   --color-accent-gold: #9EA7B3;
-   --banner-gradient: linear-gradient(135deg, #141214 0%, #302F33 52%, #464C55 100%);
-   --banner-border: rgba(127,137,149,0.18);
-   --reader-bg: #141214;
-   --reader-text: #C2C7CF;
-   --brand-wordmark-color: #C2C7CF;
-   --star-color-light: #9EA7B3;
-   --star-color-dark: #636D79;
-   --star-color-center: #C2C7CF;
-   --star-glow: rgba(127,137,149,0.16);
-   --theme-bg-pattern: none;
-   color-scheme: dark;
+
+.swatch-ad-1 {
+  background-color: #0F1216;
+  border: 1px solid #536A7D;
 }
-.swatch-ad-1 { background-color: #141214; border: 1px solid #636D79; }
-.swatch-ad-2 { background-color: #302F33; border: 1px solid #636D79; }
-.swatch-ad-3 { background-color: #464C55; }
-.swatch-ad-4 { background-color: #9EA7B3; }
+
+.swatch-ad-2 {
+  background-color: #191E24;
+  border: 1px solid #7892A6;
+}
+
+.swatch-ad-3 {
+  background-color: #242B33;
+}
+
+.swatch-ad-4 {
+  background-color: #A7BBC9;
+}
