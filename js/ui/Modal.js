@@ -325,99 +325,63 @@ export class Modal {
               </svg>
             </div>
             <div>
-              <span style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-primary-light, #5B4CC4);">Aplicación Móvil & PWA</span>
+              <span style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-primary-light, #5B4CC4);">Aplicación Web Progresiva</span>
               <h3 style="font-family: 'Cinzel', serif; font-size: 1.25rem; font-weight: 700; margin: 2px 0 0 0; color: var(--color-text); letter-spacing: 0.02em;">Instalar Biblioteca Arcadia</h3>
             </div>
           </div>
 
           <!-- Descripción -->
           <p style="font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.5; margin: 0;">
-            Disfruta de Arcadia como una aplicación nativa en tu dispositivo móvil o computadora, 100% offline y a pantalla completa.
+            Instala Arcadia en tu equipo o dispositivo móvil para disfrutar de una lectura fluida, privada y a pantalla completa.
           </p>
 
-          <!-- Opciones de Instalación / Descarga -->
-          <div style="display: flex; flex-direction: column; gap: 10px;">
-            <!-- Opción 1: Instalación WebAPK / PWA instantánea -->
-            <button id="btn-action-install-pwa" type="button" style="
-              display: flex;
-              align-items: center;
-              gap: 14px;
-              background: var(--color-surface);
-              border: 1.5px solid var(--color-border);
-              border-radius: 12px;
-              padding: 14px 16px;
-              text-align: left;
-              cursor: pointer;
-              transition: all 0.2s ease;
-              color: var(--color-text);
-              box-shadow: var(--shadow-sm);
-            ">
-              <div style="
-                width: 40px;
-                height: 40px;
-                border-radius: 10px;
-                background: var(--color-badge-bg, rgba(57, 120, 159, 0.12));
-                color: var(--color-primary);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-shrink: 0;
-              ">
-                <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                </svg>
+          <!-- Beneficios -->
+          <div style="
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: var(--color-surface-secondary, rgba(255, 255, 255, 0.03));
+            border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
+            border-radius: 12px;
+            padding: 14px 16px;
+          ">
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <span style="font-size: 1.1rem; line-height: 1.2;">⚡</span>
+              <div>
+                <strong style="font-size: 0.84rem; display: block; color: var(--color-text);">Acceso directo y pantalla completa</strong>
+                <span style="font-size: 0.78rem; color: var(--color-text-muted);">Ábrela desde el escritorio o inicio sin barras de navegación del explorador.</span>
               </div>
-              <div style="flex: 1;">
-                <strong style="font-size: 0.88rem; display: block; color: var(--color-text);">Instalar en este dispositivo (Recomendado)</strong>
-                <span style="font-size: 0.76rem; color: var(--color-text-muted);">Instala la app directamente en Android, Windows o iOS en 1 clic.</span>
-              </div>
-              <span style="font-size: 0.72rem; font-weight: 700; color: var(--color-primary); background: var(--color-badge-bg); padding: 4px 8px; border-radius: 6px;">Directo</span>
-            </button>
+            </div>
 
-            <!-- Opción 2: Descargar APK Android -->
-            <a id="btn-action-download-apk" href="https://www.pwabuilder.com" target="_blank" rel="noopener noreferrer" style="
-              display: flex;
-              align-items: center;
-              gap: 14px;
-              background: var(--color-surface);
-              border: 1.5px solid var(--color-border);
-              border-radius: 12px;
-              padding: 14px 16px;
-              text-align: left;
-              cursor: pointer;
-              transition: all 0.2s ease;
-              color: var(--color-text);
-              text-decoration: none;
-              box-shadow: var(--shadow-sm);
-            ">
-              <div style="
-                width: 40px;
-                height: 40px;
-                border-radius: 10px;
-                background: rgba(46, 125, 50, 0.12);
-                color: #2E7D32;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-shrink: 0;
-              ">
-                <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <span style="font-size: 1.1rem; line-height: 1.2;">📖</span>
+              <div>
+                <strong style="font-size: 0.84rem; display: block; color: var(--color-text);">Lectura 100% sin conexión</strong>
+                <span style="font-size: 0.78rem; color: var(--color-text-muted);">Todos tus libros EPUB, notas, marcas y citas disponibles sin internet.</span>
               </div>
-              <div style="flex: 1;">
-                <strong style="font-size: 0.88rem; display: block; color: var(--color-text);">Descargar paquete instalador APK (.apk)</strong>
-                <span style="font-size: 0.76rem; color: var(--color-text-muted);">Genera o descarga el archivo .apk independiente para Android.</span>
+            </div>
+
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <span style="font-size: 1.1rem; line-height: 1.2;">🔒</span>
+              <div>
+                <strong style="font-size: 0.84rem; display: block; color: var(--color-text);">Totalmente privada y local</strong>
+                <span style="font-size: 0.78rem; color: var(--color-text-muted);">Tus libros se almacenan en tu dispositivo; cero rastreo y cero servidores externos.</span>
               </div>
-              <span style="font-size: 0.72rem; font-weight: 700; color: #2E7D32; background: rgba(46, 125, 50, 0.12); padding: 4px 8px; border-radius: 6px;">.APK</span>
-            </a>
+            </div>
           </div>
 
-          <div id="install-instruction-box" style="display: none; font-size: 0.82rem; color: var(--color-text-secondary); background: var(--color-surface-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: 12px 14px; line-height: 1.5;"></div>
+          <div id="install-instruction-box" style="display: none; font-size: 0.82rem; color: var(--color-text-secondary); background: rgba(91, 76, 196, 0.08); border: 1px solid var(--color-primary-glow); border-radius: 8px; padding: 12px 14px; line-height: 1.5;"></div>
 
           <!-- Botones de Acción -->
-          <div class="arcadia-modal-actions" style="margin-top: 8px;">
-            <button id="btn-cancel-install" class="arcadia-modal-btn arcadia-modal-btn--ghost" style="width: 100%;">Cerrar</button>
+          <div class="arcadia-modal-actions">
+            <button id="btn-cancel-install" class="arcadia-modal-btn arcadia-modal-btn--ghost">Cancelar</button>
+
+            <button id="btn-confirm-install" class="arcadia-modal-btn arcadia-modal-btn--primary" style="display: inline-flex; align-items: center; gap: 6px;">
+              <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              <span id="btn-confirm-install-text">Instalar ahora</span>
+            </button>
           </div>
         </div>
       `;
@@ -439,12 +403,13 @@ export class Modal {
         if (e.target === overlay) close(false);
       });
 
-      const installPwaBtn = overlay.querySelector('#btn-action-install-pwa');
-      installPwaBtn.addEventListener('click', async () => {
+      const confirmBtn = overlay.querySelector('#btn-confirm-install');
+      confirmBtn.addEventListener('click', async () => {
         if (isStandalone) {
           const infoBox = overlay.querySelector('#install-instruction-box');
           infoBox.style.display = 'block';
           infoBox.innerHTML = '✨ <strong>¡Ya estás usando la aplicación instalada!</strong> Arcadia ya se encuentra ejecutándose como app en este dispositivo.';
+          confirmBtn.style.display = 'none';
           return;
         }
 
@@ -459,14 +424,17 @@ export class Modal {
             close(false);
           }
         } else {
+          // Instrucciones para instalación en navegador
           const infoBox = overlay.querySelector('#install-instruction-box');
           infoBox.style.display = 'block';
           infoBox.innerHTML = `
             <strong>Instalación manual según tu navegador:</strong><br>
-            • <strong>Chrome / Edge:</strong> Haz clic en los tres puntos (⋮) &gt; <em>«Instalar aplicación»</em> o <em>«Añadir a inicio»</em>.<br>
+            • <strong>Chrome / Edge:</strong> Haz clic en el icono 🖥️ o ➕ en el lado derecho de la barra de direcciones superior, o ve al menú (tres puntos) &gt; <em>Instalar aplicación</em>.<br>
             • <strong>Safari (iPhone / iPad):</strong> Pulsa el botón Compartir ⬆️ y selecciona <em>«Añadir a pantalla de inicio»</em>.<br>
-            • <strong>Android:</strong> Pulsa el menú (⋮) de tu navegador y selecciona <em>«Instalar aplicación»</em>.
+            • <strong>Android:</strong> Pulsa el menú (⋮) de tu navegador y selecciona <em>«Instalar aplicación»</em> o <em>«Añadir a inicio»</em>.
           `;
+          overlay.querySelector('#btn-confirm-install-text').textContent = '¡Entendido!';
+          confirmBtn.onclick = () => close(true);
         }
       });
     });

@@ -32,7 +32,7 @@ export class PWAManager {
     try {
       if (window.matchMedia) {
         try {
-          if (window.matchMedia('(display-mode: standalone)').matches) return true;
+          if (window.matchMedia('(display-mode: standalone)').matches || window.matchMedia('(display-mode: fullscreen)').matches) return true;
         } catch (_) {}
       }
       if (window.navigator && window.navigator.standalone === true) return true;
@@ -127,11 +127,15 @@ export class PWAManager {
       Toast.success('¡Biblioteca Arcadia instalada con éxito en tu dispositivo!');
     });
 
-    // Escuchar si cambia el modo de visualización a standalone
+    // Escuchar si cambia el modo de visualización a standalone o fullscreen
     try {
       const matchMediaStandalone = window.matchMedia('(display-mode: standalone)');
+      const matchMediaFullscreen = window.matchMedia('(display-mode: fullscreen)');
       if (matchMediaStandalone.addEventListener) {
         matchMediaStandalone.addEventListener('change', () => this.syncInstallButtonVisibility());
+      }
+      if (matchMediaFullscreen.addEventListener) {
+        matchMediaFullscreen.addEventListener('change', () => this.syncInstallButtonVisibility());
       }
     } catch (_) {}
 

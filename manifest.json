@@ -5,16 +5,15 @@
     "description": "Biblioteca virtual personal para lectura de libros electrónicos EPUB. 100% local-first y offline.",
     "start_url": "./index.html",
     "scope": "./",
-    "display": "standalone",
+    "display": "fullscreen",
     "display_override": [
-        "window-controls-overlay",
+        "fullscreen",
         "standalone",
         "minimal-ui"
     ],
     "orientation": "any",
     "background_color": "#000000",
     "theme_color": "#EEF4F8",
-    "prefer_related_applications": false,
     "lang": "es",
     "dir": "ltr",
     "categories": [
