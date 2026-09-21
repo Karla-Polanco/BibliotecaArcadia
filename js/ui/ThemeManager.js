@@ -95,7 +95,7 @@ export class ThemeManager {
   _handleSystemThemeChange(e) {}
 
   /**
-   * Sincroniza el color de la barra del navegador / splash con el tema.
+   * Sincroniza el color de la barra del navegador, barra de estado y navegación Android con el tema.
    * @param {string} themeName
    */
   _updateThemeColor(themeName) {
@@ -110,10 +110,14 @@ export class ThemeManager {
     const color = themeColors[themeName] || '#EEF4F8';
     try {
       let meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute('content', color);
-      // Para PWA en iOS / standalone
-      let meta2 = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-      if (meta2) meta2.setAttribute('content', color);
+      if (meta) {
+        meta.setAttribute('content', color);
+      } else {
+        meta = document.createElement('meta');
+        meta.name = 'theme-color';
+        meta.content = color;
+        document.head.appendChild(meta);
+      }
     } catch (_) {}
   }
 
