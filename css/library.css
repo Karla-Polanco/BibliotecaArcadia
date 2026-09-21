@@ -1027,8 +1027,24 @@
   scrollbar-color: var(--color-border, rgba(255, 255, 255, 0.18)) transparent;
   padding: 20px 24px;
   border-radius: var(--radius-xl);
+  clip-path: inset(0 round var(--radius-xl, 18px));
   background-color: var(--color-surface) !important;
   background-image: none !important;
+}
+
+#theme-modal .modal-card::-webkit-scrollbar {
+  width: 6px;
+}
+
+#theme-modal .modal-card::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 18px 0;
+  border-radius: var(--radius-full, 9999px);
+}
+
+#theme-modal .modal-card::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: var(--radius-full, 9999px);
 }
 
 #theme-modal .modal-card::-webkit-scrollbar-button {

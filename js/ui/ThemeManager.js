@@ -109,11 +109,11 @@ export class ThemeManager {
     };
     const color = themeColors[themeName] || '#EEF4F8';
     try {
-      let meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) {
-        meta.setAttribute('content', color);
+      const metaTags = document.querySelectorAll('meta[name="theme-color"]');
+      if (metaTags && metaTags.length > 0) {
+        metaTags.forEach((meta) => meta.setAttribute('content', color));
       } else {
-        meta = document.createElement('meta');
+        const meta = document.createElement('meta');
         meta.name = 'theme-color';
         meta.content = color;
         document.head.appendChild(meta);

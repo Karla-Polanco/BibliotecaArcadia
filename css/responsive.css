@@ -516,6 +516,7 @@
     margin-top: auto !important;
     margin-bottom: auto !important;
     border-radius: 18px !important;
+    clip-path: inset(0 round 18px);
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
@@ -530,7 +531,16 @@
   .theme-modal-dialog::-webkit-scrollbar-track,
   .modal-card::-webkit-scrollbar-track,
   .arcadia-modal-card::-webkit-scrollbar-track {
-    margin: 14px 0;
+    background: transparent;
+    margin: 18px 0;
+    border-radius: 9999px;
+  }
+
+  .theme-modal-dialog::-webkit-scrollbar-thumb,
+  .modal-card::-webkit-scrollbar-thumb,
+  .arcadia-modal-card::-webkit-scrollbar-thumb {
+    background-color: var(--color-border);
+    border-radius: 9999px;
   }
 
   #theme-modal .modal-card {
@@ -538,6 +548,8 @@
     max-height: 92vh;
     max-height: min(92vh, calc(100dvh - 24px));
     padding: 18px 14px 18px 18px;
+    border-radius: 18px !important;
+    clip-path: inset(0 round 18px);
   }
 
   .theme-option-card { padding: 12px 14px; border-radius: 12px; }
