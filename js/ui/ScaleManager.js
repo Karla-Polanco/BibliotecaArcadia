@@ -64,6 +64,10 @@ export class ScaleManager {
     if (labelEl) {
       labelEl.textContent = `${this.currentScale}%`;
     }
+    const dec = document.getElementById('btn-scale-decrease');
+    const inc = document.getElementById('btn-scale-increase');
+    if (dec) dec.disabled = this.currentScale <= this.MIN_SCALE;
+    if (inc) inc.disabled = this.currentScale >= this.MAX_SCALE;
   }
 
   /**

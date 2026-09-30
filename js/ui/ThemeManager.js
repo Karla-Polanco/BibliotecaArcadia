@@ -8,18 +8,18 @@
 
 export class ThemeManager {
   static THEMES = {
-    CERULEAN_LIGHT: 'cerulean-light',
-    LAVENDER_LIGHT: 'lavender-light',
-    WINE_POETRY: 'serene-fog',
-    ENCHANTED_FOREST: 'enchanted-forest',
-    CLEAR_SKY: 'clear-sky',
-    ABYSS_DARK: 'abyss-dark'
+    BOREAL_BLUE: 'boreal-blue',
+    TWILIGHT_LAVENDER: 'twilight-lavender',
+    CLASSIC_IVORY: 'classic-ivory',
+    OLIVE_GREEN: 'olive-green',
+    ANTIQUE_PINK: 'antique-pink',
+    NIGHT_INK: 'night-ink'
   };
 
   static STORAGE_KEY = 'arcadia_theme';
 
   constructor() {
-    this.currentTheme = localStorage.getItem(ThemeManager.STORAGE_KEY) || ThemeManager.THEMES.CERULEAN_LIGHT;
+    this.currentTheme = localStorage.getItem(ThemeManager.STORAGE_KEY) || ThemeManager.THEMES.BOREAL_BLUE;
     this.mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     this._handleSystemThemeChange = this._handleSystemThemeChange.bind(this);
   }
@@ -38,34 +38,34 @@ export class ThemeManager {
 
   /**
    * Aplica un tema al documento raíz.
-   * Normaliza aliases legacy (mystic-night → cerulean-light, deep-twilight, system, wine-poetry).
+   * Normaliza aliases legacy (cerulean-light, lavender-light, clear-sky, enchanted-forest, serene-fog, abyss-dark, etc.).
    * @param {string} themeName - Nombre del tema
    */
   applyTheme(themeName) {
     if (!themeName || typeof themeName !== 'string') {
-      themeName = ThemeManager.THEMES.CERULEAN_LIGHT;
+      themeName = ThemeManager.THEMES.BOREAL_BLUE;
     }
     themeName = themeName.trim();
 
     // Normalizar temas legacy
-    if (themeName === 'system' || themeName === 'deep-twilight' || themeName === 'mystic-night' || themeName === 'wine-poetry') {
-      if (themeName === 'wine-poetry') themeName = ThemeManager.THEMES.WINE_POETRY;
-      else themeName = ThemeManager.THEMES.CERULEAN_LIGHT;
-    }
-    // Alias adicional: mystic-night ya mapeado arriba, pero por si viene con espacios/casing
-    if (themeName === 'mystic-night') themeName = ThemeManager.THEMES.CERULEAN_LIGHT;
+    if (themeName === 'cerulean-light') themeName = ThemeManager.THEMES.BOREAL_BLUE;
+    else if (themeName === 'lavender-light') themeName = ThemeManager.THEMES.TWILIGHT_LAVENDER;
+    else if (themeName === 'clear-sky') themeName = ThemeManager.THEMES.CLASSIC_IVORY;
+    else if (themeName === 'enchanted-forest' || themeName === 'mint') themeName = ThemeManager.THEMES.OLIVE_GREEN;
+    else if (themeName === 'serene-fog' || themeName === 'wine-poetry' || themeName === 'wine') themeName = ThemeManager.THEMES.ANTIQUE_PINK;
+    else if (themeName === 'abyss-dark' || themeName === 'mystic-night' || themeName === 'deep-twilight' || themeName === 'system') themeName = ThemeManager.THEMES.NIGHT_INK;
 
     const knownThemes = new Set([
-      ThemeManager.THEMES.CERULEAN_LIGHT,
-      ThemeManager.THEMES.LAVENDER_LIGHT,
-      ThemeManager.THEMES.WINE_POETRY,
-      ThemeManager.THEMES.ENCHANTED_FOREST,
-      ThemeManager.THEMES.CLEAR_SKY,
-      ThemeManager.THEMES.ABYSS_DARK
+      ThemeManager.THEMES.BOREAL_BLUE,
+      ThemeManager.THEMES.TWILIGHT_LAVENDER,
+      ThemeManager.THEMES.CLASSIC_IVORY,
+      ThemeManager.THEMES.OLIVE_GREEN,
+      ThemeManager.THEMES.ANTIQUE_PINK,
+      ThemeManager.THEMES.NIGHT_INK
     ]);
     if (!knownThemes.has(themeName)) {
-      console.warn(`[ThemeManager] Tema desconocido "${themeName}", usando cerulean-light`);
-      themeName = ThemeManager.THEMES.CERULEAN_LIGHT;
+      console.warn(`[ThemeManager] Tema desconocido "${themeName}", usando boreal-blue`);
+      themeName = ThemeManager.THEMES.BOREAL_BLUE;
     }
 
     this.currentTheme = themeName;
@@ -100,14 +100,14 @@ export class ThemeManager {
    */
   _updateThemeColor(themeName) {
     const themeColors = {
-      'cerulean-light': { bg: '#EEF4F8', surface: '#FFFFFF', dark: false },
-      'lavender-light': { bg: '#F8F6FC', surface: '#FFFFFF', dark: false },
-      'clear-sky': { bg: '#F8F4EC', surface: '#FFFFFF', dark: false },
-      'enchanted-forest': { bg: '#F2F7F3', surface: '#FFFFFF', dark: false },
-      'serene-fog': { bg: '#FBF7F8', surface: '#FFFFFF', dark: false },
-      'abyss-dark': { bg: '#0F1216', surface: '#161B22', dark: true }
+      'boreal-blue': { bg: '#EEF3F7', surface: '#F8FAFC', dark: false },
+      'twilight-lavender': { bg: '#F4F1F7', surface: '#FCFAFD', dark: false },
+      'classic-ivory': { bg: '#F4EFE6', surface: '#FAF7F1', dark: false },
+      'olive-green': { bg: '#EEF4F0', surface: '#F8FAF8', dark: false },
+      'antique-pink': { bg: '#F7F2F3', surface: '#FDFBFC', dark: false },
+      'night-ink': { bg: '#0E1114', surface: '#15191E', dark: true }
     };
-    const current = themeColors[themeName] || themeColors['cerulean-light'];
+    const current = themeColors[themeName] || themeColors['boreal-blue'];
     const color = current.bg;
     const isDark = current.dark;
     const navColor = current.surface || color;

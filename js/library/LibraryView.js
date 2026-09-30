@@ -12,14 +12,16 @@ import { CollectionManager } from './CollectionManager.js';
 import { CollectionModal } from '../ui/CollectionModal.js';
 import { Toast } from '../ui/Toast.js';
 import { Modal } from '../ui/Modal.js';
+import { SettingsView } from '../ui/SettingsView.js';
 
 export class LibraryView {
-  constructor(containerElement, bookManager, onOpenBook = null, annotationsView = null, vocabularyView = null) {
+  constructor(containerElement, bookManager, onOpenBook = null, annotationsView = null, vocabularyView = null, settingsView = null) {
     this.container = containerElement;
     this.bookManager = bookManager;
     this.onOpenBook = onOpenBook;
     this.annotationsView = annotationsView;
     this.vocabularyView = vocabularyView;
+    this.settingsView = settingsView || new SettingsView(containerElement);
     this.filteredBooks = [];
     this.init();
   }
@@ -97,50 +99,11 @@ export class LibraryView {
   }
 
   /**
-   * Actualiza los contadores de badges numéricos en el sidebar y móvil.
+   * Actualiza el estado derivado del sidebar (sin badges).
    */
   async updateBadges() {
     const books = this.bookManager.getAllBooks();
     const totalCount = books.length;
-    const toReadCount = books.filter(b => b.status === 'to_read').length;
-    const readingCount = books.filter(b => b.status === 'reading').length;
-    const completedCount = books.filter(b => b.status === 'completed').length;
-    const favCount = books.filter(b => b.favorite).length;
-
-    const elTotal = document.getElementById('badge-library-total');
-    const elToRead = document.getElementById('badge-to-read');
-    const elReading = document.getElementById('badge-reading');
-    const elCompleted = document.getElementById('badge-completed');
-    const elFav = document.getElementById('badge-favorites');
-    const elMobileBadge = document.querySelector('.mobile-nav-badge');
-    const elAnnotations = document.getElementById('badge-annotations');
-
-    if (elTotal) elTotal.textContent = totalCount;
-    if (elToRead) elToRead.textContent = toReadCount;
-    if (elReading) elReading.textContent = readingCount;
-    if (elCompleted) elCompleted.textContent = completedCount;
-    if (elFav) elFav.textContent = favCount;
-    if (elMobileBadge) elMobileBadge.textContent = totalCount;
-
-    if (elAnnotations) {
-      try {
-        const annotsCount = await dbManager.count('annotations');
-        const notesCount = await dbManager.count('notes');
-        elAnnotations.textContent = annotsCount + notesCount;
-      } catch (e) {
-        elAnnotations.textContent = '0';
-      }
-    }
-
-    const elVocab = document.getElementById('badge-vocabulary');
-    if (elVocab) {
-      try {
-        const wordsCount = await dbManager.count('words');
-        elVocab.textContent = wordsCount;
-      } catch (e) {
-        elVocab.textContent = '0';
-      }
-    }
 
     if (totalCount > 0) {
       const currentId = appState.get('currentReadingId');
@@ -162,28 +125,29 @@ export class LibraryView {
     if (!listEl) return;
 
     const collections = await CollectionManager.getAllCollections();
-    const counts = await CollectionManager.getCollectionCounts();
     const activeFilter = appState.get('activeFilter') || 'all';
 
-    listEl.innerHTML = collections.map(col => {
+    listEl.innerHTML = collections.map((col, idx) => {
       const isColActive = activeFilter === `collection:${col.id}`;
-      const count = counts[col.id] || 0;
-      const colColor = col.color || '#5B4CC4';
+      const defaultColors = ['#EC4899', '#3B82F6', '#8B5CF6', '#10B981', '#F59E0B'];
+      const colColor = col.color || defaultColors[idx % defaultColors.length];
+
+      const iconSvg = `<svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+           </svg>`;
+
       return `
         <div class="collection-nav-item ${isColActive ? 'active' : ''}" style="--col-accent: ${colColor};" data-col-item-id="${col.id}">
           <button type="button" class="collection-nav-link" data-nav-filter="collection:${col.id}" aria-label="Abrir colección ${this.escapeAttr(col.name)}">
             <span class="collection-badge-icon" aria-hidden="true">
-              <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-              </svg>
+              ${iconSvg}
             </span>
             <span class="collection-nav-name">${this.escapeHtml(col.name)}</span>
           </button>
           <div class="collection-nav-right">
-            <span class="collection-count-badge">${count}</span>
             <button class="btn-col-options" data-col-id="${col.id}" title="Opciones de colección" aria-label="Opciones de colección ${this.escapeAttr(col.name)}">
-              <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+              <svg style="width: 13px; height: 13px;" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
               </svg>
             </button>
           </div>
@@ -265,6 +229,15 @@ export class LibraryView {
       return;
     }
 
+    // Si el filtro activo es "Ajustes", ocultar el encabezado de biblioteca y delegar a SettingsView
+    if (filter === 'settings') {
+      if (libraryHeader) libraryHeader.style.display = 'none';
+      if (this.settingsView) {
+        this.settingsView.loadAndRender();
+      }
+      return;
+    }
+
     // En vistas de catálogo o colección, mostrar siempre el encabezado de biblioteca
     if (libraryHeader) libraryHeader.style.display = 'block';
 
@@ -312,8 +285,8 @@ export class LibraryView {
             <div class="header-card-top">
               <div class="header-card-brand-group">
                 <div class="header-card-icon-box">
-                  <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
                 <div class="header-card-text">
@@ -324,7 +297,7 @@ export class LibraryView {
               </div>
               <div class="panel-actions-row">
                 <span class="collection-count-pill">
-                  <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                  <svg style="width: 13px; height: 13px;" fill="currentColor" viewBox="0 0 512 512" aria-hidden="true"><g transform="translate(0,512) scale(0.1,-0.1)" fill="currentColor" stroke="none"><path d="M3854 4896 c-396 -164 -825 -584 -1216 -1189 -43 -67 -79 -126 -81 -131 -2 -6 -53 33 -113 85 -517 452 -1072 695 -1602 702 l-134 2 -24 -28 c-24 -28 -24 -30 -24 -241 l0 -213 -87 -17 c-137 -27 -191 -44 -208 -68 -12 -18 -15 -54 -15 -180 l0 -158 -103 0 c-87 0 -110 -3 -147 -22 -24 -13 -53 -36 -64 -51 -21 -28 -21 -30 -21 -1560 l0 -1532 23 -33 c52 -72 -27 -67 1092 -67 1155 0 1011 -13 1272 112 l158 75 172 -82 c106 -50 199 -88 241 -96 56 -12 233 -14 1046 -12 l977 3 41 27 c80 53 74 -88 71 1616 l-3 1521 -21 28 c-40 53 -79 67 -196 71 l-106 4 -4 160 c-3 159 -3 160 -30 183 -25 21 -123 49 -240 70 l-38 6 0 214 c0 209 -1 215 -23 241 -23 26 -24 26 -156 26 -123 -1 -201 -7 -243 -18 -16 -5 -17 16 -20 265 -3 255 -4 272 -23 290 -35 34 -64 34 -151 -3z m9 -218 c3 -24 5 -642 6 -1374 l1 -1331 -94 -46 c-330 -159 -752 -570 -1060 -1032 l-66 -99 0 1315 0 1315 61 99 c283 459 580 807 881 1034 82 62 242 161 259 161 4 0 9 -19 12 -42z m-2796 -494 c436 -64 891 -299 1309 -678 l101 -91 8 -339 c4 -186 4 -797 0 -1358 l-8 -1019 -36 33 c-61 57 -141 122 -238 192 -412 296 -880 482 -1270 503 l-113 6 0 1389 0 1388 73 -6 c39 -3 118 -12 174 -20z m3241 -1366 l2 -1388 -54 0 c-92 0 -277 -28 -418 -64 -243 -61 -527 -189 -766 -345 -74 -49 -118 -73 -112 -61 33 61 233 295 364 425 215 214 403 351 584 425 42 18 86 41 97 51 20 19 20 34 23 1169 l2 1148 30 7 c36 8 197 23 225 21 20 -1 20 -9 23 -1388z m-3648 -297 c0 -1158 1 -1200 19 -1222 17 -22 28 -24 167 -30 315 -15 559 -81 866 -235 97 -49 288 -160 288 -168 0 -2 -48 12 -107 29 -234 71 -448 104 -724 112 -235 7 -471 -13 -637 -54 l-22 -5 0 1370 0 1371 63 14 c34 9 68 16 75 16 9 1 12 -245 12 -1198z m3880 1184 c19 -4 43 -9 53 -11 16 -5 17 -79 17 -1376 l0 -1370 -23 6 c-13 3 -82 16 -153 28 -175 30 -605 33 -784 5 -140 -22 -311 -59 -421 -92 -45 -14 -84 -24 -85 -22 -7 6 185 117 301 175 290 144 598 222 876 222 93 0 102 2 124 25 l25 24 0 1201 c0 1139 1 1201 18 1196 9 -2 33 -7 52 -11z m-4190 -1784 l0 -1380 24 -28 24 -28 844 0 843 0 93 48 92 47 58 -29 c108 -55 110 -49 -35 -118 -70 -34 -148 -67 -173 -72 -29 -7 -386 -11 -997 -11 l-953 0 0 1475 0 1475 90 0 90 0 0 -1379z m4600 -96 l0 -1475 -956 0 -955 0 -75 25 c-41 14 -118 47 -171 74 l-98 48 80 40 79 40 100 -48 99 -49 856 2 856 3 2 1395 c2 767 5 1401 8 1408 3 8 31 12 90 12 l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661 -73 l-764 0 3 72 3 72 55 12 c48 11 211 36 320 48 78 9 470 -4 568 -18z m2987 -10 c82 -14 153 -30 158 -35 4 -4 7 -37 5 -72 l-3 -64 -761 -3 c-890 -3 -884 -3 -658 71 159 52 320 89 479 111 169 24 175 24 410 21 182 -3 246 -8 370 -29z"/><path d="M1071 3613 c-12 -10 -24 -34 -27 -53 -10 -62 11 -75 186 -119 316 -79 606 -221 901 -442 77 -57 114 -79 136 -79 39 0 76 40 76 82 0 39 -35 71 -203 189 -286 200 -605 347 -900 415 -126 29 -141 29 -169 7z"/><path d="M1093 2949 c-27 -10 -53 -47 -53 -76 0 -46 39 -71 140 -93 298 -63 628 -219 925 -435 66 -48 129 -92 141 -97 48 -22 112 41 98 98 -14 53 -348 280 -587 397 -249 123 -598 231 -664 206z"/><path d="M1065 2175 c-26 -25 -32 -63 -15 -94 11 -21 43 -35 120 -51 323 -70 655 -228 971 -464 58 -44 111 -76 125 -76 29 0 71 37 79 71 9 36 -25 73 -149 164 -305 222 -632 378 -956 455 -113 27 -145 26 -175 -5z"/></g></svg>
                   ${books.length} ${books.length === 1 ? 'libro' : 'libros'}
                 </span>
                 <button type="button" id="btn-edit-active-col" class="btn-col-header-action" title="Editar colección">
@@ -366,6 +339,22 @@ export class LibraryView {
           else if (filter === 'completed') stdTitle.textContent = 'Libros leídos';
           else if (filter === 'favorites') stdTitle.textContent = 'Mis favoritos';
           else stdTitle.textContent = 'Biblioteca';
+        }
+
+        // Píldora de conteo junto al título (Biblioteca y Favoritos)
+        const countPill = headerTop.querySelector('#library-count-pill');
+        if (countPill) {
+          if (filter === 'all') {
+            const n = books.length;
+            countPill.textContent = `${n} ${n === 1 ? 'libro' : 'libros'}`;
+            countPill.style.display = '';
+          } else if (filter === 'favorites') {
+            const n = books.filter(b => b.favorite).length;
+            countPill.textContent = `${n} ${n === 1 ? 'favorito' : 'favoritos'}`;
+            countPill.style.display = '';
+          } else {
+            countPill.style.display = 'none';
+          }
         }
 
         if (uploadBtn) uploadBtn.style.display = '';
@@ -479,9 +468,7 @@ export class LibraryView {
         ${this.renderCollectionHeader()}
         <div class="library-empty-state">
           <div class="empty-state-icon">
-            <svg style="width: 36px; height: 36px; color: var(--color-primary-light);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
+            <svg style="width: 36px; height: 36px; color: var(--color-primary-light);" fill="currentColor" viewBox="0 0 512 512" aria-hidden="true"><g transform="translate(0,512) scale(0.1,-0.1)" fill="currentColor" stroke="none"><path d="M3854 4896 c-396 -164 -825 -584 -1216 -1189 -43 -67 -79 -126 -81 -131 -2 -6 -53 33 -113 85 -517 452 -1072 695 -1602 702 l-134 2 -24 -28 c-24 -28 -24 -30 -24 -241 l0 -213 -87 -17 c-137 -27 -191 -44 -208 -68 -12 -18 -15 -54 -15 -180 l0 -158 -103 0 c-87 0 -110 -3 -147 -22 -24 -13 -53 -36 -64 -51 -21 -28 -21 -30 -21 -1560 l0 -1532 23 -33 c52 -72 -27 -67 1092 -67 1155 0 1011 -13 1272 112 l158 75 172 -82 c106 -50 199 -88 241 -96 56 -12 233 -14 1046 -12 l977 3 41 27 c80 53 74 -88 71 1616 l-3 1521 -21 28 c-40 53 -79 67 -196 71 l-106 4 -4 160 c-3 159 -3 160 -30 183 -25 21 -123 49 -240 70 l-38 6 0 214 c0 209 -1 215 -23 241 -23 26 -24 26 -156 26 -123 -1 -201 -7 -243 -18 -16 -5 -17 16 -20 265 -3 255 -4 272 -23 290 -35 34 -64 34 -151 -3z m9 -218 c3 -24 5 -642 6 -1374 l1 -1331 -94 -46 c-330 -159 -752 -570 -1060 -1032 l-66 -99 0 1315 0 1315 61 99 c283 459 580 807 881 1034 82 62 242 161 259 161 4 0 9 -19 12 -42z m-2796 -494 c436 -64 891 -299 1309 -678 l101 -91 8 -339 c4 -186 4 -797 0 -1358 l-8 -1019 -36 33 c-61 57 -141 122 -238 192 -412 296 -880 482 -1270 503 l-113 6 0 1389 0 1388 73 -6 c39 -3 118 -12 174 -20z m3241 -1366 l2 -1388 -54 0 c-92 0 -277 -28 -418 -64 -243 -61 -527 -189 -766 -345 -74 -49 -118 -73 -112 -61 33 61 233 295 364 425 215 214 403 351 584 425 42 18 86 41 97 51 20 19 20 34 23 1169 l2 1148 30 7 c36 8 197 23 225 21 20 -1 20 -9 23 -1388z m-3648 -297 c0 -1158 1 -1200 19 -1222 17 -22 28 -24 167 -30 315 -15 559 -81 866 -235 97 -49 288 -160 288 -168 0 -2 -48 12 -107 29 -234 71 -448 104 -724 112 -235 7 -471 -13 -637 -54 l-22 -5 0 1370 0 1371 63 14 c34 9 68 16 75 16 9 1 12 -245 12 -1198z m3880 1184 c19 -4 43 -9 53 -11 16 -5 17 -79 17 -1376 l0 -1370 -23 6 c-13 3 -82 16 -153 28 -175 30 -605 33 -784 5 -140 -22 -311 -59 -421 -92 -45 -14 -84 -24 -85 -22 -7 6 185 117 301 175 290 144 598 222 876 222 93 0 102 2 124 25 l25 24 0 1201 c0 1139 1 1201 18 1196 9 -2 33 -7 52 -11z m-4190 -1784 l0 -1380 24 -28 24 -28 844 0 843 0 93 48 92 47 58 -29 c108 -55 110 -49 -35 -118 -70 -34 -148 -67 -173 -72 -29 -7 -386 -11 -997 -11 l-953 0 0 1475 0 1475 90 0 90 0 0 -1379z m4600 -96 l0 -1475 -956 0 -955 0 -75 25 c-41 14 -118 47 -171 74 l-98 48 80 40 79 40 100 -48 99 -49 856 2 856 3 2 1395 c2 767 5 1401 8 1408 3 8 31 12 90 12 l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661 -73 l-764 0 3 72 3 72 55 12 c48 11 211 36 320 48 78 9 470 -4 568 -18z m2987 -10 c82 -14 153 -30 158 -35 4 -4 7 -37 5 -72 l-3 -64 -761 -3 c-890 -3 -884 -3 -658 71 159 52 320 89 479 111 169 24 175 24 410 21 182 -3 246 -8 370 -29z"/><path d="M1071 3613 c-12 -10 -24 -34 -27 -53 -10 -62 11 -75 186 -119 316 -79 606 -221 901 -442 77 -57 114 -79 136 -79 39 0 76 40 76 82 0 39 -35 71 -203 189 -286 200 -605 347 -900 415 -126 29 -141 29 -169 7z"/><path d="M1093 2949 c-27 -10 -53 -47 -53 -76 0 -46 39 -71 140 -93 298 -63 628 -219 925 -435 66 -48 129 -92 141 -97 48 -22 112 41 98 98 -14 53 -348 280 -587 397 -249 123 -598 231 -664 206z"/><path d="M1065 2175 c-26 -25 -32 -63 -15 -94 11 -21 43 -35 120 -51 323 -70 655 -228 971 -464 58 -44 111 -76 125 -76 29 0 71 37 79 71 9 36 -25 73 -149 164 -305 222 -632 378 -956 455 -113 27 -145 26 -175 -5z"/></g></svg>
           </div>
           <h3 class="empty-state-title">${emptyTitle}</h3>
           <p class="empty-state-desc">
@@ -614,14 +601,14 @@ export class LibraryView {
       } else if (book.lastReadChapterTitle && !book.lastReadChapterTitle.includes('%')) {
         helper = book.lastReadChapterTitle;
       }
-      const bookIconSvg = `<svg style="width:12px;height:12px;flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>`;
+      const bookIconSvg = `<svg style="width:12px;height:12px;flex-shrink:0" fill="currentColor" viewBox="0 0 512 512" aria-hidden="true"><g transform="translate(0,512) scale(0.1,-0.1)" fill="currentColor" stroke="none"><path d="M3854 4896 c-396 -164 -825 -584 -1216 -1189 -43 -67 -79 -126 -81 -131 -2 -6 -53 33 -113 85 -517 452 -1072 695 -1602 702 l-134 2 -24 -28 c-24 -28 -24 -30 -24 -241 l0 -213 -87 -17 c-137 -27 -191 -44 -208 -68 -12 -18 -15 -54 -15 -180 l0 -158 -103 0 c-87 0 -110 -3 -147 -22 -24 -13 -53 -36 -64 -51 -21 -28 -21 -30 -21 -1560 l0 -1532 23 -33 c52 -72 -27 -67 1092 -67 1155 0 1011 -13 1272 112 l158 75 172 -82 c106 -50 199 -88 241 -96 56 -12 233 -14 1046 -12 l977 3 41 27 c80 53 74 -88 71 1616 l-3 1521 -21 28 c-40 53 -79 67 -196 71 l-106 4 -4 160 c-3 159 -3 160 -30 183 -25 21 -123 49 -240 70 l-38 6 0 214 c0 209 -1 215 -23 241 -23 26 -24 26 -156 26 -123 -1 -201 -7 -243 -18 -16 -5 -17 16 -20 265 -3 255 -4 272 -23 290 -35 34 -64 34 -151 -3z m9 -218 c3 -24 5 -642 6 -1374 l1 -1331 -94 -46 c-330 -159 -752 -570 -1060 -1032 l-66 -99 0 1315 0 1315 61 99 c283 459 580 807 881 1034 82 62 242 161 259 161 4 0 9 -19 12 -42z m-2796 -494 c436 -64 891 -299 1309 -678 l101 -91 8 -339 c4 -186 4 -797 0 -1358 l-8 -1019 -36 33 c-61 57 -141 122 -238 192 -412 296 -880 482 -1270 503 l-113 6 0 1389 0 1388 73 -6 c39 -3 118 -12 174 -20z m3241 -1366 l2 -1388 -54 0 c-92 0 -277 -28 -418 -64 -243 -61 -527 -189 -766 -345 -74 -49 -118 -73 -112 -61 33 61 233 295 364 425 215 214 403 351 584 425 42 18 86 41 97 51 20 19 20 34 23 1169 l2 1148 30 7 c36 8 197 23 225 21 20 -1 20 -9 23 -1388z m-3648 -297 c0 -1158 1 -1200 19 -1222 17 -22 28 -24 167 -30 315 -15 559 -81 866 -235 97 -49 288 -160 288 -168 0 -2 -48 12 -107 29 -234 71 -448 104 -724 112 -235 7 -471 -13 -637 -54 l-22 -5 0 1370 0 1371 63 14 c34 9 68 16 75 16 9 1 12 -245 12 -1198z m3880 1184 c19 -4 43 -9 53 -11 16 -5 17 -79 17 -1376 l0 -1370 -23 6 c-13 3 -82 16 -153 28 -175 30 -605 33 -784 5 -140 -22 -311 -59 -421 -92 -45 -14 -84 -24 -85 -22 -7 6 185 117 301 175 290 144 598 222 876 222 93 0 102 2 124 25 l25 24 0 1201 c0 1139 1 1201 18 1196 9 -2 33 -7 52 -11z m-4190 -1784 l0 -1380 24 -28 24 -28 844 0 843 0 93 48 92 47 58 -29 c108 -55 110 -49 -35 -118 -70 -34 -148 -67 -173 -72 -29 -7 -386 -11 -997 -11 l-953 0 0 1475 0 1475 90 0 90 0 0 -1379z m4600 -96 l0 -1475 -956 0 -955 0 -75 25 c-41 14 -118 47 -171 74 l-98 48 80 40 79 40 100 -48 99 -49 856 2 856 3 2 1395 c2 767 5 1401 8 1408 3 8 31 12 90 12 l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661 -73 l-764 0 3 72 3 72 55 12 c48 11 211 36 320 48 78 9 470 -4 568 -18z m2987 -10 c82 -14 153 -30 158 -35 4 -4 7 -37 5 -72 l-3 -64 -761 -3 c-890 -3 -884 -3 -658 71 159 52 320 89 479 111 169 24 175 24 410 21 182 -3 246 -8 370 -29z"/><path d="M1071 3613 c-12 -10 -24 -34 -27 -53 -10 -62 11 -75 186 -119 316 -79 606 -221 901 -442 77 -57 114 -79 136 -79 39 0 76 40 76 82 0 39 -35 71 -203 189 -286 200 -605 347 -900 415 -126 29 -141 29 -169 7z"/><path d="M1093 2949 c-27 -10 -53 -47 -53 -76 0 -46 39 -71 140 -93 298 -63 628 -219 925 -435 66 -48 129 -92 141 -97 48 -22 112 41 98 98 -14 53 -348 280 -587 397 -249 123 -598 231 -664 206z"/><path d="M1065 2175 c-26 -25 -32 -63 -15 -94 11 -21 43 -35 120 -51 323 -70 655 -228 971 -464 58 -44 111 -76 125 -76 29 0 71 37 79 71 9 36 -25 73 -149 164 -305 222 -632 378 -956 455 -113 27 -145 26 -175 -5z"/></g></svg>`;
 
       return `
       <div class="book-list-item" data-book-id="${book.id}">
         <div class="list-cover-wrapper">
           <div class="book-spine-3d" aria-hidden="true"></div>
           ${book.coverDataUrl ? `
-            <img src="${book.coverDataUrl}" alt="${this.escapeHtml(book.title)}" class="list-cover-thumb">
+            <img src="${book.coverDataUrl}" alt="${this.escapeHtml(book.title)}" class="list-cover-thumb" loading="lazy">
           ` : `
             <div class="list-cover-thumb list-cover-placeholder" style="background: ${book.coverGradient || 'var(--banner-gradient)'};">
               <img src="assets/icons/logo-transparent.png" alt="" style="width: 36px; height: auto; opacity: 0.92; filter: drop-shadow(0 1px 4px rgba(0,0,0,0.5));">
@@ -659,7 +646,7 @@ export class LibraryView {
           </div>
 
           <div class="list-status-row">
-            <span class="list-status-badge ${book.status}">${bookIconSvg}${this.getStatusLabel(book.status)}</span>
+            <span class="list-status-badge ${book.status}">${this.getStatusLabel(book.status)}</span>
             ${helper ? `<span class="list-status-helper">${this.escapeHtml(helper)}</span>` : ''}
           </div>
         </div>
@@ -761,7 +748,7 @@ export class LibraryView {
 
     menu.innerHTML = `
       <button class="menu-action-btn" data-opt="read" style="background: color-mix(in srgb, var(--color-primary-light) 12%, transparent);">
-        <svg style="width: 16px; height: 16px; color: var(--color-primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <svg style="width: 16px; height: 16px; color: var(--color-primary);" fill="currentColor" viewBox="0 0 512 512" aria-hidden="true"><g transform="translate(0,512) scale(0.1,-0.1)" fill="currentColor" stroke="none"><path d="M3854 4896 c-396 -164 -825 -584 -1216 -1189 -43 -67 -79 -126 -81 -131 -2 -6 -53 33 -113 85 -517 452 -1072 695 -1602 702 l-134 2 -24 -28 c-24 -28 -24 -30 -24 -241 l0 -213 -87 -17 c-137 -27 -191 -44 -208 -68 -12 -18 -15 -54 -15 -180 l0 -158 -103 0 c-87 0 -110 -3 -147 -22 -24 -13 -53 -36 -64 -51 -21 -28 -21 -30 -21 -1560 l0 -1532 23 -33 c52 -72 -27 -67 1092 -67 1155 0 1011 -13 1272 112 l158 75 172 -82 c106 -50 199 -88 241 -96 56 -12 233 -14 1046 -12 l977 3 41 27 c80 53 74 -88 71 1616 l-3 1521 -21 28 c-40 53 -79 67 -196 71 l-106 4 -4 160 c-3 159 -3 160 -30 183 -25 21 -123 49 -240 70 l-38 6 0 214 c0 209 -1 215 -23 241 -23 26 -24 26 -156 26 -123 -1 -201 -7 -243 -18 -16 -5 -17 16 -20 265 -3 255 -4 272 -23 290 -35 34 -64 34 -151 -3z m9 -218 c3 -24 5 -642 6 -1374 l1 -1331 -94 -46 c-330 -159 -752 -570 -1060 -1032 l-66 -99 0 1315 0 1315 61 99 c283 459 580 807 881 1034 82 62 242 161 259 161 4 0 9 -19 12 -42z m-2796 -494 c436 -64 891 -299 1309 -678 l101 -91 8 -339 c4 -186 4 -797 0 -1358 l-8 -1019 -36 33 c-61 57 -141 122 -238 192 -412 296 -880 482 -1270 503 l-113 6 0 1389 0 1388 73 -6 c39 -3 118 -12 174 -20z m3241 -1366 l2 -1388 -54 0 c-92 0 -277 -28 -418 -64 -243 -61 -527 -189 -766 -345 -74 -49 -118 -73 -112 -61 33 61 233 295 364 425 215 214 403 351 584 425 42 18 86 41 97 51 20 19 20 34 23 1169 l2 1148 30 7 c36 8 197 23 225 21 20 -1 20 -9 23 -1388z m-3648 -297 c0 -1158 1 -1200 19 -1222 17 -22 28 -24 167 -30 315 -15 559 -81 866 -235 97 -49 288 -160 288 -168 0 -2 -48 12 -107 29 -234 71 -448 104 -724 112 -235 7 -471 -13 -637 -54 l-22 -5 0 1370 0 1371 63 14 c34 9 68 16 75 16 9 1 12 -245 12 -1198z m3880 1184 c19 -4 43 -9 53 -11 16 -5 17 -79 17 -1376 l0 -1370 -23 6 c-13 3 -82 16 -153 28 -175 30 -605 33 -784 5 -140 -22 -311 -59 -421 -92 -45 -14 -84 -24 -85 -22 -7 6 185 117 301 175 290 144 598 222 876 222 93 0 102 2 124 25 l25 24 0 1201 c0 1139 1 1201 18 1196 9 -2 33 -7 52 -11z m-4190 -1784 l0 -1380 24 -28 24 -28 844 0 843 0 93 48 92 47 58 -29 c108 -55 110 -49 -35 -118 -70 -34 -148 -67 -173 -72 -29 -7 -386 -11 -997 -11 l-953 0 0 1475 0 1475 90 0 90 0 0 -1379z m4600 -96 l0 -1475 -956 0 -955 0 -75 25 c-41 14 -118 47 -171 74 l-98 48 80 40 79 40 100 -48 99 -49 856 2 856 3 2 1395 c2 767 5 1401 8 1408 3 8 31 12 90 12 l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661 -73 l-764 0 3 72 3 72 55 12 c48 11 211 36 320 48 78 9 470 -4 568 -18z m2987 -10 c82 -14 153 -30 158 -35 4 -4 7 -37 5 -72 l-3 -64 -761 -3 c-890 -3 -884 -3 -658 71 159 52 320 89 479 111 169 24 175 24 410 21 182 -3 246 -8 370 -29z"/><path d="M1071 3613 c-12 -10 -24 -34 -27 -53 -10 -62 11 -75 186 -119 316 -79 606 -221 901 -442 77 -57 114 -79 136 -79 39 0 76 40 76 82 0 39 -35 71 -203 189 -286 200 -605 347 -900 415 -126 29 -141 29 -169 7z"/><path d="M1093 2949 c-27 -10 -53 -47 -53 -76 0 -46 39 -71 140 -93 298 -63 628 -219 925 -435 66 -48 129 -92 141 -97 48 -22 112 41 98 98 -14 53 -348 280 -587 397 -249 123 -598 231 -664 206z"/><path d="M1065 2175 c-26 -25 -32 -63 -15 -94 11 -21 43 -35 120 -51 323 -70 655 -228 971 -464 58 -44 111 -76 125 -76 29 0 71 37 79 71 9 36 -25 73 -149 164 -305 222 -632 378 -956 455 -113 27 -145 26 -175 -5z"/></g></svg>
         <span style="flex:1; text-align:left;">Leer libro</span>
         <svg style="width:14px;height:14px;opacity:.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </button>

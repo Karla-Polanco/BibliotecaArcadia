@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ============================================================================
  * BACKUP MANAGER - COPIA DE SEGURIDAD Y RESTAURACIÓN INTEGRAL
  * ============================================================================
@@ -58,7 +58,7 @@ export class BackupManager {
           collections: collections,
           bookCollections: bookCollections,
           words: words,
-          appTheme: localStorage.getItem('arcadia_theme') || 'cerulean-light',
+          appTheme: localStorage.getItem('arcadia_theme') || 'boreal-blue',
           readerPrefs: localStorage.getItem('arcadia_reader_prefs') || null
         }
       };
@@ -148,8 +148,13 @@ export class BackupManager {
 
       if (backup.data.appTheme) {
         let t = backup.data.appTheme;
-        if (t === 'mystic-night' || t === 'deep-twilight') t = 'cerulean-light';
-        if (t === 'wine-poetry') t = 'serene-fog';
+        if (t === 'cerulean-light') t = 'boreal-blue';
+        if (t === 'lavender-light') t = 'twilight-lavender';
+        if (t === 'clear-sky') t = 'classic-ivory';
+        if (t === 'enchanted-forest') t = 'olive-green';
+        if (t === 'serene-fog' || t === 'wine-poetry' || t === 'wine') t = 'antique-pink';
+        if (t === 'abyss-dark' || t === 'mystic-night' || t === 'deep-twilight') t = 'night-ink';
+
         localStorage.setItem('arcadia_theme', t);
         document.documentElement.setAttribute('data-theme', t);
       }

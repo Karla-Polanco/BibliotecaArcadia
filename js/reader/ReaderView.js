@@ -33,6 +33,8 @@ export class ReaderView {
     this.spinnerEl = document.getElementById('reader-loading-spinner');
     this.settingsPanelEl = document.getElementById('reader-settings-panel');
     this.settingsBackdropEl = document.getElementById('reader-settings-backdrop');
+    this.prevChapterBtn = document.getElementById('btn-footer-prev-chapter');
+    this.nextChapterBtn = document.getElementById('btn-footer-next-chapter');
 
     // Elementos de Búsqueda
     this.searchBtn = document.getElementById('btn-reader-search');
@@ -67,10 +69,8 @@ export class ReaderView {
     }
 
     // Botones de navegación de capítulo en la barra inferior
-    const prevChapterBtn = document.getElementById('btn-footer-prev-chapter');
-    const nextChapterBtn = document.getElementById('btn-footer-next-chapter');
-    if (prevChapterBtn) prevChapterBtn.addEventListener('click', () => readerManager.prevChapter());
-    if (nextChapterBtn) nextChapterBtn.addEventListener('click', () => readerManager.nextChapter());
+    if (this.prevChapterBtn) this.prevChapterBtn.addEventListener('click', () => readerManager.prevChapter());
+    if (this.nextChapterBtn) this.nextChapterBtn.addEventListener('click', () => readerManager.nextChapter());
 
     // 3. Atajos de Teclado
     window.addEventListener('keydown', (e) => {
@@ -214,6 +214,12 @@ export class ReaderView {
       } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
         e.preventDefault();
         readerManager.prevPage();
+      } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'f') {
+        e.preventDefault();
+        this.toggleSearch(true);
+      } else if (e.key === '/' && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        this.toggleSearch(true);
       } else if (e.key === 'Escape') {
         if (this.settingsPanelEl?.classList.contains('open')) {
           this.toggleSettings(false);
@@ -224,10 +230,8 @@ export class ReaderView {
         } else {
           this.close();
         }
-      } else if (e.key === 'f' || e.key === 'F') {
-        if (!e.ctrlKey && !e.metaKey) {
-          this.toggleFullscreen();
-        }
+      } else if ((e.key === 'f' || e.key === 'F') && !e.ctrlKey && !e.metaKey) {
+        this.toggleFullscreen();
       }
     });
 
@@ -273,8 +277,11 @@ export class ReaderView {
       localStorage.setItem('arcadia_active_view', 'reader');
       localStorage.setItem('arcadia_active_book_id', bookId);
 
-      // (Re)suscribirse a la ubicación en cada apertura: destroy() limpia
-      // los callbacks y la suscripción del constructor quedaría muerta.
+      const result = await readerManager.openBook(bookId, 'reader-content', initialCfi);
+
+      // Suscribirse DESPUÉS de openBook: openBook() llama a destroy(), que
+      // hace onRelocatedCallbacks.clear(). Suscribirse antes se borra y la
+      // barra de progreso del lector quedaría clavada en 0%.
       if (this._unsubRelocated) {
         try { this._unsubRelocated(); } catch (_) {}
       }
@@ -282,7 +289,16 @@ export class ReaderView {
         this.updateLocationInfo(data);
       });
 
-      const result = await readerManager.openBook(bookId, 'reader-content', initialCfi);
+      // Forzar primer pintado por si el 'relocated' inicial ya se disparó
+      // antes de suscribirse (cabecera, progreso y capítulo activo).
+      try {
+        const loc = readerManager.rendition && readerManager.rendition.currentLocation
+          ? readerManager.rendition.currentLocation()
+          : null;
+        if (loc && loc.start) readerManager._handleRelocated(loc);
+      } catch (_) {}
+      // Estado inicial de los botones de capítulo
+      this.updateChapterNavState();
 
       if (this.titleEl && result.book) {
         this.titleEl.textContent = result.book.title;
@@ -320,6 +336,8 @@ export class ReaderView {
     try { document.body.classList.remove('reader-open'); } catch (_) {}
     try { document.documentElement.classList.remove('reader-open'); } catch (_) {}
     this.toggleToc(false);
+    if (this.prevChapterBtn) { this.prevChapterBtn.disabled = false; this.prevChapterBtn.title = 'Capítulo anterior'; }
+    if (this.nextChapterBtn) { this.nextChapterBtn.disabled = false; this.nextChapterBtn.title = 'Capítulo siguiente'; }
     readerManager.destroy();
     if (this._unsubRelocated) {
       try { this._unsubRelocated(); } catch (_) {}
@@ -374,7 +392,23 @@ export class ReaderView {
       this._lastChapterHref = href;
     }
     this._markActiveTocItem(false);
+    this.updateChapterNavState();
 
+  }
+
+  /**
+   * Habilita/deshabilita los botones de capítulo según la posición en el spine.
+   * Usa el atributo nativo disabled: bloquea el click y se anuncia bien a
+   * lectores de pantalla. Si el índice es desconocido deja ambos activos.
+   */
+  updateChapterNavState() {
+    if (!this.prevChapterBtn || !this.nextChapterBtn) return;
+    let state = { isFirst: false, isLast: false };
+    try { state = readerManager.getChapterNavState() || state; } catch (_) {}
+    this.prevChapterBtn.disabled = !!state.isFirst;
+    this.nextChapterBtn.disabled = !!state.isLast;
+    this.prevChapterBtn.title = state.isFirst ? 'Estás en el primer capítulo' : 'Capítulo anterior';
+    this.nextChapterBtn.title = state.isLast ? 'Estás en el último capítulo' : 'Capítulo siguiente';
   }
 
   /**
@@ -644,10 +678,32 @@ export class ReaderView {
 
     // 3. Atajos de teclado dentro del iframe
     doc.addEventListener('keydown', (e) => {
+      if (['INPUT', 'TEXTAREA'].includes(e.target?.tagName)) return;
+
       if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+        e.preventDefault();
         readerManager.nextPage();
       } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
         readerManager.prevPage();
+      } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'f') {
+        e.preventDefault();
+        this.toggleSearch(true);
+      } else if (e.key === '/' && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        this.toggleSearch(true);
+      } else if (e.key === 'Escape') {
+        if (this.settingsPanelEl?.classList.contains('open')) {
+          this.toggleSettings(false);
+        } else if (this.searchPanelEl?.classList.contains('open')) {
+          this.toggleSearch(false);
+        } else if (this.tocDrawerEl?.classList.contains('open')) {
+          this.toggleToc(false);
+        } else {
+          this.close();
+        }
+      } else if ((e.key === 'f' || e.key === 'F') && !e.ctrlKey && !e.metaKey) {
+        this.toggleFullscreen();
       }
     });
 
@@ -709,13 +765,31 @@ export class ReaderView {
       btn.classList.toggle('active', btn.dataset.align === (settings.textAlign || 'left'));
     });
 
+    // 4c. Sangría de Primera Línea
+    const indentOn = !!settings.firstLineIndent;
+    document.querySelectorAll('#first-line-indent-options [data-indent]').forEach(btn => {
+      const isOn = (btn.dataset.indent === '1') === indentOn;
+      btn.classList.toggle('active', isOn);
+      btn.setAttribute('aria-pressed', String(isOn));
+    });
+
     // 5. Tema del lector (soporta alias legacy 'wine'/'mystic-night')
     document.querySelectorAll('#reader-theme-options [data-reader-theme]').forEach(chip => {
       const themeVal = (settings.theme || 'inherit');
       const normalize = v => {
-        if (v === 'wine') return 'serene-fog';
-        if (v === 'mystic-night' || v === 'mint') return 'enchanted-forest';
-        if (v === 'paper' || v === 'neutral' || v === 'oled') return v;
+        if (v === 'cerulean-light') return 'boreal-blue';
+        if (v === 'lavender-light') return 'twilight-lavender';
+        if (v === 'clear-sky') return 'classic-ivory';
+        if (v === 'enchanted-forest' || v === 'mint') return 'olive-green';
+        if (v === 'serene-fog' || v === 'wine-poetry' || v === 'wine') return 'antique-pink';
+        if (v === 'abyss-dark' || v === 'mystic-night' || v === 'deep-twilight') return 'night-ink';
+        // Migración de tarjetas anteriores a las nuevas
+        if (v === 'paper') return 'pergamino';
+        if (v === 'neutral') return 'pizarra';
+        if (v === 'oled') return 'ambar';
+        if (v === 'twilight-lavender') return 'melocoton';
+        if (v === 'olive-green') return 'terracota';
+        if (v === 'pergamino' || v === 'terracota' || v === 'moca' || v === 'ambar' || v === 'niebla' || v === 'pizarra' || v === 'melocoton') return v;
         return v;
       };
       const normalizedChip = normalize(chip.dataset.readerTheme);
@@ -804,6 +878,15 @@ export class ReaderView {
       btn.addEventListener('click', async () => {
         const align = btn.dataset.align;
         const updated = await readerManager.updateSettings({ textAlign: align });
+        this.syncSettingsUI(updated);
+      });
+    });
+
+    // 4c. Sangría de Primera Línea
+    document.querySelectorAll('#first-line-indent-options [data-indent]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const firstLineIndent = btn.dataset.indent === '1';
+        const updated = await readerManager.updateSettings({ firstLineIndent });
         this.syncSettingsUI(updated);
       });
     });

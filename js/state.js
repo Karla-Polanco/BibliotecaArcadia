@@ -29,7 +29,16 @@ export class AppState {
       sortBy: 'recent',            // 'recent', 'title', 'author', 'progress'
       searchQuery: '',
       currentReadingId: null,  // ID del libro en lectura activa (null = ninguno)
-      selectedTheme: (()=>{ let t=safeGet('arcadia_theme','cerulean-light')||'cerulean-light'; if(t==='mystic-night'||t==='deep-twilight') t='cerulean-light'; if(t==='wine-poetry') t='serene-fog'; return t; })()
+      selectedTheme: (()=>{
+        let t = safeGet('arcadia_theme', 'boreal-blue') || 'boreal-blue';
+        if (t === 'cerulean-light') t = 'boreal-blue';
+        if (t === 'lavender-light') t = 'twilight-lavender';
+        if (t === 'clear-sky') t = 'classic-ivory';
+        if (t === 'enchanted-forest') t = 'olive-green';
+        if (t === 'serene-fog' || t === 'wine-poetry' || t === 'wine') t = 'antique-pink';
+        if (t === 'abyss-dark' || t === 'mystic-night' || t === 'deep-twilight') t = 'night-ink';
+        return t;
+      })()
     };
 
     this.subscribers = new Map();

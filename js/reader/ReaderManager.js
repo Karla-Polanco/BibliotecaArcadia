@@ -26,6 +26,7 @@ export class ReaderManager {
     this.currentChapterTitle = '';
     this.toc = [];
     this.saveProgressTimeout = null;
+    this._pendingSave = null;
     this.onRelocatedCallbacks = new Set();
     this.isNavigating = false;
   }
@@ -84,7 +85,7 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
     });
 
     // 5. Inyectar estilos y temas en el iframe (inicial y en cada nuevo capítulo cargado)
-    const activeGlobalTheme = document.documentElement.getAttribute('data-theme') || 'cerulean-light';
+    const activeGlobalTheme = document.documentElement.getAttribute('data-theme') || 'boreal-blue';
     if (this.rendition.hooks && this.rendition.hooks.content) {
       this.rendition.hooks.content.register((contents) => {
         ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
@@ -99,7 +100,13 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
 
     // 7. Inicializar Gestor de Ubicaciones (en segundo plano, sin bloquear la apertura)
     this.locationsManager = new LocationsManager(this.book, bookId);
-    this.locationsManager.init().catch(() => {});
+    this.locationsManager.init().then(() => {
+      try {
+        const loc = this.rendition && this.rendition.currentLocation
+          ? this.rendition.currentLocation() : null;
+        if (loc && loc.start) this._handleRelocated(loc);
+      } catch (_) {}
+    }).catch(() => {});
 
     // 8. Recuperar posición de lectura (priorizar initialCfi si viene de una nota)
     let targetCfi = initialCfi;
@@ -214,7 +221,7 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
       const currentHref = currentLoc?.start?.href;
       if (currentHref && this.book.spine && this.book.spine.items) {
         const items = this.book.spine.items;
-        const currentIndex = items.findIndex(item => item.href === currentHref || item.url === currentHref || currentHref.includes(item.href));
+        const currentIndex = this._getSpineIndex(currentHref);
         if (currentIndex !== -1 && currentIndex < items.length - 1) {
           const nextItem = items[currentIndex + 1];
           await this.rendition.display(nextItem.href);
@@ -244,7 +251,7 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
       const currentHref = currentLoc?.start?.href;
       if (currentHref && this.book.spine && this.book.spine.items) {
         const items = this.book.spine.items;
-        const currentIndex = items.findIndex(item => item.href === currentHref || item.url === currentHref || currentHref.includes(item.href));
+        const currentIndex = this._getSpineIndex(currentHref);
         if (currentIndex > 0) {
           const prevItem = items[currentIndex - 1];
           await this.rendition.display(prevItem.href);
@@ -282,6 +289,50 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
         }
       });
     } catch (_) {}
+  }
+
+  /**
+   * Resuelve el índice de un href dentro del spine (o -1 si no se encuentra).
+   * Fuente única de verdad: la usan nextChapter(), prevChapter() y
+   * getChapterNavState() para que el estado de los botones nunca se
+   * contradiga con la navegación real. Normaliza quitando fragmentos (#...).
+   * @private
+   */
+  _getSpineIndex(href) {
+    if (!href || !this.book || !this.book.spine || !this.book.spine.items) return -1;
+    const strip = (s) => String(s || '').split('#')[0].split('?')[0].trim();
+    const target = strip(href);
+    return this.book.spine.items.findIndex(item => {
+      const a = strip(item.href);
+      const b = strip(item.url);
+      return (a && (a === target || target.startsWith(a))) ||
+             (b && (b === target || target.startsWith(b)));
+    });
+  }
+
+  /**
+   * Indica si la posición actual es el primer o el último capítulo del spine.
+   * Si el href no se puede resolver devuelve ambos en false (botones
+   * habilitados) para no dejar al usuario sin salida.
+   * @returns {{isFirst: boolean, isLast: boolean, total: number, index: number}}
+   */
+  getChapterNavState() {
+    const items = (this.book && this.book.spine && this.book.spine.items) || [];
+    const empty = { isFirst: false, isLast: false, total: items.length, index: -1 };
+    if (items.length === 0 || !this.rendition) return empty;
+    let href = '';
+    try {
+      const loc = this.rendition.currentLocation ? this.rendition.currentLocation() : null;
+      href = (loc && loc.start && loc.start.href) || this.currentChapterHref || '';
+    } catch (_) { return empty; }
+    const index = this._getSpineIndex(href);
+    if (index === -1) return empty;
+    return {
+      index,
+      total: items.length,
+      isFirst: index <= 0,
+      isLast: index >= items.length - 1
+    };
   }
 
   /**
@@ -384,7 +435,7 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
 
     this.currentSettings = await ReaderSettings.save(this.currentBookId, partialSettings);
     if (this.rendition) {
-      const activeGlobalTheme = document.documentElement.getAttribute('data-theme') || 'cerulean-light';
+      const activeGlobalTheme = document.documentElement.getAttribute('data-theme') || 'boreal-blue';
       ReaderSettings.apply(this.rendition, this.currentSettings, activeGlobalTheme);
     }
 
@@ -414,19 +465,29 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
     this.currentChapterHref = chapterHref || '';
     this.currentChapterTitle = chapterTitle;
 
-    // Calcular porcentaje
+    // Calcular porcentaje (0% real es falsy: comprobar tipo explícito)
     let percentage = 0;
-    if (location.start.percentage) {
-      percentage = Math.round(location.start.percentage * 1000) / 10;
+    const rawPct = location.start.percentage;
+    if (typeof rawPct === 'number' && !isNaN(rawPct)) {
+      percentage = Math.round(rawPct * 1000) / 10;
     } else if (this.locationsManager) {
       percentage = this.locationsManager.getPercentage(startCfi);
     }
 
-    // Persistir asíncronamente con debounce para no saturar IndexedDB
-    clearTimeout(this.saveProgressTimeout);
-    this.saveProgressTimeout = setTimeout(async () => {
-      await this._saveReadingProgress(startCfi, chapterHref, chapterTitle, percentage);
-    }, 400);
+    // No persistir un 0 temporal mientras locations no está listo:
+    // pisaría el avance real en IndexedDB. A la UI sí se le avisa.
+    const locationsReady = !this.locationsManager || this.locationsManager.isReady;
+    if (percentage === 0 && !locationsReady && this.currentCfi) {
+      // Solo notificar, sin programar guardado
+    } else {
+      clearTimeout(this.saveProgressTimeout);
+      this._pendingSave = { cfi: startCfi, href: chapterHref, title: chapterTitle, percentage };
+      this.saveProgressTimeout = setTimeout(async () => {
+        const p = this._pendingSave;
+        this._pendingSave = null;
+        await this._saveReadingProgress(p.cfi, p.href, p.title, p.percentage);
+      }, 400);
+    }
 
     // Notificar a los observadores suscritos de la UI
     const locationPayload = {
@@ -615,6 +676,12 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
     this.currentChapterTitle = '';
     this.toc = [];
     clearTimeout(this.saveProgressTimeout);
+    if (this._pendingSave) {
+      const p = this._pendingSave;
+      this._pendingSave = null;
+      // Flush sin esperar: no perder el último avance al cerrar rápido
+      this._saveReadingProgress(p.cfi, p.href, p.title, p.percentage).catch(() => {});
+    }
     this.onRelocatedCallbacks.clear();
 
     try {

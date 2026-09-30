@@ -197,7 +197,58 @@ export class AnnotationManager {
   }
 
   /**
-   * Elimina una anotación de IndexedDB y de la vista del lector.
+   * Elimina directamente los elementos DOM/SVG del lector para la anotación especificada.
+   * @private
+   */
+  _removeDomElements(annot) {
+    if (!annot) return;
+    try {
+      const searchKeys = [annot.id, annot.cfiRange].filter(Boolean);
+
+      const removeNodesInDoc = (doc) => {
+        if (!doc) return;
+        searchKeys.forEach(key => {
+          try {
+            const byId = doc.getElementById(key);
+            if (byId) byId.remove();
+          } catch (_) {}
+
+          try {
+            const els = doc.querySelectorAll(`[data-id="${CSS.escape(key)}"], [data-cfi="${CSS.escape(key)}"], [id="${CSS.escape(key)}"]`);
+            els.forEach(el => el.remove());
+          } catch (_) {
+            try {
+              const all = doc.querySelectorAll('[data-id], [data-cfi], [id]');
+              all.forEach(el => {
+                if (el.getAttribute('data-id') === key || el.getAttribute('data-cfi') === key || el.id === key) {
+                  el.remove();
+                }
+              });
+            } catch (_) {}
+          }
+        });
+      };
+
+      // Limpiar en iframe contents de epub.js
+      const contents = this.rendition && typeof this.rendition.getContents === 'function'
+        ? this.rendition.getContents()
+        : [];
+      const contentList = Array.isArray(contents) ? contents : Array.from(contents || []);
+      contentList.forEach(content => {
+        if (content && content.document) {
+          removeNodesInDoc(content.document);
+        }
+      });
+
+      // Limpiar en documento principal (#reader-content y SVG overlays)
+      removeNodesInDoc(document);
+    } catch (e) {
+      console.warn('[AnnotationManager] Aviso limpiando nodos DOM:', e);
+    }
+  }
+
+  /**
+   * Elimina una anotación de IndexedDB y de la vista del lector inmediatamente.
    * @param {string} annotationId - ID de la anotación
    */
   async removeAnnotation(annotationId) {
@@ -209,17 +260,26 @@ export class AnnotationManager {
       return false;
     }
 
-    // Eliminar de IndexedDB
+    // 1. Eliminar de IndexedDB y del mapa en memoria
     await dbManager.delete('annotations', annotationId);
     this.annotations = this.annotations.filter(a => a.id !== annotationId);
 
-    // Eliminar del rendition (vía oficial + barrido por si las vistas se reciclaron)
+    // 2. Eliminar del rendition de epub.js (vía oficial + desanclado de vistas + remoción de nodos DOM)
     if (this.rendition) {
       try {
-        const renditionType = (annot.type === 'strikethrough' || annot.type === 'wavy') ? 'underline' : annot.type;
-        this.rendition.annotations.remove(annot.cfiRange, renditionType);
+        this.rendition.annotations.remove(annot.cfiRange, 'highlight');
       } catch (e) {}
+      try {
+        this.rendition.annotations.remove(annot.cfiRange, 'underline');
+      } catch (e) {}
+      try {
+        if (annot.type && annot.type !== 'highlight' && annot.type !== 'underline') {
+          this.rendition.annotations.remove(annot.cfiRange, annot.type);
+        }
+      } catch (e) {}
+
       this._detachFromAllViews(annot.cfiRange);
+      this._removeDomElements(annot);
     }
 
     appState.notify('annotationRemoved', annotationId);

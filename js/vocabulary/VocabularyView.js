@@ -64,9 +64,7 @@ export class VocabularyView {
         <div class="header-card-top">
           <div class="header-card-brand-group">
             <div class="header-card-icon-box header-card-icon-box--vocab">
-              <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>
+              <svg class="icon-lg" fill="currentColor" viewBox="0 0 512 512" aria-hidden="true"><g transform="translate(0,512) scale(0.1,-0.1)" fill="currentColor" stroke="none"><path d="M3854 4896 c-396 -164 -825 -584 -1216 -1189 -43 -67 -79 -126 -81 -131 -2 -6 -53 33 -113 85 -517 452 -1072 695 -1602 702 l-134 2 -24 -28 c-24 -28 -24 -30 -24 -241 l0 -213 -87 -17 c-137 -27 -191 -44 -208 -68 -12 -18 -15 -54 -15 -180 l0 -158 -103 0 c-87 0 -110 -3 -147 -22 -24 -13 -53 -36 -64 -51 -21 -28 -21 -30 -21 -1560 l0 -1532 23 -33 c52 -72 -27 -67 1092 -67 1155 0 1011 -13 1272 112 l158 75 172 -82 c106 -50 199 -88 241 -96 56 -12 233 -14 1046 -12 l977 3 41 27 c80 53 74 -88 71 1616 l-3 1521 -21 28 c-40 53 -79 67 -196 71 l-106 4 -4 160 c-3 159 -3 160 -30 183 -25 21 -123 49 -240 70 l-38 6 0 214 c0 209 -1 215 -23 241 -23 26 -24 26 -156 26 -123 -1 -201 -7 -243 -18 -16 -5 -17 16 -20 265 -3 255 -4 272 -23 290 -35 34 -64 34 -151 -3z m9 -218 c3 -24 5 -642 6 -1374 l1 -1331 -94 -46 c-330 -159 -752 -570 -1060 -1032 l-66 -99 0 1315 0 1315 61 99 c283 459 580 807 881 1034 82 62 242 161 259 161 4 0 9 -19 12 -42z m-2796 -494 c436 -64 891 -299 1309 -678 l101 -91 8 -339 c4 -186 4 -797 0 -1358 l-8 -1019 -36 33 c-61 57 -141 122 -238 192 -412 296 -880 482 -1270 503 l-113 6 0 1389 0 1388 73 -6 c39 -3 118 -12 174 -20z m3241 -1366 l2 -1388 -54 0 c-92 0 -277 -28 -418 -64 -243 -61 -527 -189 -766 -345 -74 -49 -118 -73 -112 -61 33 61 233 295 364 425 215 214 403 351 584 425 42 18 86 41 97 51 20 19 20 34 23 1169 l2 1148 30 7 c36 8 197 23 225 21 20 -1 20 -9 23 -1388z m-3648 -297 c0 -1158 1 -1200 19 -1222 17 -22 28 -24 167 -30 315 -15 559 -81 866 -235 97 -49 288 -160 288 -168 0 -2 -48 12 -107 29 -234 71 -448 104 -724 112 -235 7 -471 -13 -637 -54 l-22 -5 0 1370 0 1371 63 14 c34 9 68 16 75 16 9 1 12 -245 12 -1198z m3880 1184 c19 -4 43 -9 53 -11 16 -5 17 -79 17 -1376 l0 -1370 -23 6 c-13 3 -82 16 -153 28 -175 30 -605 33 -784 5 -140 -22 -311 -59 -421 -92 -45 -14 -84 -24 -85 -22 -7 6 185 117 301 175 290 144 598 222 876 222 93 0 102 2 124 25 l25 24 0 1201 c0 1139 1 1201 18 1196 9 -2 33 -7 52 -11z m-4190 -1784 l0 -1380 24 -28 24 -28 844 0 843 0 93 48 92 47 58 -29 c108 -55 110 -49 -35 -118 -70 -34 -148 -67 -173 -72 -29 -7 -386 -11 -997 -11 l-953 0 0 1475 0 1475 90 0 90 0 0 -1379z m4600 -96 l0 -1475 -956 0 -955 0 -75 25 c-41 14 -118 47 -171 74 l-98 48 80 40 79 40 100 -48 99 -49 856 2 856 3 2 1395 c2 767 5 1401 8 1408 3 8 31 12 90 12 l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661 -73 l-764 0 3 72 3 72 55 12 c48 11 211 36 320 48 78 9 470 -4 568 -18z m2987 -10 c82 -14 153 -30 158 -35 4 -4 7 -37 5 -72 l-3 -64 -761 -3 c-890 -3 -884 -3 -658 71 159 52 320 89 479 111 169 24 175 24 410 21 182 -3 246 -8 370 -29z"/><path d="M1071 3613 c-12 -10 -24 -34 -27 -53 -10 -62 11 -75 186 -119 316 -79 606 -221 901 -442 77 -57 114 -79 136 -79 39 0 76 40 76 82 0 39 -35 71 -203 189 -286 200 -605 347 -900 415 -126 29 -141 29 -169 7z"/><path d="M1093 2949 c-27 -10 -53 -47 -53 -76 0 -46 39 -71 140 -93 298 -63 628 -219 925 -435 66 -48 129 -92 141 -97 48 -22 112 41 98 98 -14 53 -348 280 -587 397 -249 123 -598 231 -664 206z"/><path d="M1065 2175 c-26 -25 -32 -63 -15 -94 11 -21 43 -35 120 -51 323 -70 655 -228 971 -464 58 -44 111 -76 125 -76 29 0 71 37 79 71 9 36 -25 73 -149 164 -305 222 -632 378 -956 455 -113 27 -145 26 -175 -5z"/></g></svg>
             </div>
             <div class="header-card-text">
               <span class="panel-category-tag">CUADERNO LÉXICO</span>
@@ -77,7 +75,7 @@ export class VocabularyView {
           <div class="panel-actions-row">
             <span class="collection-count-pill">${totalCount} ${totalCount === 1 ? 'palabra' : 'palabras'}</span>
             <button id="btn-add-word-manual" class="btn-col-header-action btn-col-header-action--primary">
-              <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
               <span>Añadir palabra</span>
             </button>
           </div>
@@ -85,7 +83,7 @@ export class VocabularyView {
 
         <!-- Buscador -->
         <div class="panel-search-bar">
-          <svg style="width: 14px; height: 14px; color: var(--color-text-muted); flex-shrink: 0; pointer-events: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <svg class="icon-sm text-muted flex-shrink-0 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           <input type="text" id="input-vocab-search" class="panel-search-input" value="${this.escapeHtml(this.searchQuery)}" placeholder="Buscar en tu cuaderno...">
         </div>
       </div>
@@ -95,74 +93,82 @@ export class VocabularyView {
         ${filtered.length === 0 ? `
           <div class="library-empty-state">
             <div class="empty-state-icon">
-              <svg style="width: 36px; height: 36px; color: var(--color-primary-light);" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>
+              <svg class="icon-xl color-primary-light" fill="currentColor" viewBox="0 0 512 512" aria-hidden="true"><g transform="translate(0,512) scale(0.1,-0.1)" fill="currentColor" stroke="none"><path d="M3854 4896 c-396 -164 -825 -584 -1216 -1189 -43 -67 -79 -126 -81 -131 -2 -6 -53 33 -113 85 -517 452 -1072 695 -1602 702 l-134 2 -24 -28 c-24 -28 -24 -30 -24 -241 l0 -213 -87 -17 c-137 -27 -191 -44 -208 -68 -12 -18 -15 -54 -15 -180 l0 -158 -103 0 c-87 0 -110 -3 -147 -22 -24 -13 -53 -36 -64 -51 -21 -28 -21 -30 -21 -1560 l0 -1532 23 -33 c52 -72 -27 -67 1092 -67 1155 0 1011 -13 1272 112 l158 75 172 -82 c106 -50 199 -88 241 -96 56 -12 233 -14 1046 -12 l977 3 41 27 c80 53 74 -88 71 1616 l-3 1521 -21 28 c-40 53 -79 67 -196 71 l-106 4 -4 160 c-3 159 -3 160 -30 183 -25 21 -123 49 -240 70 l-38 6 0 214 c0 209 -1 215 -23 241 -23 26 -24 26 -156 26 -123 -1 -201 -7 -243 -18 -16 -5 -17 16 -20 265 -3 255 -4 272 -23 290 -35 34 -64 34 -151 -3z m9 -218 c3 -24 5 -642 6 -1374 l1 -1331 -94 -46 c-330 -159 -752 -570 -1060 -1032 l-66 -99 0 1315 0 1315 61 99 c283 459 580 807 881 1034 82 62 242 161 259 161 4 0 9 -19 12 -42z m-2796 -494 c436 -64 891 -299 1309 -678 l101 -91 8 -339 c4 -186 4 -797 0 -1358 l-8 -1019 -36 33 c-61 57 -141 122 -238 192 -412 296 -880 482 -1270 503 l-113 6 0 1389 0 1388 73 -6 c39 -3 118 -12 174 -20z m3241 -1366 l2 -1388 -54 0 c-92 0 -277 -28 -418 -64 -243 -61 -527 -189 -766 -345 -74 -49 -118 -73 -112 -61 33 61 233 295 364 425 215 214 403 351 584 425 42 18 86 41 97 51 20 19 20 34 23 1169 l2 1148 30 7 c36 8 197 23 225 21 20 -1 20 -9 23 -1388z m-3648 -297 c0 -1158 1 -1200 19 -1222 17 -22 28 -24 167 -30 315 -15 559 -81 866 -235 97 -49 288 -160 288 -168 0 -2 -48 12 -107 29 -234 71 -448 104 -724 112 -235 7 -471 -13 -637 -54 l-22 -5 0 1370 0 1371 63 14 c34 9 68 16 75 16 9 1 12 -245 12 -1198z m3880 1184 c19 -4 43 -9 53 -11 16 -5 17 -79 17 -1376 l0 -1370 -23 6 c-13 3 -82 16 -153 28 -175 30 -605 33 -784 5 -140 -22 -311 -59 -421 -92 -45 -14 -84 -24 -85 -22 -7 6 185 117 301 175 290 144 598 222 876 222 93 0 102 2 124 25 l25 24 0 1201 c0 1139 1 1201 18 1196 9 -2 33 -7 52 -11z m-4190 -1784 l0 -1380 24 -28 24 -28 844 0 843 0 93 48 92 47 58 -29 c108 -55 110 -49 -35 -118 -70 -34 -148 -67 -173 -72 -29 -7 -386 -11 -997 -11 l-953 0 0 1475 0 1475 90 0 90 0 0 -1379z m4600 -96 l0 -1475 -956 0 -955 0 -75 25 c-41 14 -118 47 -171 74 l-98 48 80 40 79 40 100 -48 99 -49 856 2 856 3 2 1395 c2 767 5 1401 8 1408 3 8 31 12 90 12 l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661 -73 l-764 0 3 72 3 72 55 12 c48 11 211 36 320 48 78 9 470 -4 568 -18z m2987 -10 c82 -14 153 -30 158 -35 4 -4 7 -37 5 -72 l-3 -64 -761 -3 c-890 -3 -884 -3 -658 71 159 52 320 89 479 111 169 24 175 24 410 21 182 -3 246 -8 370 -29z"/><path d="M1071 3613 c-12 -10 -24 -34 -27 -53 -10 -62 11 -75 186 -119 316 -79 606 -221 901 -442 77 -57 114 -79 136 -79 39 0 76 40 76 82 0 39 -35 71 -203 189 -286 200 -605 347 -900 415 -126 29 -141 29 -169 7z"/><path d="M1093 2949 c-27 -10 -53 -47 -53 -76 0 -46 39 -71 140 -93 298 -63 628 -219 925 -435 66 -48 129 -92 141 -97 48 -22 112 41 98 98 -14 53 -348 280 -587 397 -249 123 -598 231 -664 206z"/><path d="M1065 2175 c-26 -25 -32 -63 -15 -94 11 -21 43 -35 120 -51 323 -70 655 -228 971 -464 58 -44 111 -76 125 -76 29 0 71 37 79 71 9 36 -25 73 -149 164 -305 222 -632 378 -956 455 -113 27 -145 26 -175 -5z"/></g></svg>
             </div>
             <h3 class="empty-state-title">${this.searchQuery ? 'Sin resultados' : 'Tu cuaderno está vacío'}</h3>
             <p class="empty-state-desc">
               ${this.searchQuery ? `No se encontraron palabras que coincidan con «<strong>${this.escapeHtml(this.searchQuery)}</strong>». Prueba con otro término.` : 'Crea tu primera palabra o usa «Definir» mientras lees. Tus términos aparecerán aquí.'}
             </p>
-            ${this.searchQuery ? `<button id="btn-vocab-clear-search" class="arcadia-modal-btn arcadia-modal-btn--ghost"><span>Limpiar búsqueda</span></button>` : `<button id="btn-add-word-empty" class="arcadia-modal-btn arcadia-modal-btn--primary"><svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg><span>Añadir mi primera palabra</span></button>`}
+            ${this.searchQuery ? `<button id="btn-vocab-clear-search" class="arcadia-modal-btn arcadia-modal-btn--ghost"><span>Limpiar búsqueda</span></button>` : `<button id="btn-add-word-empty" class="arcadia-modal-btn arcadia-modal-btn--primary"><svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg><span>Añadir mi primera palabra</span></button>`}
           </div>
         ` : filtered.map(w => {
           const book = this.books.find(b => b.id === w.bookId);
           const bookTitle = book ? book.title : 'Nota personal';
+          const formattedDate = new Date(w.dateAdded || Date.now()).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
           const escAttr = (v) => this.escapeHtml(v).replace(/"/g, '&quot;');
           return `
             <div class="vocab-card" data-word-id="${w.id}">
+              <!-- Cabecera Superior -->
               <div class="vocab-card-header">
-                <div style="min-width: 0;">
-                  <div style="display: flex; align-items: center; gap: 8px;">
-                    <h3 class="vocab-word-title">${this.escapeHtml(w.word)}</h3>
-                    <button class="btn-card-speak" data-word="${this.escapeHtml(w.word)}" title="Escuchar pronunciación" style="
-                      width: 28px; height: 28px; border-radius: 50%; background-color: var(--color-surface-hover); color: var(--color-primary-light); display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid var(--color-border); flex-shrink: 0; transition: all 0.18s ease;
-                    ">
-                      <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
-                    </button>
-                  </div>
-                  ${w.phonetic ? `<span class="vocab-phonetic-badge">${this.escapeHtml(w.phonetic)}</span>` : ''}
+                <div class="vocab-card-header-left">
+                  <h3 class="vocab-word-title">${this.escapeHtml(w.word)}</h3>
+                  <button class="btn-card-speak btn-circle-speak" data-word="${this.escapeHtml(w.word)}" title="Escuchar pronunciación" aria-label="Escuchar pronunciación">
+                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+                  </button>
                 </div>
 
-                <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
-                  <button class="btn-card-edit btn-card-action" data-action="edit-word" data-id="${w.id}" title="Editar término">
-                    <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                <div class="vocab-card-header-actions">
+                  <button class="btn-card-edit btn-circle-action" data-action="edit-word" data-id="${w.id}" title="Editar término" aria-label="Editar">
+                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                   </button>
-
-                  <button class="btn-card-del btn-card-action" data-action="delete-word" data-id="${w.id}" title="Eliminar término">
-                    <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  <button class="btn-card-del btn-circle-action" data-action="delete-word" data-id="${w.id}" title="Eliminar término" aria-label="Eliminar">
+                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                   </button>
                 </div>
               </div>
 
-              <!-- Definición -->
+              <!-- Píldora Fonética (Si existe) -->
+              ${w.phonetic ? `
+                <div class="vocab-phonetic-row">
+                  <div class="vocab-phonetic-badge">
+                    <span>${this.escapeHtml(w.phonetic)}</span>
+                  </div>
+                </div>
+              ` : ''}
+
+              <!-- Caja de Definición -->
               <div class="vocab-definition-box">
                 <p class="vocab-definition-text">
                   ${this.escapeHtml(w.definition)}
                 </p>
+                <div class="vocab-leaf-watermark" aria-hidden="true">
+                  <svg class="icon-md" fill="currentColor" viewBox="0 0 25.871 25.871"><g><g><path d="M22.521,0c-5.334,1.076-9.402,5.67-9.402,5.67l-0.224,2.31l-0.93-0.979 c-4.267,4.842-4.711,11.917-4.711,11.917c0.064,0.313,0.172,0.559,0.305,0.757l9.966-13.029L8.526,20.335 c0.485,0.121,0.917,0.036,0.917,0.036C19.321,15.67,21.261,9.187,21.261,9.187l-2.03-0.673l2.758-0.42 c0.073-0.23,0.142-0.458,0.203-0.679C23.471,2.883,22.521,0,22.521,0z"></path><path d="M7.56,19.675c-0.97,1.389-3.43,4.533-4.55,6.196l1.363-0.695c0,0,2.321-2.71,4.15-4.841 C8.188,20.251,7.824,20.061,7.56,19.675z"></path></g></g></svg>
+                </div>
               </div>
 
-              <!-- Cita de contexto si existe -->
+              <!-- Cita de Contexto (Si existe) -->
               ${w.contextSentence ? `
                 <div class="vocab-context-box">
                   «${this.escapeHtml(w.contextSentence)}»
                 </div>
               ` : ''}
 
-              <!-- Pie: libro y fecha -->
+              <!-- Pie: Libro y Fecha -->
               <div class="vocab-card-footer">
-                <span title="${this.escapeHtml(bookTitle)}" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 190px;">📖 ${this.escapeHtml(bookTitle)}</span>
-                <span style="flex-shrink: 0;">${new Date(w.dateAdded).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}</span>
+                <div class="vocab-footer-source">
+                  <span title="${this.escapeHtml(bookTitle)}">📖 ${this.escapeHtml(bookTitle)}</span>
+                </div>
+                <span class="vocab-footer-date">${formattedDate}</span>
               </div>
 
-              <!-- Acciones inferiores -->
+              <!-- Botones de Acción Inferiores (Escuchar y Copiar) -->
               <div class="vocab-card-actions">
-                <button class="btn-listen-word vocab-action-btn" data-action="speak-word" data-word="${escAttr(w.word)}" title="Escuchar pronunciación">
-                  <svg style="width: 13px; height: 13px; color: var(--color-primary-light);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+                <button class="btn-listen-word vocab-pill-btn" data-action="speak-word" data-word="${escAttr(w.word)}" title="Escuchar pronunciación">
+                  <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
                   <span>Escuchar</span>
                 </button>
-                <button class="btn-copy-word vocab-action-btn" data-action="copy-word" data-word="${escAttr(w.word)}" data-definition="${escAttr(w.definition || '')}" title="Copiar palabra y definición">
-                  <svg style="width: 13px; height: 13px; color: var(--color-text-muted);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                <button class="btn-copy-word vocab-pill-btn" data-action="copy-word" data-word="${escAttr(w.word)}" data-definition="${escAttr(w.definition || '')}" title="Copiar palabra y definición">
+                  <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
                   <span>Copiar</span>
                 </button>
               </div>
@@ -176,21 +182,22 @@ export class VocabularyView {
   }
 
   injectStyles() {
-    if (document.getElementById('vocab-view-styles')) return;
-    const style = document.createElement('style');
-    style.id = 'vocab-view-styles';
+    let style = document.getElementById('vocab-view-styles');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'vocab-view-styles';
+      document.head.appendChild(style);
+    }
     style.textContent = `
-      .vocab-card { position: relative; overflow: hidden; transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease; }
-      .vocab-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--color-border-focus); }
-      .vocab-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--color-primary-light), var(--color-secondary)); opacity: 0; transition: opacity 0.18s ease; }
-      .vocab-card:hover::before { opacity: 1; }
+      .vocab-card { position: relative; overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+      .vocab-card::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 5px; background-color: var(--color-primary-light); border-radius: 16px 0 0 16px; }
+      .vocab-card:hover { transform: translateY(-2px) !important; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important; border-color: color-mix(in srgb, var(--color-primary-light) 40%, var(--color-border)) !important; }
       .btn-card-speak:hover { background-color: var(--color-primary-light) !important; color: #FFF !important; }
       .btn-card-edit:hover { color: var(--color-primary-light) !important; background-color: var(--color-surface-hover) !important; }
       .btn-card-del:hover { color: #EF4444 !important; background-color: var(--color-surface-hover) !important; }
       #btn-add-word-manual:hover, #btn-add-word-empty:hover { filter: brightness(1.12); }
       #input-vocab-search:focus { border-color: var(--color-border-focus) !important; }
     `;
-    document.head.appendChild(style);
   }
 
   attachEvents() {
@@ -289,73 +296,51 @@ export class VocabularyView {
     const escAttr = (v) => this.escapeHtml(v).replace(/"/g, '&quot;');
     // Crear modal personalizado con los 4 campos
     const overlay = document.createElement('div');
-    overlay.className = 'theme-modal-overlay active';
-    overlay.style.cssText = `
-      position: fixed; inset: 0; top: 0; left: 0;
-      width: 100vw; height: 100vh; height: 100dvh;
-      z-index: 99999;
-      background: rgba(0, 0, 0, 0.78);
-      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      display: flex; align-items: center; justify-content: center;
-      padding: 20px; box-sizing: border-box;
-    `;
-
-    const fieldStyle = `
-      width: 100%; background: var(--color-surface-elevated, #161625);
-      border: 1px solid var(--color-border, #333); border-radius: var(--radius-sm, 6px);
-      color: var(--color-text, #fff); padding: 10px; font-size: var(--text-sm, 0.875rem);
-      box-sizing: border-box; font-family: inherit; line-height: 1.4;
-    `;
-
-    const labelStyle = `
-      font-size: 0.7rem; text-transform: uppercase; font-weight: bold;
-      color: var(--color-primary-light); display: block; margin-bottom: 6px;
-      letter-spacing: 0.03em;
-    `;
+    overlay.className = 'theme-modal-overlay-custom active';
 
     overlay.innerHTML = `
-      <div class="theme-modal-dialog" style="max-width: 460px; padding: 24px;">
-        <div class="theme-modal-header" style="margin-bottom: 18px;">
+      <div class="theme-modal-dialog vocab-modal-dialog">
+        <div class="theme-modal-header mb-3">
           <div>
-            <h2 class="theme-modal-title" style="font-size: 1.2rem;">${isEditing ? 'Editar palabra' : 'Añadir palabra al vocabulario'}</h2>
-            <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin: 4px 0 0;">${isEditing ? 'Modifica los campos y guarda los cambios.' : 'Completa los campos para agregar un nuevo término.'}</p>
+            <h2 class="theme-modal-title text-base">${isEditing ? 'Editar palabra' : 'Añadir palabra al vocabulario'}</h2>
+            <p class="theme-modal-subtitle">${isEditing ? 'Modifica los campos y guarda los cambios.' : 'Completa los campos para agregar un nuevo término.'}</p>
           </div>
           <button class="theme-modal-close" id="btn-close-add-word">
-            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 18px;">
+        <div class="vocab-modal-form-group">
           <!-- Palabra -->
           <div>
-            <label style="${labelStyle}">Palabra</label>
-            <input type="text" id="add-word-input" placeholder="Ej. Ataraxia, Epifanía..." value="${isEditing ? escAttr(wordToEdit.word) : ''}" style="${fieldStyle}">
-            <span id="add-word-lookup-status" style="font-size: 0.7rem; color: var(--color-text-muted); margin-top: 4px; display: none;">Buscando definición...</span>
+            <label class="vocab-modal-label">Palabra</label>
+            <input type="text" id="add-word-input" class="vocab-modal-field" placeholder="Ej. Ataraxia, Epifanía..." value="${isEditing ? escAttr(wordToEdit.word) : ''}">
+            <span id="add-word-lookup-status" class="vocab-modal-status-text hidden">Buscando definición...</span>
           </div>
 
           <!-- Fonética -->
           <div>
-            <label style="${labelStyle}">Fonética</label>
-            <input type="text" id="add-word-phonetic" placeholder="Ej. /a.taˈɾak.sja/" value="${isEditing ? escAttr(wordToEdit.phonetic || '') : ''}" style="${fieldStyle}">
+            <label class="vocab-modal-label">Fonética</label>
+            <input type="text" id="add-word-phonetic" class="vocab-modal-field" placeholder="Ej. /a.taˈɾak.sja/" value="${isEditing ? escAttr(wordToEdit.phonetic || '') : ''}">
           </div>
 
           <!-- Definición -->
           <div>
-            <label style="${labelStyle}">Definición</label>
-            <textarea id="add-word-definition" placeholder="Significado del término..." style="${fieldStyle} min-height: 70px; resize: vertical;">${isEditing ? this.escapeHtml(wordToEdit.definition || '') : ''}</textarea>
+            <label class="vocab-modal-label">Definición</label>
+            <textarea id="add-word-definition" class="vocab-modal-field textarea-def" placeholder="Significado del término...">${isEditing ? this.escapeHtml(wordToEdit.definition || '') : ''}</textarea>
           </div>
 
           <!-- Oración de contexto -->
           <div>
-            <label style="${labelStyle}">Oración de contexto</label>
-            <textarea id="add-word-context" placeholder="Ej. Buscaba la ataraxia a través de la lectura sosegada." style="${fieldStyle} min-height: 50px; resize: vertical; font-style: italic;">${isEditing ? this.escapeHtml(wordToEdit.contextSentence || '') : ''}</textarea>
+            <label class="vocab-modal-label">Oración de contexto</label>
+            <textarea id="add-word-context" class="vocab-modal-field textarea-context" placeholder="Ej. Buscaba la ataraxia a través de la lectura sosegada.">${isEditing ? this.escapeHtml(wordToEdit.contextSentence || '') : ''}</textarea>
           </div>
         </div>
 
-        <div style="display: flex; justify-content: flex-end; gap: 10px;">
-          <button id="btn-cancel-add-word" style="padding: 8px 16px; border-radius: var(--radius-sm); font-size: var(--text-xs); color: var(--color-text-secondary); cursor: pointer; background: none; border: none;">Cancelar</button>
-          <button id="btn-save-add-word" style="padding: 10px 20px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: bold; background-color: var(--color-primary-light); color: #FFFFFF; cursor: pointer; display: flex; align-items: center; gap: 6px; border: none;">
-            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        <div class="flex-end-gap">
+          <button id="btn-cancel-add-word" class="btn-vocab-cancel">Cancelar</button>
+          <button id="btn-save-add-word" class="btn-vocab-save">
+            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
             <span>${isEditing ? 'Guardar cambios' : 'Guardar'}</span>
           </button>
         </div>

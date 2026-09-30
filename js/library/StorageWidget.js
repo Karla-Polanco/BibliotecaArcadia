@@ -11,14 +11,57 @@ export class StorageWidget {
     this.fillEl = fillElement;
     this.textEl = textElement;
     this.isPersistent = false;
+    this.widgetEl = document.querySelector('.storage-widget');
+    this.toggleBtn = document.querySelector('.btn-storage-toggle');
+    this.headerEl = document.querySelector('.storage-header');
   }
 
   /**
-   * Inicializa la comprobación y solicita persistencia del almacenamiento.
+   * Inicializa la comprobación, eventos y solicita persistencia del almacenamiento.
    */
   async init() {
+    this.setupMinimizeToggle();
     await this.requestPersistence();
     await this.update();
+  }
+
+  /**
+   * Configura el botón minimizar / colapsar y restaura la preferencia en localStorage.
+   */
+  setupMinimizeToggle() {
+    if (!this.widgetEl) {
+      this.widgetEl = document.querySelector('.storage-widget');
+    }
+    if (!this.widgetEl) return;
+
+    if (!this.toggleBtn) {
+      this.toggleBtn = this.widgetEl.querySelector('.btn-storage-toggle');
+    }
+    if (!this.headerEl) {
+      this.headerEl = this.widgetEl.querySelector('.storage-header');
+    }
+
+    // Restaurar estado colapsado si fue guardado previamente
+    const savedState = localStorage.getItem('arcadia_storage_collapsed');
+    if (savedState === 'true') {
+      this.widgetEl.classList.add('is-collapsed');
+    }
+
+    const handleToggle = (e) => {
+      e.stopPropagation();
+      const isNowCollapsed = this.widgetEl.classList.toggle('is-collapsed');
+      localStorage.setItem('arcadia_storage_collapsed', isNowCollapsed ? 'true' : 'false');
+    };
+
+    if (this.toggleBtn) {
+      this.toggleBtn.addEventListener('click', handleToggle);
+    }
+    if (this.headerEl) {
+      this.headerEl.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-storage-toggle')) return;
+        handleToggle(e);
+      });
+    }
   }
 
   /**

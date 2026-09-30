@@ -1,18 +1,24 @@
-/* ==========================================================================
+/* =================================================================
    ESTILOS GENERALES, RESET Y TIPOGRAFÍA BASE - BIBLIOTECA ARCADIA
-   ========================================================================== */
+   ================================================================= */
 
-/* Carga de fuentes externas - WOFF2 preferente + OTF fallback */
+/* =================================================================
+   01. TIPOGRAFÍA EXTERNA Y FUENTES BASE
+   ================================================================= */
+
 @font-face {
   font-family: 'OpenDyslexic';
   src: url('https://cdn.jsdelivr.net/gh/antijingoist/opendyslexic@master/compiled/OpenDyslexic-Regular.woff2') format('woff2'),
-       url('https://cdn.jsdelivr.net/gh/antijingoist/opendyslexic@master/compiled/OpenDyslexic-Regular.otf') format('opentype');
+    url('https://cdn.jsdelivr.net/gh/antijingoist/opendyslexic@master/compiled/OpenDyslexic-Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
-/* Reset y modelo de caja */
+/* =================================================================
+   02. RESET ESTRUCTURAL Y CONFIGURACIÓN RAÍZ
+   ================================================================= */
+
 *,
 *::before,
 *::after {
@@ -21,7 +27,7 @@
   padding: 0;
 }
 
-/* Configuración raíz y viewport */
+/* Configuración Raíz (HTML) */
 html {
   font-size: 16.5px;
   line-height: 1.5;
@@ -32,44 +38,51 @@ html {
   color-scheme: light;
 }
 
-/* Esquemas de color para temas claros */
-[data-theme="cerulean-light"],
-[data-theme="lavender-light"],
-[data-theme="clear-sky"],
-[data-theme="enchanted-forest"],
-[data-theme="serene-fog"] {
+/* -----------------------------------------------------------------
+   Mapeo de Temas y Soporte de Interfaz de Sistema
+   ----------------------------------------------------------------- */
+
+/* Temas claros */
+[data-theme="boreal-blue"],
+[data-theme="twilight-lavender"],
+[data-theme="classic-ivory"],
+[data-theme="olive-green"],
+[data-theme="antique-pink"] {
   color-scheme: light;
 }
-[data-theme="abyss-dark"] {
+
+/* Tema oscuro */
+[data-theme="night-ink"] {
   color-scheme: dark;
 }
 
-/* Estructura base del cuerpo y renderizado - FIX perf: sin background-attachment:fixed ni overflow-x:hidden */
+/* Lienzo Principal (BODY) */
 body {
-  /* Tipografía y legibilidad */
   font-family: var(--font-sans, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
   color: var(--color-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 
-  /* Fondo - soporta --theme-pg-pattern (nuevo) y --theme-bg-pattern (legado) */
   background-color: var(--color-background);
-  background-image: var(--theme-pg-pattern, var(--theme-bg-pattern, none));
+  background-image: var(--theme-bg-pattern, none);
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
 
-  /* Estructura y viewport */
   min-height: 100vh;
   min-height: 100dvh;
 
-  /* Transición */
-  transition: background-color var(--transition-normal, 250ms ease),
-              color var(--transition-normal, 250ms ease);
+  transition:
+    background-color var(--transition-normal, 250ms ease),
+    color var(--transition-normal, 250ms ease);
 }
 
-/* Elementos multimedia y vectoriales */
+/* =================================================================
+   03. ELEMENTOS GLOBALES Y UTILIDADES
+   ================================================================= */
+
+/* Contenedores Multimedia */
 img,
 picture,
 video,
@@ -79,53 +92,61 @@ svg {
   max-width: 100%;
 }
 
-/* Control de contracción de iconos */
 svg {
   flex-shrink: 0;
 }
 
-/* Listas sin viñetas */
+/* -----------------------------------------------------------------
+   LISTAS Y ENLACES
+   ----------------------------------------------------------------- */
+
 ul,
 ol {
   list-style: none;
 }
 
-/* Enlaces limpios */
 a {
   color: inherit;
   text-decoration: none;
 }
 
-/* Botones universales e interacción - transición específica por perf (no all) */
+/* =================================================================
+   04. CONFIGURACIÓN DE BOTONES
+   ================================================================= */
+
 button {
   font-family: inherit;
   font-size: inherit;
   border: none;
-  background: transparent;
+  background-color: transparent;
   color: inherit;
   cursor: pointer;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background-color var(--transition-fast, 150ms ease),
-              color var(--transition-fast, 150ms ease),
-              border-color var(--transition-fast, 150ms ease),
-              box-shadow var(--transition-fast, 150ms ease),
-              transform var(--transition-fast, 150ms ease);
+
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
 }
 
-/* Estados de foco accesible - agrupado sin !important */
+/* Foco Accesible */
 :focus-visible {
-  outline: 3px solid var(--color-primary-light, #8B7CF6);
+  outline: 3px solid var(--color-border-focus, var(--color-primary-light));
   outline-offset: 2px;
-  border-radius: var(--radius-sm, 6px);
+  border-radius: var(--radius-sm, 8px);
 }
 
-/* Botones de navegación y listas */
+/* -----------------------------------------------------------------
+   Botones de Navegación y Listas Estructurada
+   ----------------------------------------------------------------- */
 button.nav-item,
 button.collection-nav-link,
-button.mobile-nav-link,
-button.state-option-card {
+button.mobile-nav-link {
   font-family: inherit;
   text-align: left;
   justify-content: flex-start;
@@ -140,108 +161,10 @@ button.mobile-nav-link {
   justify-content: center;
 }
 
-button.state-option-card {
-  cursor: pointer;
-  display: flex;
-}
+/* -----------------------------------------------------------------
+   Ocultación Visual Accesible para Lectores de Pantalla
+   ----------------------------------------------------------------- */
 
-/* Controles de formulario base */
-input,
-select,
-textarea {
-  font-family: inherit;
-  font-size: var(--text-sm, 0.92rem);
-  color: var(--color-text);
-  background-color: var(--color-surface);
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-md, 8px);
-  padding: 9px 13px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-}
-
-/* Estados hover en inputs */
-input:hover,
-select:hover,
-textarea:hover {
-  border-color: var(--color-text-secondary);
-}
-
-/* Estados de foco en inputs */
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: var(--color-primary-light);
-  box-shadow: 0 0 0 1px var(--color-primary-glow, rgba(139, 124, 246, 0.35)),
-              0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-/* Reset para inputs integrados - especificidad elevada con :is() sin !important */
-:is(.search-box, .panel-search-bar) input,
-.search-input,
-.panel-search-input,
-#input-vocab-search,
-#input-annot-search {
-  border: none;
-  outline: none;
-  box-shadow: none;
-  background: transparent;
-  border-radius: 0;
-  padding: 0;
-}
-
-/* Selectores desplegables personalizados */
-select {
-  appearance: none;
-  -webkit-appearance: none;
-  cursor: pointer;
-  padding-right: 36px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238E88A8' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 14px 14px;
-}
-
-/* Opciones del menú desplegable */
-select option {
-  background-color: var(--color-surface-elevated, var(--color-surface, #1e1c2e));
-  color: var(--color-text, #ffffff);
-  padding: 10px 14px;
-}
-
-/* Barra de desplazamiento estándar moderno W3C como base */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
-}
-
-/* Dimensiones del scrollbar webkit - afinado para Chromium/Safari sin deprecated */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--color-border);
-  border-radius: var(--radius-full, 9999px);
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-text-muted);
-}
-
-/* Selección de texto */
-::selection {
-  background-color: var(--color-primary, #5B4CC4);
-  color: #ffffff;
-}
-
-/* Ocultación visual accesible */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -254,7 +177,124 @@ select option {
   border-width: 0;
 }
 
-/* Capa de fondo de modales - sin !important, especificidad vía :is() */
+/* =================================================================
+   04. FORMULARIOS Y CONTROLES DE ENTRADA
+   ================================================================= */
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: var(--text-sm, 0.90rem);
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md, 12px);
+  padding: 9px 13px;
+  transition: border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+/* Hover en controles */
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: var(--color-text-secondary);
+}
+
+/* Foco en controles */
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 1px var(--focus-ring);
+  outline: none;
+}
+
+/* Reset de inputs embebidos en barras de búsqueda */
+:is(.search-box, .panel-search-bar) input,
+.search-input,
+.panel-search-input,
+#input-vocab-search,
+#input-annot-search {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+}
+
+/* -----------------------------------------------------------------
+   Selectores Desplegables
+   ----------------------------------------------------------------- */
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  padding-right: 36px;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238E88A8' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px 14px;
+}
+
+/* Opciones de menú */
+select option {
+  background-color: var(--color-surface-elevated, var(--color-surface));
+  color: var(--color-text);
+  padding: 10px 14px;
+}
+
+/* =================================================================
+   05. BARRAS DE DESPLAZAMIENTO (SCROLLBARS)
+   ================================================================= */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-text-muted);
+}
+
+/* -----------------------------------------------------------------
+   Selección de Texto
+   ----------------------------------------------------------------- */
+
+::selection {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse, #FFFFFF);
+}
+
+/* =================================================================
+   06. SISTEMA DE MODALES
+   ================================================================= */
+
+/* -----------------------------------------------------------------
+   Capa de Fondo (Overlay / Backdrop)
+   ----------------------------------------------------------------- */
+
 :is(.theme-modal-overlay, .modal-overlay, .arcadia-modal-overlay) {
   position: fixed;
   inset: 0;
@@ -263,24 +303,27 @@ select option {
   align-items: center;
   justify-content: center;
   padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
-  background: var(--modal-backdrop, rgba(0, 0, 0, 0.65));
+  background: var(--modal-backdrop, rgba(0, 0, 0, 0.60));
   backdrop-filter: blur(12px) saturate(1.1);
   -webkit-backdrop-filter: blur(12px) saturate(1.1);
   opacity: 0;
   pointer-events: none;
   overflow-y: auto;
   overscroll-behavior: contain;
-  transition: opacity var(--transition-normal, 250ms ease),
-              backdrop-filter var(--transition-normal, 250ms ease);
+  transition:
+    opacity var(--transition-normal),
+    backdrop-filter var(--transition-normal);
 }
 
-/* Estado activo del overlay */
 :is(.theme-modal-overlay, .modal-overlay, .arcadia-modal-overlay).active {
   opacity: 1;
   pointer-events: auto;
 }
 
-/* Contenedor y tarjeta del modal - sin !important */
+/* -----------------------------------------------------------------
+   Tarjeta / Contenedor del Modal
+   ----------------------------------------------------------------- */
+
 :is(.theme-modal-dialog, .modal-card, .arcadia-modal-card) {
   position: relative;
   width: 100%;
@@ -290,8 +333,8 @@ select option {
   padding: 28px;
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl, 18px);
-  clip-path: inset(0 round var(--radius-xl, 18px));
+  border-radius: var(--radius-xl, 20px);
+  clip-path: inset(0 round var(--radius-xl, 20px));
   box-shadow: var(--shadow-xl), 0 0 0 1px var(--color-border-subtle);
   color: var(--color-text);
   overflow-y: auto;
@@ -299,10 +342,12 @@ select option {
   scrollbar-width: thin;
   scrollbar-color: var(--color-border) transparent;
   transform: scale(0.96) translateY(8px);
-  transition: transform var(--transition-normal, 250ms cubic-bezier(0.16, 1, 0.3, 1)),
-              opacity var(--transition-fast, 150ms ease);
+  transition:
+    transform var(--transition-normal),
+    opacity var(--transition-fast);
 }
 
+/* Scrollbar interno del modal */
 :is(.theme-modal-dialog, .modal-card, .arcadia-modal-card)::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -311,12 +356,12 @@ select option {
 :is(.theme-modal-dialog, .modal-card, .arcadia-modal-card)::-webkit-scrollbar-track {
   background: transparent;
   margin: 18px 0;
-  border-radius: var(--radius-full, 9999px);
+  border-radius: var(--radius-full);
 }
 
 :is(.theme-modal-dialog, .modal-card, .arcadia-modal-card)::-webkit-scrollbar-thumb {
   background-color: var(--color-border);
-  border-radius: var(--radius-full, 9999px);
+  border-radius: var(--radius-full);
 }
 
 :is(.theme-modal-dialog, .modal-card, .arcadia-modal-card)::-webkit-scrollbar-thumb:hover {
@@ -329,24 +374,37 @@ select option {
   height: 0 !important;
 }
 
-/* Animación de entrada de la tarjeta */
+/* Animación de entrada */
 :is(.theme-modal-overlay, .modal-overlay, .arcadia-modal-overlay).active :is(.theme-modal-dialog, .modal-card, .arcadia-modal-card) {
   transform: scale(1) translateY(0);
 }
 
-/* Variantes de tamaño ancho para modales */
+/* ----------------------------------------------------------------- 
+   Variantes de Ancho 
+   ----------------------------------------------------------------- */
+
 #theme-modal .modal-card,
 .modal-card.modal-wide,
 .theme-modal-dialog.wide {
   max-width: min(960px, 100%);
 }
 
-/* Variantes de ancho específicas para Arcadia */
-.arcadia-modal-card--sm { max-width: 440px; }
-.arcadia-modal-card--md { max-width: 460px; }
-.arcadia-modal-card--lg { max-width: 480px; }
+.arcadia-modal-card--sm {
+  max-width: 440px;
+}
 
-/* Cabeceras de modales */
+.arcadia-modal-card--md {
+  max-width: 460px;
+}
+
+.arcadia-modal-card--lg {
+  max-width: 480px;
+}
+
+/* -----------------------------------------------------------------
+   Cabecera y Títulos del Modales
+   ----------------------------------------------------------------- */
+
 :is(.theme-modal-header, .modal-header) {
   display: flex;
   align-items: flex-start;
@@ -357,50 +415,56 @@ select option {
 
 .theme-modal-header {
   padding-bottom: 14px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--color-border-subtle);
 }
 
-/* Tipografía de títulos de modales */
 :is(.theme-modal-title, .modal-title, .arcadia-modal-title) {
-  font-family: 'Cinzel', var(--font-serif, Georgia, serif);
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-family: var(--font-display, Georgia, serif);
+  font-size: var(--text-lg, 1.25rem);
+  font-weight: var(--weight-bold, 700);
   color: var(--color-text);
   letter-spacing: 0.03em;
   line-height: 1.25;
 }
 
 .arcadia-modal-title {
-  font-size: 1.15rem;
+  font-size: var(--text-md, 1.15rem);
   letter-spacing: 0.02em;
   margin: 0 0 6px 0;
 }
 
-/* Botón de cierre en modales */
+/* -----------------------------------------------------------------
+   Botón de Cierre del Modal
+   ----------------------------------------------------------------- */
+
 :is(.theme-modal-close, .modal-close-btn) {
   width: 36px;
   height: 36px;
-  border-radius: var(--radius-full, 999px);
-  background: var(--color-surface-hover, rgba(255, 255, 255, 0.05));
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  background: var(--color-surface-hover);
+  border: 1px solid var(--color-border-subtle);
   color: var(--color-text-secondary);
   flex-shrink: 0;
   margin-top: -4px;
   margin-right: -4px;
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-              background-color 0.2s ease,
-              color 0.2s ease,
-              border-color 0.2s ease;
+  transition:
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
 :is(.theme-modal-close, .modal-close-btn):hover {
   background: var(--color-border);
   color: var(--color-text);
   transform: rotate(90deg) scale(1.05);
-  border-color: var(--color-primary-light);
+  border-color: var(--color-border-focus);
 }
 
-/* Estructura vertical del modal Arcadia */
+/* -----------------------------------------------------------------
+   Estructura Interna del Modal Arcadia
+   ----------------------------------------------------------------- */
+
 .arcadia-modal-card {
   display: flex;
   flex-direction: column;
@@ -416,9 +480,9 @@ select option {
 .arcadia-modal-icon {
   width: 44px;
   height: 44px;
-  border-radius: 12px;
-  background-color: var(--color-surface-hover, rgba(255, 255, 255, 0.05));
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md, 12px);
+  background-color: var(--color-surface-hover);
+  border: 1px solid var(--color-border-subtle);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -426,7 +490,7 @@ select option {
 }
 
 .arcadia-modal-text {
-  font-size: 0.88rem;
+  font-size: var(--text-sm, 0.88rem);
   color: var(--color-text-secondary);
   line-height: 1.55;
   white-space: pre-line;
@@ -441,6 +505,10 @@ select option {
   margin-top: 10px;
 }
 
+/* -----------------------------------------------------------------
+   Botones de Acción
+   ----------------------------------------------------------------- */
+
 .arcadia-modal-btn {
   display: inline-flex;
   align-items: center;
@@ -448,15 +516,15 @@ select option {
   gap: 6px;
   min-height: 36px;
   padding: 6px 14px;
-  border-radius: var(--radius-md, 8px);
-  font-size: 0.82rem;
+  border-radius: var(--radius-sm, 8px);
+  font-size: var(--text-xs, 0.82rem);
   font-weight: var(--weight-medium, 500);
   border: 1px solid transparent;
   white-space: nowrap;
   transition: transform var(--transition-fast),
-              background-color var(--transition-fast),
-              border-color var(--transition-fast),
-              box-shadow var(--transition-fast);
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -466,21 +534,21 @@ select option {
 }
 
 .arcadia-modal-btn--ghost {
+  color: var(--color-text-secondary);
   background: var(--color-surface);
   border-color: var(--color-border);
-  color: var(--color-text-secondary);
 }
 
 .arcadia-modal-btn--ghost:hover {
+  color: var(--color-text);
   background: var(--color-surface-hover);
   border-color: var(--color-text-secondary);
-  color: var(--color-text);
 }
 
 .arcadia-modal-btn--primary {
   background-color: var(--color-primary-light);
-  color: #ffffff;
-  box-shadow: 0 1px 4px var(--color-primary-glow, rgba(139, 124, 246, 0.35));
+  color: var(--color-text-inverse, #FFFFFF);
+  box-shadow: 0 1px 4px var(--color-primary-glow);
   font-weight: var(--weight-semibold, 600);
   padding: 6px 18px;
   border-color: transparent;
@@ -488,22 +556,25 @@ select option {
 
 .arcadia-modal-btn--primary:hover {
   filter: brightness(1.08);
-  box-shadow: 0 3px 10px var(--color-primary-glow, rgba(139, 124, 246, 0.45));
+  box-shadow: 0 3px 10px var(--color-primary-glow);
 }
 
 .arcadia-modal-btn--danger {
-  background-color: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
-  border-color: rgba(239, 68, 68, 0.25);
+  color: var(--state-danger);
+  border-color: var(--state-danger-border);
+  background-color: var(--state-danger-bg);
 }
 
 .arcadia-modal-btn--danger:hover {
-  background-color: rgba(239, 68, 68, 0.18);
-  border-color: rgba(239, 68, 68, 0.4);
-  color: #dc2626;
+  color: var(--state-danger);
+  border-color: var(--state-danger);
+  background-color: color-mix(in srgb, var(--state-danger) 22%, transparent);
 }
 
-/* Formularios y campos en modales - restaurado sin !important */
+/* -----------------------------------------------------------------
+   Campos de Formulario dentro de Modales
+   ----------------------------------------------------------------- */
+
 .arcadia-modal-form {
   display: flex;
   flex-direction: column;
@@ -541,7 +612,7 @@ select option {
 }
 
 .btn-setting-action:hover {
-  border-color: var(--color-primary-light);
+  border-color: var(--color-border-focus);
   background-color: var(--color-surface-hover);
   color: var(--color-text);
   transform: translateY(-1px);
@@ -552,7 +623,10 @@ select option {
   transform: scale(0.97);
 }
 
-/* Controles de formulario universales en modales */
+/* -----------------------------------------------------------------
+   Controles de Formulario Universal para Modales
+   ----------------------------------------------------------------- */
+
 .modal-card input[type="text"],
 .modal-card input[type="search"],
 .modal-card textarea,
@@ -568,7 +642,9 @@ select option {
   font-family: inherit;
   font-size: var(--text-sm);
   padding: 10px 14px;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+  transition: border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast);
 }
 
 .modal-card input:hover,
@@ -586,18 +662,159 @@ select option {
 .arcadia-modal-card textarea:focus,
 .theme-modal-dialog input:focus,
 .theme-modal-dialog textarea:focus {
-  border-color: var(--color-primary-light);
+  border-color: var(--color-border-focus);
   box-shadow: var(--focus-ring);
   outline: none;
 }
 
-/* Menú contextual flotante - exacto imagen */
+/* -----------------------------------------------------------------
+   Modal de Acciones de Colección (Editar / Eliminar)
+   ----------------------------------------------------------------- */
+
+.col-action-modal {
+  max-width: 360px;
+  padding: 20px;
+  gap: 14px;
+}
+
+.col-action-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 30px;
+}
+
+.col-action-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm, 10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 18%, transparent);
+  color: var(--col-accent, var(--color-primary-light));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 25%, transparent);
+}
+
+.col-action-name {
+  font-family: var(--font-sans);
+  font-size: 1.02rem;
+  font-weight: var(--weight-bold, 700);
+  line-height: 1.2;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.col-action-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-xs, 8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.col-action-close:hover {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.col-action-sub {
+  font-size: var(--text-xs, 0.82rem);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.col-action-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.col-action-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm, 10px);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  text-align: left;
+  white-space: normal;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.col-action-btn:hover {
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-border-focus);
+}
+
+.col-action-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--color-primary-light);
+}
+
+.col-action-btn-label {
+  font-size: var(--text-sm, 0.85rem);
+  font-weight: var(--weight-semibold, 600);
+  line-height: 1.35;
+}
+
+/* Botón Destructivo Dinámico */
+.col-action-btn--delete {
+  background-color: var(--state-danger-bg);
+  border-color: var(--state-danger-border);
+  color: var(--state-danger);
+}
+
+.col-action-btn--delete:hover {
+  background-color: color-mix(in srgb, var(--state-danger) 18%, transparent);
+  border-color: var(--state-danger);
+}
+
+.col-action-btn--delete svg {
+  color: var(--state-danger);
+}
+
+.col-action-foot {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border);
+}
+
+.col-action-foot .arcadia-modal-btn {
+  min-height: 32px;
+  padding: 4px 14px;
+  font-size: var(--text-2xs, 0.78rem);
+}
+
+/* =================================================================
+   07. COMPONENTES FLOTANTES: MENÚ CONTEXTUAL
+   ================================================================= */
+
 .context-menu-floating {
   position: fixed;
   background-color: var(--color-surface-elevated, var(--color-surface));
   border: 1px solid var(--color-border);
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: var(--radius-md, 12px);
+  box-shadow: var(--shadow-dropdown);
   padding: 6px;
   z-index: var(--z-floating-menu, 120);
   min-width: 220px;
@@ -607,22 +824,30 @@ select option {
   animation: contextMenuPop 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   transform-origin: top right;
 }
-.context-menu-floating::before{
-  content:'';
-  position:absolute;
-  top:-6px;
-  right:18px;
-  width:12px;
-  height:12px;
-  background:var(--color-surface-elevated, var(--color-surface));
-  border-left:1px solid var(--color-border);
-  border-top:1px solid var(--color-border);
-  transform:rotate(45deg);
+
+.context-menu-floating::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: 18px;
+  width: 12px;
+  height: 12px;
+  background: var(--color-surface-elevated, var(--color-surface));
+  border-left: 1px solid var(--color-border);
+  border-top: 1px solid var(--color-border);
+  transform: rotate(45deg);
 }
 
 @keyframes contextMenuPop {
-  from { opacity: 0; transform: scale(0.92) translateY(-4px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .menu-action-btn {
@@ -631,7 +856,7 @@ select option {
   gap: 8px;
   width: 100%;
   padding: 8px 10px;
-  border-radius: 8px;
+  border-radius: var(--radius-xs, 8px);
   font-size: var(--text-xs, 0.75rem);
   font-weight: var(--weight-medium, 500);
   color: var(--color-text);
@@ -640,9 +865,16 @@ select option {
   cursor: pointer;
   text-align: left;
   min-height: 36px;
-  transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+  transition: background-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast);
 }
-.menu-action-btn svg{width:15px;height:15px;flex-shrink:0}
+
+.menu-action-btn svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
 
 .menu-action-btn:hover {
   background-color: var(--color-surface-hover);
@@ -659,15 +891,18 @@ select option {
 }
 
 .menu-action-btn--danger {
-  color: var(--state-danger, #ef4444);
+  color: var(--state-danger);
 }
 
 .menu-action-btn--danger:hover {
-  background-color: var(--state-danger-bg, rgba(239, 68, 68, 0.12));
-  color: var(--state-danger, #ef4444);
+  background-color: var(--state-danger-bg);
+  color: var(--state-danger);
 }
 
-/* Renderizado eficiente de tarjetas */
+/* =================================================================
+   08. RENDIMIENTO Y CONTENCIÓN DEL RENDERIZADO
+   ================================================================= */
+
 .book-card,
 .book-list-item,
 .annotation-card {
@@ -675,7 +910,10 @@ select option {
   contain-intrinsic-size: auto 220px;
 }
 
-/* Ajustes adaptativos para dispositivos móviles */
+/* =================================================================
+   09. MEDIA QUERIES Y RESPONSIVIDAD
+   ================================================================= */
+
 @media (max-width: 768px) {
   :is(.theme-modal-overlay, .modal-overlay, .arcadia-modal-overlay) {
     padding: 16px;
@@ -685,11 +923,487 @@ select option {
   :is(.theme-modal-dialog, .modal-card, .arcadia-modal-card) {
     padding: 22px 18px;
     border-radius: 22px 22px 12px 12px;
-    max-height: min(92vh, calc(100dvh - 24px));
   }
 }
 
-/* Reducción de animaciones por accesibilidad - spec recomendada sin !important */
+/* =================================================================
+   10. MODAL NOTA AL MARGEN (maqueta: título serif, cita, textarea)
+   ================================================================= */
+
+.note-margin-overlay {
+  align-items: center !important;
+  padding: 20px !important;
+  background: rgba(13, 22, 36, 0.68) !important;
+}
+
+.note-margin-card {
+  position: relative;
+  width: 100%;
+  max-width: 820px;
+  margin: auto;
+  background: #f1f5f9;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(5, 15, 30, 0.45), 0 2px 8px rgba(5, 15, 30, 0.25);
+  padding: 34px 38px 28px 38px;
+  color: #1a2e4a;
+  transform: scale(0.96) translateY(8px);
+  transition: transform var(--transition-normal);
+  max-height: min(92vh, calc(100dvh - 40px));
+  overflow-y: auto;
+}
+
+.arcadia-modal-overlay.active .note-margin-card {
+  transform: scale(1) translateY(0);
+}
+
+.note-margin-close {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5c6b7e;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease, transform 0.15s ease;
+}
+
+.note-margin-close svg {
+  width: 26px;
+  height: 26px;
+}
+
+.note-margin-close:hover {
+  color: #1a2e4a;
+  background: rgba(90, 110, 135, 0.12);
+  transform: scale(1.06);
+}
+
+.note-margin-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+  padding-right: 36px;
+}
+
+.note-margin-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  color: #5b7fa3;
+  filter: drop-shadow(0 2px 2px rgba(91, 127, 163, 0.4));
+}
+
+.note-margin-icon svg {
+  width: 42px;
+  height: 42px;
+}
+
+.note-margin-title {
+  font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.55rem, 3.4vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  color: #1a2e4a;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.note-margin-label {
+  margin: 20px 0 0 0;
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: #7e92a8;
+  line-height: 1.4;
+}
+
+.note-margin-quote {
+  margin: 4px 0 0 0;
+  font-family: 'Lora', Georgia, serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  line-height: 1.45;
+  color: #43586f;
+  word-break: break-word;
+}
+
+.note-margin-divider {
+  height: 1px;
+  background: #cbd8e4;
+  margin: 20px 0 26px 0;
+}
+
+.note-margin-textarea {
+  width: 100%;
+  min-height: 172px;
+  box-sizing: border-box;
+  background: #f7fafd !important;
+  border: 1.6px solid #8aa7c2 !important;
+  border-radius: 14px !important;
+  padding: 16px 18px !important;
+  font-family: 'Poppins', system-ui, sans-serif !important;
+  font-size: 1.15rem !important;
+  line-height: 1.5;
+  color: #33475f !important;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.note-margin-textarea::placeholder {
+  color: #9aaec3;
+  opacity: 1;
+}
+
+.note-margin-textarea:focus {
+  border-color: #5b7fa3 !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(91, 127, 163, 0.18) !important;
+}
+
+.note-margin-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: nowrap;
+}
+
+.note-margin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: 10px;
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.15s ease, filter 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.note-margin-btn:active {
+  transform: scale(0.97);
+}
+
+.note-margin-btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.note-margin-btn--cancel {
+  background: #ffffff;
+  border: 1.5px solid #b9c9db;
+  color: #3d4e65;
+}
+
+.note-margin-btn--cancel svg {
+  width: 16px;
+  height: 16px;
+  color: #4e7ca3;
+}
+
+.note-margin-btn--cancel:hover {
+  border-color: #8aa7c2;
+  background: #f7fafd;
+}
+
+.note-margin-btn--save {
+  background: #2e72b0;
+  border: 1.5px solid #2e72b0;
+  color: #ffffff;
+  padding: 0 18px;
+  box-shadow: none;
+}
+
+.note-margin-btn--save:hover {
+  background: #285f96;
+  border-color: #285f96;
+  filter: none;
+  box-shadow: none;
+}
+
+@media (max-width: 640px) {
+  .note-margin-card {
+    padding: 24px 20px 20px 20px;
+    border-radius: 16px;
+  }
+
+  .note-margin-head {
+    gap: 10px;
+  }
+
+  .note-margin-icon,
+  .note-margin-icon svg {
+    width: 34px;
+    height: 34px;
+  }
+
+  .note-margin-label {
+    font-size: 1.05rem;
+    margin-top: 16px;
+  }
+
+  .note-margin-quote {
+    font-size: 1.15rem;
+  }
+
+  .note-margin-textarea {
+    min-height: 140px !important;
+    font-size: 1rem !important;
+  }
+
+  .note-margin-actions {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .note-margin-btn {
+    width: auto;
+    flex: 1 1 0;
+    min-height: 42px;
+    padding: 0 12px;
+    font-size: 0.9rem;
+  }
+}
+
+/* =================================================================
+   UTILIDADES GENERALES DE CLASES (REEMPLAZO DE ESTILOS INLINE)
+   ================================================================= */
+
+/* Tamaños de Iconos SVG */
+.icon-xs { width: 12px; height: 12px; }
+.icon-sm { width: 14px; height: 14px; }
+.icon-md { width: 18px; height: 18px; }
+.icon-lg { width: 24px; height: 24px; }
+.icon-xl { width: 36px; height: 36px; }
+
+/* Layouts y Posicionamiento */
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-end-gap { display: flex; justify-content: flex-end; gap: 10px; }
+.w-full { width: 100%; }
+.sr-only-absolute { position: absolute; }
+.hidden { display: none !important; }
+.text-muted { color: var(--color-text-muted); }
+.text-base { font-size: 1.2rem; }
+.mb-3 { margin-bottom: 18px; }
+.pointer-events-none { pointer-events: none; }
+.flex-shrink-0 { flex-shrink: 0; }
+
+/* Tipografías para Selector de Fuentes */
+.font-literata { font-family: 'Literata', Georgia, serif; }
+.font-source-serif { font-family: 'Source Serif 4', Georgia, serif; }
+.font-lora { font-family: 'Lora', Georgia, serif; }
+.font-garamond { font-family: 'EB Garamond', Garamond, serif; }
+.font-playfair { font-family: 'Playfair Display', Georgia, serif; }
+.font-atkinson { font-family: 'Atkinson Hyperlegible', sans-serif; }
+.font-poppins { font-family: 'Poppins', sans-serif; }
+.font-inter { font-family: 'Inter', sans-serif; }
+.font-roboto { font-family: 'Roboto', sans-serif; }
+.font-opendyslexic { font-family: 'OpenDyslexic', 'Lexend', sans-serif; }
+
+/* Clases para Modales y Formularios Dinámicos */
+.theme-modal-overlay-custom {
+  position: fixed; inset: 0; top: 0; left: 0;
+  width: 100vw; height: 100vh; height: 100dvh;
+  z-index: 99999;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px; box-sizing: border-box;
+}
+
+.vocab-modal-dialog {
+  max-width: 460px;
+  padding: 24px;
+}
+
+.vocab-modal-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.vocab-modal-field {
+  width: 100%;
+  background: var(--color-surface-elevated, #161625);
+  border: 1px solid var(--color-border, #333);
+  border-radius: var(--radius-sm, 6px);
+  color: var(--color-text, #fff);
+  padding: 10px;
+  font-size: var(--text-sm, 0.875rem);
+  box-sizing: border-box;
+  font-family: inherit;
+  line-height: 1.4;
+}
+
+.vocab-modal-field.textarea-def {
+  min-height: 70px;
+  resize: vertical;
+}
+
+.vocab-modal-field.textarea-context {
+  min-height: 50px;
+  resize: vertical;
+  font-style: italic;
+}
+
+.vocab-modal-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: var(--color-primary-light);
+  display: block;
+  margin-bottom: 6px;
+  letter-spacing: 0.03em;
+}
+
+.vocab-modal-status-text {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+.btn-vocab-cancel {
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.btn-vocab-save {
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-weight: bold;
+  background-color: var(--color-primary-light);
+  color: #FFFFFF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+}
+
+.btn-pwa-nav {
+  width: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.mobile-logo-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn-search-clear {
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 4px;
+  display: none;
+  background: transparent;
+  border: none;
+}
+
+.btn-search-submit {
+  padding: 5px 12px;
+  border-radius: var(--radius-full, 999px);
+  background: var(--color-primary-light);
+  color: #FFF;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  flex-shrink: 0;
+}
+
+.search-status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4px;
+}
+
+.search-status-info {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.btn-search-close {
+  font-size: var(--text-xs);
+  color: var(--color-primary-light);
+  cursor: pointer;
+  font-weight: bold;
+  background: transparent;
+  border: none;
+}
+
+/* Toast Notifications */
+.toast-body-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.toast-close-btn {
+  color: var(--color-text-muted);
+  padding: 7px;
+  border-radius: 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.toast-close-btn:hover {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.toast-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.toast-icon.success { color: #10B981; }
+.toast-icon.error { color: #EF4444; }
+.toast-icon.warning { color: #F59E0B; }
+.toast-icon.info { color: var(--color-primary-light); }
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

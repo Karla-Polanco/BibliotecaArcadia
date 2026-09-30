@@ -174,6 +174,107 @@ export class Modal {
   }
 
   /**
+   * Muestra el modal "NOTA AL MARGEN" con el diseño de la maqueta:
+   * título serif con icono, cita seleccionada, divisor, textarea y
+   * botones Cancelar / Guardar nota.
+   * @param {Object} options
+   * @param {string} [options.quote=''] - Cita seleccionada (sin comillas latinas)
+   * @param {string} [options.defaultValue=''] - Valor inicial del textarea
+   * @param {string} [options.placeholder='Escribe tu nota aquí...'] - Placeholder
+   * @returns {Promise<string|null>} Texto ingresado o null si se cancela
+   */
+  static noteDialog({
+    quote = '',
+    defaultValue = '',
+    placeholder = 'Escribe tu nota aquí...'
+  } = {}) {
+    return new Promise((resolve) => {
+      const overlay = document.createElement('div');
+      overlay.className = 'arcadia-modal-overlay note-margin-overlay';
+
+      const safeQuote = this.escapeHtml(quote);
+      const safeValue = this.escapeHtml(defaultValue);
+      const safePlaceholder = this.escapeHtml(placeholder);
+
+      overlay.innerHTML = `
+        <div class="note-margin-card" role="dialog" aria-modal="true" aria-labelledby="note-margin-title">
+          <button class="note-margin-close" id="note-margin-x" aria-label="Cerrar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+
+          <div class="note-margin-head">
+            <span class="note-margin-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 2V5" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 2V5" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path opacity="0.75" d="M8 11H16" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path opacity="0.75" d="M8 16H12" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <h3 class="note-margin-title" id="note-margin-title">NOTA AL MARGEN</h3>
+          </div>
+
+          <p class="note-margin-label">Cita seleccionada:</p>
+          <p class="note-margin-quote">&laquo;${safeQuote}&raquo;</p>
+
+          <div class="note-margin-divider" aria-hidden="true"></div>
+
+          <label class="sr-only" for="note-margin-input">Escribe tu nota</label>
+          <textarea id="note-margin-input" class="note-margin-textarea" placeholder="${safePlaceholder}">${safeValue}</textarea>
+
+          <div class="note-margin-actions">
+            <button id="note-margin-cancel" class="note-margin-btn note-margin-btn--cancel">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              <span>Cancelar</span>
+            </button>
+            <button id="note-margin-save" class="note-margin-btn note-margin-btn--save">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              <span>Guardar nota</span>
+            </button>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(overlay);
+
+      requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('active')));
+      requestAnimationFrame(() => {
+        const input = overlay.querySelector('#note-margin-input');
+        if (input) input.focus();
+      });
+
+      const close = (result) => {
+        overlay.classList.remove('active');
+        setTimeout(() => {
+          overlay.remove();
+          window.removeEventListener('keydown', keyHandler);
+          resolve(result);
+        }, 260);
+      };
+
+      const keyHandler = (e) => {
+        if (e.key === 'Escape') close(null);
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+          const val = overlay.querySelector('#note-margin-input')?.value;
+          close(val !== undefined ? val : null);
+        }
+      };
+
+      window.addEventListener('keydown', keyHandler);
+      overlay.querySelector('#note-margin-x').addEventListener('click', () => close(null));
+      overlay.querySelector('#note-margin-cancel').addEventListener('click', () => close(null));
+      overlay.querySelector('#note-margin-save').addEventListener('click', () => {
+        const val = overlay.querySelector('#note-margin-input')?.value;
+        close(val !== undefined ? val : null);
+      });
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) close(null);
+      });
+    });
+  }
+
+  /**
    * Muestra un diálogo modal especializado para editar los detalles de un libro (título y autor simultáneos).
    */
   static editBookDetails(book) {
@@ -248,27 +349,35 @@ export class Modal {
       overlay.className = 'arcadia-modal-overlay';
 
       overlay.innerHTML = `
-        <div class="arcadia-modal-card arcadia-modal-card--sm">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="width: 12px; height: 12px; border-radius: 50%; background-color: ${collection.color || '#5B4CC4'}; box-shadow: 0 0 0 2px rgba(255,255,255,0.15); flex-shrink: 0;"></span>
-            <h3 class="arcadia-modal-title">${this.escapeHtml(collection.name)}</h3>
-          </div>
-          <p class="arcadia-modal-text">Selecciona la acción que deseas realizar con esta colección:</p>
-
-          <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 4px;">
-            <button id="btn-col-action-edit" class="arcadia-modal-btn" style="justify-content: flex-start; background: var(--color-surface-hover); border: 1px solid var(--color-border); color: var(--color-text);">
-              <svg style="width: 16px; height: 16px; color: var(--color-primary-light); flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-              <span>Editar nombre, color o descripción</span>
-            </button>
-
-            <button id="btn-col-action-delete" class="arcadia-modal-btn" style="justify-content: flex-start; background: rgba(220, 38, 38, 0.1); border-color: rgba(220, 38, 38, 0.25); color: #F87171;">
-              <svg style="width: 16px; height: 16px; color: #EF4444; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-              <span>Eliminar colección</span>
+        <div class="arcadia-modal-card col-action-modal" style="--col-accent: ${collection.color || '#5B4CC4'};">
+          <div class="col-action-head">
+            <span class="col-action-badge" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </span>
+            <h3 class="col-action-name">${this.escapeHtml(collection.name)}</h3>
+            <button class="col-action-close" id="btn-col-action-x" aria-label="Cerrar">
+              <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
           </div>
 
-          <div class="arcadia-modal-actions">
-            <button id="btn-col-action-cancel" class="arcadia-modal-btn arcadia-modal-btn--ghost" style="border: none; background: transparent;">Cerrar</button>
+          <p class="col-action-sub">Elige qué hacer con esta colección.</p>
+
+          <div class="col-action-list">
+            <button id="btn-col-action-edit" class="col-action-btn">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+              <span class="col-action-btn-label">Editar nombre, color o descripción</span>
+            </button>
+
+            <button id="btn-col-action-delete" class="col-action-btn col-action-btn--delete">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+              <span class="col-action-btn-label">Eliminar colección</span>
+            </button>
+          </div>
+
+          <div class="col-action-foot">
+            <button id="btn-col-action-cancel" class="arcadia-modal-btn arcadia-modal-btn--ghost">Cerrar</button>
           </div>
         </div>
       `;
@@ -288,6 +397,7 @@ export class Modal {
       overlay.querySelector('#btn-col-action-edit').addEventListener('click', () => close('edit'));
       overlay.querySelector('#btn-col-action-delete').addEventListener('click', () => close('delete'));
       overlay.querySelector('#btn-col-action-cancel').addEventListener('click', () => close(null));
+      overlay.querySelector('#btn-col-action-x').addEventListener('click', () => close(null));
       overlay.addEventListener('click', (e) => {
         if (e.target === overlay) close(null);
       });

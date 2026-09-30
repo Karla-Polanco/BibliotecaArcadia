@@ -89,10 +89,7 @@ class App {
     // 8. Vincular Navegación del Sidebar y Móvil
     this.initNavigation();
 
-    // 9. Vincular Modal de Selector de Temas y Ajustes
-    this.initThemeModal();
-
-    // 10. Restaurar última vista, libro o sección activa al recargar
+    // 9. Restaurar última vista, libro o sección activa al recargar
     await this.restoreLastState();
 
     console.log('✦ Biblioteca Arcadia inicializada con éxito');
@@ -251,91 +248,6 @@ class App {
         }
       }
 
-      const actionLink = e.target.closest('.mobile-nav-link[data-action="open-settings"]');
-      if (actionLink) {
-        e.preventDefault();
-        this.openThemeModal();
-      }
-    });
-
-    // Enlaces de la Bottom Navigation móvil con data-action (compat)
-    document.querySelectorAll('.mobile-nav-link').forEach(link => {
-      link.addEventListener('click', (e) => {
-        const action = link.dataset.action;
-        if (action === 'open-settings') {
-          // Ya manejado por delegación, evitar doble apertura
-          e.preventDefault();
-          return;
-        }
-      });
-    });
-
-    // Ajustes en el Sidebar abre el modal de temas
-    const settingsNavItem = document.getElementById('nav-settings');
-    if (settingsNavItem) {
-      settingsNavItem.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.openThemeModal();
-        toggleDrawer(false);
-      });
-    }
-  }
-
-  /**
-   * Modal interactivo para seleccionar temas con previsualización exacta.
-   */
-  initThemeModal() {
-    const modal = document.getElementById('theme-modal');
-    if (!modal) return;
-    const closeBtn = document.getElementById('modal-close-btn');
-
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => this.closeThemeModal());
-    }
-
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) this.closeThemeModal();
-    });
-
-    // Botones de copia de seguridad (Exportar e Importar)
-    const btnExport = document.getElementById('btn-export-backup');
-    if (btnExport) {
-      btnExport.addEventListener('click', () => BackupManager.exportBackup());
-    }
-    const btnImport = document.getElementById('btn-import-backup');
-    if (btnImport) {
-      btnImport.addEventListener('click', () => BackupManager.triggerFileInput());
-    }
-
-    // Tarjetas de opción de tema
-    document.querySelectorAll('.theme-option-card').forEach(card => {
-      card.addEventListener('click', () => {
-        const theme = card.dataset.themeValue;
-        this.themeManager.applyTheme(theme);
-        this.updateThemeModalActiveCard(theme);
-      });
-    });
-
-    this.updateThemeModalActiveCard(this.themeManager.getTheme());
-  }
-
-  openThemeModal() {
-    const modal = document.getElementById('theme-modal');
-    if (modal) {
-      this.updateThemeModalActiveCard(this.themeManager.getTheme());
-      ScaleManager.initControls();
-      modal.classList.add('active');
-    }
-  }
-
-  closeThemeModal() {
-    const modal = document.getElementById('theme-modal');
-    if (modal) modal.classList.remove('active');
-  }
-
-  updateThemeModalActiveCard(activeTheme) {
-    document.querySelectorAll('.theme-option-card').forEach(card => {
-      card.classList.toggle('selected', card.dataset.themeValue === activeTheme);
     });
   }
 

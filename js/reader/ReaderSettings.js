@@ -14,9 +14,10 @@ export class ReaderSettings {
     fontWeight: 'normal', // 'normal' (400), 'medium' (600), 'bold' (800)
     lineHeight: 1.6,
     textAlign: 'left',    // 'left', 'justify', 'center', 'right'
+    firstLineIndent: false, // sangría de primera línea (apagada por defecto)
     columns: 1,           // 1 o 2 columnas
     flowMode: 'scrolled-doc', // Desplazamiento continuo (scroll)
-    theme: 'inherit'      // 'inherit', 'cerulean-light', 'lavender-light', 'paper', 'neutral', 'enchanted-forest', 'clear-sky', 'serene-fog', 'abyss-dark'
+    theme: 'inherit'      // 'inherit', 'pergamino', 'terracota', 'moca', 'ambar', 'niebla', 'pizarra', 'melocoton' (+ alias legacy)
   };
 
   /**
@@ -66,7 +67,7 @@ export class ReaderSettings {
    * @param {Object} settings - Configuración a aplicar
    * @param {string} effectiveTheme - Tema visual activo
    */
-  static apply(rendition, settings, effectiveTheme = 'cerulean-light') {
+  static apply(rendition, settings, effectiveTheme = 'boreal-blue') {
     if (!rendition) return;
 
     // 1. Determinar tema de color (heredado lee variables CSS reales)
@@ -88,6 +89,10 @@ export class ReaderSettings {
     // Peso de fuente: Normal (400), Medio (600), Negrita (800)
     const fontWeightVal = settings.fontWeight === 'bold' ? '800' : (settings.fontWeight === 'medium' ? '600' : '400');
     const alignVal = settings.textAlign || 'left';
+    // La sangría de primera línea viene de la CSS interna del propio EPUB y
+    // hace que el párrafo se vea roto al justificar. Solo se respeta si el
+    // usuario la activa explícitamente desde Ajustes.
+    const indentVal = settings.firstLineIndent ? '1.5em' : '0';
 
     // 2. Generar bloque CSS optimizado para el motor de paginación de epub.js
     const customCss = `
@@ -132,6 +137,8 @@ export class ReaderSettings {
         -webkit-hyphens: auto !important;
         -ms-hyphens: auto !important;
         hyphens: auto !important;
+        hyphenate-limit-chars: 7 3 3 !important;
+        text-justify: inter-word !important;
         -webkit-touch-callout: none !important;
       }
 
@@ -146,6 +153,9 @@ export class ReaderSettings {
         line-height: ${settings.lineHeight} !important;
         font-weight: ${fontWeightVal} !important;
         text-align: ${alignVal} !important;
+        text-indent: ${indentVal} !important;
+        text-justify: ${alignVal === 'justify' ? 'inter-word' : 'auto'} !important;
+        hyphenate-limit-chars: 7 3 3 !important;
         margin-top: 0 !important;
         margin-bottom: 1.15em !important;
         -webkit-hyphens: auto !important;
@@ -351,6 +361,18 @@ export class ReaderSettings {
       contents.forEach(content => {
         if (!content || !content.document) return;
 
+        // epub.js inyecta XHTML como HTML, así que xml:lang se pierde y
+        // hyphens:auto no particiona nada. Recuperamos el idioma declarado.
+        try {
+          const root = content.document.documentElement;
+          const body = content.document.body;
+          const lang = (body && (body.getAttribute('xml:lang') || body.getAttribute('lang'))) ||
+                       (root && (root.getAttribute('xml:lang') || root.getAttribute('lang')));
+          if (root && lang && !root.getAttribute('lang')) {
+            root.setAttribute('lang', lang);
+          }
+        } catch (_) {}
+
         // Inyectar enlace a Google Fonts curado en el head del iframe
         const fontsHref = 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;0,7..72,800;1,7..72,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600;700;800&family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400&family=Lexend:wght@400;500;600;700&family=Cinzel:wght@600;700&display=swap';
         let fontLink = content.document.getElementById('arcadia-google-fonts');
@@ -428,95 +450,151 @@ export class ReaderSettings {
    * Obtiene la paleta de colores para el lector.
    */
   static _getThemeColors(themeName) {
-    // Alias legacy: 'wine', 'mystic-night' → nuevos nombres
-    if (themeName === 'wine') themeName = 'serene-fog';
-    if (themeName === 'mystic-night') themeName = 'cerulean-light';
-    if (themeName === 'lavender-light') {
+    // Alias legacy → nuevos nombres
+    if (themeName === 'cerulean-light') themeName = 'boreal-blue';
+    if (themeName === 'lavender-light') themeName = 'twilight-lavender';
+    if (themeName === 'clear-sky') themeName = 'classic-ivory';
+    if (themeName === 'enchanted-forest' || themeName === 'mint') themeName = 'olive-green';
+    if (themeName === 'serene-fog' || themeName === 'wine-poetry' || themeName === 'wine') themeName = 'antique-pink';
+    if (themeName === 'abyss-dark' || themeName === 'mystic-night' || themeName === 'deep-twilight') themeName = 'night-ink';
+
+    if (themeName === 'boreal-blue') {
       return {
-        bg: '#FAF8FC',
-        text: '#302A3B',
-        heading: '#29233A',
-        accent: '#7663A6'
+        bg: '#F4F7FA',
+        text: '#142531',
+        heading: '#163B55',
+        accent: '#235677'
       };
     }
-    if (themeName === 'oled') {
+    if (themeName === 'twilight-lavender') {
+      // Legacy de tarjeta "Lavanda" → Melocotón Pálido
       return {
-        bg: '#07090D',
-        text: '#CCD1DC',
-        heading: '#E8EAF0',
-        accent: '#C8A261'
+        bg: '#FBEFE3',
+        text: '#3B2B28',
+        heading: '#3B2B28',
+        accent: '#C27D6B'
       };
     }
-    if (themeName === 'mint') {
+    if (themeName === 'classic-ivory') {
       return {
-        bg: '#EDF3EE',
-        text: '#203328',
-        heading: '#15261C',
-        accent: '#457356'
+        bg: '#F5EFE7',
+        text: '#281B12',
+        heading: '#442B1B',
+        accent: '#6D4828'
       };
     }
+    if (themeName === 'olive-green') {
+      // Legacy de tarjeta "Oliva" → Terracota Suave
+      return {
+        bg: '#F0E2D8',
+        text: '#422A24',
+        heading: '#422A24',
+        accent: '#9E6759'
+      };
+    }
+    if (themeName === 'antique-pink') {
+      return {
+        bg: '#FAF5F6',
+        text: '#28161D',
+        heading: '#431E2C',
+        accent: '#70364C'
+      };
+    }
+    if (themeName === 'night-ink') {
+      return {
+        bg: '#12161A',
+        text: '#D2DCE2',
+        heading: '#83A6BE',
+        accent: '#527A99'
+      };
+    }
+    if (themeName === 'pergamino') {
+      return {
+        bg: '#F4E8C1',
+        text: '#3D2E1E',
+        heading: '#3D2E1E',
+        accent: '#8C6D46'
+      };
+    }
+    if (themeName === 'terracota') {
+      return {
+        bg: '#F0E2D8',
+        text: '#422A24',
+        heading: '#422A24',
+        accent: '#9E6759'
+      };
+    }
+    if (themeName === 'moca') {
+      return {
+        bg: '#1F1A17',
+        text: '#E2D7CE',
+        heading: '#E2D7CE',
+        accent: '#A88C78'
+      };
+    }
+    if (themeName === 'ambar') {
+      return {
+        bg: '#18120B',
+        text: '#ECAD59',
+        heading: '#ECAD59',
+        accent: '#B87B32'
+      };
+    }
+    if (themeName === 'niebla') {
+      return {
+        bg: '#EBEBEB',
+        text: '#262626',
+        heading: '#262626',
+        accent: '#6B6B6B'
+      };
+    }
+    if (themeName === 'pizarra') {
+      return {
+        bg: '#3A3837',
+        text: '#E8E6E3',
+        heading: '#E8E6E3',
+        accent: '#A09C96'
+      };
+    }
+    if (themeName === 'melocoton') {
+      return {
+        bg: '#FBEFE3',
+        text: '#3B2B28',
+        heading: '#3B2B28',
+        accent: '#C27D6B'
+      };
+    }
+    // Alias legacy de tarjetas anteriores → paletas nuevas más cercanas
     if (themeName === 'paper') {
       return {
-        bg: '#F4EFE6',
-        text: '#322921',
-        heading: '#1E1812',
-        accent: '#8C653C'
+        bg: '#F4E8C1',
+        text: '#3D2E1E',
+        heading: '#3D2E1E',
+        accent: '#8C6D46'
       };
     }
     if (themeName === 'neutral') {
       return {
-        bg: '#1D2128',
-        text: '#E0E3E8',
-        heading: '#FFFFFF',
-        accent: '#B5ADA0'
+        bg: '#3A3837',
+        text: '#E8E6E3',
+        heading: '#E8E6E3',
+        accent: '#A09C96'
       };
     }
-    if (themeName === 'enchanted-forest') {
+    if (themeName === 'oled') {
       return {
-        bg: '#F0F5F1',
-        text: '#24372B',
-        heading: '#193024',
-        accent: '#3F7957'
+        bg: '#18120B',
+        text: '#ECAD59',
+        heading: '#ECAD59',
+        accent: '#B87B32'
       };
     }
-    if (themeName === 'clear-sky') {
-      return {
-        bg: '#FAF5EC',
-        text: '#433229',
-        heading: '#3D2C22',
-        accent: '#A47F5D'
-      };
-    }
-    if (themeName === 'wine' || themeName === 'serene-fog') {
-      return {
-        bg: '#FBF6F7',
-        text: '#39272E',
-        heading: '#35232B',
-        accent: '#915C72'
-      };
-    }
-    if (themeName === 'cerulean-light') {
-      return {
-        bg: '#F1F5F7',
-        text: '#203746',
-        heading: '#193246',
-        accent: '#39789F'
-      };
-    }
-    if (themeName === 'abyss-dark') {
-      return {
-        bg: '#11151A',
-        text: '#D6DEE4',
-        heading: '#D7E0E6',
-        accent: '#A7BBC9'
-      };
-    }
-    // cerulean-light por defecto
+    // boreal-blue por defecto
     return {
-      bg: '#F1F5F7',
-      text: '#203746',
-      heading: '#193246',
-      accent: '#39789F'
+      bg: '#F4F7FA',
+      text: '#142531',
+      heading: '#163B55',
+      accent: '#235677'
     };
   }
 }

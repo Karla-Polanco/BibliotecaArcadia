@@ -3,7 +3,7 @@
    PWA + OFFLINE CACHE + AUTO UPDATE
    ====================================== */
 
-const CACHE_NAME = 'arcadia-pwa-v139';
+const CACHE_NAME = 'arcadia-pwa-v142';
 
 /*
  * =============================================
@@ -80,6 +80,7 @@ const APP_SHELL_ASSETS = [
     './js/ui/Toast.js',
     './js/ui/CustomSelect.js',
     './js/ui/BackupManager.js',
+    './js/ui/SettingsView.js',
 
     // Librerías Locales
     './assets/libs/jszip.min.js',

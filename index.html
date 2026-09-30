@@ -6,19 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="description"
     content="Biblioteca Arcadia - Biblioteca virtual y lector EPUB personal local-first, inspirado en la experiencia Kindle.">
-  <meta name="theme-color" content="#EEF4F8">
+  <meta name="theme-color" content="#EEF3F7">
   <script>
     (function () {
       try {
-        var savedTheme = localStorage.getItem('arcadia_theme') || 'cerulean-light';
-        if (savedTheme === 'mystic-night' || savedTheme === 'deep-twilight' || savedTheme === 'wine-poetry') {
-          savedTheme = savedTheme === 'wine-poetry' ? 'serene-fog' : 'cerulean-light';
-        }
-        var known = ['cerulean-light','lavender-light','serene-fog','enchanted-forest','clear-sky','abyss-dark'];
-        if (known.indexOf(savedTheme) === -1) savedTheme = 'cerulean-light';
+        var savedTheme = localStorage.getItem('arcadia_theme') || 'boreal-blue';
+        if (savedTheme === 'cerulean-light') savedTheme = 'boreal-blue';
+        if (savedTheme === 'lavender-light') savedTheme = 'twilight-lavender';
+        if (savedTheme === 'clear-sky') savedTheme = 'classic-ivory';
+        if (savedTheme === 'enchanted-forest') savedTheme = 'olive-green';
+        if (savedTheme === 'serene-fog' || savedTheme === 'wine-poetry' || savedTheme === 'wine') savedTheme = 'antique-pink';
+        if (savedTheme === 'abyss-dark' || savedTheme === 'mystic-night' || savedTheme === 'deep-twilight') savedTheme = 'night-ink';
+
+        var known = ['boreal-blue','twilight-lavender','classic-ivory','olive-green','antique-pink','night-ink'];
+        if (known.indexOf(savedTheme) === -1) savedTheme = 'boreal-blue';
         document.documentElement.setAttribute('data-theme', savedTheme);
-        var themeColors = { 'cerulean-light':'#EEF4F8','lavender-light':'#F8F6FC','clear-sky':'#F8F4EC','enchanted-forest':'#F2F7F3','serene-fog':'#FBF7F8','abyss-dark':'#0F1216' };
-        var tc = themeColors[savedTheme] || '#EEF4F8';
+        var themeColors = { 'boreal-blue':'#EEF3F7','twilight-lavender':'#F4F1F7','classic-ivory':'#F4EFE6','olive-green':'#EEF4F0','antique-pink':'#F7F2F3','night-ink':'#0E1114' };
+        var tc = themeColors[savedTheme] || '#EEF3F7';
         var meta = document.querySelector('meta[name="theme-color"]');
         if (meta) meta.setAttribute('content', tc);
         var savedScale = localStorage.getItem('arcadia_ui_scale');
@@ -59,27 +63,12 @@
 <body>
 
 
-  <!-- Sprite único del emblema Arcadia (gradiente + estrella facetada reutilizados en topbar y sidebar) -->
-  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- Sprite único de la marca: destello de 4 puntas del wordmark (calado, toma el color del contenedor) -->
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" class="sr-only-absolute" aria-hidden="true">
     <defs>
-      <!-- Estrella facetada de 8 puntas armónica con el tema -->
-      <g id="arcStarFacet">
-        <!-- Rayos cardinales con bisel de luz y sombra dinámicos del tema -->
-        <polygon points="12,2 12,12 9.5,9.5" fill="var(--star-color-light, #FCD34D)"/>
-        <polygon points="12,2 14.5,9.5 12,12" fill="var(--star-color-dark, #D97706)"/>
-        <polygon points="22,12 12,12 14.5,9.5" fill="var(--star-color-light, #FCD34D)"/>
-        <polygon points="22,12 14.5,14.5 12,12" fill="var(--star-color-dark, #D97706)"/>
-        <polygon points="12,22 12,12 14.5,14.5" fill="var(--star-color-light, #FCD34D)"/>
-        <polygon points="12,22 9.5,14.5 12,12" fill="var(--star-color-dark, #D97706)"/>
-        <polygon points="2,12 12,12 9.5,14.5" fill="var(--star-color-light, #FCD34D)"/>
-        <polygon points="2,12 9.5,9.5 12,12" fill="var(--star-color-dark, #D97706)"/>
-        <!-- Rayos diagonales intermedios -->
-        <polygon points="19,5 12,12 14.5,9.5" fill="var(--star-color-light, #FCD34D)"/>
-        <polygon points="19,19 12,12 14.5,14.5" fill="var(--star-color-dark, #D97706)"/>
-        <polygon points="5,19 12,12 9.5,14.5" fill="var(--star-color-light, #FCD34D)"/>
-        <polygon points="5,5 12,12 9.5,9.5" fill="var(--star-color-dark, #D97706)"/>
-        <!-- Núcleo central luminoso -->
-        <polygon points="12,8.5 15.5,12 12,15.5 8.5,12" fill="var(--star-color-center, #FEF08A)"/>
+      <!-- Destello de 4 puntas calado del wordmark (se rellena con el color del contenedor) -->
+      <g id="arcSparkle">
+        <path d="M12 1.5C12.9 8.2 15.8 11.1 22.5 12C15.8 12.9 12.9 15.8 12 22.5C11.1 15.8 8.2 12.9 1.5 12C8.2 11.1 11.1 8.2 12 1.5Z" fill="currentColor" />
       </g>
     </defs>
   </svg>
@@ -88,15 +77,15 @@
        ======================================================================== -->
   <header class="mobile-topbar" id="mobile-topbar">
     <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Abrir menú lateral" aria-expanded="false" aria-controls="app-sidebar">
-      <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="icon-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
     </button>
-    <div class="mobile-logo-wrap" style="display:flex; align-items:center; justify-content:center; width:100%;">
+    <div class="mobile-logo-wrap mobile-logo-flex">
       <span class="brand-wordmark mobile-brand-wordmark">ARCADIA</span>
     </div>
     <button class="btn-upload-epub" id="mobile-upload-trigger" aria-label="Subir libro">
-      <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
       </svg>
@@ -117,13 +106,7 @@
         <div class="brand-typography">
           <div class="brand-eyebrow-row">
             <span class="brand-rule"></span>
-            <span class="brand-diamond" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24"><use href="#arcStarFacet"/></svg>
-            </span>
             <span class="brand-eyebrow">BIBLIOTECA</span>
-            <span class="brand-diamond" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24"><use href="#arcStarFacet"/></svg>
-            </span>
             <span class="brand-rule"></span>
           </div>
           <h1 class="brand-wordmark">ARCADIA</h1>
@@ -137,13 +120,11 @@
         <nav class="nav-group" aria-label="Navegación principal">
           <button type="button" class="nav-item active" data-nav-filter="all">
             <div class="nav-item-content">
-              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              <svg class="nav-icon" fill="currentColor" viewBox="0 0 64 64">
+                <path fill="currentColor" d="m57.063 20.218l1.029-1.698s.906-1.502.906-3.519c0-4.886-4.662-4.757-4.662-4.757L44.179 7.479L38.638 2l-7.291 1.985l-2.391-.651l-1.817 1.797l-10.497 2.858s-4.04-.111-4.04 4.123c0 1.748.786 3.05.786 3.05l1.351 2.23l-1.187 1.172l-5.86 1.596s-4.662-.129-4.662 4.757a7.56 7.56 0 0 0 .779 3.281L2 29.987l.949.376c.021.051.029.108.07.149c1.835 1.839 1.684 4.309 1.422 5.643l-1.109 1.111l8.401 4.039L23.271 60.35c1.849 2.906 5.774 1.088 5.774 1.088l29.649-14.256l-1.109-1.111c-.262-1.334-.413-3.804 1.422-5.644c.041-.041.049-.098.07-.148l.949-.377l-5.513-5.45l6.33-3.043l-.961-.963c-.227-1.156-.358-3.297 1.233-4.891c.035-.036.041-.084.06-.129l.825-.327zm-5.685-8.835l-1.25 1.978l-3.234-3.198zM39.176 7.144l4.643 4.963l-16.789 6.067l-3.965-6.156zM15.744 19.052l11.457 18.911l-21.827-8.658zm-4.775 2.067l-1.345 1.33l-.538-.825zm-4.247 1.034l1.252 1.927l-2.713 2.682a5.6 5.6 0 0 1-.331-1.845c0-1.826.906-2.521 1.792-2.764M5.154 37.026l.015-.058l25.147 11.007l-24.95-11.894c.023-.135.041-.284.06-.434l19.533 8.18l-19.465-9.116a8 8 0 0 0-.086-1.245l18.079 7.445L5.165 32.4a6 6 0 0 0-.47-1.137l24.883 10.625l.566.934c1.167 1.834 3.284 1.495 4.351 1.177c1.475.728 4.119 2.412 3.442 4.893c-.357 1.312-1.142 1.948-2.399 1.948c-1.273 0-2.544-.666-2.557-.675zM30.2 50.185l-1.966.814l-1.67-2.563zm-7.614 5.381l-7.729-12.759l7.682 3.693l3.633 5.592c-1.465.626-3.102 2.055-3.586 3.474m34.033-12.184a8 8 0 0 0-.086 1.245l-19.465 9.116l19.533-8.18c.019.149.036.299.06.434l-24.95 11.895l25.147-11.007l.015.058L29.046 60.08c-.013.009-1.282.675-2.557.675c-1.258 0-2.042-.637-2.399-1.948c-.918-3.367 4.302-5.276 4.38-5.305l4.575-1.952c.491.209 3.994 1.584 5.711-1.115l1.083-1.786l17.494-7.47a6 6 0 0 0-.471 1.137L38.54 50.827zm.034-4.161l-14.825 6.144l4.114-6.791l6.767-3.253zm2.393-11.107a7 7 0 0 0-.075 1.079l-16.868 7.9l16.928-7.089c.017.129.031.26.052.376L37.459 40.688l21.794-9.539l.013.05l-24.117 11.387c-.011.007-1.112.585-2.216.585c-1.091 0-1.77-.553-2.079-1.689c-.796-2.918 3.728-4.572 3.796-4.597l25.014-10.68a5.3 5.3 0 0 0-.407.986l-15.88 7.376z" />
               </svg>
               <span>Biblioteca</span>
             </div>
-            <span class="nav-badge" id="badge-library-total">0</span>
           </button>
 
           <button type="button" class="nav-item" data-nav-filter="reading">
@@ -163,7 +144,6 @@
               </svg>
               <span>Favoritos</span>
             </div>
-            <span class="nav-badge" id="badge-favorites">0</span>
           </button>
 
           <button type="button" class="nav-item" data-nav-filter="annotations">
@@ -174,7 +154,6 @@
               </svg>
               <span>Notas y subrayados</span>
             </div>
-            <span class="nav-badge" id="badge-annotations">0</span>
           </button>
 
           <button type="button" class="nav-item" data-nav-filter="vocabulary">
@@ -185,11 +164,10 @@
               </svg>
               <span>Vocabulario</span>
             </div>
-            <span class="nav-badge" id="badge-vocabulary">0</span>
           </button>
 
 
-          <button type="button" class="nav-item" id="nav-settings">
+          <button type="button" class="nav-item" data-nav-filter="settings" id="nav-settings">
             <div class="nav-item-content">
               <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -201,8 +179,7 @@
           </button>
 
           <!-- Botón Instalar App PWA -->
-          <button class="nav-item" id="btn-pwa-install"
-            style="width: 100%; border: none; background: transparent; cursor: pointer; text-align: left;">
+          <button class="nav-item btn-pwa-nav" id="btn-pwa-install">
             <div class="nav-item-content">
               <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -210,8 +187,6 @@
               </svg>
               <span>Descargar app</span>
             </div>
-            <span class="nav-badge"
-              style="background-color: var(--color-primary-light); color: #FFF; font-size: 0.65rem;">PWA</span>
           </button>
         </nav>
 
@@ -220,7 +195,7 @@
           <div class="collections-header">
             <span class="nav-group-title">Colecciones</span>
             <button id="btn-create-collection" class="btn-create-col" title="Nueva colección" aria-label="Crear nueva colección">
-              <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
               </svg>
             </button>
@@ -235,13 +210,18 @@
         <div class="storage-widget">
           <div class="storage-header">
             <div class="storage-icon-title">
-              <svg style="width: 14px; height: 14px; color: var(--color-primary-light);" fill="none"
-                stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+              <svg class="icon-md color-primary-light" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M20 18C20 20.2091 16.4183 22 12 22C7.58172 22 4 20.2091 4 18V13.974C4.50221 14.5906 5.21495 15.1029 6.00774 15.4992C7.58004 16.2854 9.69967 16.75 12 16.75C14.3003 16.75 16.42 16.2854 17.9923 15.4992C18.7851 15.1029 19.4978 14.5906 20 13.974V18Z" fill="currentColor"/>
+                <path d="M12 10.75C14.3003 10.75 16.42 10.2854 17.9923 9.49925C18.7851 9.10285 19.4978 8.59059 20 7.97397V12C20 12.5 18.2143 13.5911 17.3214 14.1576C15.9983 14.8192 14.118 15.25 12 15.25C9.88205 15.25 8.00168 14.8192 6.67856 14.1576C5.5 13.5683 4 12.5 4 12V7.97397C4.50221 8.59059 5.21495 9.10285 6.00774 9.49925C7.58004 10.2854 9.69967 10.75 12 10.75Z" fill="currentColor"/>
+                <path d="M17.3214 8.15761C15.9983 8.81917 14.118 9.25 12 9.25C9.88205 9.25 8.00168 8.81917 6.67856 8.15761C6.16384 7.95596 5.00637 7.31492 4.2015 6.27935C4.06454 6.10313 4.00576 5.87853 4.03988 5.65798C4.06283 5.50969 4.0948 5.35695 4.13578 5.26226C4.82815 3.40554 8.0858 2 12 2C15.9142 2 19.1718 3.40554 19.8642 5.26226C19.9052 5.35695 19.9372 5.50969 19.9601 5.65798C19.9942 5.87853 19.9355 6.10313 19.7985 6.27935C18.9936 7.31492 17.8362 7.95596 17.3214 8.15761Z" fill="currentColor"/>
               </svg>
               <span>Almacenamiento</span>
             </div>
+            <button class="btn-storage-toggle" title="Opciones de almacenamiento" aria-label="Opciones de almacenamiento">
+              <svg class="icon-md" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
           </div>
           <div class="storage-progress-bar" role="progressbar" aria-label="Almacenamiento usado" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="storage-progress-track">
             <div class="storage-progress-fill" id="storage-progress-fill"></div>
@@ -261,15 +241,18 @@
         <!-- 2. Barra de Control de Biblioteca (Toolbar) -->
         <section class="library-header">
           <div class="library-header-top">
-            <h2 class="library-title">Biblioteca</h2>
+            <div class="library-title-group">
+              <h2 class="library-title">Biblioteca</h2>
+              <span class="collection-count-pill hidden" id="library-count-pill"></span>
+            </div>
             <button class="btn-upload-epub" id="btn-upload-trigger">
-              <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
               </svg>
               <span>Subir libro</span>
             </button>
-            <input type="file" id="epub-file-input" accept=".epub,application/epub+zip" style="display: none;">
+            <input type="file" id="epub-file-input" class="hidden" accept=".epub,application/epub+zip">
           </div>
 
           <div class="library-controls">
@@ -332,9 +315,8 @@
        ======================================================================== -->
   <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Navegación móvil">
     <button type="button" class="mobile-nav-link active" data-nav-filter="all" aria-label="Biblioteca">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+      <svg fill="currentColor" viewBox="0 0 64 64" aria-hidden="true">
+        <path fill="currentColor" d="m57.063 20.218l1.029-1.698s.906-1.502.906-3.519c0-4.886-4.662-4.757-4.662-4.757L44.179 7.479L38.638 2l-7.291 1.985l-2.391-.651l-1.817 1.797l-10.497 2.858s-4.04-.111-4.04 4.123c0 1.748.786 3.05.786 3.05l1.351 2.23l-1.187 1.172l-5.86 1.596s-4.662-.129-4.662 4.757a7.56 7.56 0 0 0 .779 3.281L2 29.987l.949.376c.021.051.029.108.07.149c1.835 1.839 1.684 4.309 1.422 5.643l-1.109 1.111l8.401 4.039L23.271 60.35c1.849 2.906 5.774 1.088 5.774 1.088l29.649-14.256l-1.109-1.111c-.262-1.334-.413-3.804 1.422-5.644c.041-.041.049-.098.07-.148l.949-.377l-5.513-5.45l6.33-3.043l-.961-.963c-.227-1.156-.358-3.297 1.233-4.891c.035-.036.041-.084.06-.129l.825-.327zm-5.685-8.835l-1.25 1.978l-3.234-3.198zM39.176 7.144l4.643 4.963l-16.789 6.067l-3.965-6.156zM15.744 19.052l11.457 18.911l-21.827-8.658zm-4.775 2.067l-1.345 1.33l-.538-.825zm-4.247 1.034l1.252 1.927l-2.713 2.682a5.6 5.6 0 0 1-.331-1.845c0-1.826.906-2.521 1.792-2.764M5.154 37.026l.015-.058l25.147 11.007l-24.95-11.894c.023-.135.041-.284.06-.434l19.533 8.18l-19.465-9.116a8 8 0 0 0-.086-1.245l18.079 7.445L5.165 32.4a6 6 0 0 0-.47-1.137l24.883 10.625l.566.934c1.167 1.834 3.284 1.495 4.351 1.177c1.475.728 4.119 2.412 3.442 4.893c-.357 1.312-1.142 1.948-2.399 1.948c-1.273 0-2.544-.666-2.557-.675zM30.2 50.185l-1.966.814l-1.67-2.563zm-7.614 5.381l-7.729-12.759l7.682 3.693l3.633 5.592c-1.465.626-3.102 2.055-3.586 3.474m34.033-12.184a8 8 0 0 0-.086 1.245l-19.465 9.116l19.533-8.18c.019.149.036.299.06.434l-24.95 11.895l25.147-11.007l.015.058L29.046 60.08c-.013.009-1.282.675-2.557.675c-1.258 0-2.042-.637-2.399-1.948c-.918-3.367 4.302-5.276 4.38-5.305l4.575-1.952c.491.209 3.994 1.584 5.711-1.115l1.083-1.786l17.494-7.47a6 6 0 0 0-.471 1.137L38.54 50.827zm.034-4.161l-14.825 6.144l4.114-6.791l6.767-3.253zm2.393-11.107a7 7 0 0 0-.075 1.079l-16.868 7.9l16.928-7.089c.017.129.031.26.052.376L37.459 40.688l21.794-9.539l.013.05l-24.117 11.387c-.011.007-1.112.585-2.216.585c-1.091 0-1.77-.553-2.079-1.689c-.796-2.918 3.728-4.572 3.796-4.597l25.014-10.68a5.3 5.3 0 0 0-.407.986l-15.88 7.376z" />
       </svg>
       <span>Biblioteca</span>
     </button>
@@ -355,7 +337,7 @@
       <span>Favoritos</span>
     </button>
 
-    <button type="button" class="mobile-nav-link" data-action="open-settings" aria-label="Abrir ajustes">
+    <button type="button" class="mobile-nav-link" data-nav-filter="settings" aria-label="Ajustes">
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
           d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
@@ -374,200 +356,6 @@
   </nav>
 
   <!-- ========================================================================
-       MODAL DE SELECCIÓN DE TEMAS (RENOVADO Y VISUALMENTE ENRIQUECIDO)
-       ======================================================================== -->
-  <div class="modal-overlay" id="theme-modal" role="dialog" aria-modal="true" aria-labelledby="modal-theme-title">
-    <div class="modal-card">
-      <div class="modal-header">
-        <div>
-          <h3 class="modal-title" id="modal-theme-title">Ajustes de Apariencia</h3>
-          <p style="font-size: 0.78rem; color: var(--color-text-secondary); margin: 3px 0 0 0;">Personaliza los temas y la escala visual de la biblioteca</p>
-        </div>
-        <button class="modal-close-btn" id="modal-close-btn" aria-label="Cerrar modal">
-          <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-
-      <!-- Seccion: Apariencia y Sistema de Temas -->
-      <div class="settings-subsection" style="padding: 0 4px;">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
-          <div>
-            <h4 class="settings-section-subtitle"
-              style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0 0 2px 0;">
-              Paleta y Sistema de Temas</h4>
-            <p class="settings-section-desc" style="font-size: 0.75rem; color: var(--color-text-muted); margin: 0;">
-              Selecciona el ambiente estético que mejor se adapte a tu momento de lectura.</p>
-          </div>
-        </div>
-
-        <div class="theme-options-grid">
-<!-- ============================================================
-     TARJETAS DE SELECCIÓN DE TEMAS
-     ============================================================ -->
-
-<!-- 1. Cerúleo Claro -->
-<div class="theme-option-card" data-theme-value="cerulean-light">
-  <div class="theme-card-left">
-    <h4 class="theme-card-title">Cerúleo claro</h4>
-    <p class="theme-card-desc">Helada y Luminosa, con acentos cerúleos.</p>
-  </div>
-  <div class="theme-card-right">
-    <div class="theme-swatches">
-      <div class="color-swatch swatch-mn-1" title="Azul Hielo (#EEF4F8)"></div>
-      <div class="color-swatch swatch-mn-2" title="Blanco Puro (#FFFFFF)"></div>
-      <div class="color-swatch swatch-mn-3" title="Cerúleo (#39789F)"></div>
-      <div class="color-swatch swatch-mn-4" title="Cerúleo Claro (#6FA8C8)"></div>
-    </div>
-    <div class="theme-radio" aria-hidden="true"></div>
-  </div>
-</div>
-
-<!-- 2. Lavanda Claro -->
-<div class="theme-option-card" data-theme-value="lavender-light">
-  <div class="theme-card-left">
-    <h4 class="theme-card-title">Lavanda claro</h4>
-    <p class="theme-card-desc">Blanco, lavanda y violeta. Limpia y delicada.</p>
-  </div>
-  <div class="theme-card-right">
-    <div class="theme-swatches">
-      <div class="color-swatch swatch-ll-1" title="Lavanda Perla (#F8F6FC)"></div>
-      <div class="color-swatch swatch-ll-2" title="Lavanda Suave (#F0ECF8)"></div>
-      <div class="color-swatch swatch-ll-3" title="Amatista (#7663A6)"></div>
-      <div class="color-swatch swatch-ll-4" title="Amatista Claro (#A392C8)"></div>
-    </div>
-    <div class="theme-radio" aria-hidden="true"></div>
-  </div>
-</div>
-
-<!-- 3. Niebla Serena -->
-<div class="theme-option-card" data-theme-value="serene-fog">
-  <div class="theme-card-left">
-    <h4 class="theme-card-title">Niebla Serena</h4>
-    <p class="theme-card-desc">Rosa niebla y malva. Suave para leer de día.</p>
-  </div>
-  <div class="theme-card-right">
-    <div class="theme-swatches">
-      <div class="color-swatch swatch-wp-1" title="Rosa Niebla (#FBF7F8)"></div>
-      <div class="color-swatch swatch-wp-2" title="Rosa Empolvado (#F5EAEE)"></div>
-      <div class="color-swatch swatch-wp-3" title="Vino Profundo (#633546)"></div>
-      <div class="color-swatch swatch-wp-4" title="Malva (#915C72)"></div>
-    </div>
-    <div class="theme-radio" aria-hidden="true"></div>
-  </div>
-</div>
-
-<!-- 4. Bosque de la Mañana -->
-<div class="theme-option-card" data-theme-value="enchanted-forest">
-  <div class="theme-card-left">
-    <h4 class="theme-card-title">Bosque de la mañana</h4>
-    <p class="theme-card-desc">Verdes salvia y rocío matinal. Fresca y serena.</p>
-  </div>
-  <div class="theme-card-right">
-    <div class="theme-swatches">
-      <div class="color-swatch swatch-ef-1" title="Verde Niebla (#F2F7F3)"></div>
-      <div class="color-swatch swatch-ef-2" title="Salvia Suave (#E5EFE8)"></div>
-      <div class="color-swatch swatch-ef-3" title="Bosque Profundo (#234E35)"></div>
-      <div class="color-swatch swatch-ef-4" title="Salvia (#3F7957)"></div>
-    </div>
-    <div class="theme-radio" aria-hidden="true"></div>
-  </div>
-</div>
-
-<!-- 5. Beige Cálido -->
-<div class="theme-option-card" data-theme-value="clear-sky">
-  <div class="theme-card-left">
-    <h4 class="theme-card-title">Beige cálido</h4>
-    <p class="theme-card-desc">Marfil, lino y arena. Cálida y acogedora.</p>
-  </div>
-  <div class="theme-card-right">
-    <div class="theme-swatches">
-      <div class="color-swatch swatch-cs-1" title="Marfil Cálido (#F8F4EC)"></div>
-      <div class="color-swatch swatch-cs-2" title="Lino (#F1E9DC)"></div>
-      <div class="color-swatch swatch-cs-3" title="Arena (#C8A987)"></div>
-      <div class="color-swatch swatch-cs-4" title="Espresso / Taupe (#71523C)"></div>
-    </div>
-    <div class="theme-radio" aria-hidden="true"></div>
-  </div>
-</div>
-
-<!-- 6. Abismo Nocturno -->
-<div class="theme-option-card" data-theme-value="abyss-dark">
-  <div class="theme-card-left">
-    <h4 class="theme-card-title">Abismo nocturno</h4>
-    <p class="theme-card-desc">Grafito profundo y acero azulado. Sobria y nocturna.</p>
-  </div>
-  <div class="theme-card-right">
-    <div class="theme-swatches">
-      <div class="color-swatch swatch-ad-1" title="Grafito Abisal (#0F1216)"></div>
-      <div class="color-swatch swatch-ad-2" title="Carbón Azul (#191E24)"></div>
-      <div class="color-swatch swatch-ad-3" title="Acero Oscuro (#242B33)"></div>
-      <div class="color-swatch swatch-ad-4" title="Plata Azulada (#A7BBC9)"></div>
-    </div>
-    <div class="theme-radio" aria-hidden="true"></div>
-  </div>
-</div>
-        </div>
-      </div>
-
-      <!-- Preferencias y Elementos de la Interfaz -->
-      <div class="settings-preferences-section settings-section-divider"
-        style="margin-top: 24px; padding: 24px 8px 16px 8px; border-top: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 20px;">
-        <!-- 1. Tamaño de Letras de la App -->
-        <div class="settings-block">
-          <div class="settings-row-space"
-            style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-            <div>
-              <h4 class="settings-section-subtitle"
-                style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0 0 4px 0;">
-                Tamaño de Letras de la App</h4>
-              <p class="settings-section-desc" style="font-size: 0.75rem; color: var(--color-text-muted); margin: 0;">
-                Ajusta la escala visual y la tipografía general de la aplicación.</p>
-            </div>
-            <div class="scale-stepper-wrapper">
-              <button id="btn-scale-decrease" class="btn-scale-step" title="Reducir tamaño" aria-label="Reducir tamaño">−</button>
-              <span id="label-scale-percent" class="label-scale-value">100%</span>
-              <button id="btn-scale-increase" class="btn-scale-step" title="Aumentar tamaño" aria-label="Aumentar tamaño">+</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 2. Copia de Seguridad y Restauración de Datos -->
-        <div class="settings-block" style="padding-top: 16px; border-top: 1px solid var(--color-border-subtle, rgba(255,255,255,0.06));">
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-            <div>
-              <h4 class="settings-section-subtitle"
-                style="font-size: 0.82rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin: 0 0 4px 0;">
-                Copia de Seguridad y Datos</h4>
-              <p class="settings-section-desc" style="font-size: 0.75rem; color: var(--color-text-muted); margin: 0;">
-                Guarda tus notas, citas, colecciones y progreso en un archivo JSON o restáuralos en otro dispositivo.</p>
-            </div>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <button id="btn-export-backup" class="btn-setting-action" style="
-                display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: var(--radius-sm, 8px);
-                background-color: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text);
-                font-size: var(--text-xs); font-weight: 600; cursor: pointer; transition: all 0.2s ease;
-              ">
-                <svg style="width: 14px; height: 14px; color: var(--color-primary-light);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                <span>Exportar copia</span>
-              </button>
-              <button id="btn-import-backup" class="btn-setting-action" style="
-                display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: var(--radius-sm, 8px);
-                background-color: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text);
-                font-size: var(--text-xs); font-weight: 600; cursor: pointer; transition: all 0.2s ease;
-              ">
-                <svg style="width: 14px; height: 14px; color: var(--color-accent-gold, #D4AF37);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
-                <span>Restaurar</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================================================================
        VISOR Y LECTOR EPUB (READER VIEW)
        ======================================================================== -->
   <div class="reader-view" id="reader-view" role="region" aria-label="Lector de libro">
@@ -575,7 +363,7 @@
     <header class="reader-header">
       <div class="reader-header-left">
         <button class="btn-reader-back" id="btn-reader-back" aria-label="Volver a la biblioteca">
-          <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
           <span>Biblioteca</span>
@@ -591,7 +379,7 @@
         <!-- Búsqueda Intra-Libro -->
         <button class="btn-reader-action" id="btn-reader-search" title="Buscar en este libro"
           aria-label="Buscar en el libro" aria-expanded="false" aria-controls="reader-search-panel">
-          <svg style="width: 19px; height: 19px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
@@ -599,7 +387,7 @@
 
         <!-- Tabla de Contenidos -->
         <button class="btn-reader-action" id="btn-reader-toc" title="Capítulos" aria-label="Tabla de Contenidos" aria-expanded="false" aria-controls="reader-toc-drawer">
-          <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <svg class="icon-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h7" />
           </svg>
         </button>
@@ -607,7 +395,7 @@
         <!-- Ajustes de Lectura (Fuentes, Márgenes, etc.) -->
         <button class="btn-reader-action" id="btn-reader-settings" title="Ajustes de lectura y tipografía"
           aria-label="Ajustes de lectura" aria-expanded="false" aria-controls="reader-settings-panel">
-          <svg style="width: 19px; height: 19px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
               d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
           </svg>
@@ -616,7 +404,7 @@
         <!-- Pantalla Completa -->
         <button class="btn-reader-action" id="btn-reader-fullscreen" title="Pantalla Completa"
           aria-label="Alternar pantalla completa" aria-pressed="false">
-          <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
               d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
           </svg>
@@ -647,7 +435,7 @@
     <footer class="reader-footer">
       <button class="btn-footer-chapter" id="btn-footer-prev-chapter" title="Capítulo anterior"
         aria-label="Capítulo anterior">
-        <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 19l-7-7 7-7" />
         </svg>
         <span class="btn-chapter-label">Cap. anterior</span>
@@ -661,7 +449,7 @@
       <button class="btn-footer-chapter" id="btn-footer-next-chapter" title="Capítulo siguiente"
         aria-label="Capítulo siguiente">
         <span class="btn-chapter-label">Cap. siguiente</span>
-        <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5l7 7-7 7" />
         </svg>
       </button>
@@ -673,7 +461,7 @@
       <div class="toc-header">
         <h3 class="toc-title">Capítulos</h3>
         <button class="toc-close-btn" id="toc-close-btn" aria-label="Cerrar panel">
-          <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
@@ -688,29 +476,26 @@
       <div class="search-panel-header">
         <h3 id="reader-search-title" class="sr-only">Búsqueda en el libro</h3>
         <div class="search-input-wrapper">
-          <svg style="width: 18px; height: 18px; color: var(--color-text-muted); flex-shrink: 0;" fill="none"
+          <svg class="icon-md text-muted flex-shrink-0" fill="none"
             stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <label class="sr-only" for="input-reader-search">Buscar texto en este libro</label>
           <input type="search" id="input-reader-search" placeholder="Buscar texto en este libro..." autocomplete="off" aria-label="Buscar texto en este libro">
-          <button id="btn-clear-reader-search" title="Borrar búsqueda" aria-label="Borrar búsqueda"
-            style="color: var(--color-text-muted); cursor: pointer; padding: 4px; display: none; background: transparent; border: none;">
-            <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <button id="btn-clear-reader-search" class="btn-search-clear" title="Borrar búsqueda" aria-label="Borrar búsqueda">
+            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
-          <button id="btn-submit-reader-search"
-            style="padding: 5px 12px; border-radius: var(--radius-full, 999px); background: var(--color-primary-light); color: #FFF; font-size: 0.75rem; font-weight: 600; cursor: pointer; border: none; flex-shrink: 0;">
+          <button id="btn-submit-reader-search" class="btn-search-submit">
             Buscar
           </button>
         </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 4px;">
-          <span id="search-status-text" style="font-size: var(--text-xs); color: var(--color-text-muted);" role="status" aria-live="polite">Escribe y
+        <div class="search-status-bar">
+          <span id="search-status-text" class="search-status-info" role="status" aria-live="polite">Escribe y
             pulsa Buscar o Enter</span>
-          <button id="btn-close-reader-search"
-            style="font-size: var(--text-xs); color: var(--color-primary-light); cursor: pointer; font-weight: bold; background: transparent; border: none;">Cerrar</button>
+          <button id="btn-close-reader-search" class="btn-search-close">Cerrar</button>
         </div>
       </div>
       <div class="search-results-list" id="search-results-list" aria-live="polite"></div>
@@ -723,24 +508,17 @@
       <!-- Tipografía -->
       <div class="settings-group">
         <span class="settings-group-label">Tipografía</span>
-        <div class="settings-btn-grid" id="font-family-options">
-          <button class="setting-pill-btn active" data-font="Literata"
-            style="font-family: 'Literata', Georgia, serif;">Literata</button>
-          <button class="setting-pill-btn" data-font="Source Serif"
-            style="font-family: 'Source Serif 4', Georgia, serif;">Source Serif</button>
-          <button class="setting-pill-btn" data-font="Lora" style="font-family: 'Lora', Georgia, serif;">Lora</button>
-          <button class="setting-pill-btn" data-font="EB Garamond"
-            style="font-family: 'EB Garamond', Garamond, serif;">Garamond</button>
-          <button class="setting-pill-btn" data-font="Playfair"
-            style="font-family: 'Playfair Display', Georgia, serif;">Playfair</button>
-          <button class="setting-pill-btn" data-font="Atkinson"
-            style="font-family: 'Atkinson Hyperlegible', sans-serif;">Atkinson</button>
-          <button class="setting-pill-btn" data-font="Poppins"
-            style="font-family: 'Poppins', sans-serif;">Poppins</button>
-          <button class="setting-pill-btn" data-font="Inter" style="font-family: 'Inter', sans-serif;">Inter</button>
-          <button class="setting-pill-btn" data-font="Roboto" style="font-family: 'Roboto', sans-serif;">Roboto</button>
-          <button class="setting-pill-btn" data-font="OpenDyslexic"
-            style="font-family: 'OpenDyslexic', sans-serif;">Dyslexic</button>
+        <div class="settings-btn-grid typography-grid" id="font-family-options">
+          <button class="setting-pill-btn font-literata active" data-font="Literata"><span class="font-aa">Aa</span><span class="font-name">Literata</span></button>
+          <button class="setting-pill-btn font-source-serif" data-font="Source Serif"><span class="font-aa">Aa</span><span class="font-name">Source Serif</span></button>
+          <button class="setting-pill-btn font-lora" data-font="Lora"><span class="font-aa">Aa</span><span class="font-name">Lora</span></button>
+          <button class="setting-pill-btn font-garamond" data-font="EB Garamond"><span class="font-aa">Aa</span><span class="font-name">Garamond</span></button>
+          <button class="setting-pill-btn font-playfair" data-font="Playfair"><span class="font-aa">Aa</span><span class="font-name">Playfair</span></button>
+          <button class="setting-pill-btn font-atkinson" data-font="Atkinson"><span class="font-aa">Aa</span><span class="font-name">Atkinson</span></button>
+          <button class="setting-pill-btn font-poppins" data-font="Poppins"><span class="font-aa">Aa</span><span class="font-name">Poppins</span></button>
+          <button class="setting-pill-btn font-inter" data-font="Inter"><span class="font-aa">Aa</span><span class="font-name">Inter</span></button>
+          <button class="setting-pill-btn font-roboto" data-font="Roboto"><span class="font-aa">Aa</span><span class="font-name">Roboto</span></button>
+          <button class="setting-pill-btn font-opendyslexic" data-font="OpenDyslexic"><span class="font-aa">Aa</span><span class="font-name">Dyslexic</span></button>
         </div>
       </div>
 
@@ -756,8 +534,8 @@
 
       <!-- Grosor de Texto -->
       <div class="settings-group">
-        <span class="settings-group-label">Grosor de Fuente</span>
-        <div class="settings-btn-grid" id="font-weight-options">
+        <span class="settings-group-label">Grosor de fuente</span>
+        <div class="settings-btn-grid segmented-control" id="font-weight-options">
           <button class="setting-pill-btn active" data-weight="normal">Normal</button>
           <button class="setting-pill-btn" data-weight="medium">Medio</button>
           <button class="setting-pill-btn" data-weight="bold">Negrita</button>
@@ -767,7 +545,7 @@
       <!-- Interlineado -->
       <div class="settings-group">
         <span class="settings-group-label">Interlineado</span>
-        <div class="settings-btn-grid" id="line-height-options">
+        <div class="settings-btn-grid segmented-control" id="line-height-options">
           <button class="setting-pill-btn" data-lh="1.3">Compacto</button>
           <button class="setting-pill-btn active" data-lh="1.6">Normal</button>
           <button class="setting-pill-btn" data-lh="1.9">Amplio</button>
@@ -776,20 +554,31 @@
 
       <!-- Alineación de Texto (4 opciones) -->
       <div class="settings-group">
-        <span class="settings-group-label">Alineación de Texto</span>
-        <div class="settings-align-grid" id="font-align-options">
+        <span class="settings-group-label">Alineación de texto</span>
+        <div class="settings-align-grid segmented-control" id="font-align-options">
           <button class="align-pill-btn active" data-align="left" title="Alinear a la izquierda" aria-label="Alinear a la izquierda">
-            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h10M4 14h14M4 18h8"/></svg>
+            <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h10M4 14h14M4 18h8"/></svg>
           </button>
           <button class="align-pill-btn" data-align="justify" title="Justificar texto" aria-label="Justificar texto">
-            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+            <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
           </button>
           <button class="align-pill-btn" data-align="center" title="Centrar texto" aria-label="Centrar texto">
-            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M6 10h12M5 14h14M8 18h8"/></svg>
+            <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M6 10h12M5 14h14M8 18h8"/></svg>
           </button>
           <button class="align-pill-btn" data-align="right" title="Alinear a la derecha" aria-label="Alinear a la derecha">
-            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M10 10h10M6 14h14M12 18h8"/></svg>
+            <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M10 10h10M6 14h14M12 18h8"/></svg>
           </button>
+        </div>
+      </div>
+
+      <!-- Sangría de Primera Línea -->
+      <div class="settings-group">
+        <span class="settings-group-label">Sangría de Primera Línea</span>
+        <div class="settings-btn-grid settings-btn-grid-2" id="first-line-indent-options" role="group" aria-label="Sangría de primera línea">
+          <button type="button" class="setting-pill-btn active" data-indent="0" aria-pressed="true"
+            title="Sin sangría (párrafos alineados al margen)">Sin sangría</button>
+          <button type="button" class="setting-pill-btn" data-indent="1" aria-pressed="false"
+            title="Con sangría en la primera línea">Con sangría</button>
         </div>
       </div>
 
@@ -798,32 +587,36 @@
         <span class="settings-group-label" id="reader-theme-label">Tema de Lectura</span>
         <div class="reader-theme-swatches" id="reader-theme-options" role="radiogroup" aria-labelledby="reader-theme-label">
           <button type="button" class="reader-theme-chip active" data-reader-theme="inherit" title="Sincronizar con tema de la app" role="radio" aria-checked="true">
-            <span class="reader-theme-swatch swatch-auto"></span>
+            <span class="reader-theme-preview preview-auto"><span class="preview-auto-half preview-auto-light"><span class="preview-line"></span><span class="preview-aa">Aa</span></span><span class="preview-auto-half preview-auto-dark"><span class="preview-line"></span><span class="preview-aa">Aa</span></span></span>
             <span class="reader-theme-name">Auto</span>
           </button>
-          <button type="button" class="reader-theme-chip" data-reader-theme="paper" title="Tema Sepia" role="radio" aria-checked="false">
-            <span class="reader-theme-swatch" style="background-color: #F4EFE6; border: 1px solid #E0D9C6;"></span>
-            <span class="reader-theme-name">Sepia</span>
+          <button type="button" class="reader-theme-chip" data-reader-theme="pergamino" title="Tema Pergamino" role="radio" aria-checked="false">
+            <span class="reader-theme-preview preview-pergamino"><span class="preview-line"></span><span class="preview-aa">Aa</span></span>
+            <span class="reader-theme-name">Pergamino</span>
           </button>
-          <button type="button" class="reader-theme-chip" data-reader-theme="lavender-light" title="Tema Lavanda Claro" role="radio" aria-checked="false">
-            <span class="reader-theme-swatch" style="background-color: #F8F6FC; border: 1px solid #DED7EC;"></span>
-            <span class="reader-theme-name">Lavanda</span>
+          <button type="button" class="reader-theme-chip" data-reader-theme="terracota" title="Tema Terracota Suave" role="radio" aria-checked="false">
+            <span class="reader-theme-preview preview-terracota"><span class="preview-line"></span><span class="preview-aa">Aa</span></span>
+            <span class="reader-theme-name">Terracota Suave</span>
           </button>
-          <button type="button" class="reader-theme-chip" data-reader-theme="neutral" title="Tema Carbón" role="radio" aria-checked="false">
-            <span class="reader-theme-swatch" style="background-color: #1D2128; border: 1px solid #2E3440;"></span>
-            <span class="reader-theme-name">Carbón</span>
+          <button type="button" class="reader-theme-chip" data-reader-theme="moca" title="Tema Café Moca" role="radio" aria-checked="false">
+            <span class="reader-theme-preview preview-moca"><span class="preview-line"></span><span class="preview-aa">Aa</span></span>
+            <span class="reader-theme-name">Café Moca</span>
           </button>
-          <button type="button" class="reader-theme-chip" data-reader-theme="oled" title="Tema OLED Negro Reposado" role="radio" aria-checked="false">
-            <span class="reader-theme-swatch" style="background-color: #07090D; border: 1px solid #1C1F26;"></span>
-            <span class="reader-theme-name">OLED</span>
+          <button type="button" class="reader-theme-chip" data-reader-theme="ambar" title="Tema Ámbar Nocturno" role="radio" aria-checked="false">
+            <span class="reader-theme-preview preview-ambar"><span class="preview-line"></span><span class="preview-aa">Aa</span></span>
+            <span class="reader-theme-name">Ámbar Nocturno</span>
           </button>
-          <button type="button" class="reader-theme-chip" data-reader-theme="enchanted-forest" title="Tema Bosque de la Mañana" role="radio" aria-checked="false">
-            <span class="reader-theme-swatch" style="background-color: #F2F7F3; border: 1px solid #CBDDCF;"></span>
-            <span class="reader-theme-name">Bosque</span>
+          <button type="button" class="reader-theme-chip" data-reader-theme="niebla" title="Tema Gris Niebla" role="radio" aria-checked="false">
+            <span class="reader-theme-preview preview-niebla"><span class="preview-line"></span><span class="preview-aa">Aa</span></span>
+            <span class="reader-theme-name">Gris Niebla</span>
           </button>
-          <button type="button" class="reader-theme-chip" data-reader-theme="cerulean-light" title="Tema Cerúleo Claro" role="radio" aria-checked="false">
-            <span class="reader-theme-swatch" style="background-color: #EEF4F8; border: 1px solid #C9DCE8;"></span>
-            <span class="reader-theme-name">Cerúleo</span>
+          <button type="button" class="reader-theme-chip" data-reader-theme="pizarra" title="Tema Pizarra Silícea" role="radio" aria-checked="false">
+            <span class="reader-theme-preview preview-pizarra"><span class="preview-line"></span><span class="preview-aa">Aa</span></span>
+            <span class="reader-theme-name">Pizarra Silícea</span>
+          </button>
+          <button type="button" class="reader-theme-chip" data-reader-theme="melocoton" title="Tema Melocotón Pálido" role="radio" aria-checked="false">
+            <span class="reader-theme-preview preview-melocoton"><span class="preview-line"></span><span class="preview-aa">Aa</span></span>
+            <span class="reader-theme-name">Melocotón Pálido</span>
           </button>
         </div>
       </div>

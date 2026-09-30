@@ -65,12 +65,12 @@ export class Toast {
     `;
 
     toastEl.innerHTML = `
-      <div style="display: flex; align-items: center; gap: 10px; min-width: 0;">
+      <div class="toast-body-content">
         ${this._getTypeIcon(type)}
         <span>${this._escape(message)}</span>
       </div>
-      <button class="toast-close-btn" style="color: var(--color-text-muted); padding: 7px; border-radius: 8px; cursor: pointer; flex-shrink: 0; background: transparent; border: none; display: flex; align-items: center;" aria-label="Cerrar notificación" title="Cerrar">
-        <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <button class="toast-close-btn" aria-label="Cerrar notificación" title="Cerrar">
+        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
@@ -127,13 +127,7 @@ export class Toast {
   }
 
   static _ensureCloseStyles() {
-    if (document.getElementById('toast-close-styles')) return;
-    const style = document.createElement('style');
-    style.id = 'toast-close-styles';
-    style.textContent = `
-      .toast-close-btn:hover { background-color: var(--color-surface-hover) !important; color: var(--color-text) !important; }
-    `;
-    document.head.appendChild(style);
+    // No-op (styles in main.css)
   }
 
   static success(msg, duration) { this.show(msg, 'success', duration); }
@@ -153,13 +147,13 @@ export class Toast {
   static _getTypeIcon(type) {
     switch (type) {
       case 'success':
-        return '<svg style="width: 18px; height: 18px; color: #10B981; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+        return '<svg class="toast-icon success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
       case 'error':
-        return '<svg style="width: 18px; height: 18px; color: #EF4444; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+        return '<svg class="toast-icon error" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
       case 'warning':
-        return '<svg style="width: 18px; height: 18px; color: #F59E0B; flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>';
+        return '<svg class="toast-icon warning" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>';
       default:
-        return '<svg style="width: 18px; height: 18px; color: var(--color-primary-light); flex-shrink: 0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+        return '<svg class="toast-icon info" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
     }
   }
 
