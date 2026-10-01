@@ -461,7 +461,22 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
 
     // Obtener título de capítulo si está disponible
     const chapterHref = location.start.href;
-    const chapterTitle = this._findChapterTitle(chapterHref) || 'Capítulo actual';
+    let chapterTitle = this._findChapterTitle(chapterHref);
+
+    if (!chapterTitle) {
+      try {
+        const contents = this.rendition && this.rendition.getContents ? this.rendition.getContents() : [];
+        if (contents && contents.length > 0 && contents[0].document) {
+          chapterTitle = this._findChapterTitle(chapterHref, contents[0].document);
+        }
+      } catch (_) {}
+    }
+
+    if (!chapterTitle) {
+      const idx = this._getSpineIndex(chapterHref);
+      chapterTitle = idx !== -1 ? `Capítulo ${idx + 1}` : 'Capítulo 1';
+    }
+
     this.currentChapterHref = chapterHref || '';
     this.currentChapterTitle = chapterTitle;
 
@@ -563,36 +578,186 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
   }
 
   /**
-   * Busca el nombre legible del capítulo en la tabla de contenidos por href.
+   * Busca el nombre legible del capítulo en la tabla de contenidos por href o DOM.
    * @private
    */
-  _findChapterTitle(href) {
-    if (!href || !this.toc) return '';
-    const decode = (s) => {
-      let out = String(s || '').split('#')[0].split('?')[0].trim();
-      try { out = decodeURIComponent(out); } catch (_) {}
-      return out;
+  /**
+   * Busca el nombre legible del capítulo en la tabla de contenidos por href o DOM.
+   * Soporta libros de relatos/antologías (ej: "La Asesina y el Lord pirata — Capítulo 1").
+   * @private
+   */
+  _findChapterTitle(href, doc = null) {
+    const getFilename = (pathStr) => {
+      let clean = String(pathStr || '').split('#')[0].split('?')[0].trim();
+      try { clean = decodeURIComponent(clean); } catch (_) {}
+      const parts = clean.split('/');
+      return parts[parts.length - 1].toLowerCase();
     };
-    const cleanHref = decode(href);
 
-    const searchToc = (items) => {
-      for (const item of items) {
-        const itemHref = decode(item.href);
-        if (itemHref && cleanHref &&
-            (itemHref === cleanHref || itemHref.includes(cleanHref) ||
-             cleanHref.includes(itemHref) ||
-             itemHref.endsWith(cleanHref) || cleanHref.endsWith(itemHref))) {
-          return item.label ? item.label.trim() : '';
+    const cleanPath = (p) => {
+      if (!p) return '';
+      let str = String(p).split('#')[0].split('?')[0].trim();
+      try { str = decodeURIComponent(str); } catch (_) {}
+      return str.toLowerCase();
+    };
+
+    const cleanFullHref = (p) => {
+      if (!p) return '';
+      let str = String(p).trim();
+      try { str = decodeURIComponent(str); } catch (_) {}
+      return str.toLowerCase();
+    };
+
+    const targetFile = getFilename(href);
+    const targetPath = cleanPath(href);
+    const targetFull = cleanFullHref(href);
+
+    // Formatear etiquetas puramente numéricas o romanas ("1", "01", "I" -> "Capítulo 1")
+    const formatChapterLabel = (rawLabel) => {
+      if (!rawLabel) return '';
+      const trimmed = rawLabel.trim();
+      if (/^\d+\.?$/.test(trimmed)) {
+        return `Capítulo ${parseInt(trimmed, 10)}`;
+      }
+      if (/^(?=[MDCLXVI])M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})\.?$/i.test(trimmed)) {
+        return `Capítulo ${trimmed.replace(/\.$/, '')}`;
+      }
+      return trimmed;
+    };
+
+    // 1. Coincidencia Inteligente por la Tabla de Contenidos (TOC)
+    // Buscamos de Hijos -> Padre (Leaf-First) para obtener la coincidencia más específica en antologías.
+    const toc = (this.book && this.book.navigation && this.book.navigation.toc) || this.toc || [];
+    if (targetFile && toc.length > 0) {
+      const searchTocRecursive = (items, parentItem = null) => {
+        for (const item of items) {
+          if (item.subitems && item.subitems.length > 0) {
+            const childResult = searchTocRecursive(item.subitems, item);
+            if (childResult) return childResult;
+          }
+
+          const itemPath = cleanPath(item.href);
+          const itemFile = getFilename(item.href);
+          const itemFull = cleanFullHref(item.href);
+
+          const isMatch = (
+            (itemFull && targetFull && (itemFull === targetFull || targetFull.endsWith(itemFull))) ||
+            (itemPath && targetPath && (itemPath === targetPath || targetPath.endsWith(itemPath) || itemPath.endsWith(targetPath))) ||
+            (itemFile && targetFile && itemFile === targetFile)
+          );
+
+          if (isMatch) {
+            let label = item.label ? formatChapterLabel(item.label) : '';
+            const parentLabel = parentItem && parentItem.label ? parentItem.label.trim() : '';
+
+            if (label) {
+              if (parentLabel && !parentLabel.toLowerCase().includes('contenido') && !parentLabel.toLowerCase().includes('índice')) {
+                if (/^Capítulo\s+\d+/i.test(label) || /^\d+$/.test(item.label?.trim() || '')) {
+                  return `${parentLabel} — ${label}`;
+                }
+              }
+              return label;
+            }
+          }
         }
-        if (item.subitems && item.subitems.length > 0) {
-          const found = searchToc(item.subitems);
-          if (found) return found;
+        return '';
+      };
+
+      const foundLabel = searchTocRecursive(toc);
+      if (foundLabel) return foundLabel;
+    }
+
+    // 2. Extraer del DOM (Combinar relato/parte en h1 + capítulo en h2)
+    if (doc && doc.body) {
+      try {
+        const h1El = doc.querySelector('h1, .story-title, .relato-titulo, .part-title');
+        const chapterEl = doc.querySelector('h2, h3, .chapter-title, .chapter-name, .chapter-number, .capitulo-titulo, .capitulo, [class*="chapter"], [class*="capitulo"]');
+
+        let storyTitle = h1El ? (h1El.textContent || '').replace(/\s+/g, ' ').trim() : '';
+        let chapterTitle = chapterEl ? (chapterEl.textContent || '').replace(/\s+/g, ' ').trim() : '';
+
+        if (chapterTitle) {
+          chapterTitle = formatChapterLabel(chapterTitle);
+        }
+
+        if (storyTitle && chapterTitle && storyTitle !== chapterTitle) {
+          if (!/^capítulo/i.test(storyTitle) && storyTitle.length >= 2 && storyTitle.length <= 80) {
+            if (/^capítulo/i.test(chapterTitle) || /^\d+$/.test(chapterTitle)) {
+              return `${storyTitle} — ${formatChapterLabel(chapterTitle)}`;
+            }
+          }
+        }
+
+        if (chapterTitle && chapterTitle.length >= 1 && chapterTitle.length <= 100) {
+          return chapterTitle;
+        }
+
+        if (storyTitle && storyTitle.length >= 2 && storyTitle.length <= 100) {
+          return formatChapterLabel(storyTitle);
+        }
+
+        if (doc.title) {
+          const docTitle = doc.title.replace(/\s+/g, ' ').trim();
+          if (docTitle && docTitle.length >= 2 && docTitle.length <= 100 &&
+              !docTitle.toLowerCase().endsWith('.xhtml') &&
+              !docTitle.toLowerCase().endsWith('.html') &&
+              !docTitle.toLowerCase().endsWith('.xml')) {
+            return formatChapterLabel(docTitle);
+          }
+        }
+      } catch (_) {}
+    }
+
+    // 3. Reconocimiento explícito de páginas preliminares o patrón numérico en nombre de archivo
+    if (targetFile) {
+      if (targetFile.includes('cover') || targetFile.includes('portada')) return 'Portada';
+      if (targetFile.includes('title') || targetFile.includes('titulo')) return 'Página de título';
+      if (targetFile.includes('copyright') || targetFile.includes('credito') || targetFile.includes('colophon')) return 'Créditos';
+      if (targetFile.includes('dedicat') || targetFile.includes('dedicac')) return 'Dedicatoria';
+      if (targetFile.includes('prolog') || targetFile.includes('preface') || targetFile.includes('prefacio')) return 'Prólogo';
+      if (targetFile.includes('epilog')) return 'Epílogo';
+      if (targetFile.includes('toc') || targetFile.includes('nav') || targetFile.includes('indice')) return 'Tabla de contenidos';
+      if (targetFile.includes('intro') || targetFile.includes('presentacion')) return 'Introducción';
+
+      // Extracción de número de capítulo del nombre de archivo (ej: relato1_cap01.xhtml -> Capítulo 1)
+      const fnNumMatch = targetFile.match(/(?:cap|chap|ch|capitulo|capitulo_|_c)[-_]?0*(\d+)/i) || targetFile.match(/[-_]0*(\d+)\.x?html$/i);
+      if (fnNumMatch && fnNumMatch[1]) {
+        const num = parseInt(fnNumMatch[1], 10);
+        if (num > 0) {
+          return `Capítulo ${num}`;
         }
       }
-      return '';
-    };
+    }
 
-    return searchToc(this.toc);
+    // 4. Calcular el número correlativo de capítulo (descontando preliminares)
+    const items = (this.book && this.book.spine && (this.book.spine.items || this.book.spine.spineItems)) || [];
+    if (href && items.length > 0) {
+      const idx = this._getSpineIndex ? this._getSpineIndex(href) : items.findIndex(it => getFilename(it.href) === targetFile);
+      if (idx !== -1) {
+        const isFrontMatter = (fn) => (
+          fn.includes('cover') || fn.includes('portada') ||
+          fn.includes('title') || fn.includes('titulo') ||
+          fn.includes('copyright') || fn.includes('credito') || fn.includes('colophon') ||
+          fn.includes('dedicat') || fn.includes('dedicac') ||
+          fn.includes('prolog') || fn.includes('preface') || fn.includes('prefacio') ||
+          fn.includes('toc') || fn.includes('nav') || fn.includes('indice') ||
+          fn.includes('intro') || fn.includes('presentacion')
+        );
+
+        let realChapterCount = 0;
+        for (let k = 0; k <= idx; k++) {
+          const fn = getFilename(items[k]?.href);
+          if (!isFrontMatter(fn)) {
+            realChapterCount++;
+          }
+        }
+        if (realChapterCount > 0) {
+          return `Capítulo ${realChapterCount}`;
+        }
+      }
+    }
+
+    return 'Portada';
   }
 
   /**
@@ -628,9 +793,7 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
   }
 
   /**
-   * Devuelve el capítulo en curso. Prioriza la ubicación EN VIVO del
-   * rendition (fiable al abrir el drawer tras leer con scroll) y usa
-   * la última registrada como respaldo.
+   * Devuelve el capítulo en curso.
    * @returns {{href: string, title: string}}
    */
   getCurrentChapter() {
@@ -648,10 +811,8 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
         title = this._findChapterTitle(href) || '';
       } catch (_) {}
     }
-    if (!title || title === 'Capítulo actual') {
-      title = (this.currentChapterTitle && this.currentChapterTitle !== 'Capítulo actual')
-        ? this.currentChapterTitle
-        : title;
+    if (!title) {
+      title = this.currentChapterTitle || 'Capítulo 1';
     }
     return { href, title };
   }

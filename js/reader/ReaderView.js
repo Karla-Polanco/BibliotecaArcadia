@@ -12,6 +12,7 @@ import { SearchManager } from './SearchManager.js';
 import { ScaleManager } from '../ui/ScaleManager.js';
 import { Toast } from '../ui/Toast.js';
 import { appState } from '../state.js';
+import { ReadingStatsManager } from '../ui/ReadingStatsManager.js';
 
 export class ReaderView {
   constructor() {
@@ -45,7 +46,13 @@ export class ReaderView {
     this.searchCloseBtn = document.getElementById('btn-close-reader-search');
     this.searchStatusText = document.getElementById('search-status-text');
     this.searchResultsList = document.getElementById('search-results-list');
+    this.prevSearchBtn = document.getElementById('btn-prev-search-result');
+    this.nextSearchBtn = document.getElementById('btn-next-search-result');
+    this.goToSearchBtn = document.getElementById('btn-go-to-search-result');
     this.searchManager = null;
+    this._searchResults = [];
+    this._currentSearchIndex = -1;
+    this._searchDebounceTimer = null;
 
     this.isOpen = false;
     this.currentBookId = null;
@@ -124,31 +131,56 @@ export class ReaderView {
     if (this.searchCloseBtn) {
       this.searchCloseBtn.addEventListener('click', () => this.toggleSearch(false));
     }
-    if (this.searchInput) {
-      this.searchInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          this.executeSearch();
-        }
-      });
-      this.searchInput.addEventListener('input', () => {
-        if (this.searchClearBtn) {
-          this.searchClearBtn.style.display = this.searchInput.value ? 'block' : 'none';
+
+    if (this.prevSearchBtn) {
+      this.prevSearchBtn.addEventListener('click', () => this.navigateSearchResult(-1));
+    }
+    if (this.nextSearchBtn) {
+      this.nextSearchBtn.addEventListener('click', () => this.navigateSearchResult(1));
+    }
+    if (this.goToSearchBtn) {
+      this.goToSearchBtn.addEventListener('click', () => {
+        if (this._searchResults && this._currentSearchIndex >= 0) {
+          this.jumpToSearchResult(this._currentSearchIndex);
+          this.toggleSearch(false);
         }
       });
     }
 
-    const searchSubmitBtn = document.getElementById('btn-submit-reader-search');
-    if (searchSubmitBtn) {
-      searchSubmitBtn.addEventListener('click', () => this.executeSearch());
+    if (this.searchInput) {
+      this.searchInput.addEventListener('input', () => {
+        const hasText = this.searchInput.value.trim().length > 0;
+        if (this.searchClearBtn) {
+          this.searchClearBtn.style.display = hasText ? 'inline-flex' : 'none';
+        }
+        clearTimeout(this._searchDebounceTimer);
+        this._searchDebounceTimer = setTimeout(() => {
+          this.executeSearch();
+        }, 250);
+      });
+      this.searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          if (this._searchResults && this._searchResults.length > 0) {
+            this.navigateSearchResult(1);
+          } else {
+            this.executeSearch();
+          }
+        }
+      });
     }
 
     if (this.searchClearBtn) {
       this.searchClearBtn.addEventListener('click', () => {
-        this.searchInput.value = '';
+        if (this.searchInput) this.searchInput.value = '';
         this.searchClearBtn.style.display = 'none';
+        this._searchResults = [];
+        this._currentSearchIndex = -1;
         if (this.searchResultsList) this.searchResultsList.innerHTML = '';
-        if (this.searchStatusText) this.searchStatusText.textContent = 'Escribe y pulsa Buscar o Enter';
-        this.searchInput.focus();
+        if (this.searchStatusText) this.searchStatusText.textContent = '0 resultados';
+        if (this.prevSearchBtn) this.prevSearchBtn.disabled = true;
+        if (this.nextSearchBtn) this.nextSearchBtn.disabled = true;
+        this.searchInput?.focus();
       });
     }
 
@@ -313,6 +345,15 @@ export class ReaderView {
       // Sincronizar UI de ajustes
       const currentSettings = readerManager.getSettings();
       this.syncSettingsUI(currentSettings);
+
+      // Iniciar contador de tiempo de lectura (1 minuto por cada 60 seg en pantalla)
+      if (this._statsInterval) clearInterval(this._statsInterval);
+      ReadingStatsManager.recordMinutes(1); // Registrar inicio
+      this._statsInterval = setInterval(() => {
+        if (this.isOpen) {
+          ReadingStatsManager.recordMinutes(1);
+        }
+      }, 60000);
     } catch (err) {
       console.error('Error al abrir el libro en el lector:', err);
       Toast.error(err.message || 'No se pudo abrir el libro.');
@@ -329,6 +370,10 @@ export class ReaderView {
    */
   close() {
     this.isOpen = false;
+    if (this._statsInterval) {
+      clearInterval(this._statsInterval);
+      this._statsInterval = null;
+    }
     if (this.container) {
       this.container.classList.remove('active');
     }
@@ -375,6 +420,9 @@ export class ReaderView {
     if (this.progressTextEl) {
       this.progressTextEl.textContent = `${pct}%`;
       if (this.infoProgressEl) this.infoProgressEl.textContent = `${pct}%`;
+    }
+    if (pct >= 99 && this.currentBookId) {
+      ReadingStatsManager.recordBookCompleted(this.currentBookId);
     }
     // Accesibilidad: exponer progreso como progressbar
     const track = document.getElementById('reader-progress-track');
@@ -932,82 +980,157 @@ export class ReaderView {
     const query = this.searchInput.value.trim();
 
     if (!query || query.length < 2) {
-      if (this.searchStatusText) this.searchStatusText.textContent = 'Ingresa al menos 2 caracteres';
+      this._searchResults = [];
+      this._currentSearchIndex = -1;
+      if (this.searchStatusText) this.searchStatusText.textContent = '0 resultados';
+      if (this.searchResultsList) this.searchResultsList.innerHTML = '';
+      if (this.prevSearchBtn) this.prevSearchBtn.disabled = true;
+      if (this.nextSearchBtn) this.nextSearchBtn.disabled = true;
+      if (this.goToSearchBtn) this.goToSearchBtn.disabled = true;
+      if (this.searchClearBtn) this.searchClearBtn.style.display = query ? 'inline-flex' : 'none';
       return;
     }
 
+    if (this.searchClearBtn) this.searchClearBtn.style.display = 'inline-flex';
+
     if (this.searchStatusText) {
-      this.searchStatusText.textContent = 'Buscando en todos los capítulos...';
+      this.searchStatusText.textContent = 'Buscando...';
     }
-    if (this.searchResultsList) {
+    if (this.searchResultsList && !this.searchResultsList.children.length) {
       this.searchResultsList.innerHTML = `
-        <div style="text-align: center; padding: 30px; color: var(--color-text-muted); font-size: var(--text-sm);">
-          <div class="loading-ring" style="width: 28px; height: 28px; margin: 0 auto 12px; border-width: 2px;"></div>
+        <div style="text-align: center; padding: 24px; color: var(--color-text-muted); font-size: var(--text-sm);">
+          <div class="loading-ring" style="width: 24px; height: 24px; margin: 0 auto 10px; border-width: 2px;"></div>
           <span>Buscando coincidencias...</span>
         </div>
       `;
     }
 
+    if (this.searchManager) {
+      this.searchManager.cancel();
+    }
     this.searchManager = new SearchManager(readerManager.book, readerManager.currentBookId);
+
     let results = [];
     try {
-      results = await this.searchManager.search(query, 60);
+      const currentChapterHref = readerManager.currentChapterHref || (readerManager.rendition?.location?.start?.href);
+      results = await this.searchManager.search(query, 60, currentChapterHref);
     } catch (err) {
       console.warn('Búsqueda falló:', err);
       if (this.searchStatusText) this.searchStatusText.textContent = 'Error en la búsqueda';
       if (this.searchResultsList) this.searchResultsList.innerHTML = '';
+      if (this.prevSearchBtn) this.prevSearchBtn.disabled = true;
+      if (this.nextSearchBtn) this.nextSearchBtn.disabled = true;
+      if (this.goToSearchBtn) this.goToSearchBtn.disabled = true;
       return;
     }
 
     if (!this.searchResultsList) return;
 
     if (results.length === 0) {
+      this._searchResults = [];
+      this._currentSearchIndex = -1;
       if (this.searchStatusText) this.searchStatusText.textContent = '0 resultados';
+      if (this.prevSearchBtn) this.prevSearchBtn.disabled = true;
+      if (this.nextSearchBtn) this.nextSearchBtn.disabled = true;
+      if (this.goToSearchBtn) this.goToSearchBtn.disabled = true;
       this.searchResultsList.innerHTML = `
-        <div style="text-align: center; padding: 30px; color: var(--color-text-muted); font-size: var(--text-sm);">
+        <div style="text-align: center; padding: 28px 16px; color: var(--color-text-muted); font-size: var(--text-sm);">
           No se encontraron coincidencias para «${this.escapeHtml(query)}».
         </div>
       `;
       return;
     }
 
-    if (this.searchStatusText) {
-      this.searchStatusText.textContent = `${results.length} coincidencias encontradas`;
-    }
+    this._searchResults = results;
+    this._currentSearchIndex = 0;
+    if (this.prevSearchBtn) this.prevSearchBtn.disabled = false;
+    if (this.nextSearchBtn) this.nextSearchBtn.disabled = false;
+    if (this.goToSearchBtn) this.goToSearchBtn.disabled = false;
 
-    // Resaltar la coincidencia dentro del fragmento
+    // Resaltar la coincidencia dentro del fragmento con soft yellow highlight
     const qRegex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
 
-    this.searchResultsList.innerHTML = results.map(r => {
-      const highlightedSnippet = this.escapeHtml(r.excerpt).replace(qRegex, '<span class="search-match-highlight">$1</span>');
+    this.searchResultsList.innerHTML = results.map((r, idx) => {
+      const highlightedSnippet = this.escapeHtml(r.excerpt).replace(qRegex, '<mark class="search-match-highlight">$1</mark>');
       return `
-        <div class="search-result-item" data-cfi="${this.escapeHtml(r.cfi)}">
-          <div style="font-size: 0.7rem; font-weight: bold; color: var(--color-primary-light); margin-bottom: 4px;">
-            ${this.escapeHtml(r.chapterTitle)}
+        <div class="search-result-item ${idx === 0 ? 'selected' : ''}" data-idx="${idx}">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span class="search-result-loc">${this.escapeHtml(r.chapterTitle || `Párrafo ${idx + 1}`)}</span>
+            <button type="button" class="btn-go-to-section" data-idx="${idx}" title="Ir a esta ubicación y cerrar buscador">
+              <span>Ir a la sección</span>
+              <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
           </div>
-          <div style="font-size: var(--text-xs); color: var(--color-text); line-height: 1.4;">
+          <div class="search-result-snippet">
             ${highlightedSnippet}
           </div>
         </div>
       `;
     }).join('');
 
-    // Evento de clic en resultado de búsqueda
+    // Eventos de clic en tarjetas de resultado y botón "Ir a la sección"
     this.searchResultsList.querySelectorAll('.search-result-item').forEach(itemEl => {
-      itemEl.addEventListener('click', async () => {
-        const cfi = itemEl.dataset.cfi;
-        if (cfi) {
-          try {
-            await readerManager.goTo(cfi);
-            this.toggleSearch(false);
-            Toast.success('Navegado a la coincidencia.');
-          } catch (err) {
-            console.warn('Salto a coincidencia falló:', err);
-            Toast.error('No se pudo navegar a ese pasaje.');
-          }
+      itemEl.addEventListener('click', () => {
+        const idx = parseInt(itemEl.dataset.idx, 10);
+        if (!isNaN(idx)) {
+          this.jumpToSearchResult(idx);
+          this.toggleSearch(false);
         }
       });
     });
+
+    this.updateSearchResultState();
+  }
+
+  /**
+   * Navega hacia la coincidencia anterior (-1) o siguiente (+1).
+   */
+  navigateSearchResult(direction) {
+    if (!this._searchResults || this._searchResults.length === 0) return;
+    this._currentSearchIndex = (this._currentSearchIndex + direction + this._searchResults.length) % this._searchResults.length;
+    this.updateSearchResultState();
+  }
+
+  /**
+   * Salta a un resultado por su índice de coincidencia.
+   */
+  jumpToSearchResult(index) {
+    if (!this._searchResults || index < 0 || index >= this._searchResults.length) return;
+    this._currentSearchIndex = index;
+    this.updateSearchResultState();
+  }
+
+  /**
+   * Actualiza la UI del resultado activo y navega a la posición CFI en el libro.
+   */
+  updateSearchResultState() {
+    if (!this._searchResults || this._searchResults.length === 0 || this._currentSearchIndex < 0) return;
+    const total = this._searchResults.length;
+    const currentNum = this._currentSearchIndex + 1;
+
+    if (this.searchStatusText) {
+      this.searchStatusText.textContent = `${total} ${total === 1 ? 'resultado' : 'resultados'} · ${currentNum} de ${total}`;
+    }
+
+    const items = this.searchResultsList?.querySelectorAll('.search-result-item');
+    if (items) {
+      items.forEach((item, idx) => {
+        const isSel = idx === this._currentSearchIndex;
+        item.classList.toggle('selected', isSel);
+        if (isSel) {
+          item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
+      });
+    }
+
+    const match = this._searchResults[this._currentSearchIndex];
+    if (match && match.cfi) {
+      try {
+        readerManager.goTo(match.cfi);
+      } catch (err) {
+        console.warn('Salto por búsqueda falló:', err);
+      }
+    }
   }
 
   escapeHtml(text) {

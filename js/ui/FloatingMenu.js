@@ -11,6 +11,7 @@ import { NoteManager } from '../annotations/NoteManager.js';
 import { VocabularyManager } from '../vocabulary/VocabularyManager.js';
 import { Toast } from './Toast.js';
 import { Modal } from './Modal.js';
+import { dbManager } from '../db.js';
 
 export class FloatingMenu {
   constructor() {
@@ -32,14 +33,16 @@ export class FloatingMenu {
     // El aspecto visual vive en reader.css (.reader-floating-menu);
     // aquí solo se posiciona vía showAt/hide.
 
-    // Botones de colores: solo resaltan (el color de líneas va aparte)
-    const colorsHtml = Object.entries(AnnotationManager.COLORS).map(([name, conf]) => `
+    // Botones de colores: solo resaltan (el color de líneas va aparte).
+    // El negro ('note') es exclusivo de las notas: no se ofrece en las paletas.
+    const paletteEntries = Object.entries(AnnotationManager.COLORS).filter(([name]) => name !== 'note');
+    const colorsHtml = paletteEntries.map(([name, conf]) => `
       <button class="menu-color-btn" data-color="${name}" title="Resaltar en ${conf.name}" style="background-color: ${conf.border};"
         aria-label="Resaltar ${conf.name}"></button>
     `).join('');
 
     // Mini-paleta para el color de las líneas (no resalta, solo elige color)
-    const lineColorsHtml = Object.entries(AnnotationManager.COLORS).map(([name, conf]) => `
+    const lineColorsHtml = paletteEntries.map(([name, conf]) => `
       <button class="line-color-dot" data-color="${name}" title="${conf.name}" style="background-color: ${conf.border};"
         aria-label="Línea en ${conf.name}"></button>
     `).join('');
@@ -255,7 +258,7 @@ export class FloatingMenu {
         this.activeSelection = {
           cfiRange,
           text,
-          chapterTitle: document.getElementById('reader-chapter-title')?.textContent || 'Capítulo actual'
+          chapterTitle: document.getElementById('reader-chapter-title')?.textContent || 'Capítulo 1'
         };
 
         this.showAt(x, y);
@@ -273,6 +276,7 @@ export class FloatingMenu {
    */
   setActiveColor(color) {
     if (!AnnotationManager.COLORS[color]) return;
+    if (color === 'note') return; // negro reservado a notas, no seleccionable
     this.activeColor = color;
     this._refreshLineColorUI();
   }
@@ -284,6 +288,7 @@ export class FloatingMenu {
    */
   _refreshLineColorUI() {
     if (!this.menuEl) return;
+    if (this.activeColor === 'note') this.activeColor = 'terracotta';
     const conf = AnnotationManager.COLORS[this.activeColor] || {};
     const hex = conf.border || '#FF8E6B';
     const name = conf.name || '';
@@ -391,11 +396,15 @@ export class FloatingMenu {
 
   /**
    * Diálogo modal para redactar una nota vinculada.
+   * Al guardar, el pasaje queda subrayado con línea negra fina
+   * (marca 'note-underline') y al pulsarla se abre el mini-modal.
+   * Si se pasa existingNote, edita en lugar de crear.
    */
-  async openNoteDialog(selection) {
+  async openNoteDialog(selection, existingNote = null) {
     const quote = selection.text.length > 120 ? selection.text.substring(0, 120).trimEnd() + '…' : selection.text;
     const noteText = await Modal.noteDialog({
       quote,
+      defaultValue: existingNote ? (existingNote.content || '') : '',
       placeholder: 'Escribe tu nota aquí...'
     });
 
@@ -405,23 +414,157 @@ export class FloatingMenu {
       const cleanTitle = noteText.trim().length > 35
         ? noteText.trim().substring(0, 35).trimEnd() + '…'
         : noteText.trim();
-      await NoteManager.createNote({
-        bookId: annotationManager.currentBookId || 'general',
-        cfiRange: selection.cfiRange,
-        selectedText: selection.text,
-        title: cleanTitle,
-        content: noteText.trim()
-      });
-      Toast.success('Nota guardada con éxito.');
+      const bookId = annotationManager.currentBookId || existingNote?.bookId || 'general';
+
+      if (existingNote) {
+        await NoteManager.updateNote(existingNote.id, {
+          content: noteText.trim(),
+          title: cleanTitle,
+          selectedText: selection.text || existingNote.selectedText,
+          cfiRange: selection.cfiRange || existingNote.cfiRange
+        });
+        // Asegurar que la marca negra existe tras editar (por si era nota antigua)
+        const mark = annotationManager.findNoteMark(existingNote.id, selection.cfiRange || existingNote.cfiRange);
+        if (!mark && (selection.cfiRange || existingNote.cfiRange)) {
+          try {
+            await annotationManager.addNoteMark(
+              selection.cfiRange || existingNote.cfiRange,
+              selection.text || existingNote.selectedText || '',
+              selection.chapterTitle || 'Capítulo 1',
+              existingNote.id
+            );
+          } catch (_) {}
+        }
+        Toast.success('Nota actualizada.');
+      } else {
+        const note = await NoteManager.createNote({
+          bookId,
+          cfiRange: selection.cfiRange,
+          selectedText: selection.text,
+          title: cleanTitle,
+          content: noteText.trim()
+        });
+        // Subrayado negro fino sobre el pasaje
+        try {
+          await annotationManager.addNoteMark(
+            selection.cfiRange,
+            selection.text,
+            selection.chapterTitle || 'Capítulo 1',
+            note.id
+          );
+        } catch (markErr) {
+          console.warn('Nota guardada pero no se pudo marcar el pasaje:', markErr);
+        }
+        Toast.success('Nota guardada con éxito.');
+      }
     } catch (err) {
       Toast.error('Error al guardar la nota.');
     }
   }
 
   /**
-   * Menú emergente para eliminar o editar un resaltado existente.
+   * Localiza la nota vinculada a una marca de subrayado negro.
+   * @private
+   */
+  async _findLinkedNote(annotation) {
+    if (!annotation) return null;
+    try {
+      if (annotation.noteId) {
+        const byId = await dbManager.get('notes', annotation.noteId).catch(() => null);
+        if (byId) return byId;
+      }
+      const bookId = annotationManager.currentBookId || annotation.bookId;
+      if (bookId && annotation.cfiRange) {
+        const notes = await NoteManager.getNotesForBook(bookId).catch(() => []);
+        const match = (notes || []).find(n => n.cfiRange === annotation.cfiRange);
+        if (match) return match;
+        if (annotation.noteId) {
+          const byIdLoose = (notes || []).find(n => n.id === annotation.noteId);
+          if (byIdLoose) return byIdLoose;
+        }
+      }
+    } catch (_) {}
+    return null;
+  }
+
+  /**
+   * Mini-modal de lectura de nota (maqueta NOTA): cita + contenido
+   * + Eliminar / Editar / Cerrar.
+   */
+  async showNoteViewModal(note, annotation) {
+    const action = await Modal.viewNote({
+      quote: note.selectedText || annotation.text || '',
+      content: note.content || ''
+    });
+
+    if (action === 'edit') {
+      await this.openNoteDialog({
+        cfiRange: note.cfiRange || annotation.cfiRange,
+        text: note.selectedText || annotation.text || '',
+        chapterTitle: annotation.chapterTitle || 'Capítulo 1'
+      }, note);
+    } else if (action === 'delete') {
+      const confirmed = await Modal.confirm({
+        title: 'Eliminar nota',
+        message: '¿Estás seguro de que deseas eliminar esta nota y su subrayado?',
+        danger: true,
+        confirmText: 'Eliminar'
+      });
+      if (!confirmed) return;
+      try {
+        // Borrar la nota y su(s) marca(s) negra(s) para no dejar subrayado fantasma
+        await NoteManager.deleteNote(note.id);
+        const bookId = annotationManager.currentBookId || note.bookId;
+        if (bookId) {
+          const marks = (annotationManager.annotations || []).filter(a =>
+            a.type === 'note-underline' &&
+            (a.noteId === note.id || (note.cfiRange && a.cfiRange === note.cfiRange))
+          );
+          for (const m of marks) {
+            try { await annotationManager.removeAnnotation(m.id); } catch (_) {}
+          }
+          // Por si la marca en memoria no estaba cargada, intentar borrado directo por CFI conocido
+          if (marks.length === 0 && annotation && annotation.id) {
+            try { await annotationManager.removeAnnotation(annotation.id); } catch (_) {}
+          }
+        } else if (annotation && annotation.id) {
+          try { await annotationManager.removeAnnotation(annotation.id); } catch (_) {}
+        }
+        Toast.success('Nota eliminada.');
+      } catch (err) {
+        console.warn('Error al eliminar nota:', err);
+        Toast.error('No se pudo eliminar la nota.');
+      }
+    }
+  }
+
+  /**
+   * Menú emergente al pulsar un pasaje marcado.
+   * - Marca negra de nota -> mini-modal NOTA (ver / editar / eliminar).
+   * - Resaltados y subrayados -> confirmación de eliminación (comportamiento previo).
    */
   async showAnnotationOptions(annotation) {
+    // 1. Marca de nota: abrir el pequeño modal con la nota
+    if (annotation && annotation.type === 'note-underline') {
+      const note = await this._findLinkedNote(annotation);
+      if (note) {
+        await this.showNoteViewModal(note, annotation);
+      } else {
+        // Marca huérfana (nota borrada externamente): ofrecer quitar el subrayado
+        const confirmed = await Modal.confirm({
+          title: 'Quitar subrayado',
+          message: 'Esta marca ya no tiene nota asociada. ¿Deseas quitar el subrayado del pasaje?',
+          danger: true,
+          confirmText: 'Quitar'
+        });
+        if (confirmed) {
+          await annotationManager.removeAnnotation(annotation.id);
+          Toast.success('Subrayado eliminado.');
+        }
+      }
+      return;
+    }
+
     const short = annotation.text ? annotation.text.substring(0, 60) : 'Pasaje seleccionado';
     const quote = annotation.text && annotation.text.length > 60 ? short.trimEnd() + '…' : short;
     const typeNoun = annotation.type === 'highlight'

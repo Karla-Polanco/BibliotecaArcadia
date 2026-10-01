@@ -193,8 +193,8 @@ export class VocabularyView {
       .vocab-card::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 5px; background-color: var(--color-primary-light); border-radius: 16px 0 0 16px; }
       .vocab-card:hover { transform: translateY(-2px) !important; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important; border-color: color-mix(in srgb, var(--color-primary-light) 40%, var(--color-border)) !important; }
       .btn-card-speak:hover { background-color: var(--color-primary-light) !important; color: #FFF !important; }
-      .btn-card-edit:hover { color: var(--color-primary-light) !important; background-color: var(--color-surface-hover) !important; }
-      .btn-card-del:hover { color: #EF4444 !important; background-color: var(--color-surface-hover) !important; }
+      .btn-card-edit:hover { color: #FFFFFF !important; background-color: #2470DE !important; border-color: #2470DE !important; }
+      .btn-card-del:hover { color: #A83730 !important; background-color: #FBDDDA !important; border-color: #E5A9A6 !important; }
       #btn-add-word-manual:hover, #btn-add-word-empty:hover { filter: brightness(1.12); }
       #input-vocab-search:focus { border-color: var(--color-border-focus) !important; }
     `;

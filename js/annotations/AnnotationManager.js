@@ -16,7 +16,8 @@ export class AnnotationManager {
     slate:     { bg: 'rgba(122, 182, 245, 0.38)', border: '#7AB6F5', name: 'Azul Pizarra' },   // SKY DAYDREAM 4th #7AB6F5
     lavender:  { bg: 'rgba(167, 139, 250, 0.38)', border: '#A78BFA', name: 'Lavanda Tenue' },  // LAVENDER FOG 4th #A78BFA
     rose:      { bg: 'rgba(179, 90, 109, 0.38)', border: '#B35A6D', name: 'Rosa Empolvado' },   // MOODY ROSE 4th #B35A6D (polvo editorial)
-    terracotta:{ bg: 'rgba(255, 142, 107, 0.38)', border: '#FF8E6B', name: 'Terracota Cálida' } // PEACH GLOW 4th #FF8E6B
+    terracotta:{ bg: 'rgba(255, 142, 107, 0.38)', border: '#FF8E6B', name: 'Terracota Cálida' }, // PEACH GLOW 4th #FF8E6B
+    note:      { bg: 'transparent', border: '#111111', name: 'Nota' }
   };
 
   // Mapa de compatibilidad para anotaciones antiguas (yellow→amber, etc.)
@@ -49,6 +50,30 @@ export class AnnotationManager {
     this.rendition = rendition;
     this.currentBookId = bookId;
     this.annotations = await this.getAnnotationsForBook(bookId);
+
+    // Migración: notas antiguas sin marca visual -> crear su subrayado negro fino
+    try {
+      const notes = await dbManager.getByIndex('notes', 'by_bookId', bookId).catch(() => []);
+      for (const note of (notes || [])) {
+        if (!note || !note.cfiRange) continue;
+        const exists = this.annotations.some(a =>
+          (a.type === 'note-underline') &&
+          (a.noteId === note.id || a.cfiRange === note.cfiRange)
+        );
+        if (!exists) {
+          try {
+            await this._createAnnotation(
+              note.cfiRange,
+              note.selectedText || '',
+              'note-underline',
+              'note',
+              note.title || 'Capítulo 1',
+              { noteId: note.id, silent: true }
+            );
+          } catch (_) {}
+        }
+      }
+    } catch (_) {}
 
     // Re-aplicar todas las anotaciones existentes al cargar o cambiar de sección
     this.applyAllToRendition();
@@ -106,10 +131,32 @@ export class AnnotationManager {
   }
 
   /**
+   * Crea la marca visual de una nota: subrayado negro, fino (1px).
+   * @param {string} cfiRange - Rango CFI del pasaje
+   * @param {string} text - Texto seleccionado
+   * @param {string} chapterTitle - Título del capítulo
+   * @param {string} noteId - ID de la nota vinculada en el store 'notes'
+   */
+  async addNoteMark(cfiRange, text, chapterTitle = '', noteId = null) {
+    return await this._createAnnotation(cfiRange, text, 'note-underline', 'note', chapterTitle, { noteId });
+  }
+
+  /**
+   * Busca la marca de nota vinculada a un noteId o CFI.
+   */
+  findNoteMark(noteId, cfiRange) {
+    if (!this.annotations) return null;
+    return this.annotations.find(a =>
+      a.type === 'note-underline' &&
+      ((noteId && a.noteId === noteId) || (cfiRange && a.cfiRange === cfiRange))
+    ) || null;
+  }
+
+  /**
    * Crea y almacena una entidad de anotación en IndexedDB y en epub.js.
    * @private
    */
-  async _createAnnotation(cfiRange, text, type, color, chapterTitle) {
+  async _createAnnotation(cfiRange, text, type, color, chapterTitle, extra = {}) {
     if (!this.currentBookId) throw new Error('No hay un libro activo.');
 
     const annotation = {
@@ -117,12 +164,16 @@ export class AnnotationManager {
       bookId: this.currentBookId,
       cfiRange: cfiRange,
       text: (text || '').trim(),
-      type: type, // 'highlight', 'underline', 'strikethrough', 'wavy'
+      type: type, // 'highlight', 'underline', 'strikethrough', 'wavy', 'note-underline'
       color: color,
-      chapterTitle: chapterTitle || 'Capítulo actual',
+      chapterTitle: chapterTitle || 'Capítulo 1',
       createdAt: Date.now(),
       updatedAt: Date.now()
     };
+
+    if (extra && extra.noteId) {
+      annotation.noteId = extra.noteId;
+    }
 
     // Guardar en IndexedDB
     await dbManager.put('annotations', annotation);
@@ -131,7 +182,9 @@ export class AnnotationManager {
     // Renderizar inmediatamente en epub.js
     this._renderOnRendition(annotation);
 
-    appState.notify('annotationAdded', annotation);
+    if (!extra || !extra.silent) {
+      appState.notify('annotationAdded', annotation);
+    }
     return annotation;
   }
 
@@ -142,15 +195,32 @@ export class AnnotationManager {
   _renderOnRendition(annot) {
     if (!this.rendition) return;
 
-    // Resolver color legacy → nuevo
+    // Resolver color legacy → nuevo.
+    // 'note' (negro) es exclusivo de note-underline: si un resaltado o
+    // subrayado normal lo trae (paleta antigua), degradar a ámbar/terracota.
     let colorKey = annot.color;
     if (AnnotationManager.LEGACY_COLOR_MAP[colorKey]) {
       colorKey = AnnotationManager.LEGACY_COLOR_MAP[colorKey];
     }
+    if (colorKey === 'note' && annot.type !== 'note-underline') {
+      colorKey = annot.type === 'highlight' ? 'amber' : 'terracotta';
+    }
     const colorConfig = AnnotationManager.COLORS[colorKey] || AnnotationManager.COLORS.amber;
 
     try {
-      if (annot.type === 'underline' || annot.type === 'strikethrough' || annot.type === 'wavy') {
+      if (annot.type === 'note-underline') {
+        // Marca de nota: línea fina (1px) del color del texto.
+        // En temas claros el texto es casi negro; en temas oscuros es
+        // marfil/ámbar claro, así la línea siempre contrasta sin cambiar JS
+        // al cambiar de tema (currentColor se re-resuelve solo).
+        this.rendition.annotations.underline(
+          annot.cfiRange,
+          { id: annot.id },
+          () => this.onAnnotationClicked(annot),
+          'arcadia-note-underline',
+          { 'stroke': 'currentColor', 'stroke-width': '1px', 'stroke-opacity': '1', 'mix-blend-mode': 'normal', 'fill': 'none' }
+        );
+      } else if (annot.type === 'underline' || annot.type === 'strikethrough' || annot.type === 'wavy') {
         const className = annot.type === 'strikethrough' ? 'arcadia-strikethrough' :
                           (annot.type === 'wavy' ? 'arcadia-wavy-underline' : 'arcadia-underline');
         this.rendition.annotations.underline(

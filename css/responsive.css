@@ -702,6 +702,43 @@
     padding: 8px 10px !important;
     font-size: 0.72rem !important;
   }
+
+  /* Dashboard de Hábitos y Ajustes en Móvil */
+  .settings-card-section {
+    padding: 16px 14px !important;
+    border-radius: 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .stats-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .stat-card {
+    padding: 8px 10px !important;
+    gap: 8px !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .stat-card-icon {
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 1rem !important;
+    border-radius: 8px !important;
+  }
+
+  .stat-card-value {
+    font-size: 1.05rem !important;
+  }
+
+  .stat-card-label {
+    font-size: 0.64rem !important;
+  }
 }
 
 /* --------------------------------------------------------------------------

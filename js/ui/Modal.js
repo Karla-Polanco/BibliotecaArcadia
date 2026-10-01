@@ -32,6 +32,10 @@ export class Modal {
       overlay.className = 'arcadia-modal-overlay';
 
       const confirmClass = danger ? 'arcadia-modal-btn arcadia-modal-btn--danger' : 'arcadia-modal-btn arcadia-modal-btn--primary';
+      const trashSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>`;
+      const pencilSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>`;
+      const btnIcon = danger ? trashSvg : (/edit/i.test(confirmText) ? pencilSvg : '');
+      const confirmLabel = `${btnIcon}<span>${this.escapeHtml(confirmText)}</span>`;
 
       const defaultIcon = danger
         ? `<svg style="width: 22px; height: 22px; color: #EF4444;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>`
@@ -51,7 +55,7 @@ export class Modal {
 
           <div class="arcadia-modal-actions">
             <button id="modal-cancel-btn" class="arcadia-modal-btn arcadia-modal-btn--ghost">${this.escapeHtml(cancelText)}</button>
-            <button id="modal-confirm-btn" class="${confirmClass}">${this.escapeHtml(confirmText)}</button>
+            <button id="modal-confirm-btn" class="${confirmClass}">${confirmLabel}</button>
           </div>
         </div>
       `;
@@ -275,34 +279,142 @@ export class Modal {
   }
 
   /**
+   * Muestra el mini-modal de lectura de nota (maqueta: NOTA + cita + contenido
+   * + Eliminar / Editar / Cerrar). Se abre al pulsar el pasaje subrayado en negro.
+   * @param {Object} options
+   * @param {string} [options.quote=''] - Pasaje citado (sin comillas latinas)
+   * @param {string} [options.content=''] - Texto de la nota
+   * @returns {Promise<'edit'|'delete'|'close'>} Acción elegida por el usuario
+   */
+  static viewNote({ quote = '', content = '' } = {}) {
+    return new Promise((resolve) => {
+      const overlay = document.createElement('div');
+      overlay.className = 'arcadia-modal-overlay note-view-overlay';
+
+      const safeQuote = this.escapeHtml(quote);
+      const safeContent = this.escapeHtml(content);
+
+      overlay.innerHTML = `
+        <div class="note-view-card" role="dialog" aria-modal="true" aria-labelledby="note-view-title">
+          <button class="note-view-close" id="note-view-x" aria-label="Cerrar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+
+          <div class="note-view-head">
+            <span class="note-view-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 2V5" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 2V5" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path opacity="0.75" d="M8 11H16" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path opacity="0.75" d="M8 16H12" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <h3 class="note-view-title" id="note-view-title">NOTA</h3>
+          </div>
+
+          ${safeQuote ? `<p class="note-view-quote">&laquo;${safeQuote}&raquo;</p>` : ''}
+
+          <div class="note-view-divider" aria-hidden="true"></div>
+
+          <p class="note-view-content">${safeContent || '<span style="opacity:.6">Sin contenido</span>'}</p>
+
+          <div class="note-view-actions">
+            <button id="note-view-delete" class="note-view-btn note-view-btn--danger">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+              <span>Eliminar</span>
+            </button>
+            <span class="note-view-spacer"></span>
+            <button id="note-view-edit" class="note-view-btn note-view-btn--primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+              <span>Editar</span>
+            </button>
+            <button id="note-view-close" class="note-view-btn note-view-btn--ghost">
+              <span>Cerrar</span>
+            </button>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(overlay);
+
+      requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('active')));
+
+      const close = (result) => {
+        overlay.classList.remove('active');
+        setTimeout(() => {
+          overlay.remove();
+          window.removeEventListener('keydown', keyHandler);
+          resolve(result);
+        }, 260);
+      };
+
+      const keyHandler = (e) => {
+        if (e.key === 'Escape') close('close');
+      };
+
+      window.addEventListener('keydown', keyHandler);
+      overlay.querySelector('#note-view-x').addEventListener('click', () => close('close'));
+      overlay.querySelector('#note-view-close').addEventListener('click', () => close('close'));
+      overlay.querySelector('#note-view-edit').addEventListener('click', () => close('edit'));
+      overlay.querySelector('#note-view-delete').addEventListener('click', () => close('delete'));
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) close('close');
+      });
+    });
+  }
+
+  /**
    * Muestra un diálogo modal especializado para editar los detalles de un libro (título y autor simultáneos).
    */
   static editBookDetails(book) {
     return new Promise((resolve) => {
       const overlay = document.createElement('div');
       overlay.className = 'arcadia-modal-overlay';
+      let currentCoverDataUrl = book.coverDataUrl || null;
 
       overlay.innerHTML = `
         <div class="arcadia-modal-card arcadia-modal-card--md">
           <div>
             <h3 class="arcadia-modal-title" style="font-size: 1.2rem;">Editar información del libro</h3>
-            <p class="arcadia-modal-text">Modifica los metadatos visibles de este ejemplar en tu biblioteca.</p>
+            <p class="arcadia-modal-text">Modifica la portada, título, autor y saga de este ejemplar.</p>
           </div>
 
           <form id="edit-book-form" class="arcadia-modal-form">
+            <!-- Selector y Vista Previa de Portada -->
+            <div class="arcadia-modal-field">
+              <label>Portada del libro</label>
+              <div style="display: flex; gap: 14px; align-items: center; background: var(--color-surface-secondary); padding: 12px; border-radius: 12px; border: 1px solid var(--color-border-subtle);">
+                <div id="edit-cover-preview-box" style="width: 54px; height: 80px; border-radius: 6px; overflow: hidden; background: var(--color-surface); flex-shrink: 0; border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center;">
+                  ${currentCoverDataUrl ? `
+                    <img src="${currentCoverDataUrl}" alt="Portada" style="width: 100%; height: 100%; object-fit: cover;">
+                  ` : `
+                    <svg style="width: 24px; height: 24px; color: var(--color-text-muted);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  `}
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                  <button type="button" id="btn-change-cover-trigger" class="arcadia-modal-btn arcadia-modal-btn--ghost" style="font-size: 0.78rem; padding: 6px 12px; height: auto;">
+                    Seleccionar nueva portada
+                  </button>
+                  <input type="file" id="edit-book-cover-input" accept="image/*" style="display: none;">
+                  <span style="font-size: 0.72rem; color: var(--color-text-muted);">Formatos aceptados: JPG, PNG, WEBP.</span>
+                </div>
+              </div>
+            </div>
+
             <div class="arcadia-modal-field">
               <label>Título del libro</label>
               <input type="text" id="edit-book-title" value="${this.escapeHtml(book.title)}" required>
             </div>
 
             <div class="arcadia-modal-field">
-              <label>Saga <span style="font-weight: 400; opacity: 0.7;">(opcional)</span></label>
-              <input type="text" id="edit-book-saga" value="${this.escapeHtml(book.saga || '')}" placeholder="Ej: Trono de Cristal" autocomplete="off">
+              <label>Autor</label>
+              <input type="text" id="edit-book-author" value="${this.escapeHtml(book.author)}" required>
             </div>
 
             <div class="arcadia-modal-field">
-              <label>Autor</label>
-              <input type="text" id="edit-book-author" value="${this.escapeHtml(book.author)}" required>
+              <label>Saga <span style="font-weight: 400; opacity: 0.7;">(opcional)</span></label>
+              <input type="text" id="edit-book-saga" value="${this.escapeHtml(book.saga || '')}" placeholder="Ej: Trono de Cristal" autocomplete="off">
             </div>
 
             <div class="arcadia-modal-actions">
@@ -318,6 +430,28 @@ export class Modal {
       requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('active')));
       requestAnimationFrame(() => overlay.querySelector('#edit-book-title')?.focus());
 
+      // Vincular cambio de archivo de portada
+      const coverInput = overlay.querySelector('#edit-book-cover-input');
+      const coverTrigger = overlay.querySelector('#btn-change-cover-trigger');
+      const previewBox = overlay.querySelector('#edit-cover-preview-box');
+
+      if (coverTrigger && coverInput) {
+        coverTrigger.addEventListener('click', () => coverInput.click());
+        coverInput.addEventListener('change', (e) => {
+          const file = e.target.files && e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+              currentCoverDataUrl = evt.target.result;
+              if (previewBox) {
+                previewBox.innerHTML = `<img src="${currentCoverDataUrl}" alt="Portada" style="width: 100%; height: 100%; object-fit: cover;">`;
+              }
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      }
+
       const close = (result) => {
         overlay.classList.remove('active');
         setTimeout(() => {
@@ -332,7 +466,7 @@ export class Modal {
         const title = overlay.querySelector('#edit-book-title').value.trim();
         const saga = overlay.querySelector('#edit-book-saga')?.value.trim() || '';
         const author = overlay.querySelector('#edit-book-author').value.trim();
-        close({ title, saga, author });
+        close({ title, saga, author, coverDataUrl: currentCoverDataUrl });
       });
       overlay.addEventListener('click', (e) => {
         if (e.target === overlay) close(null);
@@ -352,9 +486,7 @@ export class Modal {
         <div class="arcadia-modal-card col-action-modal" style="--col-accent: ${collection.color || '#5B4CC4'};">
           <div class="col-action-head">
             <span class="col-action-badge" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
+              <svg width="18" height="18" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true"><path fill="currentColor" d="M57.063 20.218l1.029-1.698s.906-1.502.906-3.519c0-4.886-4.662-4.757-4.662-4.757L44.179 7.479L38.638 2l-7.291 1.985l-2.391-.651l-1.817 1.797l-10.497 2.858s-4.04-.111-4.04 4.123c0 1.748.786 3.05.786 3.05l1.351 2.23l-1.187 1.172l-5.86 1.596s-4.662-.129-4.662 4.757a7.56 7.56 0 0 0 .779 3.281L2 29.987l.949.376c.021.051.029.108.07.149c1.835 1.839 1.684 4.309 1.422 5.643l-1.109 1.111l8.401 4.039L23.271 60.35c1.849 2.906 5.774 1.088 5.774 1.088l29.649-14.256l-1.109-1.111c-.262-1.334-.413-3.804 1.422-5.644c.041-.041.049-.098.07-.148l.949-.377l-5.513-5.45l6.33-3.043l-.961-.963c-.227-1.156-.358-3.297 1.233-4.891c.035-.036.041-.084.06-.129l.825-.327l-4.937-4.881m-5.685-8.835l-1.25 1.978l-3.234-3.198l4.484 1.22M39.176 7.144l4.643 4.963l-16.789 6.067l-3.965-6.156l16.111-4.874M15.744 19.052l11.457 18.911l-21.827-8.658l10.37-10.253m-4.775 2.067l-1.345 1.33l-.538-.825l1.883-.505m-4.247 1.034l1.252 1.927l-2.713 2.682a5.586 5.586 0 0 1-.331-1.845c0-1.826.906-2.521 1.792-2.764M5.154 37.026l.015-.058l25.147 11.007l-24.95-11.894c.023-.135.041-.284.06-.434l19.533 8.18l-19.465-9.116a7.723 7.723 0 0 0-.086-1.245l18.079 7.445L5.165 32.4a6.048 6.048 0 0 0-.47-1.137l24.883 10.625l.566.934c1.167 1.834 3.284 1.495 4.351 1.177c1.475.728 4.119 2.412 3.442 4.893c-.357 1.312-1.142 1.948-2.399 1.948c-1.273 0-2.544-.666-2.557-.675L5.154 37.026M30.2 50.185l-1.966.814l-1.67-2.563l3.636 1.749m-7.614 5.381l-7.729-12.759l7.682 3.693l3.633 5.592c-1.465.626-3.102 2.055-3.586 3.474m34.033-12.184a7.731 7.731 0 0 0-.086 1.245l-19.465 9.116l19.533-8.18c.019.149.036.299.06.434l-24.95 11.895l25.147-11.007a.982.982 0 0 1 .015.058L29.046 60.08c-.013.009-1.282.675-2.557.675c-1.258 0-2.042-.637-2.399-1.948c-.918-3.367 4.302-5.276 4.38-5.305l4.575-1.952c.491.209 3.994 1.584 5.711-1.115l1.083-1.786l17.494-7.47a6.12 6.12 0 0 0-.471 1.137L38.54 50.827l18.079-7.445m.034-4.161l-14.825 6.144l4.114-6.791l6.767-3.253l3.944 3.9m2.393-11.107a6.9 6.9 0 0 0-.075 1.079l-16.868 7.9l16.928-7.089c.017.129.031.26.052.376L37.459 40.688l21.794-9.539a.46.46 0 0 1 .013.05L35.149 42.586c-.011.007-1.112.585-2.216.585c-1.091 0-1.77-.553-2.079-1.689c-.796-2.918 3.728-4.572 3.796-4.597l25.014-10.68a5.268 5.268 0 0 0-.407.986l-15.88 7.376l15.669-6.453" /></svg>
             </span>
             <h3 class="col-action-name">${this.escapeHtml(collection.name)}</h3>
             <button class="col-action-close" id="btn-col-action-x" aria-label="Cerrar">

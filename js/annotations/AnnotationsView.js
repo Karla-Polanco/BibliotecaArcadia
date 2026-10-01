@@ -63,6 +63,9 @@ export class AnnotationsView {
     const items = [];
 
     this.annotations.forEach(a => {
+      // Las marcas negras de nota no se listan aparte: ya están representadas
+      // por su tarjeta de nota (evita duplicados en el cuaderno).
+      if (a.type === 'note-underline') return;
       items.push({
         id: a.id,
         kind: a.type || 'highlight', // 'highlight' | 'underline'
@@ -344,16 +347,27 @@ export class AnnotationsView {
         if (confirmed) {
           try {
             if (kind === 'note') {
-              // La nota se crea junto a un resaltado ámbar sobre el mismo
-              // pasaje: borrar ambos para no dejar el color fantasma.
+              // La nota vive junto a su subrayado negro fino sobre el mismo
+              // pasaje: borrar ambos para no dejar la línea fantasma.
               const card = btn.closest('[data-book-id]');
               const noteBookId = card?.dataset.bookId || null;
               const noteCfi = card?.dataset.cfi || null;
               if (noteBookId && noteCfi) {
                 const linked = this.annotations.filter(a =>
-                  a.bookId === noteBookId && a.cfiRange === noteCfi);
+                  a.bookId === noteBookId && (a.cfiRange === noteCfi || a.noteId === id));
                 for (const h of linked) {
                   try { await annotationManager.removeAnnotation(h.id); } catch (_) {}
+                }
+                // Si el manager no tiene el libro abierto, borrar directo en DB
+                if (linked.length === 0) {
+                  try {
+                    const allMarks = await dbManager.getAll('annotations').catch(() => []);
+                    const orphans = (allMarks || []).filter(a =>
+                      a.type === 'note-underline' && (a.noteId === id || (a.bookId === noteBookId && a.cfiRange === noteCfi)));
+                    for (const o of orphans) {
+                      try { await dbManager.delete('annotations', o.id); } catch (_) {}
+                    }
+                  } catch (_) {}
                 }
               }
               await dbManager.delete('notes', id);

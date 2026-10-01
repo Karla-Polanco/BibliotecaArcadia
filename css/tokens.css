@@ -13,15 +13,15 @@
   --font-brand: 'Cinzel Decorative', 'Cinzel', Georgia, serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
 
-  /* Escala Proporcional */
-  --text-2xs: 0.70rem;
-  --text-xs: 0.80rem;
-  --text-sm: 0.90rem;
-  --text-base: 1.00rem;
-  --text-md: 1.12rem;
-  --text-lg: 1.28rem;
-  --text-xl: 1.55rem;
-  --text-2xl: 1.95rem;
+  /* Escala Proporcional y Fluida */
+  --text-2xs: clamp(0.68rem, 0.65rem + 0.15vw, 0.72rem);
+  --text-xs: clamp(0.78rem, 0.75rem + 0.18vw, 0.84rem);
+  --text-sm: clamp(0.88rem, 0.85rem + 0.20vw, 0.94rem);
+  --text-base: clamp(0.98rem, 0.95rem + 0.25vw, 1.05rem);
+  --text-md: clamp(1.08rem, 1.02rem + 0.30vw, 1.18rem);
+  --text-lg: clamp(1.22rem, 1.15rem + 0.40vw, 1.35rem);
+  --text-xl: clamp(1.48rem, 1.35rem + 0.65vw, 1.70rem);
+  --text-2xl: clamp(1.85rem, 1.65rem + 1.00vw, 2.25rem);
 
   /* Pesos de Fuente */
   --weight-regular: 400;
@@ -52,33 +52,33 @@
   --radius-full: 9999px;
 
   /* ----------------------------------------------------------
-     03. ELEVACIÓN Y SOMBRAS MULTICAPA
+     03. ELEVACIÓN Y SOMBRAS MULTICAPA AMBIENT + KEY
      ---------------------------------------------------------- */
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
   --shadow-md: 0 6px 16px -2px rgba(0, 0, 0, 0.07), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
   --shadow-lg: 0 14px 28px -4px rgba(0, 0, 0, 0.10), 0 4px 10px -2px rgba(0, 0, 0, 0.04);
-  --shadow-xl: 0 22px 44px -8px rgba(0, 0, 0, 0.16), 0 8px 18px -4px rgba(0, 0, 0, 0.06);
+  --shadow-xl: 0 22px 44px -8px rgba(0, 0, 0, 0.15), 0 8px 18px -4px rgba(0, 0, 0, 0.06);
 
   --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--color-border-subtle);
   --shadow-card-hover: 0 12px 24px -4px rgba(0, 0, 0, 0.08), 0 0 0 1px var(--color-border);
-  --shadow-dropdown: 0 10px 30px -4px rgba(0, 0, 0, 0.18), 0 2px 6px -1px rgba(0, 0, 0, 0.08);
+  --shadow-dropdown: 0 12px 36px -4px rgba(0, 0, 0, 0.18), 0 2px 8px -1px rgba(0, 0, 0, 0.08);
 
-  /* Sombras y Aspect Ratio del Libro */
+  /* Sombras y Aspect Ratio del Libro (Efecto Editorial) */
   --book-aspect-ratio: 2 / 3;
-  --shadow-book: 0 6px 18px -3px rgba(0, 0, 0, 0.22), 0 2px 6px -1px rgba(0, 0, 0, 0.12);
-  --shadow-book-hover: 0 16px 32px -6px rgba(0, 0, 0, 0.32), 0 4px 12px -2px rgba(0, 0, 0, 0.16);
+  --shadow-book: 0 8px 20px -4px rgba(0, 0, 0, 0.22), 0 2px 6px -1px rgba(0, 0, 0, 0.12), -2px 0 6px rgba(0, 0, 0, 0.08);
+  --shadow-book-hover: 0 18px 36px -6px rgba(0, 0, 0, 0.30), 0 4px 12px -2px rgba(0, 0, 0, 0.16), -3px 0 8px rgba(0, 0, 0, 0.12);
 
   /* ----------------------------------------------------------
      04. TRANSICIONES Y FÍSICAS DE MOVIMIENTO
      ---------------------------------------------------------- */
   --transition-fast: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-normal: 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-slow: 0.32s cubic-bezier(0.16, 1, 0.3, 1);
-  --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-normal: 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.36s cubic-bezier(0.16, 1, 0.3, 1);
+  --spring-bounce: 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* ----------------------------------------------------------
-     05. DOMENSIONES ESTRUCTURALES Y VIEWPORT
+     05. DIMENSIONES ESTRUCTURALES Y VIEWPORT
      ---------------------------------------------------------- */
   --sidebar-width: 260px;
   --mobile-nav-height: 62px;
@@ -117,12 +117,12 @@
 
   /* Emblema (Valores por defecto redefinidos en cada tema) */
   --star-color-light: #90B3C9;
-  --star-color-dark: 235677;
+  --star-color-dark: #235677;
   --star-color-center: #EEF4F8;
   --star-glow: rgba(35, 86, 119, 0.18);
 
   /* ----------------------------------------------------------
-     09. ESTADO SEMÁNTICOS Y DE INTERACCIÓN
+     09. ESTADOS SEMÁNTICOS Y DE INTERACCIÓN
      ---------------------------------------------------------- */
   --state-success: #4D8B6F;
   --state-success-bg: rgba(77, 139, 111, 0.12);

@@ -277,6 +277,25 @@ export class ReaderSettings {
         cursor: pointer !important;
       }
 
+      /* 4. Marca de nota: línea fina (1px) del color del texto
+         (negra en temas claros, clara en temas oscuros) */
+      .arcadia-note-underline,
+      svg .arcadia-note-underline {
+        color: ${themeColors.text} !important;
+        cursor: pointer !important;
+      }
+      svg line.arcadia-note-underline,
+      svg rect.arcadia-note-underline,
+      svg polygon.arcadia-note-underline {
+        fill: none !important;
+        stroke: currentColor !important;
+        stroke-width: 1px !important;
+        stroke-dasharray: none !important;
+        stroke-linecap: square !important;
+        stroke-opacity: 1 !important;
+        cursor: pointer !important;
+      }
+
       .arcadia-underline:hover, .arcadia-strikethrough:hover, .arcadia-wavy-underline:hover {
         filter: brightness(1.25) !important;
       }
