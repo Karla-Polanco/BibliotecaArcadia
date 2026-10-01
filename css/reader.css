@@ -833,6 +833,7 @@ html.reader-open {
   align-items: center;
   justify-content: center;
   gap: 6px;
+  font-family: inherit !important;
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 1;
@@ -845,6 +846,17 @@ html.reader-open {
   padding-bottom: 12px;
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
 }
+
+.setting-pill-btn.font-literata .font-aa { font-family: 'Literata', Georgia, serif !important; }
+.setting-pill-btn.font-source-serif .font-aa { font-family: 'Source Serif 4', Georgia, serif !important; }
+.setting-pill-btn.font-lora .font-aa { font-family: 'Lora', Georgia, serif !important; }
+.setting-pill-btn.font-garamond .font-aa { font-family: 'EB Garamond', Garamond, serif !important; }
+.setting-pill-btn.font-playfair .font-aa { font-family: 'Playfair Display', Georgia, serif !important; }
+.setting-pill-btn.font-atkinson .font-aa { font-family: 'Atkinson Hyperlegible', sans-serif !important; }
+.setting-pill-btn.font-poppins .font-aa { font-family: 'Poppins', sans-serif !important; }
+.setting-pill-btn.font-inter .font-aa { font-family: 'Inter', sans-serif !important; }
+.setting-pill-btn.font-roboto .font-aa { font-family: 'Roboto', sans-serif !important; }
+.setting-pill-btn.font-opendyslexic .font-aa { font-family: 'OpenDyslexic', 'Lexend', sans-serif !important; }
 .typography-grid .setting-pill-btn .font-aa::before {
   content: '';
   position: absolute;
@@ -878,7 +890,7 @@ html.reader-open {
   font-weight: 500;
   line-height: 1.25;
   color: var(--color-text);
-  font-family: 'Inter', sans-serif !important;
+  font-family: var(--font-sans);
   background: transparent;
   white-space: normal;
   pointer-events: none;

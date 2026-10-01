@@ -73,7 +73,7 @@
 }
 
 .brand-eyebrow {
-    font-family: 'Cinzel', 'Playfair Display', serif;
+    font-family: var(--font-display);
     font-size: 0.66rem;
     letter-spacing: 0.35em;
     font-weight: 600;
@@ -151,7 +151,7 @@
 
 .brand-tagline {
     margin: 3px 0 0 0;
-    font-family: 'Cinzel', 'Playfair Display', serif;
+    font-family: var(--font-display);
     font-size: 0.60rem;
     letter-spacing: 0.32em;
     font-weight: 600;

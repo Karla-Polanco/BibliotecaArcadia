@@ -2012,7 +2012,7 @@
 }
 
 .annotation-quote {
-   font-family: 'Lora', Georgia, serif;
+   font-family: var(--font-serif);
    font-size: 0.94rem;
    color: #2B3A55;
    line-height: 1.55;
@@ -2054,7 +2054,7 @@
 .annotation-user-note-text {
    margin: 0;
    font-size: 0.82rem;
-   font-family: 'Poppins', system-ui, sans-serif;
+   font-family: var(--font-sans);
 }
 
 .annotation-card-footer {
@@ -2092,7 +2092,7 @@
    font-size: 0.86rem;
    font-weight: 700;
    color: #1F2A44;
-   font-family: 'Poppins', system-ui, sans-serif;
+   font-family: var(--font-sans);
    white-space: nowrap;
    overflow: hidden;
    text-overflow: ellipsis;
@@ -2103,7 +2103,7 @@
    color: var(--annot-deep);
    font-size: 0.85rem;
    font-weight: 700;
-   font-family: 'Poppins', system-ui, sans-serif;
+   font-family: var(--font-sans);
    padding: 7px 16px;
    border-radius: var(--radius-full);
    border: 1px solid var(--annot-dash);
@@ -2192,7 +2192,7 @@
 }
 
 .vocab-word-title {
-   font-family: 'Playfair Display', 'Lora', Georgia, serif;
+   font-family: var(--font-display);
    font-size: 1.25rem;
    font-weight: 700;
    color: var(--color-text);
@@ -2285,7 +2285,7 @@
    color: var(--color-primary-light);
    font-size: 0.78rem;
    font-weight: 500;
-   font-family: 'Source Code Pro', monospace, sans-serif;
+   font-family: var(--font-mono);
 }
 
 .vocab-definition-box {
@@ -2298,7 +2298,7 @@
 }
 
 .vocab-definition-text {
-   font-family: 'Lora', 'Source Serif 4', Georgia, serif;
+   font-family: var(--font-serif);
    font-size: 0.92rem;
    color: var(--color-text);
    line-height: 1.45;
@@ -2320,7 +2320,7 @@
    border-left: 3px solid color-mix(in srgb, var(--color-primary-light) 50%, transparent);
    border-radius: 8px;
    padding: 8px 12px;
-   font-family: 'Lora', Georgia, serif;
+   font-family: var(--font-serif);
    font-size: 0.88rem;
    color: var(--color-text);
    font-style: italic;

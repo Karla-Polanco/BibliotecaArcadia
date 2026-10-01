@@ -11,7 +11,7 @@
   --font-serif: 'Literata', 'Source Serif 4', Lora, Georgia, serif;
   --font-display: 'Cinzel', Georgia, serif;
   --font-brand: 'Cinzel Decorative', 'Cinzel', Georgia, serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
+  --font-mono: 'Source Code Pro', 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
 
   /* Escala Proporcional y Fluida */
   --text-2xs: clamp(0.68rem, 0.65rem + 0.15vw, 0.72rem);

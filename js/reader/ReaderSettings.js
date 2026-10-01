@@ -95,7 +95,11 @@ export class ReaderSettings {
     const indentVal = settings.firstLineIndent ? '1.5em' : '0';
 
     // 2. Generar bloque CSS optimizado para el motor de paginación de epub.js
+    const googleFontsUrl = 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;0,7..72,800;1,7..72,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&family=Lexend:wght@300;400;500;600;700&family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@500;600;700;800&display=swap';
+
     const customCss = `
+      @import url('${googleFontsUrl}');
+
       @font-face {
         font-family: 'OpenDyslexic';
         src: url('https://cdn.jsdelivr.net/gh/antijingoist/opendyslexic@master/compiled/OpenDyslexic-Regular.otf') format('opentype');
