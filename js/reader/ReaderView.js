@@ -829,7 +829,7 @@ export class ReaderView {
         if (v === 'lavender-light') return 'twilight-lavender';
         if (v === 'clear-sky') return 'classic-ivory';
         if (v === 'enchanted-forest' || v === 'mint') return 'olive-green';
-        if (v === 'serene-fog' || v === 'wine-poetry' || v === 'wine') return 'antique-pink';
+        if (v === 'serene-fog' || v === 'wine-poetry' || v === 'wine' || v === 'antique-pink') return 'toasted-ash';
         if (v === 'abyss-dark' || v === 'mystic-night' || v === 'deep-twilight') return 'night-ink';
         // Migración de tarjetas anteriores a las nuevas
         if (v === 'paper') return 'pergamino';

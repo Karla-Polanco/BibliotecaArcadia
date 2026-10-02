@@ -17,11 +17,9 @@
   --text-2xs: clamp(0.68rem, 0.65rem + 0.15vw, 0.72rem);
   --text-xs: clamp(0.78rem, 0.75rem + 0.18vw, 0.84rem);
   --text-sm: clamp(0.88rem, 0.85rem + 0.20vw, 0.94rem);
-  --text-base: clamp(0.98rem, 0.95rem + 0.25vw, 1.05rem);
-  --text-md: clamp(1.08rem, 1.02rem + 0.30vw, 1.18rem);
-  --text-lg: clamp(1.22rem, 1.15rem + 0.40vw, 1.35rem);
-  --text-xl: clamp(1.48rem, 1.35rem + 0.65vw, 1.70rem);
-  --text-2xl: clamp(1.85rem, 1.65rem + 1.00vw, 2.25rem);
+  --text-md: clamp(1.04rem, 1.00rem + 0.25vw, 1.14rem);
+  --text-lg: clamp(1.20rem, 1.15rem + 0.35vw, 1.32rem);
+  --text-xl: clamp(1.44rem, 1.35rem + 0.55vw, 1.65rem);
 
   /* Pesos de Fuente */
   --weight-regular: 400;
@@ -30,67 +28,97 @@
   --weight-bold: 700;
 
   /* ----------------------------------------------------------
-     02. ESPACIADO Y GEOMETRÍA
+     02. ESPACIADO Y GEOMETRÍA MODULAR (Base 4px)
      ---------------------------------------------------------- */
-  --space-3xs: 0.15rem;
-  --space-2xs: 0.25rem;
-  --space-xs: 0.50rem;
-  --space-sm: 0.75rem;
-  --space-md: 1.00rem;
-  --space-lg: 1.50rem;
-  --space-xl: 2.00rem;
-  --space-2xl: 2.75rem;
-  --space-3xl: 3.50rem;
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 40px;
+  --space-3xl: 48px;
 
-  /* Radios de Curvatura Cohesivos */
-  --radius-xs: 6px;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  --radius-2xl: 24px;
-  --radius-full: 9999px;
+  /* Escala de Radios Cohesiva */
+  --radius-xs: 4px;      /* micro-tags, kbd */
+  --radius-sm: 8px;      /* controles interactivos (botones, inputs, selects) */
+  --radius-md: 12px;     /* items lista, navegación, sub-paneles */
+  --radius-lg: 16px;     /* tarjetas principales */
+  --radius-xl: 20px;     /* modales y diálogos */
+  --radius-full: 9999px; /* píldoras y avatares */
 
   /* ----------------------------------------------------------
-     03. ELEVACIÓN Y SOMBRAS MULTICAPA AMBIENT + KEY
+     03. ALTURAS Y DIMENSIONES DE CONTROLES
+     ---------------------------------------------------------- */
+  --control-height-sm: 30px;
+  --control-height-md: 38px;  /* Estándar universal botones/inputs/selects */
+  --control-height-lg: 44px;  /* Formularios amplios y móvil accesible */
+
+  --control-padding-x-sm: 10px;
+  --control-padding-x-md: 14px;
+  --control-padding-x-lg: 18px;
+
+  --control-font-size-sm: 0.76rem;
+  --control-font-size-md: 0.84rem;
+  --control-font-size-lg: 0.92rem;
+
+  --control-icon-size-sm: 14px;
+  --control-icon-size-md: 16px;
+  --control-icon-size-lg: 18px;
+
+  /* Button Design System Aliases (Compatibilidad) */
+  --btn-height-sm: var(--control-height-sm);
+  --btn-height-md: var(--control-height-md);
+  --btn-height-lg: var(--control-height-lg);
+  --btn-px-sm: var(--control-padding-x-sm);
+  --btn-px-md: var(--control-padding-x-md);
+  --btn-px-lg: var(--control-padding-x-lg);
+  --btn-radius: var(--radius-sm);
+  --btn-radius-pill: var(--radius-full);
+  --btn-icon-size-sm: var(--control-icon-size-sm);
+  --btn-icon-size-md: var(--control-icon-size-md);
+  --btn-icon-size-lg: var(--control-icon-size-lg);
+
+  /* ----------------------------------------------------------
+     04. ELEVACIÓN Y SOMBRAS MULTICAPA
      ---------------------------------------------------------- */
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-  --shadow-md: 0 6px 16px -2px rgba(0, 0, 0, 0.07), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 14px 28px -4px rgba(0, 0, 0, 0.10), 0 4px 10px -2px rgba(0, 0, 0, 0.04);
-  --shadow-xl: 0 22px 44px -8px rgba(0, 0, 0, 0.15), 0 8px 18px -4px rgba(0, 0, 0, 0.06);
-
-  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--color-border-subtle);
-  --shadow-card-hover: 0 12px 24px -4px rgba(0, 0, 0, 0.08), 0 0 0 1px var(--color-border);
-  --shadow-dropdown: 0 12px 36px -4px rgba(0, 0, 0, 0.18), 0 2px 8px -1px rgba(0, 0, 0, 0.08);
-
-  /* Sombras y Aspect Ratio del Libro (Efecto Editorial) */
-  --book-aspect-ratio: 2 / 3;
-  --shadow-book: 0 8px 20px -4px rgba(0, 0, 0, 0.22), 0 2px 6px -1px rgba(0, 0, 0, 0.12), -2px 0 6px rgba(0, 0, 0, 0.08);
-  --shadow-book-hover: 0 18px 36px -6px rgba(0, 0, 0, 0.30), 0 4px 12px -2px rgba(0, 0, 0, 0.16), -3px 0 8px rgba(0, 0, 0, 0.12);
+  --shadow-sm: 0 2px 4px -1px rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 18px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --shadow-xl: 0 20px 32px -4px rgba(0, 0, 0, 0.12), 0 8px 12px -4px rgba(0, 0, 0, 0.04);
+  --shadow-dropdown: var(--shadow-lg);
 
   /* ----------------------------------------------------------
-     04. TRANSICIONES Y FÍSICAS DE MOVIMIENTO
+     05. FÍSICAS DE TRANSICIÓN Y HOVER
      ---------------------------------------------------------- */
-  --transition-fast: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-normal: 0.24s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-slow: 0.36s cubic-bezier(0.16, 1, 0.3, 1);
-  --spring-bounce: 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-fast: 140ms ease;
+  --transition-normal: 180ms ease;
+  --transition-smooth: 220ms ease;
+
+  --hover-lift: translateY(-1px);
+  --hover-scale: 1.01;
+
+  --hover-surface: var(--color-surface-hover);
+  --hover-border: var(--color-border);
+  --hover-border-focus: var(--color-border-focus);
+  --hover-shadow-sm: var(--shadow-sm);
+  --hover-shadow-md: var(--shadow-md);
+  --hover-shadow-card: 0 4px 14px rgba(0, 0, 0, 0.05);
 
   /* ----------------------------------------------------------
-     05. DIMENSIONES ESTRUCTURALES Y VIEWPORT
+     06. DIMENSIONES ESTRUCTURALES Y VIEWPORT
      ---------------------------------------------------------- */
   --sidebar-width: 260px;
   --mobile-nav-height: 62px;
-  --header-height: 56px;
-  --control-height: 40px;
-  --control-height-sm: 34px;
+  --header-height: 58px;
+  --control-height: var(--control-height-md);
   --touch-target-min: 44px;
+  --book-aspect-ratio: 2 / 3;
 
   /* ----------------------------------------------------------
-     06. JERARQUÍA DE CAPAS (Z-INDEX)
+     07. JERARQUÍA DE CAPAS (Z-INDEX)
      ---------------------------------------------------------- */
-  --z-base: 1;
   --z-sticky: 30;
   --z-sidebar: 40;
   --z-mobile-nav: 50;
@@ -102,35 +130,27 @@
   --z-toast: 300;
 
   /* ----------------------------------------------------------
-     07. ACCESIBILIDAD, FOCO Y SELECCIÓN
+     08. ACCESIBILIDAD, FOCO Y SELECCIÓN
      ---------------------------------------------------------- */
   --color-border-focus: var(--color-primary, #235677);
   --focus-ring: 0 0 0 3px var(--color-primary-glow, rgba(35, 86, 119, 0.25));
 
   /* ----------------------------------------------------------
-     08. ACENTOS Y EMBLEMAS EDITORIALES
-     ---------------------------------------------------------- */
-  --color-gold: #C8A261;
-  --color-gold-light: #EBD9A8;
-  --color-gold-dark: #8C6A2F;
-  --color-gold-glow: rgba(200, 162, 97, 0.22);
-
-  /* Emblema (Valores por defecto redefinidos en cada tema) */
-  --star-color-light: #90B3C9;
-  --star-color-dark: #235677;
-  --star-color-center: #EEF4F8;
-  --star-glow: rgba(35, 86, 119, 0.18);
-
-  /* ----------------------------------------------------------
-     09. ESTADOS SEMÁNTICOS Y DE INTERACCIÓN
+     09. ESTADOS SEMÁNTICOS
      ---------------------------------------------------------- */
   --state-success: #4D8B6F;
   --state-success-bg: rgba(77, 139, 111, 0.12);
-  --state-warning: #C68A3C;
-  --state-warning-bg: rgba(198, 138, 60, 0.12);
   --state-danger: #C85A54;
   --state-danger-bg: rgba(200, 90, 84, 0.12);
-  --state-danger-border: rgba(200, 90, 84, 0.28);
-  --state-info: var(--color-primary-light, #4A7A99);
-  --state-info-bg: var(--color-badge-bg, rgba(35, 86, 119, 0.08));
+  --color-gold: #C8A261;
+}
+
+/* Modo Accesibilidad: Reducción de movimiento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

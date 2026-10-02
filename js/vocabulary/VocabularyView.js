@@ -11,6 +11,7 @@ import { dbManager } from '../db.js';
 import { appState } from '../state.js';
 import { Toast } from '../ui/Toast.js';
 import { Modal } from '../ui/Modal.js';
+import { Icons } from '../ui/Icons.js';
 
 export class VocabularyView {
   constructor(containerElement) {
@@ -74,8 +75,8 @@ export class VocabularyView {
           </div>
           <div class="panel-actions-row">
             <span class="collection-count-pill">${totalCount} ${totalCount === 1 ? 'palabra' : 'palabras'}</span>
-            <button id="btn-add-word-manual" class="btn-col-header-action btn-col-header-action--primary">
-              <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            <button id="btn-add-word-manual" class="btn btn--sm btn--primary">
+              ${Icons.PLUS}
               <span>Añadir palabra</span>
             </button>
           </div>
@@ -99,7 +100,7 @@ export class VocabularyView {
             <p class="empty-state-desc">
               ${this.searchQuery ? `No se encontraron palabras que coincidan con «<strong>${this.escapeHtml(this.searchQuery)}</strong>». Prueba con otro término.` : 'Crea tu primera palabra o usa «Definir» mientras lees. Tus términos aparecerán aquí.'}
             </p>
-            ${this.searchQuery ? `<button id="btn-vocab-clear-search" class="arcadia-modal-btn arcadia-modal-btn--ghost"><span>Limpiar búsqueda</span></button>` : `<button id="btn-add-word-empty" class="arcadia-modal-btn arcadia-modal-btn--primary"><svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg><span>Añadir mi primera palabra</span></button>`}
+            ${this.searchQuery ? `<button id="btn-vocab-clear-search" class="btn btn--ghost"><span>Limpiar búsqueda</span></button>` : `<button id="btn-add-word-empty" class="btn btn--primary">${Icons.PLUS}<span>Añadir mi primera palabra</span></button>`}
           </div>
         ` : filtered.map(w => {
           const book = this.books.find(b => b.id === w.bookId);
@@ -112,17 +113,17 @@ export class VocabularyView {
               <div class="vocab-card-header">
                 <div class="vocab-card-header-left">
                   <h3 class="vocab-word-title">${this.escapeHtml(w.word)}</h3>
-                  <button class="btn-card-speak btn-circle-speak" data-word="${this.escapeHtml(w.word)}" title="Escuchar pronunciación" aria-label="Escuchar pronunciación">
-                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+                  <button class="btn-card-speak btn btn--icon btn--circle btn--ghost" data-word="${this.escapeHtml(w.word)}" title="Escuchar pronunciación" aria-label="Escuchar pronunciación">
+                    ${Icons.SPEAKER}
                   </button>
                 </div>
 
                 <div class="vocab-card-header-actions">
-                  <button class="btn-card-edit btn-circle-action" data-action="edit-word" data-id="${w.id}" title="Editar término" aria-label="Editar">
-                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                  <button class="btn-card-edit btn btn--icon btn--circle btn--ghost" data-action="edit-word" data-id="${w.id}" title="Editar término" aria-label="Editar">
+                    ${Icons.EDIT}
                   </button>
-                  <button class="btn-card-del btn-circle-action" data-action="delete-word" data-id="${w.id}" title="Eliminar término" aria-label="Eliminar">
-                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  <button class="btn-card-del btn btn--icon btn--circle btn--danger" data-action="delete-word" data-id="${w.id}" title="Eliminar término" aria-label="Eliminar">
+                    ${Icons.TRASH}
                   </button>
                 </div>
               </div>
@@ -163,12 +164,12 @@ export class VocabularyView {
 
               <!-- Botones de Acción Inferiores (Escuchar y Copiar) -->
               <div class="vocab-card-actions">
-                <button class="btn-listen-word vocab-pill-btn" data-action="speak-word" data-word="${escAttr(w.word)}" title="Escuchar pronunciación">
-                  <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+                <button class="btn-listen-word vocab-pill-btn btn btn--sm btn--ghost" data-action="speak-word" data-word="${escAttr(w.word)}" title="Escuchar pronunciación">
+                  ${Icons.SPEAKER}
                   <span>Escuchar</span>
                 </button>
-                <button class="btn-copy-word vocab-pill-btn" data-action="copy-word" data-word="${escAttr(w.word)}" data-definition="${escAttr(w.definition || '')}" title="Copiar palabra y definición">
-                  <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                <button class="btn-copy-word vocab-pill-btn btn btn--sm btn--ghost" data-action="copy-word" data-word="${escAttr(w.word)}" data-definition="${escAttr(w.definition || '')}" title="Copiar palabra y definición">
+                  ${Icons.COPY}
                   <span>Copiar</span>
                 </button>
               </div>
@@ -192,10 +193,6 @@ export class VocabularyView {
       .vocab-card { position: relative; overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
       .vocab-card::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 5px; background-color: var(--color-primary-light); border-radius: 16px 0 0 16px; }
       .vocab-card:hover { transform: translateY(-2px) !important; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important; border-color: color-mix(in srgb, var(--color-primary-light) 40%, var(--color-border)) !important; }
-      .btn-card-speak:hover { background-color: var(--color-primary-light) !important; color: #FFF !important; }
-      .btn-card-edit:hover { color: #FFFFFF !important; background-color: #2470DE !important; border-color: #2470DE !important; }
-      .btn-card-del:hover { color: #A83730 !important; background-color: #FBDDDA !important; border-color: #E5A9A6 !important; }
-      #btn-add-word-manual:hover, #btn-add-word-empty:hover { filter: brightness(1.12); }
       #input-vocab-search:focus { border-color: var(--color-border-focus) !important; }
     `;
   }
@@ -305,8 +302,8 @@ export class VocabularyView {
             <h2 class="theme-modal-title text-base">${isEditing ? 'Editar palabra' : 'Añadir palabra al vocabulario'}</h2>
             <p class="theme-modal-subtitle">${isEditing ? 'Modifica los campos y guarda los cambios.' : 'Completa los campos para agregar un nuevo término.'}</p>
           </div>
-          <button class="theme-modal-close" id="btn-close-add-word">
-            <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          <button class="theme-modal-close btn--close" id="btn-close-add-word" aria-label="Cerrar modal">
+            ${Icons.CLOSE}
           </button>
         </div>
 
@@ -338,9 +335,9 @@ export class VocabularyView {
         </div>
 
         <div class="flex-end-gap">
-          <button id="btn-cancel-add-word" class="btn-vocab-cancel">Cancelar</button>
-          <button id="btn-save-add-word" class="btn-vocab-save">
-            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <button id="btn-cancel-add-word" class="btn btn--ghost">Cancelar</button>
+          <button id="btn-save-add-word" class="btn btn--primary">
+            ${Icons.SAVE}
             <span>${isEditing ? 'Guardar cambios' : 'Guardar'}</span>
           </button>
         </div>

@@ -14,6 +14,7 @@ import { ReadingStatsManager } from './ReadingStatsManager.js';
 import { dbManager } from '../db.js';
 import { appState } from '../state.js';
 import { Toast } from './Toast.js';
+import { Icons } from './Icons.js';
 
 export class SettingsView {
   constructor(containerElement, themeManager) {
@@ -135,7 +136,7 @@ export class SettingsView {
           <div class="theme-options-grid">
             <!-- 1. Azul Boreal -->
             <div class="theme-card-item ${currentTheme === 'boreal-blue' ? 'selected' : ''}" data-theme-value="boreal-blue" style="--theme-accent-color: #235677;">
-              <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #EEF3F7 0%, #D8E5F0 100%);">
+              <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #EEF3F7 0%, #D4E2EB 100%);">
                 <div class="theme-card-preview-top">
                   <div class="theme-card-check-badge">
                     <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
@@ -145,19 +146,19 @@ export class SettingsView {
                 <div class="theme-card-preview-dots">
                   <span class="theme-dot" style="background: #235677;"></span>
                   <span class="theme-dot" style="background: #4A7A99;"></span>
-                  <span class="theme-dot" style="background: #6B9BB9;"></span>
-                  <span class="theme-dot" style="background: #D8E5F0;"></span>
+                  <span class="theme-dot" style="background: #577D95;"></span>
+                  <span class="theme-dot" style="background: #B7CBD9;"></span>
                 </div>
               </div>
               <div class="theme-card-meta">
                 <h4 class="theme-card-title">Azul Boreal</h4>
-                <p class="theme-card-desc">Fresco, limpio y luminoso.</p>
+                <p class="theme-card-desc">Fresco, limpio y diurno.</p>
               </div>
             </div>
 
-            <!-- 2. Lavanda Crepuscular -->
-            <div class="theme-card-item ${currentTheme === 'twilight-lavender' ? 'selected' : ''}" data-theme-value="twilight-lavender" style="--theme-accent-color: #5C3D7B;">
-              <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #F4F1F7 0%, #E2DAEC 100%);">
+            <!-- 2. Marfil Clásico -->
+            <div class="theme-card-item ${currentTheme === 'classic-ivory' ? 'selected' : ''}" data-theme-value="classic-ivory" style="--theme-accent-color: #6D4828;">
+              <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #FAF7F1 0%, #DBC8B0 100%);">
                 <div class="theme-card-preview-top">
                   <div class="theme-card-check-badge">
                     <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
@@ -165,43 +166,21 @@ export class SettingsView {
                   <div class="theme-card-mini-pill"></div>
                 </div>
                 <div class="theme-card-preview-dots">
-                  <span class="theme-dot" style="background: #5C3D7B;"></span>
-                  <span class="theme-dot" style="background: #7E619E;"></span>
-                  <span class="theme-dot" style="background: #A184C0;"></span>
-                  <span class="theme-dot" style="background: #D7CBE3;"></span>
-                </div>
-              </div>
-              <div class="theme-card-meta">
-                <h4 class="theme-card-title">Lavanda Crepuscular</h4>
-                <p class="theme-card-desc">Serena, delicada y elegante.</p>
-              </div>
-            </div>
-
-            <!-- 3. Marfil Clásico -->
-            <div class="theme-card-item ${currentTheme === 'classic-ivory' ? 'selected' : ''}" data-theme-value="classic-ivory" style="--theme-accent-color: #C05A34;">
-              <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #F4EFE6 0%, #E6DBC9 100%);">
-                <div class="theme-card-preview-top">
-                  <div class="theme-card-check-badge">
-                    <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-                  </div>
-                  <div class="theme-card-mini-pill"></div>
-                </div>
-                <div class="theme-card-preview-dots">
-                  <span class="theme-dot" style="background: #C05A34;"></span>
-                  <span class="theme-dot" style="background: #D98852;"></span>
-                  <span class="theme-dot" style="background: #6D8456;"></span>
-                  <span class="theme-dot" style="background: #D89A3E;"></span>
+                  <span class="theme-dot" style="background: #6D4828;"></span>
+                  <span class="theme-dot" style="background: #8E6540;"></span>
+                  <span class="theme-dot" style="background: #997554;"></span>
+                  <span class="theme-dot" style="background: #CBB99E;"></span>
                 </div>
               </div>
               <div class="theme-card-meta">
                 <h4 class="theme-card-title">Marfil Clásico</h4>
-                <p class="theme-card-desc">Crema y terracota tradicional.</p>
+                <p class="theme-card-desc">Editorial, cálido y tradicional.</p>
               </div>
             </div>
 
-            <!-- 4. Verde Oliva -->
+            <!-- 3. Verde Oliva -->
             <div class="theme-card-item ${currentTheme === 'olive-green' ? 'selected' : ''}" data-theme-value="olive-green" style="--theme-accent-color: #2C5D40;">
-              <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #EEF4F0 0%, #D3E4D8 100%);">
+              <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #E7EEE9 0%, #C5DACD 100%);">
                 <div class="theme-card-preview-top">
                   <div class="theme-card-check-badge">
                     <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
@@ -210,20 +189,20 @@ export class SettingsView {
                 </div>
                 <div class="theme-card-preview-dots">
                   <span class="theme-dot" style="background: #2C5D40;"></span>
-                  <span class="theme-dot" style="background: #528063;"></span>
-                  <span class="theme-dot" style="background: #79A78A;"></span>
-                  <span class="theme-dot" style="background: #C3DBCB;"></span>
+                  <span class="theme-dot" style="background: #4D7E60;"></span>
+                  <span class="theme-dot" style="background: #658E76;"></span>
+                  <span class="theme-dot" style="background: #B2C7B9;"></span>
                 </div>
               </div>
               <div class="theme-card-meta">
                 <h4 class="theme-card-title">Verde Oliva</h4>
-                <p class="theme-card-desc">Natural, equilibrado y orgánico.</p>
+                <p class="theme-card-desc">Natural, descanso visual y salvia.</p>
               </div>
             </div>
 
-            <!-- 5. Rosa Antiguo -->
-            <div class="theme-card-item ${currentTheme === 'antique-pink' ? 'selected' : ''}" data-theme-value="antique-pink" style="--theme-accent-color: #70364C;">
-              <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #F7F2F3 0%, #EAD6DE 100%);">
+            <!-- 4. Lavanda Crepuscular -->
+            <div class="theme-card-item ${currentTheme === 'twilight-lavender' ? 'selected' : ''}" data-theme-value="twilight-lavender" style="--theme-accent-color: #4C2E6B;">
+              <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #D9D1E3 0%, #C2B4D3 100%);">
                 <div class="theme-card-preview-top">
                   <div class="theme-card-check-badge">
                     <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
@@ -231,21 +210,43 @@ export class SettingsView {
                   <div class="theme-card-mini-pill"></div>
                 </div>
                 <div class="theme-card-preview-dots">
-                  <span class="theme-dot" style="background: #70364C;"></span>
-                  <span class="theme-dot" style="background: #94576F;"></span>
-                  <span class="theme-dot" style="background: #B87B93;"></span>
-                  <span class="theme-dot" style="background: #E2C2CF;"></span>
+                  <span class="theme-dot" style="background: #4C2E6B;"></span>
+                  <span class="theme-dot" style="background: #6E4994;"></span>
+                  <span class="theme-dot" style="background: #8060A0;"></span>
+                  <span class="theme-dot" style="background: #B2A4C2;"></span>
                 </div>
               </div>
               <div class="theme-card-meta">
-                <h4 class="theme-card-title">Rosa Antiguo</h4>
-                <p class="theme-card-desc">Cálido, íntimo y romántico.</p>
+                <h4 class="theme-card-title">Lavanda Crepuscular</h4>
+                <p class="theme-card-desc">Penumbra, suave y vespertina.</p>
+              </div>
+            </div>
+
+            <!-- 5. Ceniza Tostada -->
+            <div class="theme-card-item ${(currentTheme === 'toasted-ash' || currentTheme === 'antique-pink') ? 'selected' : ''}" data-theme-value="toasted-ash" style="--theme-accent-color: #A36B42;">
+              <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #1A1613 0%, #2F2620 100%);">
+                <div class="theme-card-preview-top">
+                  <div class="theme-card-check-badge">
+                    <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  </div>
+                  <div class="theme-card-mini-pill" style="background: rgba(255,255,255,0.2);"></div>
+                </div>
+                <div class="theme-card-preview-dots">
+                  <span class="theme-dot" style="background: #A36B42;"></span>
+                  <span class="theme-dot" style="background: #C48E66;"></span>
+                  <span class="theme-dot" style="background: #BCA390;"></span>
+                  <span class="theme-dot" style="background: #423831;"></span>
+                </div>
+              </div>
+              <div class="theme-card-meta">
+                <h4 class="theme-card-title">Ceniza Tostada</h4>
+                <p class="theme-card-desc">Íntimo, amaderado y muy cálido.</p>
               </div>
             </div>
 
             <!-- 6. Noche de Tinta -->
-            <div class="theme-card-item ${currentTheme === 'night-ink' ? 'selected' : ''}" data-theme-value="night-ink" style="--theme-accent-color: #83A6BE;">
-              <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #0E1114 0%, #1D2630 100%);">
+            <div class="theme-card-item ${currentTheme === 'night-ink' ? 'selected' : ''}" data-theme-value="night-ink" style="--theme-accent-color: #527A99;">
+              <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #0D1115 0%, #1C242E 100%);">
                 <div class="theme-card-preview-top">
                   <div class="theme-card-check-badge">
                     <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
@@ -254,9 +255,9 @@ export class SettingsView {
                 </div>
                 <div class="theme-card-preview-dots">
                   <span class="theme-dot" style="background: #527A99;"></span>
-                  <span class="theme-dot" style="background: #83A6BE;"></span>
-                  <span class="theme-dot" style="background: #A4C2D6;"></span>
-                  <span class="theme-dot" style="background: #2B3742;"></span>
+                  <span class="theme-dot" style="background: #7E9EB5;"></span>
+                  <span class="theme-dot" style="background: #9DB4C4;"></span>
+                  <span class="theme-dot" style="background: #2A3642;"></span>
                 </div>
               </div>
               <div class="theme-card-meta">
@@ -323,8 +324,11 @@ export class SettingsView {
             </div>
 
             <div style="display: flex; gap: 10px; margin-top: 16px;">
-              <button type="button" id="btn-reset-custom-theme" class="arcadia-modal-btn arcadia-modal-btn--ghost" style="border-radius: 999px; padding: 10px 20px; font-size: 0.85rem;">Restablecer</button>
-              <button type="button" id="btn-apply-custom-theme" class="arcadia-modal-btn arcadia-modal-btn--primary" style="flex: 1; border-radius: 999px; padding: 10px 20px; font-size: 0.85rem; font-weight: 700;">Aplicar tema</button>
+              <button type="button" id="btn-reset-custom-theme" class="btn btn--ghost" style="border-radius: 999px; padding: 10px 20px; font-size: 0.85rem;">Restablecer</button>
+              <button type="button" id="btn-apply-custom-theme" class="btn btn--primary" style="flex: 1; border-radius: 999px; padding: 10px 20px; font-size: 0.85rem; font-weight: 700;">
+                ${Icons.CHECK}
+                <span>Aplicar tema</span>
+              </button>
             </div>
           </div>
         </section>
@@ -360,12 +364,12 @@ export class SettingsView {
               </p>
             </div>
             <div class="settings-btn-group">
-              <button type="button" id="btn-export-backup" class="arcadia-modal-btn arcadia-modal-btn--ghost btn-backup-action">
-                <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              <button type="button" id="btn-export-backup" class="btn btn--ghost btn-backup-action">
+                ${Icons.EXPORT}
                 <span>Exportar backup</span>
               </button>
-              <button type="button" id="btn-import-backup" class="arcadia-modal-btn arcadia-modal-btn--primary btn-backup-action">
-                <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+              <button type="button" id="btn-import-backup" class="btn btn--primary btn-backup-action">
+                ${Icons.IMPORT}
                 <span>Importar backup</span>
               </button>
             </div>

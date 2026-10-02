@@ -9,6 +9,7 @@
 import { CollectionManager } from '../library/CollectionManager.js';
 import { Toast } from './Toast.js';
 import { Modal } from './Modal.js';
+import { Icons } from './Icons.js';
 
 export class CollectionModal {
   /**
@@ -40,8 +41,8 @@ export class CollectionModal {
       <div class="theme-modal-dialog" style="max-width: 440px;">
         <div class="theme-modal-header">
           <h2 class="theme-modal-title">${isEdit ? 'Editar Colección' : 'Nueva Colección'}</h2>
-          <button class="theme-modal-close" id="btn-close-col-modal" aria-label="Cerrar modal">
-            <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"/></svg>
+          <button class="theme-modal-close btn--close" id="btn-close-col-modal" aria-label="Cerrar modal">
+            ${Icons.CLOSE}
           </button>
         </div>
 
@@ -65,13 +66,13 @@ export class CollectionModal {
 
           <div class="arcadia-modal-actions" style="margin-top: 16px;">
             ${isEdit ? `
-              <button type="button" id="btn-col-delete" class="arcadia-modal-btn arcadia-modal-btn--danger" style="margin-right: auto;">
-                <svg style="width: 13px; height: 13px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+              <button type="button" id="btn-col-delete" class="btn btn--danger" style="margin-right: auto;">
+                ${Icons.TRASH}
                 <span>Eliminar</span>
               </button>
             ` : ''}
-            <button type="button" id="btn-col-cancel" class="arcadia-modal-btn arcadia-modal-btn--ghost">Cancelar</button>
-            <button type="submit" class="arcadia-modal-btn arcadia-modal-btn--primary">Guardar</button>
+            <button type="button" id="btn-col-cancel" class="btn btn--ghost">Cancelar</button>
+            <button type="submit" class="btn btn--primary">${Icons.SAVE}<span>Guardar</span></button>
           </div>
         </form>
       </div>
@@ -168,8 +169,8 @@ export class CollectionModal {
             <h2 class="theme-modal-title" style="font-family: 'Cinzel', serif; letter-spacing: 0.03em;">Asignar a Colección</h2>
             <span style="font-size: var(--text-xs); color: var(--color-text-secondary); display: block; margin-top: 2px;">${this.escapeHtml(book.title)}</span>
           </div>
-          <button class="theme-modal-close" id="btn-close-assign-modal" aria-label="Cerrar modal">
-            <svg style="width: 18px; height: 18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"/></svg>
+          <button class="theme-modal-close btn--close" id="btn-close-assign-modal" aria-label="Cerrar modal">
+            ${Icons.CLOSE}
           </button>
         </div>
 
@@ -206,7 +207,7 @@ export class CollectionModal {
         </div>
 
         <div class="arcadia-modal-actions">
-          <button id="btn-done-assign" class="arcadia-modal-btn arcadia-modal-btn--primary">Listo</button>
+          <button id="btn-done-assign" class="btn btn--primary">${Icons.CHECK}<span>Listo</span></button>
         </div>
       </div>
     `;

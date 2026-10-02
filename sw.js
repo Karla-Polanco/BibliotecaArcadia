@@ -3,7 +3,7 @@
    PWA + OFFLINE CACHE + AUTO UPDATE
    ====================================== */
 
-const CACHE_NAME = 'arcadia-pwa-v156';
+const CACHE_NAME = 'arcadia-pwa-v157';
 
 /*
  * =============================================
@@ -72,6 +72,7 @@ const APP_SHELL_ASSETS = [
     './js/pwa/PWAManager.js',
 
     // UI
+    './js/ui/Icons.js',
     './js/ui/Modal.js',
     './js/ui/CollectionModal.js',
     './js/ui/ScaleManager.js',

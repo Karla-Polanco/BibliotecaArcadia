@@ -13,6 +13,7 @@ import { Toast } from '../ui/Toast.js';
 import { AnnotationManager, annotationManager } from './AnnotationManager.js';
 import { Modal } from '../ui/Modal.js';
 import { CustomSelect } from '../ui/CustomSelect.js';
+import { Icons } from '../ui/Icons.js';
 
 export class AnnotationsView {
   constructor(containerElement, onOpenBookCfi) {
@@ -182,7 +183,7 @@ export class AnnotationsView {
             <p class="empty-state-desc">
               ${this.searchQuery ? `No se encontraron notas ni subrayados que coincidan con «<strong>${this.escapeHtml(this.searchQuery)}</strong>». Prueba con otro término de búsqueda.` : 'Selecciona texto mientras lees en cualquier libro para resaltar pasajes o añadir notas personales. Tus citas aparecerán aquí.'}
             </p>
-            ${this.searchQuery ? `<button id="btn-annot-clear-search" class="arcadia-modal-btn arcadia-modal-btn--ghost"><span>Limpiar búsqueda</span></button>` : `<button id="btn-annot-go-library" class="arcadia-modal-btn arcadia-modal-btn--ghost"><span>Ver toda la biblioteca</span></button>`}
+            ${this.searchQuery ? `<button id="btn-annot-clear-search" class="btn btn--ghost"><span>Limpiar búsqueda</span></button>` : `<button id="btn-annot-go-library" class="btn btn--ghost"><span>Ver toda la biblioteca</span></button>`}
           </div>
         ` : filtered.map(item => this.renderCard(item)).join('')}
       </div>
@@ -214,8 +215,8 @@ export class AnnotationsView {
             </span>
           </div>
 
-          <button class="btn-delete-annot btn-card-action" data-action="delete" data-id="${item.id}" data-kind="${item.kind}" title="Eliminar cita/nota" aria-label="Eliminar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+          <button class="btn-delete-annot btn btn--icon btn--danger btn-card-action" data-action="delete" data-id="${item.id}" data-kind="${item.kind}" title="Eliminar cita/nota" aria-label="Eliminar">
+            ${Icons.TRASH}
           </button>
         </div>
 
@@ -242,9 +243,9 @@ export class AnnotationsView {
           </div>
 
           ${item.cfi ? `
-            <button class="btn-jump-cfi" data-action="jump" data-book-id="${item.bookId}" data-cfi="${item.cfi}">
+            <button type="button" class="btn-jump-cfi btn btn--sm" data-action="jump" data-book-id="${item.bookId}" data-cfi="${item.cfi}">
               <span>Ir al pasaje</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              ${Icons.ARROW_RIGHT}
             </button>
           ` : ''}
         </div>

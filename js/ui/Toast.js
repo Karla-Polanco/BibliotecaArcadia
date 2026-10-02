@@ -5,6 +5,8 @@
  * Proporciona avisos emergentes no intrusivos con soporte para ARIA live region.
  */
 
+import { Icons } from './Icons.js';
+
 export class Toast {
   static container = null;
 
@@ -69,10 +71,8 @@ export class Toast {
         ${this._getTypeIcon(type)}
         <span>${this._escape(message)}</span>
       </div>
-      <button class="toast-close-btn" aria-label="Cerrar notificación" title="Cerrar">
-        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
+      <button class="toast-close-btn btn--close" aria-label="Cerrar notificación" title="Cerrar">
+        ${Icons.CLOSE}
       </button>
     `;
 

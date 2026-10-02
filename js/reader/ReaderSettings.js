@@ -478,56 +478,54 @@ export class ReaderSettings {
     if (themeName === 'lavender-light') themeName = 'twilight-lavender';
     if (themeName === 'clear-sky') themeName = 'classic-ivory';
     if (themeName === 'enchanted-forest' || themeName === 'mint') themeName = 'olive-green';
-    if (themeName === 'serene-fog' || themeName === 'wine-poetry' || themeName === 'wine') themeName = 'antique-pink';
+    if (themeName === 'serene-fog' || themeName === 'wine-poetry' || themeName === 'wine' || themeName === 'antique-pink') themeName = 'toasted-ash';
     if (themeName === 'abyss-dark' || themeName === 'mystic-night' || themeName === 'deep-twilight') themeName = 'night-ink';
 
     if (themeName === 'boreal-blue') {
       return {
-        bg: '#F4F7FA',
-        text: '#142531',
+        bg: '#F3F7FA',
+        text: '#101F2B',
         heading: '#163B55',
         accent: '#235677'
       };
     }
     if (themeName === 'twilight-lavender') {
-      // Legacy de tarjeta "Lavanda" → Melocotón Pálido
       return {
-        bg: '#FBEFE3',
-        text: '#3B2B28',
-        heading: '#3B2B28',
-        accent: '#C27D6B'
+        bg: '#E1DAEB',
+        text: '#180D24',
+        heading: '#321B47',
+        accent: '#4C2E6B'
       };
     }
     if (themeName === 'classic-ivory') {
       return {
         bg: '#F5EFE7',
-        text: '#281B12',
+        text: '#24170E',
         heading: '#442B1B',
         accent: '#6D4828'
       };
     }
     if (themeName === 'olive-green') {
-      // Legacy de tarjeta "Oliva" → Terracota Suave
       return {
-        bg: '#F0E2D8',
-        text: '#422A24',
-        heading: '#422A24',
-        accent: '#9E6759'
+        bg: '#EBF1ED',
+        text: '#112217',
+        heading: '#153824',
+        accent: '#2C5D40'
       };
     }
-    if (themeName === 'antique-pink') {
+    if (themeName === 'toasted-ash' || themeName === 'antique-pink') {
       return {
-        bg: '#FAF5F6',
-        text: '#28161D',
-        heading: '#431E2C',
-        accent: '#70364C'
+        bg: '#1C1815',
+        text: '#DACFC7',
+        heading: '#C48E66',
+        accent: '#A36B42'
       };
     }
     if (themeName === 'night-ink') {
       return {
-        bg: '#12161A',
-        text: '#D2DCE2',
-        heading: '#83A6BE',
+        bg: '#101418',
+        text: '#CED9E0',
+        heading: '#7E9EB5',
         accent: '#527A99'
       };
     }

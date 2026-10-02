@@ -13,6 +13,7 @@ export class ThemeManager {
     CLASSIC_IVORY: 'classic-ivory',
     OLIVE_GREEN: 'olive-green',
     ANTIQUE_PINK: 'antique-pink',
+    TOASTED_ASH: 'toasted-ash',
     NIGHT_INK: 'night-ink',
     CUSTOM: 'custom'
   };
@@ -82,7 +83,7 @@ export class ThemeManager {
     else if (themeName === 'lavender-light') themeName = ThemeManager.THEMES.TWILIGHT_LAVENDER;
     else if (themeName === 'clear-sky') themeName = ThemeManager.THEMES.CLASSIC_IVORY;
     else if (themeName === 'enchanted-forest' || themeName === 'mint') themeName = ThemeManager.THEMES.OLIVE_GREEN;
-    else if (themeName === 'serene-fog' || themeName === 'wine-poetry' || themeName === 'wine') themeName = ThemeManager.THEMES.ANTIQUE_PINK;
+    else if (themeName === 'serene-fog' || themeName === 'wine-poetry' || themeName === 'wine' || themeName === 'antique-pink') themeName = ThemeManager.THEMES.TOASTED_ASH;
     else if (themeName === 'abyss-dark' || themeName === 'mystic-night' || themeName === 'deep-twilight' || themeName === 'system') themeName = ThemeManager.THEMES.NIGHT_INK;
 
     const knownThemes = new Set([
@@ -90,7 +91,7 @@ export class ThemeManager {
       ThemeManager.THEMES.TWILIGHT_LAVENDER,
       ThemeManager.THEMES.CLASSIC_IVORY,
       ThemeManager.THEMES.OLIVE_GREEN,
-      ThemeManager.THEMES.ANTIQUE_PINK,
+      ThemeManager.THEMES.TOASTED_ASH,
       ThemeManager.THEMES.NIGHT_INK,
       ThemeManager.THEMES.CUSTOM
     ]);
@@ -149,11 +150,12 @@ export class ThemeManager {
   _updateThemeColor(themeName) {
     const themeColors = {
       'boreal-blue': { bg: '#EEF3F7', surface: '#F8FAFC', dark: false },
-      'twilight-lavender': { bg: '#F4F1F7', surface: '#FCFAFD', dark: false },
+      'twilight-lavender': { bg: '#D9D1E3', surface: '#E8E2F0', dark: false },
       'classic-ivory': { bg: '#F4EFE6', surface: '#FAF7F1', dark: false },
-      'olive-green': { bg: '#EEF4F0', surface: '#F8FAF8', dark: false },
-      'antique-pink': { bg: '#F7F2F3', surface: '#FDFBFC', dark: false },
-      'night-ink': { bg: '#0E1114', surface: '#15191E', dark: true }
+      'olive-green': { bg: '#E7EEE9', surface: '#F4F8F5', dark: false },
+      'toasted-ash': { bg: '#1A1613', surface: '#221D1A', dark: true },
+      'antique-pink': { bg: '#1A1613', surface: '#221D1A', dark: true },
+      'night-ink': { bg: '#0D1115', surface: '#141A20', dark: true }
     };
 
     let current = themeColors[themeName] || themeColors['boreal-blue'];

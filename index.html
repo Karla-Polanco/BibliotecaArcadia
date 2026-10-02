@@ -15,13 +15,13 @@
         if (savedTheme === 'lavender-light') savedTheme = 'twilight-lavender';
         if (savedTheme === 'clear-sky') savedTheme = 'classic-ivory';
         if (savedTheme === 'enchanted-forest') savedTheme = 'olive-green';
-        if (savedTheme === 'serene-fog' || savedTheme === 'wine-poetry' || savedTheme === 'wine') savedTheme = 'antique-pink';
+        if (savedTheme === 'serene-fog' || savedTheme === 'wine-poetry' || savedTheme === 'wine' || savedTheme === 'antique-pink') savedTheme = 'toasted-ash';
         if (savedTheme === 'abyss-dark' || savedTheme === 'mystic-night' || savedTheme === 'deep-twilight') savedTheme = 'night-ink';
 
-        var known = ['boreal-blue','twilight-lavender','classic-ivory','olive-green','antique-pink','night-ink'];
+        var known = ['boreal-blue','twilight-lavender','classic-ivory','olive-green','toasted-ash','night-ink'];
         if (known.indexOf(savedTheme) === -1) savedTheme = 'boreal-blue';
         document.documentElement.setAttribute('data-theme', savedTheme);
-        var themeColors = { 'boreal-blue':'#EEF3F7','twilight-lavender':'#F4F1F7','classic-ivory':'#F4EFE6','olive-green':'#EEF4F0','antique-pink':'#F7F2F3','night-ink':'#0E1114' };
+        var themeColors = { 'boreal-blue':'#EEF3F7','twilight-lavender':'#D9D1E3','classic-ivory':'#F4EFE6','olive-green':'#E7EEE9','toasted-ash':'#1A1613','night-ink':'#0D1115' };
         var tc = themeColors[savedTheme] || '#EEF3F7';
         var meta = document.querySelector('meta[name="theme-color"]');
         if (meta) meta.setAttribute('content', tc);
@@ -335,9 +335,16 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
                   <span>Grid</span>
                 </button>
                 <button class="toggle-btn" id="btn-view-list" aria-label="Vista Lista" aria-pressed="false">
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                  <svg fill="currentColor" viewBox="0 0 612 612" aria-hidden="true">
+                    <path d="M59.226,88.839C26.513,88.839,0,115.352,0,148.064s26.513,59.226,59.226,59.226s59.226-26.514,59.226-59.226
+				S91.938,88.839,59.226,88.839z M59.226,246.774C26.513,246.774,0,273.288,0,306c0,32.713,26.513,59.226,59.226,59.226
+				s59.226-26.513,59.226-59.226C118.452,273.288,91.938,246.774,59.226,246.774z M59.226,404.71C26.513,404.71,0,431.223,0,463.936
+				c0,32.712,26.513,59.226,59.226,59.226s59.226-26.514,59.226-59.226C118.452,431.223,91.938,404.71,59.226,404.71z
+				 M197.419,187.548h375.096c21.815,0,39.484-17.669,39.484-39.484s-17.669-39.484-39.484-39.484H197.419
+				c-21.815,0-39.484,17.669-39.484,39.484S175.604,187.548,197.419,187.548z M572.516,266.516H197.419
+				c-21.815,0-39.484,17.669-39.484,39.484c0,21.814,17.669,39.484,39.484,39.484h375.096c21.815,0,39.484-17.67,39.484-39.484
+				C612,284.185,594.331,266.516,572.516,266.516z M572.516,424.451H197.419c-21.815,0-39.484,17.67-39.484,39.484
+				s17.669,39.483,39.484,39.483h375.096c21.815,0,39.484-17.669,39.484-39.483S594.331,424.451,572.516,424.451z" />
                   </svg>
                   <span>Lista</span>
                 </button>
@@ -546,10 +553,8 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
     <aside class="reader-toc-drawer" id="reader-toc-drawer" aria-label="Navegación del libro">
       <div class="toc-header">
         <h3 class="toc-title">Capítulos</h3>
-        <button class="toc-close-btn" id="toc-close-btn" aria-label="Cerrar panel">
-          <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12" />
-          </svg>
+        <button class="toc-close-btn btn--close" id="toc-close-btn" aria-label="Cerrar panel">
+          <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
       <!-- Lista de Capítulos -->
@@ -594,7 +599,7 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </button>
-            <button type="button" id="btn-close-reader-search" class="btn-search-close-pill" aria-label="Cerrar búsqueda">
+            <button type="button" id="btn-close-reader-search" class="btn-search-close-pill btn btn--sm btn--ghost" aria-label="Cerrar búsqueda">
               <span>Cerrar</span>
               <span class="kbd-badge">Esc</span>
             </button>
