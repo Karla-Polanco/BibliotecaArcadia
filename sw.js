@@ -3,7 +3,7 @@
    PWA + OFFLINE CACHE + AUTO UPDATE
    ====================================== */
 
-const CACHE_NAME = 'arcadia-pwa-v157';
+const CACHE_NAME = 'arcadia-pwa-v158';
 
 /*
  * =============================================
@@ -41,6 +41,7 @@ const APP_SHELL_ASSETS = [
     './js/app.js',
     './js/db.js',
     './js/state.js',
+    './js/utils.js',
 
     // EPUB
     './js/epub/EPUBParser.js',
