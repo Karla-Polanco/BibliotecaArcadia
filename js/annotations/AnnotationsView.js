@@ -9,6 +9,7 @@
 
 import { dbManager } from '../db.js';
 import { appState } from '../state.js';
+import { escapeHtml } from '../utils.js';
 import { Toast } from '../ui/Toast.js';
 import { AnnotationManager, annotationManager } from './AnnotationManager.js';
 import { Modal } from '../ui/Modal.js';
@@ -401,8 +402,6 @@ export class AnnotationsView {
   }
 
   escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text || '';
-    return div.innerHTML;
+    return escapeHtml(text);
   }
 }

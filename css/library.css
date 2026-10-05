@@ -504,9 +504,6 @@
    transform: scale(0.96);
 }
 
-.card-progress-bar {
-   display: none !important;
-}
 
 /* ------------------------------------------------------------------
    Metadatos e Información de la Tarjeta de Libro
@@ -860,7 +857,6 @@
    border-color: color-mix(in srgb, var(--state-success, #4D8B6F) 26%, transparent);
 }
 
-.list-status-badge.unread,
 .list-status-badge.to_read {
    background-color: var(--color-surface-secondary);
    color: var(--color-text-muted);
@@ -1001,44 +997,6 @@
    06. MODAL SELECTOR DE TEMAS Y TARJETAS
    ================================================================== */
 
-#theme-modal .modal-card {
-   width: 100%;
-   max-width: min(580px, 100%) !important;
-   max-height: min(90vh, calc(100dvh - 40px));
-   overflow-y: auto;
-   overflow-x: hidden;
-   overscroll-behavior: contain;
-   -webkit-overflow-scrolling: touch;
-   scrollbar-width: thin;
-   scrollbar-color: var(--color-border) transparent;
-   padding: 20px 24px;
-   border-radius: var(--radius-full);
-   clip-path: inset(0 round var(--radius-xl));
-   background-color: var(--color-surface) !important;
-   background-image: none !important;
-}
-
-#theme-modal .modal-card::-webkit-scrollbar {
-   width: 6px;
-}
-
-#theme-modal .modal-card::-webkit-scrollbar-track {
-   background: transparent;
-   margin: 18px 0;
-   border-radius: var(--radius-full);
-}
-
-#theme-modal .modal-card::-webkit-scrollbar-thumb {
-   background-color: var(--color-border);
-   border-radius: var(--radius-full);
-}
-
-#theme-modal .modal-card::-webkit-scrollbar-button {
-   display: none !important;
-   width: 0 !important;
-   height: 0 !important;
-}
-
 .theme-options-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -1169,272 +1127,7 @@
     overflow: hidden;
 }
 
-/* ------------------------------------------------------------------
-   Definición por Tema Oficial de Arcadia
-   ------------------------------------------------------------------ */
 
-/* 1. Azul Boreal */
-.theme-option-card[data-theme-value="boreal-blue"] {
-   background: #EEF3F7;
-   border-color: #BCCFDC;
-}
-
-.theme-option-card[data-theme-value="boreal-blue"] .theme-card-title {
-   color: #10202C;
-}
-
-.theme-option-card[data-theme-value="boreal-blue"] .theme-card-desc {
-   color: #334D5E;
-}
-
-.theme-option-card[data-theme-value="boreal-blue"] .theme-radio {
-   border-color: #235677;
-}
-
-.theme-option-card[data-theme-value="boreal-blue"].selected {
-   border: 2px solid #235677;
-   box-shadow: 0 0 0 1px #235677, 0 3px 12px rgba(35, 86, 119, 0.18);
-}
-
-.theme-option-card[data-theme-value="boreal-blue"].selected .theme-radio {
-   background: #235677;
-   border-color: #235677;
-   color: #FFFFFF;
-}
-
-/* 2. Lavanda Crepuscular */
-.theme-option-card[data-theme-value="twilight-lavender"] {
-   background: #F4F1F7;
-   border-color: #CEC2DA;
-}
-
-.theme-option-card[data-theme-value="twilight-lavender"] .theme-card-title {
-   color: #21172B;
-}
-
-.theme-option-card[data-theme-value="twilight-lavender"] .theme-card-desc {
-   color: #4A3959;
-}
-
-.theme-option-card[data-theme-value="twilight-lavender"] .theme-radio {
-   border-color: #5C3D7B;
-}
-
-.theme-option-card[data-theme-value="twilight-lavender"].selected {
-   border: 2px solid #5C3D7B;
-   box-shadow: 0 0 0 1px #5C3D7B, 0 3px 12px rgba(92, 61, 123, 0.18);
-}
-
-.theme-option-card[data-theme-value="twilight-lavender"].selected .theme-radio {
-   background: #5C3D7B;
-   border-color: #5C3D7B;
-   color: #FFFFFF;
-}
-
-/* 3. Marfil Clásico */
-.theme-option-card[data-theme-value="classic-ivory"] {
-   background: #F4EFE6;
-   border-color: #CFBC9E;
-}
-
-.theme-option-card[data-theme-value="classic-ivory"] .theme-card-title {
-   color: #24180F;
-}
-
-.theme-option-card[data-theme-value="classic-ivory"] .theme-card-desc {
-   color: #4E392C;
-}
-
-.theme-option-card[data-theme-value="classic-ivory"] .theme-radio {
-   border-color: #6D4828;
-}
-
-.theme-option-card[data-theme-value="classic-ivory"].selected {
-   border: 2px solid #6D4828;
-   box-shadow: 0 0 0 1px #6D4828, 0 3px 12px rgba(109, 72, 40, 0.18);
-}
-
-.theme-option-card[data-theme-value="classic-ivory"].selected .theme-radio {
-   background: #6D4828;
-   border-color: #6D4828;
-   color: #FFFFFF;
-}
-
-/* 4. Verder Oliva */
-.theme-option-card[data-theme-value="olive-green"] {
-   background: #EEF4F0;
-   border-color: #B9CEBF;
-}
-
-.theme-option-card[data-theme-value="olive-green"] .theme-card-title {
-   color: #122219;
-}
-
-.theme-option-card[data-theme-value="olive-green"] .theme-card-desc {
-   color: #334E3F;
-}
-
-.theme-option-card[data-theme-value="olive-green"] .theme-radio {
-   border-color: #2C5D40;
-}
-
-.theme-option-card[data-theme-value="olive-green"].selected {
-   border: 2px solid #2C5D40;
-   box-shadow: 0 0 0 1px #2C5D40, 0 3px 12px rgba(44, 93, 64, 0.18);
-}
-
-.theme-option-card[data-theme-value="olive-green"].selected .theme-radio {
-   background: #2C5D40;
-   border-color: #2C5D40;
-   color: #FFFFFF;
-}
-
-/* 5. Ceniza Tostada */
-.theme-option-card[data-theme-value="toasted-ash"],
-.theme-option-card[data-theme-value="antique-pink"] {
-   background: #1A1613;
-   border-color: #423831;
-}
-
-.theme-option-card[data-theme-value="toasted-ash"] .theme-card-title,
-.theme-option-card[data-theme-value="antique-pink"] .theme-card-title {
-   color: #EDE3DC;
-}
-
-.theme-option-card[data-theme-value="toasted-ash"] .theme-card-desc,
-.theme-option-card[data-theme-value="antique-pink"] .theme-card-desc {
-   color: #C0B0A4;
-}
-
-.theme-option-card[data-theme-value="toasted-ash"] .theme-radio,
-.theme-option-card[data-theme-value="antique-pink"] .theme-radio {
-   border-color: #A36B42;
-}
-
-.theme-option-card[data-theme-value="toasted-ash"].selected,
-.theme-option-card[data-theme-value="antique-pink"].selected {
-   border: 2px solid #A36B42;
-   box-shadow: 0 0 0 1px #A36B42, 0 3px 12px rgba(163, 107, 66, 0.25);
-}
-
-.theme-option-card[data-theme-value="toasted-ash"].selected .theme-radio,
-.theme-option-card[data-theme-value="antique-pink"].selected .theme-radio {
-   background-color: #A36B42;
-   border-color: #A36B42;
-   color: #FFFFFF;
-}
-
-/* 6. Noche de Tinta (Modo Oscuro) */
-.theme-option-card[data-theme-value="night-ink"] {
-   background: #0E1114;
-   border-color: #2B3742;
-}
-
-.theme-option-card[data-theme-value="night-ink"] .theme-card-title {
-   color: #E5ECF2;
-}
-
-.theme-option-card[data-theme-value="night-ink"] .theme-card-desc {
-   color: #9FB2C0;
-}
-
-.theme-option-card[data-theme-value="night-ink"] .theme-radio {
-   border-color: #83A6BE;
-}
-
-.theme-option-card[data-theme-value="night-ink"].selected {
-   border: 2px solid #83A6BE;
-   box-shadow: 0 0 0 1px #83A6BE, 0 3px 12px rgba(131, 166, 190, 0.22);
-}
-
-.theme-option-card[data-theme-value="night-ink"].selected .theme-radio {
-   background: #83A6BE;
-   border-color: #83A6BE;
-   color: #0E1114;
-}
-
-/* Estructura Interna de la Tarjeta de Tema */
-
-.theme-card-left {
-   flex: 1;
-   min-width: 0;
-   display: flex;
-   flex-direction: column;
-   gap: 3px;
-}
-
-.theme-card-title {
-   font-size: 0.96rem;
-   font-weight: 700;
-   margin: 0;
-   line-height: 1.25;
-}
-
-.theme-card-desc {
-   font-size: 0.80rem;
-   line-height: 1.35;
-   margin: 0;
-}
-
-.theme-card-right {
-   display: flex;
-   align-items: center;
-   gap: 14px;
-   flex-shrink: 0;
-}
-
-.theme-swatches-wrap {
-   border: none;
-   padding: 0;
-   margin: 0;
-   display: flex;
-   align-items: center;
-}
-
-.theme-swatches {
-   display: flex;
-   align-items: center;
-   gap: 6px;
-}
-
-.color-swatch {
-   width: 22px;
-   height: 22px;
-   border-radius: 50%;
-   border: 1.5px solid rgba(255, 255, 255, 0.9);
-   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-}
-
-.theme-option-card[data-theme-value="night-ink"] .color-swatch {
-   border-color: rgba(255, 255, 255, 0.22);
-}
-
-.color-swatch:hover {
-   transform: scale(1.06);
-   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14);
-   z-index: 2;
-}
-
-.theme-radio {
-   width: 24px;
-   height: 24px;
-   border-radius: 50%;
-   border: 2px solid transparent;
-   display: grid;
-   place-items: center;
-   flex-shrink: 0;
-   background: transparent;
-   transition: border-color var(--transition-fast), background-color var(--transition-fast);
-   box-sizing: border-box;
-}
-
-.theme-option-card.selected .theme-radio::after {
-   content: '✓';
-   font-size: 13px;
-   font-weight: 800;
-   line-height: 1;
-}
 
 /* ==================================================================
    07. DESPLEGABLE PERSONALIZADO (CUSTOM SELECT)
@@ -1756,70 +1449,6 @@
    background-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 10%, var(--color-surface));
    border-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 20%, var(--color-border));
    color: var(--color-text);
-}
-
-.btn-col-header-action {
-   padding: 5px 14px;
-   border-radius: var(--radius-sm, 8px);
-   font-size: 0.78rem;
-   font-weight: 700;
-   background-color: var(--color-surface);
-   color: var(--color-text);
-   cursor: pointer;
-   display: inline-flex;
-   align-items: center;
-   gap: 6px;
-   border: 1px solid var(--color-border);
-   min-height: 34px;
-   height: 34px;
-   transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
-}
-
-.btn-col-header-action svg {
-   width: 14px;
-   height: 14px;
-   flex-shrink: 0;
-}
-
-.btn-col-header-action:hover {
-   background-color: var(--color-surface-hover);
-   border-color: var(--color-border);
-   color: var(--color-text);
-}
-
-.collection-header-panel .btn-col-header-action {
-   background-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 12%, var(--color-surface));
-   border-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 25%, var(--color-border));
-   color: var(--color-text);
-}
-
-.collection-header-panel .btn-col-header-action:hover {
-   background-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 20%, var(--color-surface));
-   border-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 40%, var(--color-border));
-   color: var(--color-text);
-}
-
-.btn-col-header-action--primary {
-   background-color: var(--color-primary);
-   color: var(--color-text-inverse, #FFFFFF);
-   border-color: transparent;
-   box-shadow: 0 2px 6px var(--color-primary-glow);
-}
-
-.btn-col-header-action--primary:hover {
-   background-color: var(--color-primary-dark);
-}
-
-.btn-col-header-action--danger {
-   background-color: var(--state-danger-bg, rgba(200, 90, 84, 0.12));
-   color: var(--state-danger, #C85A54);
-   border-color: color-mix(in srgb, var(--state-danger, #C85A54) 28%, transparent);
-}
-
-.btn-col-header-action--danger:hover {
-   background-color: var(--state-danger, #C85A54);
-   border-color: var(--state-danger, #C85A54);
-   color: #FFFFFF;
 }
 
 .header-card-select {
@@ -2248,48 +1877,11 @@
    text-overflow: ellipsis;
 }
 
-.btn-circle-speak {
-   width: 28px;
-   height: 28px;
-   min-width: 28px;
-   border-radius: 50%;
-   background: color-mix(in srgb, var(--color-primary-light) 12%, var(--color-surface));
-   color: var(--color-primary-light);
-   border: none;
-   cursor: pointer;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   flex-shrink: 0;
-   transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
-}
-
-.btn-circle-speak:hover {
-   background: var(--color-primary-light);
-   color: #FFFFFF;
-}
-
-.btn-circle-speak:active {
-   transform: scale(0.96);
-}
-
 .vocab-card-header-actions {
    display: flex;
    align-items: center;
    gap: 4px;
    flex-shrink: 0;
-}
-
-.btn-circle-action {
-   width: 30px;
-   height: 30px;
-   border-radius: var(--radius-sm, 8px);
-   cursor: pointer;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
-   border: 1px solid transparent;
 }
 
 .btn-card-edit {

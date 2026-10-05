@@ -12,6 +12,7 @@ import { appState } from '../state.js';
 import { Toast } from '../ui/Toast.js';
 import { Modal } from '../ui/Modal.js';
 import { Icons } from '../ui/Icons.js';
+import { escapeHtml } from '../utils.js';
 
 export class VocabularyView {
   constructor(containerElement) {
@@ -433,8 +434,6 @@ export class VocabularyView {
   }
 
   escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text || '';
-    return div.innerHTML;
+    return escapeHtml(text);
   }
 }

@@ -8,6 +8,7 @@
  */
 
 import { Icons } from './Icons.js';
+import { escapeHtml } from '../utils.js';
 
 export class Modal {
   /**
@@ -683,11 +684,6 @@ export class Modal {
   }
 
   static escapeHtml(text) {
-    return String(text ?? '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
+    return escapeHtml(text);
   }
 }

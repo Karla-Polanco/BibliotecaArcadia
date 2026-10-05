@@ -10,6 +10,7 @@ import { CollectionManager } from '../library/CollectionManager.js';
 import { Toast } from './Toast.js';
 import { Modal } from './Modal.js';
 import { Icons } from './Icons.js';
+import { escapeHtml, escapeAttr } from '../utils.js';
 
 export class CollectionModal {
   /**
@@ -249,14 +250,9 @@ export class CollectionModal {
   }
 
   static escapeHtml(text) {
-    return String(text ?? '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
+    return escapeHtml(text);
   }
   static escapeAttr(text) {
-    return this.escapeHtml(text);
+    return escapeAttr(text);
   }
 }

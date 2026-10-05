@@ -182,9 +182,6 @@
   outline-offset: 1px;
 }
 
-.mobile-nav-badge {
-  display: none !important;
-}
 
 /* --------------------------------------------------------------------------
    BREAKPOINT: TABLET (768px - 1024px)
@@ -505,7 +502,6 @@
 
   /* Modales en móvil: hoja inferior cómoda, sin barra invasiva */
   .theme-modal-overlay,
-  .modal-overlay,
   .arcadia-modal-overlay {
     padding: 12px !important;
     overflow-y: auto;
@@ -513,7 +509,6 @@
   }
 
   .theme-modal-dialog,
-  .modal-card,
   .arcadia-modal-card {
     padding: var(--space-md);
     padding-right: 12px;
@@ -530,13 +525,11 @@
   }
 
   .theme-modal-dialog::-webkit-scrollbar,
-  .modal-card::-webkit-scrollbar,
   .arcadia-modal-card::-webkit-scrollbar {
     width: 6px;
   }
 
   .theme-modal-dialog::-webkit-scrollbar-track,
-  .modal-card::-webkit-scrollbar-track,
   .arcadia-modal-card::-webkit-scrollbar-track {
     background: transparent;
     margin: 18px 0;
@@ -544,26 +537,13 @@
   }
 
   .theme-modal-dialog::-webkit-scrollbar-thumb,
-  .modal-card::-webkit-scrollbar-thumb,
   .arcadia-modal-card::-webkit-scrollbar-thumb {
     background-color: var(--color-border);
     border-radius: 9999px;
   }
 
-  #theme-modal .modal-card {
-    width: 100% !important;
-    max-height: 92vh;
-    max-height: min(92vh, calc(100dvh - 24px));
-    padding: 18px 14px 18px 18px;
-    border-radius: var(--radius-xl, 20px) !important;
-    clip-path: inset(0 round var(--radius-xl, 20px));
-  }
-
-  .theme-option-card { padding: 12px 14px; border-radius: var(--radius-md, 12px); }
   .theme-card-title { font-size: 0.88rem; }
   .theme-card-desc { font-size: 0.74rem; }
-  .color-swatch { width: 18px; height: 18px; }
-  .theme-radio { width: 22px; height: 22px; }
 
   /* ========================================================================
      PANELES DE CABECERA Y TARJETAS EN MÓVIL (VOCABULARIO, NOTAS Y COLECCIONES)
@@ -580,14 +560,6 @@
   .library-empty-state {
     padding: 22px 14px !important;
     margin: 4px 0 12px !important;
-  }
-
-  .annotations-header-top,
-  .vocab-header-top,
-  .collection-header-top {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 6px !important;
   }
 
   .panel-heading {

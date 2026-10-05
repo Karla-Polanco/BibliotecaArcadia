@@ -40,7 +40,6 @@ export class BookManager {
       .map(b => b.id);
 
     if (mockBookIds.length > 0) {
-      console.log(`✦ Eliminando ${mockBookIds.length} libros de ejemplo de la base de datos local...`);
       for (const id of mockBookIds) {
         await dbManager.delete('books', id);
         await dbManager.delete('readingProgress', id);

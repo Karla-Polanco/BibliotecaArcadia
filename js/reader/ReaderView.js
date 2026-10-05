@@ -13,6 +13,7 @@ import { ScaleManager } from '../ui/ScaleManager.js';
 import { Toast } from '../ui/Toast.js';
 import { appState } from '../state.js';
 import { ReadingStatsManager } from '../ui/ReadingStatsManager.js';
+import { escapeHtml } from '../utils.js';
 
 export class ReaderView {
   constructor() {
@@ -1134,8 +1135,6 @@ export class ReaderView {
   }
 
   escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text || '';
-    return div.innerHTML;
+    return escapeHtml(text);
   }
 }

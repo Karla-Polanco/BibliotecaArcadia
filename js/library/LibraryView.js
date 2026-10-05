@@ -7,7 +7,7 @@
  */
 
 import { appState } from '../state.js';
-import { dbManager } from '../db.js';
+import { escapeHtml, escapeAttr } from '../utils.js';
 import { CollectionManager } from './CollectionManager.js';
 import { CollectionModal } from '../ui/CollectionModal.js';
 import { Toast } from '../ui/Toast.js';
@@ -947,15 +947,10 @@ export class LibraryView {
   }
 
   escapeHtml(text) {
-    return String(text ?? '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
+    return escapeHtml(text);
   }
 
   escapeAttr(text) {
-    return this.escapeHtml(text);
+    return escapeAttr(text);
   }
 }

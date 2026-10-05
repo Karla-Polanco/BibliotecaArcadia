@@ -111,19 +111,6 @@
     text-transform: uppercase;
 }
 
-.brand-letter {
-    position: relative;
-    display: inline-block;
-}
-
-.brand-sparkle {
-    display: none;
-}
-
-.brand-sparkle svg {
-    display: none;
-}
-
 .mobile-brand-wordmark {
     font-family: var(--font-brand, 'Cinzel Decorative', 'Cinzel', Georgia, serif) !important;
     font-size: 1.2rem !important;
@@ -143,10 +130,6 @@
     font-variant-ligatures: common-ligatures;
     text-transform: uppercase;
     padding-left: 0.06em !important;
-}
-
-.mobile-brand-wordmark .brand-sparkle {
-    display: none;
 }
 
 .brand-tagline {

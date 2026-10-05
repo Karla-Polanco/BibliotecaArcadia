@@ -12,6 +12,7 @@ import { VocabularyManager } from '../vocabulary/VocabularyManager.js';
 import { Toast } from './Toast.js';
 import { Modal } from './Modal.js';
 import { dbManager } from '../db.js';
+import { escapeHtml } from '../utils.js';
 
 export class FloatingMenu {
   constructor() {
@@ -677,9 +678,7 @@ export class FloatingMenu {
   }
 
   escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text || '';
-    return div.innerHTML;
+    return escapeHtml(text);
   }
 }
 

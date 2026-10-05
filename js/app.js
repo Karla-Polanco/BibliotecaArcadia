@@ -91,8 +91,6 @@ class App {
 
     // 9. Restaurar última vista, libro o sección activa al recargar
     await this.restoreLastState();
-
-    console.log('✦ Biblioteca Arcadia inicializada con éxito');
     } catch (err) {
       console.error('[App] Error fatal en init():', err);
       try {
