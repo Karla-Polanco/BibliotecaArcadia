@@ -786,11 +786,13 @@ html.reader-open {
 .typography-grid {
   display: grid !important;
   grid-template-columns: repeat(2, 1fr) !important;
-  gap: 0 4px !important;
+  gap: 12px 8px !important;
 }
 .typography-grid .setting-pill-btn {
   position: relative;
   width: 100%;
+  height: auto !important;
+  min-height: 0 !important;
   box-sizing: border-box;
   padding: 0 !important;
   border: none !important;
@@ -1024,7 +1026,7 @@ html.reader-open {
 .reader-theme-swatches {
   display: grid !important;
   grid-template-columns: repeat(2, 1fr) !important;
-  gap: 0 4px !important;
+  gap: 12px 8px !important;
 }
 
 /* Tarjetas grandes con miniatura, etiqueta debajo y check de selección */
