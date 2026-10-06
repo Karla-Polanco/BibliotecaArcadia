@@ -30,13 +30,13 @@ export class AppState {
       searchQuery: '',
       currentReadingId: null,  // ID del libro en lectura activa (null = ninguno)
       selectedTheme: (()=>{
-        let t = safeGet('arcadia_theme', 'boreal-blue') || 'boreal-blue';
-        if (t === 'cerulean-light') t = 'boreal-blue';
-        if (t === 'lavender-light') t = 'twilight-lavender';
-        if (t === 'clear-sky') t = 'classic-ivory';
-        if (t === 'enchanted-forest') t = 'olive-green';
-        if (t === 'serene-fog' || t === 'wine-poetry' || t === 'wine' || t === 'antique-pink') t = 'toasted-ash';
-        if (t === 'abyss-dark' || t === 'mystic-night' || t === 'deep-twilight') t = 'night-ink';
+        let t = safeGet('arcadia_theme', 'light') || 'light';
+        if (t === 'cerulean-light' || t === 'boreal-blue') t = 'navy-summit';
+        if (t === 'lavender-light' || t === 'twilight-lavender') t = 'plum';
+        if (t === 'clear-sky' || t === 'classic-ivory') t = 'cozy-brown';
+        if (t === 'enchanted-forest' || t === 'mint' || t === 'olive-green') t = 'sage-cream';
+        if (t === 'serene-fog' || t === 'wine-poetry' || t === 'wine' || t === 'antique-pink' || t === 'toasted-ash') t = 'noir-silver';
+        if (t === 'abyss-dark' || t === 'mystic-night' || t === 'deep-twilight' || t === 'night-ink' || t === 'system') t = 'noir-silver';
         return t;
       })()
     };

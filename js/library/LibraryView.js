@@ -564,7 +564,7 @@ export class LibraryView {
 
         <div class="book-meta">
           <h4 class="book-title" title="${this.escapeHtml(book.title)}">${this.escapeHtml(book.title)}</h4>
-          ${book.saga ? `<span class="book-saga">${this.escapeHtml(book.saga)}</span>` : ''}
+          ${book.saga ? `<span class="book-saga">${this.escapeHtml(book.saga)}</span>` : `<span class="book-saga book-saga--empty" aria-hidden="true">&nbsp;</span>`}
           <span class="book-author">${this.escapeHtml(book.author)}</span>
           <div class="book-badge-info">
             <span class="book-status">${this.getStatusLabel(book.status)}</span>
@@ -616,7 +616,7 @@ export class LibraryView {
         <div class="list-content-column">
           <div class="list-info-row">
             <div class="list-info">
-              ${book.saga ? `<span class="list-saga">${this.escapeHtml(book.saga)}</span>` : ''}
+              ${book.saga ? `<span class="list-saga">${this.escapeHtml(book.saga)}</span>` : `<span class="list-saga list-saga--empty" aria-hidden="true">&nbsp;</span>`}
               <h4 class="list-title">${this.escapeHtml(book.title)}</h4>
               <span class="list-author">${this.escapeHtml(book.author)}</span>
             </div>

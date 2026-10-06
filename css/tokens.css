@@ -136,13 +136,12 @@
   --focus-ring: 0 0 0 3px var(--color-primary-glow, rgba(35, 86, 119, 0.25));
 
   /* ----------------------------------------------------------
-     09. ESTADOS SEMÁNTICOS
-     ---------------------------------------------------------- */
-  --state-success: #4D8B6F;
-  --state-success-bg: rgba(77, 139, 111, 0.12);
-  --state-danger: #C85A54;
-  --state-danger-bg: rgba(200, 90, 84, 0.12);
-  --color-gold: #C8A261;
+     09. ESTADOS SEMÁNTICOS (por tema)
+     ----------------------------------------------------------
+     NOTA: --state-success / --state-success-bg / --state-danger /
+     --state-danger-bg y --color-gold viven en themes.css,
+     definidos por cada [data-theme] para armonizar con su paleta.
+     No definir valores globales aquí. */
 }
 
 /* Modo Accesibilidad: Reducción de movimiento */

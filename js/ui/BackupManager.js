@@ -58,7 +58,7 @@ export class BackupManager {
           collections: collections,
           bookCollections: bookCollections,
           words: words,
-          appTheme: localStorage.getItem('arcadia_theme') || 'boreal-blue',
+          appTheme: localStorage.getItem('arcadia_theme') || 'light',
           readerPrefs: localStorage.getItem('arcadia_reader_prefs') || null
         }
       };
@@ -148,12 +148,12 @@ export class BackupManager {
 
       if (backup.data.appTheme) {
         let t = backup.data.appTheme;
-        if (t === 'cerulean-light') t = 'boreal-blue';
-        if (t === 'lavender-light') t = 'twilight-lavender';
-        if (t === 'clear-sky') t = 'classic-ivory';
-        if (t === 'enchanted-forest') t = 'olive-green';
-        if (t === 'serene-fog' || t === 'wine-poetry' || t === 'wine' || t === 'antique-pink') t = 'toasted-ash';
-        if (t === 'abyss-dark' || t === 'mystic-night' || t === 'deep-twilight') t = 'night-ink';
+        if (t === 'cerulean-light' || t === 'boreal-blue') t = 'navy-summit';
+        if (t === 'lavender-light' || t === 'twilight-lavender') t = 'plum';
+        if (t === 'clear-sky' || t === 'classic-ivory') t = 'cozy-brown';
+        if (t === 'enchanted-forest' || t === 'mint' || t === 'olive-green') t = 'sage-cream';
+        if (t === 'serene-fog' || t === 'wine-poetry' || t === 'wine' || t === 'antique-pink' || t === 'toasted-ash') t = 'noir-silver';
+        if (t === 'abyss-dark' || t === 'mystic-night' || t === 'deep-twilight' || t === 'night-ink' || t === 'system') t = 'noir-silver';
 
         localStorage.setItem('arcadia_theme', t);
         document.documentElement.setAttribute('data-theme', t);

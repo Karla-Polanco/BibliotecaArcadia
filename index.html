@@ -6,23 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="description"
     content="Biblioteca Arcadia - Biblioteca virtual y lector EPUB personal local-first, inspirado en la experiencia Kindle.">
-  <meta name="theme-color" content="#EEF3F7">
+  <meta name="theme-color" content="#F0F0F2">
   <script>
     (function () {
       try {
-        var savedTheme = localStorage.getItem('arcadia_theme') || 'boreal-blue';
-        if (savedTheme === 'cerulean-light') savedTheme = 'boreal-blue';
-        if (savedTheme === 'lavender-light') savedTheme = 'twilight-lavender';
-        if (savedTheme === 'clear-sky') savedTheme = 'classic-ivory';
-        if (savedTheme === 'enchanted-forest') savedTheme = 'olive-green';
-        if (savedTheme === 'serene-fog' || savedTheme === 'wine-poetry' || savedTheme === 'wine' || savedTheme === 'antique-pink') savedTheme = 'toasted-ash';
-        if (savedTheme === 'abyss-dark' || savedTheme === 'mystic-night' || savedTheme === 'deep-twilight') savedTheme = 'night-ink';
+        var savedTheme = localStorage.getItem('arcadia_theme') || 'light';
+        if (savedTheme === 'cerulean-light' || savedTheme === 'boreal-blue') savedTheme = 'navy-summit';
+        if (savedTheme === 'lavender-light' || savedTheme === 'twilight-lavender') savedTheme = 'plum';
+        if (savedTheme === 'clear-sky' || savedTheme === 'classic-ivory') savedTheme = 'cozy-brown';
+        if (savedTheme === 'enchanted-forest' || savedTheme === 'mint' || savedTheme === 'olive-green') savedTheme = 'sage-cream';
+        if (savedTheme === 'serene-fog' || savedTheme === 'wine-poetry' || savedTheme === 'wine' || savedTheme === 'antique-pink' || savedTheme === 'toasted-ash') savedTheme = 'noir-silver';
+        if (savedTheme === 'abyss-dark' || savedTheme === 'mystic-night' || savedTheme === 'deep-twilight' || savedTheme === 'night-ink' || savedTheme === 'system') savedTheme = 'noir-silver';
 
-        var known = ['boreal-blue','twilight-lavender','classic-ivory','olive-green','toasted-ash','night-ink'];
-        if (known.indexOf(savedTheme) === -1) savedTheme = 'boreal-blue';
+        var known = ['plum','sage-cream','light','navy-summit','cozy-brown','noir-silver','custom'];
+        if (known.indexOf(savedTheme) === -1) savedTheme = 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
-        var themeColors = { 'boreal-blue':'#EEF3F7','twilight-lavender':'#D9D1E3','classic-ivory':'#F4EFE6','olive-green':'#E7EEE9','toasted-ash':'#1A1613','night-ink':'#0D1115' };
-        var tc = themeColors[savedTheme] || '#EEF3F7';
+        var themeColors = { 'plum':'#EEE9F2','sage-cream':'#E5ECE1','light':'#F0F0F2','navy-summit':'#E5EBF4','cozy-brown':'#EDE1D1','noir-silver':'#0D0D0D','custom':'#10141A' };
+        var tc = themeColors[savedTheme] || '#F0F0F2';
         var meta = document.querySelector('meta[name="theme-color"]');
         if (meta) meta.setAttribute('content', tc);
         var savedScale = localStorage.getItem('arcadia_ui_scale');

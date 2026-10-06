@@ -45,17 +45,17 @@ html {
    ----------------------------------------------------------------- */
 
 /* Temas claros */
-[data-theme="boreal-blue"],
-[data-theme="twilight-lavender"],
-[data-theme="classic-ivory"],
-[data-theme="olive-green"] {
+[data-theme="plum"],
+[data-theme="sage-cream"],
+[data-theme="light"],
+[data-theme="navy-summit"],
+[data-theme="cozy-brown"] {
   color-scheme: light;
 }
 
 /* Temas oscuros */
-[data-theme="toasted-ash"],
-[data-theme="antique-pink"],
-[data-theme="night-ink"] {
+[data-theme="noir-silver"],
+[data-theme="custom"] {
   color-scheme: dark;
 }
 

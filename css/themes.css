@@ -3,362 +3,418 @@
    ============================================================================ */
 
 /* ============================================================================
-   1. AZUL BOREAL
+   1. CIRUELA & LAVANDA (PLUM)
    ----------------------------------------------------------------------------
-   Identidad: Fresco · Limpio · Diurno · Contemporáneo
-   Ambiente: Luz natural y ambientes iluminados de oficina
+   Identidad: Misterioso · Espiritual · Elegante · Pensamiento reflexivo
+   Ambiente: Lecturas de introspección, filosofía y noche temprana
    ============================================================================ */
 
-[data-theme="boreal-blue"] {
+[data-theme="plum"] {
   /* Lienzo y Superficies */
-  --color-background: #EEF3F7;
-  --color-surface: #F8FAFC;
-  --color-surface-secondary: #DFE8EF;
+  --color-background: #EEE9F2;
+  --color-surface: #F8F5FA;
+  --color-surface-secondary: #DDD3E6;
   --color-surface-elevated: #FFFFFF;
 
-  --color-surface-hover: rgba(35, 86, 119, 0.06);
-  --color-surface-active: rgba(35, 86, 119, 0.12);
+  --color-surface-hover: rgba(97, 61, 125, 0.06);
+  --color-surface-active: rgba(97, 61, 125, 0.12);
 
   /* Paleta Primaria y Secundaria */
-  --color-primary-dark: #163B55;
-  --color-primary: #235677;
-  --color-primary-light: #4A7A99;
-  --color-primary-glow: rgba(35, 86, 119, 0.20);
+  --color-primary-dark: #3E2154;
+  --color-primary: #633C84;
+  --color-primary-light: #895FA8;
+  --color-primary-glow: rgba(99, 60, 132, 0.22);
 
-  --color-secondary: #577D95;
+  --color-secondary: #A788C4;
 
-  /* Tipografía y Lectura (WCAG AAA) */
-  --color-text: #0E1C27;
-  --color-text-secondary: #2C4353;
-  --color-text-muted: #4F6777;
-  --color-text-inverse: #F8FAFC;
+  /* Tipografía y Lectura */
+  --color-text: #22152E;
+  --color-text-secondary: #432E56;
+  --color-text-muted: #6E5782;
+  --color-text-inverse: #FFFFFF;
 
-  /* Bordes, Divisores y Anillos */
-  --color-border: #B7CBD9;
-  --color-border-subtle: #D5E2EC;
-  --color-border-focus: #235677;
-  --focus-ring: 0 0 0 3px rgba(35, 86, 119, 0.28);
+  /* Bordes, Divisiones y Anillos */
+  --color-border: #C8BAD6;
+  --color-border-subtle: #E3D9EC;
+  --color-border-focus: #633C84;
+  --focus-ring: 0 0 0 3px rgba(99, 60, 132, 0.28);
 
   /* Etiquetas, Badges y Acentos */
-  --color-badge-bg: rgba(35, 86, 119, 0.08);
-  --color-accent-gold: #966C28;
+  --color-badge-bg: rgba(99, 60, 132, 0.08);
+  --color-accent-gold: #96702D;
+
+  /* Estados semánticos */
+  --state-success: #357B57;
+  --state-success-bg: rgba(53, 123, 87, 0.12);
+  --state-danger: #B53F54;
+  --state-danger-bg: rgba(181, 63, 84, 0.12);
+  --color-gold: #CCA04D;
 
   /* Modales y Capas Superpuestas */
-  --modal-backdrop: rgba(14, 28, 39, 0.55);
-  --shadow-sm: 0 1px 3px rgba(14, 28, 39, 0.06);
-  --shadow-xl: 0 20px 35px -5px rgba(14, 28, 39, 0.12), 0 10px 15px -5px rgba(14, 28, 39, 0.06);
+  --modal-backdrop: rgba(34, 21, 46, 0.58);
+  --shadow-sm: 0 1px 3px rgba(34, 21, 46, 0.06);
+  --shadow-xl: 0 20px 35px -5px rgba(34, 21, 46, 0.12), 0 10px 15px -5px rgba(34, 21, 46, 0.06);
 
   /* Gráficos de Encabezado y Marca */
-  --banner-gradient: linear-gradient(135deg, #F8FAFC 0%, #EAF1F5 52%, #CFDFE9 100%);
-  --brand-wordmark-color: #163B55;
+  --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #ECE3F5 52%, #D1BFE4 100%);
+  --brand-wordmark-color: #3E2154;
 
   /* Motor de Lectura */
-  --reader-bg: #F3F7FA;
-  --reader-text: #101F2B;
+  --reader-bg: #F3EEF7;
+  --reader-text: #1F122B;
 
   /* Patrón de Fondo Global */
-  --theme-bg-pattern: linear-gradient(135deg, #F8FAFC 0%, #EEF3F7 52%, #D4E2EB 100%);
+  --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #F1EAF7 55%, #DCCCE9 100%);
 
   color-scheme: light;
 }
 
 /* ============================================================================
-   2. MARFIL CLÁSICO
+   2. SALVIA & CREMA (NATURELLE)
    ----------------------------------------------------------------------------
-   Identidad: Editorial · Cálido · Tradicional · Papel
-   Ambiente: Luz de lámparas cálidas e interiores acogedores
+   Identidad: Botánico nórdico · Suave · Mínimo contraste agresivo
+   Ambiente: Alivio de tensión ocular y fatiga de pantalla
    ============================================================================ */
 
-[data-theme="classic-ivory"] {
+[data-theme="sage-cream"] {
   /* Lienzo y Superficies */
-  --color-background: #F4EFE6;
-  --color-surface: #FAF7F1;
-  --color-surface-secondary: #E7DECE;
-  --color-surface-elevated: #FDFBF8;
+  --color-background: #E5ECE1;
+  --color-surface: #F5F7F2;
+  --color-surface-secondary: #D4DFD0;
+  --color-surface-elevated: #FAFAF7;
 
-  --color-surface-hover: rgba(109, 72, 40, 0.06);
-  --color-surface-active: rgba(109, 72, 40, 0.12);
-
-  /* Paleta Primaria y Secundaria */
-  --color-primary-dark: #442B1B;
-  --color-primary: #6D4828;
-  --color-primary-light: #8E6540;
-  --color-primary-glow: rgba(109, 72, 40, 0.20);
-
-  --color-secondary: #997554;
-
-  /* Tipografía y Lectura */
-  --color-text: #21160D;
-  --color-text-secondary: #483526;
-  --color-text-muted: #6B5443;
-  --color-text-inverse: #FAF7F1;
-
-  /* Bordes, Divisores y Anillos */
-  --color-border: #CBB99E;
-  --color-border-subtle: #DFD0BD;
-  --color-border-focus: #6D4828;
-  --focus-ring: 0 0 0 3px rgba(109, 72, 40, 0.28);
-
-  /* Etiquetas, Badges y Acentos */
-  --color-badge-bg: rgba(109, 72, 40, 0.08);
-  --color-accent-gold: #966724;
-
-  /* Modales y Capas Superpuestas */
-  --modal-backdrop: rgba(33, 22, 13, 0.58);
-  --shadow-sm: 0 1px 3px rgba(33, 22, 13, 0.06);
-  --shadow-xl: 0 20px 35px -5px rgba(33, 22, 13, 0.12), 0 10px 15px -5px rgba(33, 22, 13, 0.06);
-
-  /* Gráficos de Encabezado y Marca */
-  --banner-gradient: linear-gradient(135deg, #FAF7F1 0%, #EFE6D7 52%, #DBC6AD 100%);
-  --brand-wordmark-color: #442B1B;
-
-  /* Motor de Lectura */
-  --reader-bg: #F5EFE7;
-  --reader-text: #24170E;
-
-  /* Patrón de Fondo Global */
-  --theme-bg-pattern: linear-gradient(135deg, #FAF7F1 0%, #F0E8DC 52%, #DBC8B0 100%);
-
-  color-scheme: light;
-}
-
-/* ============================================================================
-   3. VERDE OLIVA (SALVIA)
-   ----------------------------------------------------------------------------
-   Identidad: Natural · Descanso visual · Sedante ocular
-   Ambiente: Lecturas de más de 1 hora continua
-   ============================================================================ */
-
-[data-theme="olive-green"] {
-  /* Lienzo y Superficies (Tono salvia natural ligeramente más diferenciado) */
-  --color-background: #E7EEE9;
-  --color-surface: #F4F8F5;
-  --color-surface-secondary: #D4E1D8;
-  --color-surface-elevated: #FAFDFB;
-
-  --color-surface-hover: rgba(44, 93, 64, 0.06);
-  --color-surface-active: rgba(44, 93, 64, 0.12);
+  --color-surface-hover: rgba(73, 94, 66, 0.06);
+  --color-surface-active: rgba(73, 94, 66, 0.12);
 
   /* Paleta Primaria y Secundaria */
-  --color-primary-dark: #153824;
-  --color-primary: #2C5D40;
-  --color-primary-light: #4D7E60;
-  --color-primary-glow: rgba(44, 93, 64, 0.20);
+  --color-primary-dark: #2F4129;
+  --color-primary: #4C6843;
+  --color-primary-light: #708C68;
+  --color-primary-glow: rgba(76, 104, 67, 0.20);
 
-  --color-secondary: #658E76;
+  --color-secondary: #97A88F;
 
   /* Tipografía y Lectura */
-  --color-text: #0F1E15;
-  --color-text-secondary: #2C4334;
-  --color-text-muted: #4B6353;
-  --color-text-inverse: #F4F8F5;
+  --color-text: #192317;
+  --color-text-secondary: #354531;
+  --color-text-muted: #596B55;
+  --color-text-inverse: #FAFAF7;
 
   /* Bordes, Divisiones y Anillos */
-  --color-border: #B2C7B9;
-  --color-border-subtle: #CDDCD2;
-  --color-border-focus: #2C5D40;
-  --focus-ring: 0 0 0 3px rgba(44, 93, 64, 0.28);
+  --color-border: #BDCBB7;
+  --color-border-subtle: #D8E2D4;
+  --color-border-focus: #4C6843;
+  --focus-ring: 0 0 0 3px rgba(76, 104, 67, 0.26);
 
   /* Etiquetas, Badges y Acentos */
-  --color-badge-bg: rgba(44, 93, 64, 0.08);
-  --color-accent-gold: #8E6C29;
+  --color-badge-bg: rgba(76, 104, 67, 0.08);
+  --color-accent-gold: #967A32;
+
+  /* Estados semánticos */
+  --state-success: #387D4E;
+  --state-success-bg: rgba(56, 125, 78, 0.12);
+  --state-danger: #B44A3D;
+  --state-danger-bg: rgba(180, 74, 61, 0.12);
+  --color-gold: #C7A656;
 
   /* Modales y Capas Superpuestas */
-  --modal-backdrop: rgba(15, 30, 21, 0.58);
-  --shadow-sm: 0 1px 3px rgba(15, 30, 21, 0.06);
-  --shadow-xl: 0 20px 35px -5px rgba(15, 30, 21, 0.12), 0 10px 15px -5px rgba(15, 30, 21, 0.06);
+  --modal-backdrop: rgba(25, 35, 23, 0.58);
+  --shadow-sm: 0 1px 3px rgba(25, 35, 23, 0.06);
+  --shadow-xl: 0 20px 35px -5px rgba(25, 35, 23, 0.12), 0 10px 15px -5px rgba(25, 35, 23, 0.06);
 
   /* Gráficos de Encabezado y Marca */
-  --banner-gradient: linear-gradient(135deg, #F4F8F5 0%, #E3EDE6 52%, #C1D8CA 100%);
-  --brand-wordmark-color: #153824;
+  --banner-gradient: linear-gradient(135deg, #FAFAF7 0%, #E3EBE0 52%, #BFCEBA 100%);
+  --brand-wordmark-color: #2F4129;
 
   /* Motor de Lectura */
-  --reader-bg: #EBF1ED;
-  --reader-text: #112217;
+  --reader-bg: #EEF3EB;
+  --reader-text: #172115;
 
   /* Patrón de Fondo Global */
-  --theme-bg-pattern: linear-gradient(135deg, #F4F8F5 0%, #E6EFE9 55%, #C5DACD 100%);
+  --theme-bg-pattern: linear-gradient(135deg, #FAFAF7 0%, #E9EFE6 55%, #C8D7C3 100%);
 
   color-scheme: light;
 }
 
 /* ============================================================================
-   4. LAVANDA CREPUSCULAR (TRANSICIÓN VESPERTINA)
+   3. CLÁSICO CLARO (LIGHT)
    ----------------------------------------------------------------------------
-   Identidad: Penumbra · Suave · Menos emisión de luz blanca
-   Ambiente: Tarde/Noche con luces indirectas o atardeceres
+   Identidad: Limpio · Universal · Alto contraste · Papel natural
+   Ambiente: Uso diurno general y todo tipo de textos
    ============================================================================ */
 
-[data-theme="twilight-lavender"] {
-  /* Lienzo y Superficies (Medio tono para romper la saturación de temas blancos) */
-  --color-background: #D9D1E3;
-  --color-surface: #E8E2F0;
-  --color-surface-secondary: #C8BFD3;
-  --color-surface-elevated: #F1EDF7;
-
-  --color-surface-hover: rgba(76, 46, 107, 0.08);
-  --color-surface-active: rgba(76, 46, 107, 0.14);
-
-  /* Paleta Primaria y Secundaria */
-  --color-primary-dark: #321B47;
-  --color-primary: #4C2E6B;
-  --color-primary-light: #6E4994;
-  --color-primary-glow: rgba(76, 46, 107, 0.22);
-
-  --color-secondary: #8060A0;
-
-  /* Tipografía y Lectura */
-  --color-text: #190F24;
-  --color-text-secondary: #39254F;
-  --color-text-muted: #56416E;
-  --color-text-inverse: #F8F5FB;
-
-  /* Bordes, Divisiones y Anillos */
-  --color-border: #B2A4C2;
-  --color-border-subtle: #C3B7D1;
-  --color-border-focus: #4C2E6B;
-  --focus-ring: 0 0 0 3px rgba(76, 46, 107, 0.30);
-
-  /* Etiquetas, Badges y Acentos */
-  --color-badge-bg: rgba(76, 46, 107, 0.12);
-  --color-accent-gold: #916825;
-
-  /* Modales y Capas Superpuestas */
-  --modal-backdrop: rgba(25, 15, 36, 0.65);
-  --shadow-sm: 0 1px 3px rgba(25, 15, 36, 0.08);
-  --shadow-xl: 0 20px 35px -5px rgba(25, 15, 36, 0.15), 0 10px 15px -5px rgba(25, 15, 36, 0.08);
-
-  /* Gráficos de Encabezado y Marca */
-  --banner-gradient: linear-gradient(135deg, #E8E2F0 0%, #D8CEE3 52%, #BEB0CE 100%);
-  --brand-wordmark-color: #321B47;
-
-  /* Motor de Lectura */
-  --reader-bg: #E1DAEB;
-  --reader-text: #180D24;
-
-  /* Patrón de Fondo Global */
-  --theme-bg-pattern: linear-gradient(135deg, #E8E2F0 0%, #DDD4E7 55%, #C2B4D3 100%);
-
-  color-scheme: light;
-}
-
-/* ============================================================================
-   5. CENIZA TOSTADA (NOCHE CÁLIDA)
-   ----------------------------------------------------------------------------
-   Identidad: Íntimo · Amaderado · Muy Cálido · Cero Luz Azul
-   Ambiente: Lectura en la cama antes de dormir
-   ============================================================================ */
-
-[data-theme="toasted-ash"],
-[data-theme="antique-pink"] {
+[data-theme="light"] {
   /* Lienzo y Superficies */
-  --color-background: #1A1613;
-  --color-surface: #221D1A;
-  --color-surface-secondary: #2C2622;
-  --color-surface-elevated: #37302A;
+  --color-background: #F0F0F2;
+  --color-surface: #FAFAFB;
+  --color-surface-secondary: #E3E4E8;
+  --color-surface-elevated: #FFFFFF;
 
-  --color-surface-hover: rgba(255, 255, 255, 0.05);
-  --color-surface-active: rgba(255, 255, 255, 0.09);
+  --color-surface-hover: rgba(30, 30, 35, 0.05);
+  --color-surface-active: rgba(30, 30, 35, 0.10);
 
   /* Paleta Primaria y Secundaria */
-  --color-primary-dark: #5A351C;
-  --color-primary: #A36B42;
-  --color-primary-light: #C48E66;
-  --color-primary-glow: rgba(163, 107, 66, 0.25);
+  --color-primary-dark: #111114;
+  --color-primary: #2B2C34;
+  --color-primary-light: #525462;
+  --color-primary-glow: rgba(43, 44, 52, 0.18);
 
-  --color-secondary: #BCA390;
+  --color-secondary: #747787;
 
   /* Tipografía y Lectura */
-  --color-text: #EDE3DC;
-  --color-text-secondary: #C0B0A4;
-  --color-text-muted: #8E7D72;
-  --color-text-inverse: #1A1613;
+  --color-text: #121316;
+  --color-text-secondary: #353740;
+  --color-text-muted: #646775;
+  --color-text-inverse: #FFFFFF;
 
   /* Bordes, Divisiones y Anillos */
-  --color-border: #423831;
-  --color-border-subtle: #2C2621;
-  --color-border-focus: #C48E66;
-  --focus-ring: 0 0 0 3px rgba(196, 142, 102, 0.32);
+  --color-border: #CACCD4;
+  --color-border-subtle: #E2E3E8;
+  --color-border-focus: #2B2C34;
+  --focus-ring: 0 0 0 3px rgba(43, 44, 52, 0.25);
 
   /* Etiquetas, Badges y Acentos */
-  --color-badge-bg: rgba(163, 107, 66, 0.16);
-  --color-accent-gold: #D8AD5E;
+  --color-badge-bg: rgba(43, 44, 52, 0.07);
+  --color-accent-gold: #966C23;
+
+  /* Estados semánticos */
+  --state-success: #2B7A4B;
+  --state-success-bg: rgba(43, 122, 75, 0.12);
+  --state-danger: #B93C3C;
+  --state-danger-bg: rgba(185, 60, 60, 0.12);
+  --color-gold: #CE9B3A;
 
   /* Modales y Capas Superpuestas */
-  --modal-backdrop: rgba(10, 8, 7, 0.82);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.45);
-  --shadow-xl: 0 20px 35px -5px rgba(0, 0, 0, 0.75);
+  --modal-backdrop: rgba(18, 19, 22, 0.55);
+  --shadow-sm: 0 1px 3px rgba(18, 19, 22, 0.05);
+  --shadow-xl: 0 20px 35px -5px rgba(18, 19, 22, 0.12), 0 10px 15px -5px rgba(18, 19, 22, 0.05);
 
-  /* Gráficos de Encabezados y Marca */
-  --banner-gradient: linear-gradient(135deg, #221D1A 0%, #2A241F 50%, #392E26 100%);
-  --brand-wordmark-color: #C48E66;
+  /* Gráficos de Encabezado y Marca */
+  --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #E9EAEE 52%, #D2D5DC 100%);
+  --brand-wordmark-color: #111114;
 
   /* Motor de Lectura */
-  --reader-bg: #1C1815;
-  --reader-text: #DACFC7;
+  --reader-bg: #F4F4F6;
+  --reader-text: #121316;
 
   /* Patrón de Fondo Global */
-  --theme-bg-pattern: linear-gradient(135deg, #1A1613 0%, #221D1A 52%, #2F2620 100%);
+  --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #EDEDF1 55%, #D6D8E0 100%);
+
+  color-scheme: light;
+}
+
+/* ============================================================================
+   4. MARINO & BLANCO (SUMMIT NAVY)
+   ----------------------------------------------------------------------------
+   Identidad: Ejecutivo · Formal · Máxima precisión · Confiable
+   Ambiente: Textos técnicos, leyes, documentación y estudio analítico
+   ============================================================================ */
+
+[data-theme="navy-summit"] {
+  /* Lienzo y Superficies */
+  --color-background: #E5EBF4;
+  --color-surface: #F4F7FC;
+  --color-surface-secondary: #D0DCED;
+  --color-surface-elevated: #FFFFFF;
+
+  --color-surface-hover: rgba(20, 42, 79, 0.06);
+  --color-surface-active: rgba(20, 42, 79, 0.12);
+
+  /* Paleta Primaria y Secundaria */
+  --color-primary-dark: #0A1529;
+  --color-primary: #142A4F;
+  --color-primary-light: #2D4F82;
+  --color-primary-glow: rgba(20, 42, 79, 0.22);
+
+  --color-secondary: #637FAD;
+
+  /* Tipografía y Lectura */
+  --color-text: #0B1321;
+  --color-text-secondary: #20314C;
+  --color-text-muted: #516483;
+  --color-text-inverse: #FFFFFF;
+
+  /* Bordes, Divisiones y Anillos */
+  --color-border: #B2C3DE;
+  --color-border-subtle: #D5E0EF;
+  --color-border-focus: #142A4F;
+  --focus-ring: 0 0 0 3px rgba(20, 42, 79, 0.28);
+
+  /* Etiquetas, Badges y Acentos */
+  --color-badge-bg: rgba(20, 42, 79, 0.08);
+  --color-accent-gold: #9C7426;
+
+  /* Estados semánticos */
+  --state-success: #297A52;
+  --state-success-bg: rgba(41, 122, 82, 0.12);
+  --state-danger: #B83C3C;
+  --state-danger-bg: rgba(184, 60, 60, 0.12);
+  --color-gold: #D2A849;
+
+  /* Modales y Capas Superpuestas */
+  --modal-backdrop: rgba(11, 19, 33, 0.60);
+  --shadow-sm: 0 1px 3px rgba(11, 19, 33, 0.07);
+  --shadow-xl: 0 20px 35px -5px rgba(11, 19, 33, 0.15), 0 10px 15px -5px rgba(11, 19, 33, 0.07);
+
+  /* Gráficos de Encabezado y Marca */
+  --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #DCE5F3 52%, #B5C9E4 100%);
+  --brand-wordmark-color: #0A1529;
+
+  /* Motor de Lectura */
+  --reader-bg: #EFF3FA;
+  --reader-text: #0E1726;
+
+  /* Patrón de Fondo Global */
+  --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #E7EFF9 55%, #C2D5EE 100%);
+
+  color-scheme: light;
+}
+
+/* ============================================================================
+   5. BEIGE & BROWN (COZY EDIT)
+   ----------------------------------------------------------------------------
+   Identidad: Acogedor · Orgánico · Café con leche · Tonalidad cálida
+   Ambiente: Lecturas de tarde, narrativa, libros y ensayos
+   ============================================================================ */
+
+[data-theme="cozy-brown"] {
+  /* Lienzo y Superficies */
+  --color-background: #EDE1D1;
+  --color-surface: #FAF4EC;
+  --color-surface-secondary: #E3D1BC;
+  --color-surface-elevated: #FFFDF9;
+
+  --color-surface-hover: rgba(107, 78, 61, 0.06);
+  --color-surface-active: rgba(107, 78, 61, 0.12);
+
+  /* Paleta Primaria y Secundaria */
+  --color-primary-dark: #473226;
+  --color-primary: #6B4E3D;
+  --color-primary-light: #8E6B55;
+  --color-primary-glow: rgba(107, 78, 61, 0.20);
+
+  --color-secondary: #A67C52;
+
+  /* Tipografía y Lectura */
+  --color-text: #2B1D15;
+  --color-text-secondary: #4F392D;
+  --color-text-muted: #7A6253;
+  --color-text-inverse: #FAF4EC;
+
+  /* Bordes, Divisiones y Anillos */
+  --color-border: #D1BBA2;
+  --color-border-subtle: #E7D8C6;
+  --color-border-focus: #6B4E3D;
+  --focus-ring: 0 0 0 3px rgba(107, 78, 61, 0.26);
+
+  /* Etiquetas, Badges y Acentos */
+  --color-badge-bg: rgba(107, 78, 61, 0.08);
+  --color-accent-gold: #9E7428;
+
+  /* Estados semánticos */
+  --state-success: #3E7955;
+  --state-success-bg: rgba(62, 121, 85, 0.12);
+  --state-danger: #B34839;
+  --state-danger-bg: rgba(179, 72, 57, 0.12);
+  --color-gold: #C59A45;
+
+  /* Modales y Capas Superpuestas */
+  --modal-backdrop: rgba(43, 29, 21, 0.58);
+  --shadow-sm: 0 1px 3px rgba(43, 29, 21, 0.06);
+  --shadow-xl: 0 20px 35px -5px rgba(43, 29, 21, 0.13), 0 10px 15px -5px rgba(43, 29, 21, 0.06);
+
+  /* Gráficos de Encabezado y Marca */
+  --banner-gradient: linear-gradient(135deg, #FAF4EC 0%, #E8D7C2 52%, #CBB397 100%);
+  --brand-wordmark-color: #473226;
+
+  /* Motor de Lectura */
+  --reader-bg: #F4EBE0;
+  --reader-text: #261911;
+
+  /* Patrón de Fondo Global */
+  --theme-bg-pattern: linear-gradient(135deg, #FAF4EC 0%, #EFE3D4 55%, #D7C2AB 100%);
+
+  color-scheme: light;
+}
+
+/* ============================================================================
+   6. NOIR & SILVER (MODO OSCURO MONOCROMÁTICO)
+   ----------------------------------------------------------------------------
+   Identidad: Sobrio · Lujoso · Alto contraste tenue · Nocturno
+   Ambiente: Lecturas en entornos oscuros o nocturnas prolongadas
+   ============================================================================ */
+
+[data-theme="noir-silver"] {
+  /* Lienzo y Superficies */
+  --color-background: #0D0D0D;
+  --color-surface: #181818;
+  --color-surface-secondary: #242424;
+  --color-surface-elevated: #2B2B2B;
+
+  --color-surface-hover: rgba(230, 230, 230, 0.06);
+  --color-surface-active: rgba(230, 230, 230, 0.12);
+
+  /* Paleta Primaria y Secundaria */
+  --color-primary-dark: #FFFFFF;
+  --color-primary: #E6E6E6;
+  --color-primary-light: #B5B5B5;
+  --color-primary-glow: rgba(230, 230, 230, 0.18);
+
+  --color-secondary: #8E8E8E;
+
+  /* Tipografía y Lectura */
+  --color-text: #F2F2F2;
+  --color-text-secondary: #B8B8B8;
+  --color-text-muted: #7E7E7E;
+  --color-text-inverse: #0D0D0D;
+
+  /* Bordes, Divisiones y Anillos */
+  --color-border: #383838;
+  --color-border-subtle: #262626;
+  --color-border-focus: #E6E6E6;
+  --focus-ring: 0 0 0 3px rgba(230, 230, 230, 0.25);
+
+  /* Etiquetas, Badges y Acentos */
+  --color-badge-bg: rgba(230, 230, 230, 0.10);
+  --color-accent-gold: #D1B168;
+
+  /* Estados semánticos */
+  --state-success: #4EAA77;
+  --state-success-bg: rgba(78, 170, 119, 0.15);
+  --state-danger: #D86358;
+  --state-danger-bg: rgba(216, 99, 88, 0.15);
+  --color-gold: #DFBD6C;
+
+  /* Modales y Capas Superpuestas */
+  --modal-backdrop: rgba(0, 0, 0, 0.78);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.40);
+  --shadow-xl: 0 20px 35px -5px rgba(0, 0, 0, 0.65), 0 10px 15px -5px rgba(0, 0, 0, 0.40);
+
+  /* Gráficos de Encabezado y Marca */
+  --banner-gradient: linear-gradient(135deg, #242424 0%, #171717 52%, #0D0D0D 100%);
+  --brand-wordmark-color: #FFFFFF;
+
+  /* Motor de Lectura */
+  --reader-bg: #121212;
+  --reader-text: #E5E5E5;
+
+  /* Patrón de Fondo Global */
+  --theme-bg-pattern: linear-gradient(135deg, #1A1A1A 0%, #121212 55%, #0A0A0A 100%);
 
   color-scheme: dark;
 }
 
 /* ============================================================================
-   6. NOCHE DE TINTA (OSCURIDAD PROFUNDA / OLED FRIENDLY)
-   ----------------------------------------------------------------------------
-   Identidad: Profundo · Sobrio · Inmersivo · Cero Reflejos
-   Ambiente: Habitación completamente a oscuras
+   7. TEMA PERSONALIZADO (fallback oscuro; ThemeManager inyecta la paleta base)
    ============================================================================ */
 
-[data-theme="night-ink"] {
-  /* Lienzo y Superficies */
-  --color-background: #0D1115;
-  --color-surface: #141A20;
-  --color-surface-secondary: #1C242C;
-  --color-surface-elevated: #242E38;
-
-  --color-surface-hover: rgba(255, 255, 255, 0.05);
-  --color-surface-active: rgba(255, 255, 255, 0.10);
-
-  /* Paleta Primaria y Secundaria */
-  --color-primary-dark: #223442;
-  --color-primary: #527A99;
-  --color-primary-light: #7E9EB5;
-  --color-primary-glow: rgba(82, 122, 153, 0.25);
-
-  --color-secondary: #9DB4C4;
-
-  /* Tipografía y Lectura */
-  --color-text: #E5ECF2;
-  --color-text-secondary: #9EB0BF;
-  --color-text-muted: #6B7E8C;
-  --color-text-inverse: #0D1115;
-
-  /* Bordes, Divisiones y Anillos */
-  --color-border: #2A3642;
-  --color-border-subtle: #1C252D;
-  --color-border-focus: #7E9EB5;
-  --focus-ring: 0 0 0 3px rgba(126, 158, 181, 0.32);
-
-  /* Etiquetas, Badges y Acentos */
-  --color-badge-bg: rgba(82, 122, 153, 0.15);
-  --color-accent-gold: #CBB174;
-
-  /* Modales y Capas Superpuestas */
-  --modal-backdrop: rgba(6, 8, 10, 0.85);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.50);
-  --shadow-xl: 0 20px 35px -5px rgba(0, 0, 0, 0.75), 0 10px 15px -5px rgba(0, 0, 0, 0.55);
-
-  /* Gráficos de Encabezados y Marca */
-  --banner-gradient: linear-gradient(135deg, #10151A 0%, #161E26 50%, #202A35 100%);
-  --brand-wordmark-color: #7E9EB5;
-
-  /* Motor de Lectura */
-  --reader-bg: #101418;
-  --reader-text: #CED9E0;
-
-  /* Patrón de Fondo Global */
-  --theme-bg-pattern: linear-gradient(135deg, #0D1115 0%, #131920 52%, #1C242E 100%);
+[data-theme="custom"] {
+  /* Estados semánticos genéricos oscuros (el primario lo define el usuario) */
+  --state-success: #7AB89E;
+  --state-success-bg: rgba(122, 184, 158, 0.16);
+  --state-danger: #E08A80;
+  --state-danger-bg: rgba(224, 138, 128, 0.16);
+  --color-gold: #C8A261;
 
   color-scheme: dark;
 }
@@ -367,38 +423,38 @@
    SWATCHES ACTUALIZADAS
    ============================================================================ */
 
-/* 1. Azul Boreal */
-.swatch-bb-1 { background-color: #EEF3F7; border: 1px solid #B7CBD9; }
-.swatch-bb-2 { background-color: #F8FAFC; border: 1px solid #B7CBD9; }
-.swatch-bb-3 { background-color: #235677; }
-.swatch-bb-4 { background-color: #4A7A99; }
+/* 1. Ciruela & Lavanda (Plum) */
+.swatch-plum-1 { background-color: #EEE9F2; border: 1px solid #C8BAD6; }
+.swatch-plum-2 { background-color: #F8F5FA; border: 1px solid #C8BAD6; }
+.swatch-plum-3 { background-color: #633C84; }
+.swatch-plum-4 { background-color: #895FA8; }
 
-/* 2. Marfil Clásico */
-.swatch-ci-1 { background-color: #F4EFE6; border: 1px solid #CBB99E; }
-.swatch-ci-2 { background-color: #FAF7F1; border: 1px solid #CBB99E; }
-.swatch-ci-3 { background-color: #6D4828; }
-.swatch-ci-4 { background-color: #8E6540; }
+/* 2. Salvia & Crema */
+.swatch-sc-1 { background-color: #E5ECE1; border: 1px solid #BDCBB7; }
+.swatch-sc-2 { background-color: #F5F7F2; border: 1px solid #BDCBB7; }
+.swatch-sc-3 { background-color: #4C6843; }
+.swatch-sc-4 { background-color: #708C68; }
 
-/* 3. Verde Oliva */
-.swatch-og-1 { background-color: #E7EEE9; border: 1px solid #B2C7B9; }
-.swatch-og-2 { background-color: #F4F8F5; border: 1px solid #B2C7B9; }
-.swatch-og-3 { background-color: #2C5D40; }
-.swatch-og-4 { background-color: #4D7E60; }
+/* 3. Clásico Claro (Light) */
+.swatch-light-1 { background-color: #F0F0F2; border: 1px solid #CACCD4; }
+.swatch-light-2 { background-color: #FAFAFB; border: 1px solid #CACCD4; }
+.swatch-light-3 { background-color: #2B2C34; }
+.swatch-light-4 { background-color: #525462; }
 
-/* 4. Lavanda Crepuscular */
-.swatch-tl-1 { background-color: #D9D1E3; border: 1px solid #B2A4C2; }
-.swatch-tl-2 { background-color: #E8E2F0; border: 1px solid #B2A4C2; }
-.swatch-tl-3 { background-color: #4C2E6B; }
-.swatch-tl-4 { background-color: #6E4994; }
+/* 4. Marino & Blanco (Summit Navy) */
+.swatch-ns-1 { background-color: #E5EBF4; border: 1px solid #B2C3DE; }
+.swatch-ns-2 { background-color: #F4F7FC; border: 1px solid #B2C3DE; }
+.swatch-ns-3 { background-color: #142A4F; }
+.swatch-ns-4 { background-color: #2D4F82; }
 
-/* 5. Ceniza Tostada */
-.swatch-ta-1 { background-color: #1A1613; border: 1px solid #423831; }
-.swatch-ta-2 { background-color: #221D1A; border: 1px solid #423831; }
-.swatch-ta-3 { background-color: #A36B42; }
-.swatch-ta-4 { background-color: #C48E66; }
+/* 5. Beige & Brown (Cozy) */
+.swatch-cb-1 { background-color: #EDE1D1; border: 1px solid #D1BBA2; }
+.swatch-cb-2 { background-color: #FAF4EC; border: 1px solid #D1BBA2; }
+.swatch-cb-3 { background-color: #6B4E3D; }
+.swatch-cb-4 { background-color: #8E6B55; }
 
-/* 6. Noche de Tinta */
-.swatch-ni-1 { background-color: #0D1115; border: 1px solid #2A3642; }
-.swatch-ni-2 { background-color: #141A20; border: 1px solid #2A3642; }
-.swatch-ni-3 { background-color: #527A99; }
-.swatch-ni-4 { background-color: #7E9EB5; }
+/* 6. Noir & Silver */
+.swatch-noir-1 { background-color: #0D0D0D; border: 1px solid #383838; }
+.swatch-noir-2 { background-color: #181818; border: 1px solid #383838; }
+.swatch-noir-3 { background-color: #E6E6E6; }
+.swatch-noir-4 { background-color: #B5B5B5; }

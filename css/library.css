@@ -324,6 +324,7 @@
    transition: none;
    position: relative;
    user-select: none;
+   height: 100%;
 }
 
 .book-card:hover {
@@ -514,6 +515,7 @@
    flex-direction: column;
    gap: 2px;
    padding: 7px 2px 0;
+   flex: 1;
 }
 
 .book-title {
@@ -529,6 +531,7 @@
    overflow: hidden;
    text-overflow: ellipsis;
    margin: 0 0 1px 0;
+   min-height: 2.6em;
 }
 
 .book-author {
@@ -540,6 +543,18 @@
    overflow: hidden;
    text-overflow: ellipsis;
    line-height: 1.35;
+   margin-bottom: 7px;
+}
+
+.book-saga {
+   display: block;
+   min-height: 1.15em;
+}
+
+.book-saga--empty {
+   visibility: hidden;
+   user-select: none;
+   pointer-events: none;
 }
 
 .book-badge-info {
@@ -547,7 +562,7 @@
    align-items: center;
    justify-content: space-between;
    gap: 8px;
-   margin-top: 7px;
+   margin-top: auto;
    padding: 7px 1px 0;
    border-top: 1px solid var(--color-border);
    font-size: 0.74rem;
@@ -761,10 +776,18 @@
    overflow: hidden;
    text-overflow: ellipsis;
    line-height: 1.15;
+   display: block;
+   min-height: 1.15em;
 }
 
 .book-saga {
    font-size: 0.66rem;
+}
+
+.list-saga--empty {
+   visibility: hidden;
+   user-select: none;
+   pointer-events: none;
 }
 
 .list-title {

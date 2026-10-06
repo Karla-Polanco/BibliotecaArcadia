@@ -1499,7 +1499,8 @@ html.reader-open {
   border-radius: 3px;
 }
 
-[data-theme="night-ink"] .search-match-highlight {
+[data-theme="noir-silver"] .search-match-highlight,
+[data-theme="custom"] .search-match-highlight {
   background-color: #854D0E;
   color: #FEF08A;
 }
@@ -1727,7 +1728,7 @@ html.reader-open {
 
 /* Marca de nota: línea fina (1px) del color del texto, clicable.
    En temas claros el texto es casi negro; en temas oscuros (moca, ámbar,
-   pizarra, night-ink) es claro, así la línea siempre contrasta. */
+   pizarra, noir-silver) es claro, así la línea siempre contrasta. */
 #reader-content g.arcadia-note-underline {
   cursor: pointer;
   color: var(--reader-text, var(--color-text));

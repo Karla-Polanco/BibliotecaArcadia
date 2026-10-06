@@ -826,18 +826,19 @@ export class ReaderView {
     document.querySelectorAll('#reader-theme-options [data-reader-theme]').forEach(chip => {
       const themeVal = (settings.theme || 'inherit');
       const normalize = v => {
-        if (v === 'cerulean-light') return 'boreal-blue';
-        if (v === 'lavender-light') return 'twilight-lavender';
-        if (v === 'clear-sky') return 'classic-ivory';
-        if (v === 'enchanted-forest' || v === 'mint') return 'olive-green';
-        if (v === 'serene-fog' || v === 'wine-poetry' || v === 'wine' || v === 'antique-pink') return 'toasted-ash';
-        if (v === 'abyss-dark' || v === 'mystic-night' || v === 'deep-twilight') return 'night-ink';
+        if (v === 'cerulean-light' || v === 'boreal-blue') return 'navy-summit';
+        if (v === 'lavender-light' || v === 'twilight-lavender') return 'plum';
+        if (v === 'clear-sky' || v === 'classic-ivory') return 'cozy-brown';
+        if (v === 'enchanted-forest' || v === 'mint' || v === 'olive-green') return 'sage-cream';
+        if (v === 'serene-fog' || v === 'wine-poetry' || v === 'wine' || v === 'antique-pink' || v === 'toasted-ash') return 'noir-silver';
+        if (v === 'abyss-dark' || v === 'mystic-night' || v === 'deep-twilight' || v === 'night-ink') return 'noir-silver';
         // Migración de tarjetas anteriores a las nuevas
         if (v === 'paper') return 'pergamino';
         if (v === 'neutral') return 'pizarra';
         if (v === 'oled') return 'ambar';
-        if (v === 'twilight-lavender') return 'melocoton';
-        if (v === 'olive-green') return 'terracota';
+        if (v === 'plum') return 'melocoton';
+        if (v === 'sage-cream') return 'terracota';
+        if (v === 'plum' || v === 'sage-cream' || v === 'light' || v === 'navy-summit' || v === 'cozy-brown' || v === 'noir-silver') return v;
         if (v === 'pergamino' || v === 'terracota' || v === 'moca' || v === 'ambar' || v === 'niebla' || v === 'pizarra' || v === 'melocoton') return v;
         return v;
       };
