@@ -96,6 +96,7 @@ class App {
       try {
         Toast.error('Error al iniciar la biblioteca. Recarga la página.');
       } catch (_) {}
+      try { document.documentElement.classList.remove('is-booting'); } catch (_) {}
     }
   }
 
@@ -253,6 +254,15 @@ class App {
    * Restaura la última vista activa (lector con el libro abierto en su página, o la sección/filtro activo).
    */
   async restoreLastState() {
+    const finishBoot = () => {
+      try {
+        requestAnimationFrame(() => {
+          document.documentElement.classList.remove('is-booting');
+        });
+      } catch (_) {
+        try { document.documentElement.classList.remove('is-booting'); } catch (_) {}
+      }
+    };
     try {
       if (window.location.hash) {
         try {
@@ -281,6 +291,7 @@ class App {
           const book = await this.bookManager.getBook(savedBookId);
           if (book && this.readerView) {
             await this.readerView.open(savedBookId);
+            finishBoot();
             return;
           }
         } catch (e) {
@@ -303,8 +314,10 @@ class App {
           el.classList.toggle('active', el.dataset.navFilter === targetFilter);
         });
       }
+      finishBoot();
     } catch (err) {
       console.warn('[App] restoreLastState falló:', err);
+      finishBoot();
     }
   }
 }

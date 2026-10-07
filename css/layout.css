@@ -621,3 +621,11 @@
     opacity: 1;
     pointer-events: auto;
 }
+
+/* =======================================================
+   09. ARRANQUE (F5 en otra sección: no mostrar Biblioteca intermedia)
+   ======================================================= */
+.is-booting .main-content { visibility: hidden; }
+.is-booting[data-boot-filter="annotations"] .library-header,
+.is-booting[data-boot-filter="vocabulary"] .library-header,
+.is-booting[data-boot-filter="settings"] .library-header { display: none !important; }

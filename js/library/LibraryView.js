@@ -213,6 +213,8 @@ export class LibraryView {
     // Si el filtro activo es "Notas y subrayados", ocultar el encabezado de biblioteca y delegar a AnnotationsView
     if (filter === 'annotations') {
       if (libraryHeader) libraryHeader.style.display = 'none';
+      this.container.className = 'annotations-view';
+      this.container.innerHTML = '<div class="view-loading" aria-busy="true"></div>';
       if (this.annotationsView) {
         this.annotationsView.loadAndRender();
       }
@@ -222,6 +224,8 @@ export class LibraryView {
     // Si el filtro activo es "Vocabulario", ocultar el encabezado de biblioteca y delegar a VocabularyView
     if (filter === 'vocabulary') {
       if (libraryHeader) libraryHeader.style.display = 'none';
+      this.container.className = 'vocabulary-view';
+      this.container.innerHTML = '<div class="view-loading" aria-busy="true"></div>';
       if (this.vocabularyView) {
         this.vocabularyView.loadAndRender();
       }
@@ -231,6 +235,8 @@ export class LibraryView {
     // Si el filtro activo es "Ajustes", ocultar el encabezado de biblioteca y delegar a SettingsView
     if (filter === 'settings') {
       if (libraryHeader) libraryHeader.style.display = 'none';
+      this.container.className = 'settings-page-view';
+      this.container.innerHTML = '<div class="view-loading" aria-busy="true"></div>';
       if (this.settingsView) {
         this.settingsView.loadAndRender();
       }

@@ -81,6 +81,24 @@ body {
     color var(--transition-normal, 250ms ease);
 }
 
+/* Transición suave de temas: evita flash claro <-> oscuro.
+   Los gradientes (--theme-bg-pattern) no son animables y saltan
+   de golpe, por eso se ocultan solo durante la transición. */
+.theme-transitioning,
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease !important;
+}
+.theme-transitioning body {
+  background-image: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-transitioning, .theme-transitioning * {
+    transition: none !important;
+  }
+}
+
 /* =================================================================
    03. ELEMENTOS GLOBALES Y UTILIDADES
    ================================================================= */

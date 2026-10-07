@@ -30,6 +30,16 @@
           var scale = Math.max(80, Math.min(130, parseInt(savedScale)));
           document.documentElement.style.fontSize = (16.5 * (scale / 100)) + 'px';
         }
+        // Evita flash de Biblioteca si recargas en otra sección
+        var bootFilter = 'all';
+        var bootView = 'library';
+        try {
+          bootFilter = localStorage.getItem('arcadia_active_filter') || 'all';
+          bootView = localStorage.getItem('arcadia_active_view') || 'library';
+        } catch (e) {}
+        document.documentElement.classList.add('is-booting');
+        document.documentElement.setAttribute('data-boot-filter', bootFilter);
+        document.documentElement.setAttribute('data-boot-view', bootView);
       } catch (e) { }
     })();
   </script>

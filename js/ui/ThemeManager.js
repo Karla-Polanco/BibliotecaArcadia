@@ -107,7 +107,21 @@ export class ThemeManager {
 
     this.currentTheme = themeName;
     localStorage.setItem(ThemeManager.STORAGE_KEY, themeName);
-    document.documentElement.setAttribute('data-theme', themeName);
+    // Fundido suave claro <-> oscuro: la clase debe existir ANTES del
+    // setAttribute, si no el navegador ya pintó el flash. Se omite en el
+    // arranque (is-booting), si el tema no cambia y con reduced-motion
+    // (esto último ya lo cubre el @media global, es doble seguridad).
+    const root = document.documentElement;
+    const prevTheme = root.getAttribute('data-theme');
+    let reduceMotion = false;
+    try {
+      reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    } catch (_) {}
+    const skipTransition = reduceMotion
+      || root.classList.contains('is-booting')
+      || (prevTheme === themeName && themeName !== ThemeManager.THEMES.CUSTOM);
+    if (!skipTransition) root.classList.add('theme-transitioning');
+    root.setAttribute('data-theme', themeName);
 
     // Si es tema personalizado, inyectar variables CSS directas en :root
     if (themeName === ThemeManager.THEMES.CUSTOM) {
@@ -136,6 +150,11 @@ export class ThemeManager {
     }
 
     this._updateThemeColor(themeName);
+
+    if (!skipTransition) {
+      clearTimeout(this._themeT);
+      this._themeT = setTimeout(() => root.classList.remove('theme-transitioning'), 300);
+    }
 
     window.dispatchEvent(new CustomEvent('arcadia:themechange', {
       detail: { theme: themeName }
