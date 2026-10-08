@@ -107,20 +107,15 @@ export class ThemeManager {
 
     this.currentTheme = themeName;
     localStorage.setItem(ThemeManager.STORAGE_KEY, themeName);
-    // Fundido suave claro <-> oscuro: la clase debe existir ANTES del
-    // setAttribute, si no el navegador ya pintó el flash. Se omite en el
-    // arranque (is-booting), si el tema no cambia y con reduced-motion
-    // (esto último ya lo cubre el @media global, es doble seguridad).
+    // Cambio instantáneo sin flash: se suprimen todas las transiciones/
+    // animaciones justo antes del swap para que el nuevo tema pinte de
+    // golpe en el siguiente frame (sin fundido claro <-> oscuro ni
+    // parpadeo del patrón de fondo). La clase se retira en doble rAF.
     const root = document.documentElement;
-    const prevTheme = root.getAttribute('data-theme');
-    let reduceMotion = false;
-    try {
-      reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    } catch (_) {}
-    const skipTransition = reduceMotion
-      || root.classList.contains('is-booting')
-      || (prevTheme === themeName && themeName !== ThemeManager.THEMES.CUSTOM);
-    if (!skipTransition) root.classList.add('theme-transitioning');
+    root.classList.add('theme-no-transition');
+    // Limpieza por si un cambio anterior no alcanzó a retirar la clase
+    // (p. ej. pestaña en segundo plano sin rAF).
+    clearTimeout(this._themeT);
     root.setAttribute('data-theme', themeName);
 
     // Si es tema personalizado, inyectar variables CSS directas en :root
@@ -151,10 +146,15 @@ export class ThemeManager {
 
     this._updateThemeColor(themeName);
 
-    if (!skipTransition) {
-      clearTimeout(this._themeT);
-      this._themeT = setTimeout(() => root.classList.remove('theme-transitioning'), 300);
-    }
+    // Forzar reflow para que el swap aplique ya sin transiciones y
+    // retirar la clase en doble rAF (con fallback por si no hay rAF).
+    try { void root.offsetWidth; } catch (_) {}
+    const release = () => root.classList.remove('theme-no-transition');
+    try {
+      requestAnimationFrame(() => requestAnimationFrame(release));
+    } catch (_) {}
+    clearTimeout(this._themeT);
+    this._themeT = setTimeout(release, 60);
 
     window.dispatchEvent(new CustomEvent('arcadia:themechange', {
       detail: { theme: themeName }

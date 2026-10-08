@@ -81,22 +81,17 @@ body {
     color var(--transition-normal, 250ms ease);
 }
 
-/* Transición suave de temas: evita flash claro <-> oscuro.
-   Los gradientes (--theme-bg-pattern) no son animables y saltan
-   de golpe, por eso se ocultan solo durante la transición. */
-.theme-transitioning,
-.theme-transitioning *,
-.theme-transitioning *::before,
-.theme-transitioning *::after {
-  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease !important;
-}
-.theme-transitioning body {
-  background-image: none !important;
-}
-@media (prefers-reduced-motion: reduce) {
-  .theme-transitioning, .theme-transitioning * {
-    transition: none !important;
-  }
+/* Cambio de tema instantáneo: sin fundido ni flash.
+   Mientras dura el swap se suprimen todas las transiciones/animaciones
+   para que el nuevo tema pinte de golpe en el siguiente frame.
+   (Los gradientes de --theme-bg-pattern no son animables, así que
+   el swap directo es lo que evita el parpadeo). */
+.theme-no-transition,
+.theme-no-transition *,
+.theme-no-transition *::before,
+.theme-no-transition *::after {
+  transition: none !important;
+  animation: none !important;
 }
 
 /* =================================================================
