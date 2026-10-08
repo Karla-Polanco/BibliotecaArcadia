@@ -118,26 +118,29 @@ export class ThemeManager {
     clearTimeout(this._themeT);
     root.setAttribute('data-theme', themeName);
 
-    // Si es tema personalizado, inyectar variables CSS directas en :root
+    // Si es tema personalizado, inyectar solo las 4 variables maestras en el
+    // elemento raíz. El resto de la UI se deriva automáticamente vía
+    // color-mix en css/themes.css [data-theme="custom"].
     if (themeName === ThemeManager.THEMES.CUSTOM) {
       const colors = customColors || this.getCustomColors();
       const rootStyle = document.documentElement.style;
-      rootStyle.setProperty('--color-background', colors.bg);
-      rootStyle.setProperty('--color-surface', colors.surface);
-      rootStyle.setProperty('--color-surface-secondary', colors.surface);
-      rootStyle.setProperty('--color-surface-elevated', colors.surface);
-      rootStyle.setProperty('--color-primary', colors.primary);
-      rootStyle.setProperty('--color-primary-light', colors.primary);
-      rootStyle.setProperty('--color-primary-dark', colors.primary);
-      rootStyle.setProperty('--color-text', colors.text);
-      rootStyle.setProperty('--color-text-secondary', colors.text);
-      rootStyle.setProperty('--color-border', 'rgba(255, 255, 255, 0.16)');
-      rootStyle.setProperty('--color-border-subtle', 'rgba(255, 255, 255, 0.08)');
-      rootStyle.setProperty('--theme-bg-pattern', 'none');
+      rootStyle.setProperty('--custom-bg', colors.bg);
+      rootStyle.setProperty('--custom-surface', colors.surface);
+      rootStyle.setProperty('--custom-text', colors.text);
+      rootStyle.setProperty('--custom-primary', colors.primary);
+      // Limpieza de inyección legacy (derivadas directas) por migración:
+      // antes se pisaban --color-* y --theme-bg-pattern en línea, lo que
+      // rompía la derivación automática con color-mix.
+      ['--color-background', '--color-surface', '--color-surface-secondary', '--color-surface-elevated',
+       '--color-primary', '--color-primary-light', '--color-primary-dark', '--color-text',
+       '--color-text-secondary', '--color-border', '--color-border-subtle', '--theme-bg-pattern'].forEach(prop => {
+        rootStyle.removeProperty(prop);
+      });
     } else {
       // Limpiar propiedades en línea si se vuelve a un tema predefinido
       const rootStyle = document.documentElement.style;
-      ['--color-background', '--color-surface', '--color-surface-secondary', '--color-surface-elevated',
+      ['--custom-bg', '--custom-surface', '--custom-text', '--custom-primary',
+       '--color-background', '--color-surface', '--color-surface-secondary', '--color-surface-elevated',
        '--color-primary', '--color-primary-light', '--color-primary-dark', '--color-text',
        '--color-text-secondary', '--color-border', '--color-border-subtle', '--theme-bg-pattern'].forEach(prop => {
         rootStyle.removeProperty(prop);

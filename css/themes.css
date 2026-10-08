@@ -405,18 +405,71 @@
 }
 
 /* ============================================================================
-   7. TEMA PERSONALIZADO (fallback oscuro; ThemeManager inyecta la paleta base)
+   07. TEMA PERSONALIZADO (CONTROL DINÁMICO POR EL USUARIO)
+   Inyecta o actualiza directamente las 4 variables maestras en el elemento:
+     --custom-bg
+     --custom-surface
+     --custom-text
+     --custom-primary
+   El resto de la UI (bordes, hover, lector, etc.) se adapta automáticamente.
    ============================================================================ */
 
 [data-theme="custom"] {
-  /* Estados semánticos genéricos oscuros (el primario lo define el usuario) */
-  --state-success: #7AB89E;
-  --state-success-bg: rgba(122, 184, 158, 0.16);
-  --state-danger: #E08A80;
-  --state-danger-bg: rgba(224, 138, 128, 0.16);
-  --color-gold: #C8A261;
+    /* --- 4 Variables Maestras Configurables (Valores iniciales de tu interfaz) --- */
+    --color-background: var(--custom-bg, #10141A);
+    --color-surface: var(--custom-surface, #1A202C);
+    --color-text: var(--custom-text, #F3F4F6);
+    --color-primary: var(--custom-primary, #3B82F6);
 
-  color-scheme: dark;
+    /* --- Superficies y Capas Derivadas --- */
+    --color-surface-secondary: color-mix(in srgb, var(--color-surface) 85%, var(--color-text) 15%);
+    --color-surface-elevated: color-mix(in srgb, var(--color-surface) 90%, #FFFFFF 10%);
+
+    --color-surface-hover: color-mix(in srgb, var(--color-text) 6%, transparent);
+    --color-surface-active: color-mix(in srgb, var(--color-text) 12%, transparent);
+
+    /* --- Paleta Primaria Derivada --- */
+    --color-primary-dark: color-mix(in srgb, var(--color-primary) 70%, #000000 30%);
+    --color-primary-light: color-mix(in srgb, var(--color-primary) 75%, #FFFFFF 25%);
+    --color-primary-glow: color-mix(in srgb, var(--color-primary) 20%, transparent);
+    --color-secondary: color-mix(in srgb, var(--color-text) 55%, var(--color-surface) 45%);
+
+    /* --- Tipografía --- */
+    --color-text-secondary: color-mix(in srgb, var(--color-text) 75%, var(--color-surface) 25%);
+    --color-text-muted: color-mix(in srgb, var(--color-text) 50%, var(--color-surface) 50%);
+    --color-text-inverse: var(--color-background);
+
+    /* --- Bordes y Foco --- */
+    --color-border: color-mix(in srgb, var(--color-surface) 75%, var(--color-text) 25%);
+    --color-border-subtle: color-mix(in srgb, var(--color-surface) 88%, var(--color-text) 12%);
+    --color-border-focus: var(--color-primary);
+    --focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-primary) 30%, transparent);
+
+    /* --- Insignias y Acentos --- */
+    --color-badge-bg: color-mix(in srgb, var(--color-primary) 12%, transparent);
+    --color-accent-gold: #C8A261;
+    --color-gold: #C8A261;
+
+    /* --- Estados Semánticos --- */
+    --state-success: #52B788;
+    --state-success-bg: rgba(82, 183, 136, 0.14);
+    --state-danger: #E07A70;
+    --state-danger-bg: rgba(224, 122, 112, 0.14);
+
+    /* --- Modales y Sombras --- */
+    --modal-backdrop: rgba(0, 0, 0, 0.75);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.40);
+    --shadow-xl: 0 20px 35px -5px rgba(0, 0, 0, 0.65), 0 10px 15px -5px rgba(0, 0, 0, 0.45);
+
+    /* --- Encabezado y Motor de Lectura --- */
+    --banner-gradient: linear-gradient(135deg, var(--color-surface-secondary) 0%, var(--color-surface) 50%, var(--color-background) 100%);
+    --brand-wordmark-color: var(--color-text);
+
+    --reader-bg: var(--color-background);
+    --reader-text: var(--color-text);
+    --theme-bg-pattern: linear-gradient(135deg, var(--color-surface) 0%, var(--color-background) 100%);
+
+    color-scheme: dark;
 }
 
 /* ============================================================================
