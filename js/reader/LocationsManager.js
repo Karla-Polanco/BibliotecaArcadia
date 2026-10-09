@@ -9,6 +9,10 @@
 import { dbManager } from '../db.js';
 
 export class LocationsManager {
+  /**
+   * @param {Object} bookInstance - Instancia ePub de epub.js
+   * @param {string} bookId - ID del libro en IndexedDB
+   */
   constructor(bookInstance, bookId) {
     this.book = bookInstance;
     this.bookId = bookId;
@@ -16,13 +20,13 @@ export class LocationsManager {
   }
 
   /**
-   * Inicializa las ubicaciones del libro cargándolas de IndexedDB o generándolas.
+   * Inicializa las ubicaciones del libro cargándolas de IndexedDB o generándolas en segundo plano.
    */
   async init() {
     if (!this.book || !this.book.locations) return;
 
     try {
-      // 1. Intentar cargar ubicaciones cacheadas previamente
+      // 1. Cargar ubicaciones serializadas si ya fueron calculadas previamente
       const bookData = await dbManager.get('books', this.bookId);
       if (bookData && bookData.cachedLocations) {
         this.book.locations.load(bookData.cachedLocations);
@@ -30,7 +34,7 @@ export class LocationsManager {
         return;
       }
 
-      // 2. Si no están guardadas, generarlas en segundo plano
+      // 2. Si no están cacheadas, generarlas en segundo plano sin congelar la interfaz
       await this.generateAndSave();
     } catch (err) {
       console.warn('Advertencia en LocationsManager.init():', err);
@@ -38,15 +42,13 @@ export class LocationsManager {
   }
 
   /**
-   * Genera el mapa de ubicaciones (1024 caracteres por sección estándar) y lo persiste.
+   * Genera el mapa de ubicaciones CFI (1024 caracteres por bloque) y lo guarda en IndexedDB.
    */
   async generateAndSave() {
     try {
-      // Generar 1024 chars por location
       await this.book.locations.generate(1024);
       const serialized = this.book.locations.save();
 
-      // Guardar en el registro del libro en IndexedDB
       const bookData = await dbManager.get('books', this.bookId);
       if (bookData) {
         bookData.cachedLocations = serialized;
@@ -61,9 +63,9 @@ export class LocationsManager {
   }
 
   /**
-   * Obtiene el porcentaje de avance (0.0 a 100.0) correspondiente a un CFI.
+   * Obtiene el porcentaje de avance (0.0 a 100.0) correspondiente a una posición CFI.
    * @param {string} cfi - Canonical Fragment Identifier
-   * @returns {number} Porcentaje redondeado a 1 decimal
+   * @returns {number} Porcentaje redondeado a 1 decimal (ej. 42.5)
    */
   getPercentage(cfi) {
     if (!this.isReady || !cfi || !this.book.locations) return 0;
@@ -73,13 +75,15 @@ export class LocationsManager {
         return Math.min(100, Math.max(0, Math.round(frac * 1000) / 10));
       }
     } catch (e) {
-      // Si el CFI aún no está en el índice
+      // Retorna 0 si el CFI aún no está indexado
     }
     return 0;
   }
 
   /**
-   * Obtiene el CFI correspondiente a un porcentaje de 0 a 100.
+   * Calcula el CFI correspondiente a un porcentaje de lectura determinado.
+   * @param {number} percentage - Valor entre 0 y 100
+   * @returns {string|null}
    */
   getCfiFromPercentage(percentage) {
     if (!this.isReady || !this.book.locations) return null;

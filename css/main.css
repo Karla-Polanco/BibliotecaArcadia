@@ -300,32 +300,25 @@ select option {
 }
 
 /* =================================================================
-   05. BARRAS DE DESPLAZAMIENTO (SCROLLBARS)
+   05. BARRAS DE DESPLAZAMIENTO OCULTAS (SCROLL FUNCIONAL)
+   Scroll por rueda / táctil / teclado intacto, sin barra visible.
    ================================================================= */
 
 * {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--color-border);
-  border-radius: var(--radius-full);
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-text-muted);
+html,
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 /* -----------------------------------------------------------------
@@ -387,8 +380,8 @@ select option {
   color: var(--color-text);
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   transform: translateY(4px) scale(0.99);
   transition: transform var(--transition-normal), opacity var(--transition-fast);
 }
@@ -398,30 +391,11 @@ select option {
   transform: translateY(0) scale(1);
 }
 
-/* Scrollbar interno del modal */
+/* Scrollbar interno del modal — oculto pero con scroll funcional */
 :is(.theme-modal-dialog, .arcadia-modal-card)::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-:is(.theme-modal-dialog, .arcadia-modal-card)::-webkit-scrollbar-track {
-  background: transparent;
-  margin: 16px 0;
-}
-
-:is(.theme-modal-dialog, .arcadia-modal-card)::-webkit-scrollbar-thumb {
-  background-color: var(--color-border);
-  border-radius: var(--radius-full);
-}
-
-:is(.theme-modal-dialog, .arcadia-modal-card)::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-text-muted);
-}
-
-:is(.theme-modal-dialog, .arcadia-modal-card)::-webkit-scrollbar-button {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 /* ----------------------------------------------------------------- 
@@ -559,7 +533,7 @@ select option {
   opacity: 0.45;
   cursor: not-allowed;
   pointer-events: none;
-  transform: none !important;
+  transform: none;
 }
 
 /* Iconos dentro de botones */
@@ -590,7 +564,7 @@ select option {
 /* Guardar / Confirmar / Crear / Acción Principal */
 .btn--primary {
   background-color: var(--color-primary);
-  color: var(--color-text-inverse, #FFFFFF) !important;
+  color: var(--color-text-inverse, #FFFFFF);
   border-color: transparent;
   font-weight: var(--weight-semibold, 600);
   box-shadow: 0 1px 4px var(--color-primary-glow);
@@ -599,7 +573,7 @@ select option {
 .btn--primary:hover {
   background-color: var(--color-primary-dark);
   border-color: transparent;
-  color: var(--color-text-inverse, #FFFFFF) !important;
+  color: var(--color-text-inverse, #FFFFFF);
   box-shadow: 0 2px 6px var(--color-primary-glow);
 }
 
@@ -622,7 +596,7 @@ select option {
 .btn-delete-annot,
 .col-action-btn--delete {
   background-color: var(--state-danger-bg, rgba(200, 90, 84, 0.12));
-  color: var(--state-danger, #C85A54) !important;
+  color: var(--state-danger, #C85A54);
   border: 1px solid color-mix(in srgb, var(--state-danger, #C85A54) 28%, transparent);
   font-weight: var(--weight-semibold, 600);
 }
@@ -638,9 +612,9 @@ select option {
 .btn-card-del:hover,
 .btn-delete-annot:hover,
 .col-action-btn--delete:hover {
-  background-color: var(--state-danger, #C85A54) !important;
-  color: #FFFFFF !important;
-  border-color: var(--state-danger, #C85A54) !important;
+  background-color: var(--state-danger, #C85A54);
+  color: #FFFFFF;
+  border-color: var(--state-danger, #C85A54);
   box-shadow: 0 2px 6px rgba(200, 90, 84, 0.16);
 }
 
@@ -648,7 +622,7 @@ select option {
 .btn-card-del:hover svg,
 .btn-delete-annot:hover svg,
 .col-action-btn--delete:hover svg {
-  color: #FFFFFF !important;
+  color: #FFFFFF;
 }
 
 .btn--danger:focus-visible {
@@ -660,7 +634,7 @@ select option {
   width: var(--btn-height-md, 36px);
   min-width: var(--btn-height-md, 36px);
   height: var(--btn-height-md, 36px);
-  padding: 0 !important;
+  padding: 0;
   border-radius: var(--btn-radius, 8px);
   display: inline-flex;
   align-items: center;
@@ -672,11 +646,11 @@ select option {
   width: var(--btn-height-sm, 30px);
   min-width: var(--btn-height-sm, 30px);
   height: var(--btn-height-sm, 30px);
-  padding: 0 !important;
+  padding: 0;
 }
 
 .btn--circle {
-  border-radius: 50% !important;
+  border-radius: 50%;
 }
 
 /* 5. Botón de Cerrar (X Unificado en toda la app) */
@@ -909,23 +883,23 @@ select option {
 }
 
 .col-action-btn {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  gap: 12px !important;
-  width: 100% !important;
-  min-height: 48px !important;
-  height: auto !important;
-  padding: 12px 16px !important;
-  border-radius: var(--radius-sm, 10px) !important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  height: auto;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm, 10px);
   border: 1px solid var(--color-border);
   background-color: var(--color-surface);
   color: var(--color-text);
-  text-align: left !important;
-  white-space: normal !important;
-  line-height: 1.35 !important;
+  text-align: left;
+  white-space: normal;
+  line-height: 1.35;
   cursor: pointer;
-  box-sizing: border-box !important;
+  box-sizing: border-box;
   transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
 }
 
@@ -940,11 +914,11 @@ select option {
 
 .col-action-btn svg,
 .col-action-btn .btn-icon-svg {
-  width: 18px !important;
-  height: 18px !important;
-  min-width: 18px !important;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
   flex-shrink: 0;
-  margin: 0 !important;
+  margin: 0;
   color: var(--color-primary-light);
 }
 
@@ -957,25 +931,25 @@ select option {
 
 /* Botón Destructivo Dinámico */
 .col-action-btn--delete {
-  background-color: var(--state-danger-bg, rgba(200, 90, 84, 0.12)) !important;
-  border-color: color-mix(in srgb, var(--state-danger, #C85A54) 28%, transparent) !important;
-  color: var(--state-danger, #C85A54) !important;
+  background-color: var(--state-danger-bg, rgba(200, 90, 84, 0.12));
+  border-color: color-mix(in srgb, var(--state-danger, #C85A54) 28%, transparent);
+  color: var(--state-danger, #C85A54);
 }
 
 .col-action-btn--delete:hover {
-  background-color: var(--state-danger, #C85A54) !important;
-  border-color: var(--state-danger, #C85A54) !important;
-  color: #FFFFFF !important;
+  background-color: var(--state-danger, #C85A54);
+  border-color: var(--state-danger, #C85A54);
+  color: #FFFFFF;
 }
 
 .col-action-btn--delete svg,
 .col-action-btn--delete .btn-icon-svg {
-  color: var(--state-danger, #C85A54) !important;
+  color: var(--state-danger, #C85A54);
 }
 
 .col-action-btn--delete:hover svg,
 .col-action-btn--delete:hover .btn-icon-svg {
-  color: #FFFFFF !important;
+  color: #FFFFFF;
 }
 
 .col-action-foot {
@@ -1107,9 +1081,9 @@ select option {
    ================================================================= */
 
 .note-margin-overlay {
-  align-items: center !important;
-  padding: 20px !important;
-  background: var(--modal-backdrop, rgba(0, 0, 0, 0.60)) !important;
+  align-items: center;
+  padding: 20px;
+  background: var(--modal-backdrop, rgba(0, 0, 0, 0.60));
 }
 
 .note-margin-card {
@@ -1225,14 +1199,14 @@ select option {
   width: 100%;
   min-height: 120px;
   box-sizing: border-box;
-  background: #f7fafd !important;
-  border: 1.6px solid #8aa7c2 !important;
-  border-radius: 12px !important;
-  padding: 12px 14px !important;
-  font-family: var(--font-sans) !important;
-  font-size: 1rem !important;
+  background: #f7fafd;
+  border: 1.6px solid #8aa7c2;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
   line-height: 1.5;
-  color: #33475f !important;
+  color: #33475f;
   resize: vertical;
   outline: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
@@ -1244,9 +1218,9 @@ select option {
 }
 
 .note-margin-textarea:focus {
-  border-color: #5b7fa3 !important;
-  background: #ffffff !important;
-  box-shadow: 0 0 0 3px rgba(91, 127, 163, 0.18) !important;
+  border-color: #5b7fa3;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(91, 127, 163, 0.18);
 }
 
 .note-margin-actions {
@@ -1313,8 +1287,8 @@ select option {
   }
 
   .note-margin-textarea {
-    min-height: 100px !important;
-    font-size: 0.95rem !important;
+    min-height: 100px;
+    font-size: 0.95rem;
   }
 
   .note-margin-actions {
@@ -1338,9 +1312,9 @@ select option {
    Pequeño, centrado, con cita + contenido + Editar/Eliminar/Cerrar.
    ================================================================ */
 .note-view-overlay {
-  align-items: center !important;
-  padding: 20px !important;
-  background: rgba(13, 22, 36, 0.55) !important;
+  align-items: center;
+  padding: 20px;
+  background: rgba(13, 22, 36, 0.55);
 }
 
 .note-view-card {
@@ -1650,9 +1624,9 @@ select option {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
   }
 }
 

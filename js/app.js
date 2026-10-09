@@ -2,7 +2,7 @@
  * ============================================================================
  * APP BOOTSTRAP - BIBLIOTECA ARCADIA
  * ============================================================================
- * Punto de entrada principal: orquestación de temas, citas, navegación y vistas.
+ * Punto de entrada principal: orquesta ciclo de vida, navegación, temas y vistas.
  */
 
 import { ThemeManager } from './ui/ThemeManager.js';
@@ -31,16 +31,19 @@ class App {
     this.vocabularyView = null;
   }
 
+  /**
+   * Inicializa de forma ordenada todos los subsistemas de la aplicación.
+   */
   async init() {
     try {
-    // 1. Inicializar PWA (Service Worker, Offline y Prompt de Instalación)
+    // 1. PWA: Registra el Service Worker y el detector de instalación
     PWAManager.init();
 
-    // 2. Inicializar Gestor de Temas y Escala Global de Tipografía
+    // 2. Personalización: Aplica el tema guardado y escala tipográfica
     this.themeManager.init();
     ScaleManager.init();
 
-    // 3. Inicializar Widget de Almacenamiento Local
+    // 3. Almacenamiento: Monitor de uso de cuota local en disco
     const storageFillEl = document.getElementById('storage-progress-fill');
     const storageTextEl = document.getElementById('storage-info-text');
     this.storageWidget = new StorageWidget(storageFillEl, storageTextEl);
@@ -50,21 +53,20 @@ class App {
       console.warn('[App] StorageWidget init falló:', e);
     }
 
-    // 4. Inicializar Gestor de Libros y Persistencia IndexedDB
+    // 4. Libros: Carga catálogo desde IndexedDB y asegura datos de vocabulario
     this.bookManager = new BookManager(this.storageWidget);
     await this.bookManager.init();
 
-    // Inicializar vocabulario predeterminado si el store está vacío
     try {
       await VocabularyManager.initPresets();
     } catch (e) {
       console.warn('[App] Vocabulary presets falló:', e);
     }
 
-    // 5. Inicializar Controlador del Lector EPUB
+    // 5. Lector: Controlador del visor de libros EPUB
     this.readerView = new ReaderView();
 
-    // 6. Inicializar Vistas de Anotaciones, Vocabulario y Biblioteca
+    // 6. Vistas: Instancia vistas de anotaciones, vocabulario y biblioteca
     const booksContainer = document.getElementById('books-container');
     if (booksContainer) {
       this.annotationsView = new AnnotationsView(
@@ -83,13 +85,13 @@ class App {
       );
     }
 
-    // 7. Vincular Controles de Barra de Herramientas y Subida
+    // 7. Eventos: Controles de barra de herramientas (búsqueda, orden y vista)
     this.initToolbarControls();
 
-    // 8. Vincular Navegación del Sidebar y Móvil
+    // 8. Navegación: Barra lateral, drawer móvil y botones inferiores
     this.initNavigation();
 
-    // 9. Restaurar última vista, libro o sección activa al recargar
+    // 9. Restauración: Reanuda última lectura o filtro activo tras recarga
     await this.restoreLastState();
     } catch (err) {
       console.error('[App] Error fatal en init():', err);
@@ -101,7 +103,7 @@ class App {
   }
 
   /**
-   * Controles de búsqueda, ordenación y cambio Grid/Lista.
+   * Configura los controles de búsqueda en vivo, ordenación y alternancia Grid/Lista.
    */
   initToolbarControls() {
     const searchInput = document.getElementById('library-search');
@@ -109,7 +111,7 @@ class App {
     const btnGrid = document.getElementById('btn-view-grid');
     const btnList = document.getElementById('btn-view-list');
 
-    // Búsqueda en tiempo real
+    // Búsqueda en tiempo real con debounce de 150ms
     if (searchInput) {
       let debounceTimeout;
       searchInput.addEventListener('input', (e) => {
@@ -120,7 +122,7 @@ class App {
       });
     }
 
-    // Ordenamiento
+    // Selector de ordenación con soporte para CustomSelect accesible
     if (sortSelect) {
       sortSelect.addEventListener('change', (e) => {
         appState.set('sortBy', e.target.value);
@@ -128,7 +130,7 @@ class App {
       CustomSelect.enhance(sortSelect);
     }
 
-    // Toggle Grid / Lista
+    // Alternador de modo de visualización: Cuadrícula o Lista
     if (btnGrid && btnList) {
       const updateToggleButtons = (mode) => {
         const isGrid = mode === 'grid';
@@ -151,7 +153,7 @@ class App {
       });
     }
 
-    // Subida de archivos EPUB
+    // Selector de archivo para subida de libros EPUB
     const fileInput = document.getElementById('epub-file-input');
     const uploadBtn = document.getElementById('btn-upload-trigger');
     const mobileUploadBtn = document.getElementById('mobile-upload-trigger');
@@ -179,15 +181,14 @@ class App {
   }
 
   /**
-   * Navegación del Sidebar, Drawer lateral móvil y Bottom Nav.
-   * Usa delegación de eventos para soportar colecciones dinámicas.
+   * Gestiona la navegación de la barra lateral, menú drawer móvil y enlaces delegados.
    */
   initNavigation() {
     const sidebar = document.getElementById('app-sidebar');
     const backdrop = document.getElementById('sidebar-backdrop');
     const mobileToggle = document.getElementById('mobile-nav-toggle');
 
-    // Función para alternar Drawer lateral en móvil
+    // Apertura y cierre del drawer lateral en dispositivos móviles
     const toggleDrawer = (open) => {
       if (sidebar && backdrop) {
         if (open) {
@@ -210,13 +211,12 @@ class App {
       backdrop.addEventListener('click', () => toggleDrawer(false));
     }
 
+    // Aplica el filtro seleccionado y sincroniza los estados visuales en el menú
     const applyFilter = (filter, sourceEl = null) => {
       if (!filter) return;
-      // Actualizar clase activa en enlaces (sidebar + móvil + modal estados)
       document.querySelectorAll('[data-nav-filter]').forEach(el => {
         const isActive = el.dataset.navFilter === filter;
         el.classList.toggle('active', isActive);
-        // Para colecciones renderizadas en el sidebar
         if (el.classList.contains('nav-item-link')) {
           el.closest('.nav-item')?.classList.toggle('active', isActive);
         }
@@ -236,7 +236,7 @@ class App {
       toggleDrawer(false);
     };
 
-    // Delegación global: cualquier [data-nav-filter] presente o futuro
+    // Delegación global de clics para soportar enlaces estáticos y colecciones dinámicas
     document.addEventListener('click', (e) => {
       const navEl = e.target.closest('[data-nav-filter]');
       if (navEl && !navEl.dataset.navDelegated) {
@@ -246,12 +246,11 @@ class App {
           applyFilter(filter, navEl);
         }
       }
-
     });
   }
 
   /**
-   * Restaura la última vista activa (lector con el libro abierto en su página, o la sección/filtro activo).
+   * Restaura la última sesión activa (libro abierto en lectura o sección filtrada).
    */
   async restoreLastState() {
     const finishBoot = () => {
@@ -285,7 +284,7 @@ class App {
         localStorage.removeItem('arcadia_active_banner_quote_id');
       } catch (_) {}
 
-      // 1. Si estaba leyendo un libro, reabrir el lector en ese libro
+      // 1. Reanudar lectura si el usuario tenía un libro abierto
       if (savedView === 'reader' && savedBookId && this.bookManager) {
         try {
           const book = await this.bookManager.getBook(savedBookId);
@@ -297,14 +296,13 @@ class App {
         } catch (e) {
           console.warn('[App] No se pudo restaurar el libro anterior:', e);
         }
-        // Limpiar estado corrupto
         try {
           localStorage.setItem('arcadia_active_view', 'library');
           localStorage.removeItem('arcadia_active_book_id');
         } catch (_) {}
       }
 
-      // 2. Si estaba en una sección (Notas, Vocabulario, Frases, Favoritos, etc.), restaurar filtro
+      // 2. Restaurar sección o filtro activo (Favoritos, Notas, Vocabulario, etc.)
       if (targetFilter && targetFilter !== 'all') {
         appState.set('activeFilter', targetFilter);
         document.querySelectorAll('[data-nav-filter]').forEach(el => {
@@ -322,12 +320,12 @@ class App {
   }
 }
 
-// Arrancar al cargar el DOM
+// Inicialización de la aplicación al cargar el árbol DOM
 document.addEventListener('DOMContentLoaded', () => {
   const app = new App();
   app.init().catch((err) => {
     console.error('[App] init() rechazado:', err);
   });
-  // Exponer para depuración
+  // Instancia accesible para depuración en consola del desarrollador
   window.__arcadiaApp = app;
 });

@@ -73,32 +73,16 @@
 <body>
 
 
-  <!-- Sprite único de la marca: destello de 4 puntas del wordmark (calado, toma el color del contenedor) -->
-  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" class="sr-only-absolute" aria-hidden="true">
-    <defs>
-      <!-- Destello de 4 puntas calado del wordmark (se rellena con el color del contenedor) -->
-      <g id="arcSparkle">
-        <path d="M12 1.5C12.9 8.2 15.8 11.1 22.5 12C15.8 12.9 12.9 15.8 12 22.5C11.1 15.8 8.2 12.9 1.5 12C8.2 11.1 11.1 8.2 12 1.5Z" fill="currentColor" />
-      </g>
-    </defs>
-  </svg>
-  <!-- ========================================================================
-       TOPBAR EXCLUSIVA PARA MÓVIL
-       ======================================================================== -->
+  <!-- Barra de navegación superior exclusiva para móvil -->
   <header class="mobile-topbar" id="mobile-topbar">
     <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Abrir menú lateral" aria-expanded="false" aria-controls="app-sidebar">
-      <svg class="icon-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
+      <svg class="icon-lg" aria-hidden="true"><use href="./assets/icons/icons.svg#menu"></use></svg>
     </button>
     <div class="mobile-logo-wrap mobile-logo-flex">
       <span class="brand-wordmark mobile-brand-wordmark">ARCADIA</span>
     </div>
     <button class="btn-upload-epub" id="mobile-upload-trigger" aria-label="Subir libro">
-      <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-      </svg>
+      <svg class="icon-sm" aria-hidden="true"><use href="./assets/icons/icons.svg#upload"></use></svg>
       <span>Subir</span>
     </button>
   </header>
@@ -130,91 +114,35 @@
         <nav class="nav-group" aria-label="Navegación principal">
           <button type="button" class="nav-item active" data-nav-filter="all">
             <div class="nav-item-content">
-              <svg class="nav-icon" fill="currentColor" viewBox="0 0 512 512" aria-hidden="true"><g transform="translate(0,512) scale(0.1,-0.1)"
-fill="currentColor" stroke="none">
-<path d="M3854 4896 c-396 -164 -825 -584 -1216 -1189 -43 -67 -79 -126 -81
--131 -2 -6 -53 33 -113 85 -517 452 -1072 695 -1602 702 l-134 2 -24 -28 c-24
--28 -24 -30 -24 -241 l0 -213 -87 -17 c-137 -27 -191 -44 -208 -68 -12 -18
--15 -54 -15 -180 l0 -158 -103 0 c-87 0 -110 -3 -147 -22 -24 -13 -53 -36 -64
--51 -21 -28 -21 -30 -21 -1560 l0 -1532 23 -33 c52 -72 -27 -67 1092 -67 1155
-0 1011 -13 1272 112 l158 75 172 -82 c106 -50 199 -88 241 -96 56 -12 233 -14
-1046 -12 l977 3 41 27 c80 53 74 -88 71 1616 l-3 1521 -21 28 c-40 53 -79 67
--196 71 l-106 4 -4 160 c-3 159 -3 160 -30 183 -25 21 -123 49 -240 70 l-38 6
-0 214 c0 209 -1 215 -23 241 -23 26 -24 26 -156 26 -123 -1 -201 -7 -243 -18
--16 -5 -17 16 -20 265 -3 255 -4 272 -23 290 -35 34 -64 34 -151 -3z m9 -218
-c3 -24 5 -642 6 -1374 l1 -1331 -94 -46 c-330 -159 -752 -570 -1060 -1032
-l-66 -99 0 1315 0 1315 61 99 c283 459 580 807 881 1034 82 62 242 161 259
-161 4 0 9 -19 12 -42z m-2796 -494 c436 -64 891 -299 1309 -678 l101 -91 8
--339 c4 -186 4 -797 0 -1358 l-8 -1019 -36 33 c-61 57 -141 122 -238 192 -412
-296 -880 482 -1270 503 l-113 6 0 1389 0 1388 73 -6 c39 -3 118 -12 174 -20z
-m3241 -1366 l2 -1388 -54 0 c-92 0 -277 -28 -418 -64 -243 -61 -527 -189 -766
--345 -74 -49 -118 -73 -112 -61 33 61 233 295 364 425 215 214 403 351 584
-425 42 18 86 41 97 51 20 19 20 34 23 1169 l2 1148 30 7 c36 8 197 23 225 21
-20 -1 20 -9 23 -1388z m-3648 -297 c0 -1158 1 -1200 19 -1222 17 -22 28 -24
-167 -30 315 -15 559 -81 866 -235 97 -49 288 -160 288 -168 0 -2 -48 12 -107
-29 -234 71 -448 104 -724 112 -235 7 -471 -13 -637 -54 l-22 -5 0 1370 0 1371
-63 14 c34 9 68 16 75 16 9 1 12 -245 12 -1198z m3880 1184 c19 -4 43 -9 53
--11 16 -5 17 -79 17 -1376 l0 -1370 -23 6 c-13 3 -82 16 -153 28 -175 30 -605
-33 -784 5 -140 -22 -311 -59 -421 -92 -45 -14 -84 -24 -85 -22 -7 6 185 117
-301 175 290 144 598 222 876 222 93 0 102 2 124 25 l25 24 0 1201 c0 1139 1
-1201 18 1196 9 -2 33 -7 52 -11z m-4190 -1784 l0 -1380 24 -28 24 -28 844 0
-843 0 93 48 92 47 58 -29 c108 -55 110 -49 -35 -118 -70 -34 -148 -67 -173
--72 -29 -7 -386 -11 -997 -11 l-953 0 0 1475 0 1475 90 0 90 0 0 -1379z m4600
--96 l0 -1475 -956 0 -955 0 -75 25 c-41 14 -118 47 -171 74 l-98 48 80 40 79
-40 100 -48 99 -49 856 2 856 3 2 1395 c2 767 5 1401 8 1408 3 8 31 12 90 12
-l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
--73 l-764 0 3 72 3 72 55 12 c48 11 211 36 320 48 78 9 470 -4 568 -18z m2987
--10 c82 -14 153 -30 158 -35 4 -4 7 -37 5 -72 l-3 -64 -761 -3 c-890 -3 -884
--3 -658 71 159 52 320 89 479 111 169 24 175 24 410 21 182 -3 246 -8 370 -29z"/>
-<path d="M1071 3613 c-12 -10 -24 -34 -27 -53 -10 -62 11 -75 186 -119 316
--79 606 -221 901 -442 77 -57 114 -79 136 -79 39 0 76 40 76 82 0 39 -35 71
--203 189 -286 200 -605 347 -900 415 -126 29 -141 29 -169 7z"/>
-<path d="M1093 2949 c-27 -10 -53 -47 -53 -76 0 -46 39 -71 140 -93 298 -63
-628 -219 925 -435 66 -48 129 -92 141 -97 48 -22 112 41 98 98 -14 53 -348
-280 -587 397 -249 123 -598 231 -664 206z"/>
-<path d="M1065 2175 c-26 -25 -32 -63 -15 -94 11 -21 43 -35 120 -51 323 -70
-655 -228 971 -464 58 -44 111 -76 125 -76 29 0 71 37 79 71 9 36 -25 73 -149
-164 -305 222 -632 378 -956 455 -113 27 -145 26 -175 -5z"/>
-</g></svg>
+              <svg class="nav-icon" aria-hidden="true"><use href="./assets/icons/icons.svg#icon-library"></use></svg>
               <span>Biblioteca</span>
             </div>
           </button>
 
           <button type="button" class="nav-item" data-nav-filter="reading">
             <div class="nav-item-content">
-              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+              <svg class="nav-icon" aria-hidden="true"><use href="./assets/icons/icons.svg#clock"></use></svg>
               <span>Lectura actual</span>
             </div>
           </button>
 
           <button type="button" class="nav-item" data-nav-filter="favorites">
             <div class="nav-item-content">
-              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-              </svg>
+              <svg class="nav-icon" aria-hidden="true"><use href="./assets/icons/icons.svg#star"></use></svg>
               <span>Favoritos</span>
             </div>
           </button>
 
           <button type="button" class="nav-item" data-nav-filter="annotations">
             <div class="nav-item-content">
-              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-              </svg>
+              <svg class="nav-icon" aria-hidden="true"><use href="./assets/icons/icons.svg#pencil"></use></svg>
               <span>Notas y subrayados</span>
             </div>
           </button>
 
           <button type="button" class="nav-item" data-nav-filter="vocabulary">
             <div class="nav-item-content">
-              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-              </svg>
+              <svg class="nav-icon" aria-hidden="true"><use href="./assets/icons/icons.svg#bookmark"></use></svg>
               <span>Vocabulario</span>
             </div>
           </button>
@@ -222,11 +150,7 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
 
           <button type="button" class="nav-item" data-nav-filter="settings" id="nav-settings">
             <div class="nav-item-content">
-              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
+              <svg class="nav-icon" aria-hidden="true"><use href="./assets/icons/icons.svg#settings"></use></svg>
               <span>Ajustes</span>
             </div>
           </button>
@@ -234,10 +158,7 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
           <!-- Botón Instalar App PWA -->
           <button class="nav-item btn-pwa-nav" id="btn-pwa-install">
             <div class="nav-item-content">
-              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
+              <svg class="nav-icon" aria-hidden="true"><use href="./assets/icons/icons.svg#download"></use></svg>
               <span>Descargar app</span>
             </div>
           </button>
@@ -248,9 +169,7 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
           <div class="collections-header">
             <span class="nav-group-title">Colecciones</span>
             <button id="btn-create-collection" class="btn-create-col" title="Nueva colección" aria-label="Crear nueva colección">
-              <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-              </svg>
+              <svg class="icon-sm" aria-hidden="true"><use href="./assets/icons/icons.svg#plus"></use></svg>
             </button>
           </div>
 
@@ -263,17 +182,11 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
         <div class="storage-widget">
           <div class="storage-header">
             <div class="storage-icon-title">
-              <svg class="icon-md color-primary-light" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M20 18C20 20.2091 16.4183 22 12 22C7.58172 22 4 20.2091 4 18V13.974C4.50221 14.5906 5.21495 15.1029 6.00774 15.4992C7.58004 16.2854 9.69967 16.75 12 16.75C14.3003 16.75 16.42 16.2854 17.9923 15.4992C18.7851 15.1029 19.4978 14.5906 20 13.974V18Z" fill="currentColor"/>
-                <path d="M12 10.75C14.3003 10.75 16.42 10.2854 17.9923 9.49925C18.7851 9.10285 19.4978 8.59059 20 7.97397V12C20 12.5 18.2143 13.5911 17.3214 14.1576C15.9983 14.8192 14.118 15.25 12 15.25C9.88205 15.25 8.00168 14.8192 6.67856 14.1576C5.5 13.5683 4 12.5 4 12V7.97397C4.50221 8.59059 5.21495 9.10285 6.00774 9.49925C7.58004 10.2854 9.69967 10.75 12 10.75Z" fill="currentColor"/>
-                <path d="M17.3214 8.15761C15.9983 8.81917 14.118 9.25 12 9.25C9.88205 9.25 8.00168 8.81917 6.67856 8.15761C6.16384 7.95596 5.00637 7.31492 4.2015 6.27935C4.06454 6.10313 4.00576 5.87853 4.03988 5.65798C4.06283 5.50969 4.0948 5.35695 4.13578 5.26226C4.82815 3.40554 8.0858 2 12 2C15.9142 2 19.1718 3.40554 19.8642 5.26226C19.9052 5.35695 19.9372 5.50969 19.9601 5.65798C19.9942 5.87853 19.9355 6.10313 19.7985 6.27935C18.9936 7.31492 17.8362 7.95596 17.3214 8.15761Z" fill="currentColor"/>
-              </svg>
+              <svg class="icon-md color-primary-light" aria-hidden="true"><use href="./assets/icons/icons.svg#database"></use></svg>
               <span>Almacenamiento</span>
             </div>
             <button class="btn-storage-toggle" title="Opciones de almacenamiento" aria-label="Opciones de almacenamiento">
-              <svg class="icon-md" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-              </svg>
+              <svg class="icon-md" aria-hidden="true"><use href="./assets/icons/icons.svg#chevron-down"></use></svg>
             </button>
           </div>
           <div class="storage-progress-bar" role="progressbar" aria-label="Almacenamiento usado" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="storage-progress-track">
@@ -291,7 +204,7 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
       <div class="main-content">
 
 
-        <!-- 2. Barra de Control de Biblioteca (Toolbar) -->
+        <!-- Barra de control y catálogo de biblioteca -->
         <section class="library-header">
           <div class="library-header-top">
             <div class="library-title-group">
@@ -299,10 +212,7 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
               <span class="collection-count-pill hidden" id="library-count-pill"></span>
             </div>
             <button class="btn-upload-epub" id="btn-upload-trigger">
-              <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-              </svg>
+              <svg class="icon-sm" aria-hidden="true"><use href="./assets/icons/icons.svg#upload"></use></svg>
               <span>Subir libro</span>
             </button>
             <input type="file" id="epub-file-input" class="hidden" accept=".epub,application/epub+zip">
@@ -311,11 +221,7 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
           <div class="library-controls">
             <!-- Buscador en tiempo real -->
             <div class="search-box">
-              <svg class="search-icon" fill="none" stroke="currentColor"
-                viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+              <svg class="search-icon" aria-hidden="true"><use href="./assets/icons/icons.svg#search"></use></svg>
               <label class="sr-only" for="library-search">Buscar un libro o autor</label>
               <input type="search" id="library-search" class="search-input"
                 placeholder="Buscar un libro o autor..." autocomplete="off" aria-label="Buscar un libro o autor">
@@ -330,40 +236,25 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
                   <option value="author">Autor</option>
                   <option value="progress">Progreso de lectura</option>
                 </select>
-                <svg class="sort-icon-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
+                <svg class="sort-icon-chevron" aria-hidden="true"><use href="./assets/icons/icons.svg#chevron-down"></use></svg>
               </div>
 
               <!-- Conmutador Segmentado Grid / Lista -->
               <div class="view-mode-toggle" role="group" aria-label="Modo de vista">
                 <button class="toggle-btn active" id="btn-view-grid" aria-label="Vista Cuadrícula" aria-pressed="true">
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                  </svg>
+                  <svg aria-hidden="true"><use href="./assets/icons/icons.svg#view-grid"></use></svg>
                   <span>Grid</span>
                 </button>
                 <button class="toggle-btn" id="btn-view-list" aria-label="Vista Lista" aria-pressed="false">
-                  <svg fill="currentColor" viewBox="0 0 612 612" aria-hidden="true">
-                    <path d="M59.226,88.839C26.513,88.839,0,115.352,0,148.064s26.513,59.226,59.226,59.226s59.226-26.514,59.226-59.226
-				S91.938,88.839,59.226,88.839z M59.226,246.774C26.513,246.774,0,273.288,0,306c0,32.713,26.513,59.226,59.226,59.226
-				s59.226-26.513,59.226-59.226C118.452,273.288,91.938,246.774,59.226,246.774z M59.226,404.71C26.513,404.71,0,431.223,0,463.936
-				c0,32.712,26.513,59.226,59.226,59.226s59.226-26.514,59.226-59.226C118.452,431.223,91.938,404.71,59.226,404.71z
-				 M197.419,187.548h375.096c21.815,0,39.484-17.669,39.484-39.484s-17.669-39.484-39.484-39.484H197.419
-				c-21.815,0-39.484,17.669-39.484,39.484S175.604,187.548,197.419,187.548z M572.516,266.516H197.419
-				c-21.815,0-39.484,17.669-39.484,39.484c0,21.814,17.669,39.484,39.484,39.484h375.096c21.815,0,39.484-17.67,39.484-39.484
-				C612,284.185,594.331,266.516,572.516,266.516z M572.516,424.451H197.419c-21.815,0-39.484,17.67-39.484,39.484
-				s17.669,39.483,39.484,39.483h375.096c21.815,0,39.484-17.669,39.484-39.483S594.331,424.451,572.516,424.451z" />
-                  </svg>
-                  <span>Lista</span>
+            <svg aria-hidden="true"><use href="./assets/icons/icons.svg#view-list"></use></svg>
+            <span>Lista</span>
                 </button>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- 3. Contenedor de Libros (Grid / Lista Dinámico) -->
+        <!-- Contenedor dinámico de libros (cuadrícula o lista) -->
         <section id="books-container" class="books-grid" aria-label="Catálogo de libros" aria-live="polite"></section>
       </div>
 
@@ -375,85 +266,27 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
        ======================================================================== -->
   <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Navegación móvil">
     <button type="button" class="mobile-nav-link active" data-nav-filter="all" aria-label="Biblioteca">
-      <svg fill="currentColor" viewBox="0 0 512 512" aria-hidden="true"><g transform="translate(0,512) scale(0.1,-0.1)"
-fill="currentColor" stroke="none">
-<path d="M3854 4896 c-396 -164 -825 -584 -1216 -1189 -43 -67 -79 -126 -81
--131 -2 -6 -53 33 -113 85 -517 452 -1072 695 -1602 702 l-134 2 -24 -28 c-24
--28 -24 -30 -24 -241 l0 -213 -87 -17 c-137 -27 -191 -44 -208 -68 -12 -18
--15 -54 -15 -180 l0 -158 -103 0 c-87 0 -110 -3 -147 -22 -24 -13 -53 -36 -64
--51 -21 -28 -21 -30 -21 -1560 l0 -1532 23 -33 c52 -72 -27 -67 1092 -67 1155
-0 1011 -13 1272 112 l158 75 172 -82 c106 -50 199 -88 241 -96 56 -12 233 -14
-1046 -12 l977 3 41 27 c80 53 74 -88 71 1616 l-3 1521 -21 28 c-40 53 -79 67
--196 71 l-106 4 -4 160 c-3 159 -3 160 -30 183 -25 21 -123 49 -240 70 l-38 6
-0 214 c0 209 -1 215 -23 241 -23 26 -24 26 -156 26 -123 -1 -201 -7 -243 -18
--16 -5 -17 16 -20 265 -3 255 -4 272 -23 290 -35 34 -64 34 -151 -3z m9 -218
-c3 -24 5 -642 6 -1374 l1 -1331 -94 -46 c-330 -159 -752 -570 -1060 -1032
-l-66 -99 0 1315 0 1315 61 99 c283 459 580 807 881 1034 82 62 242 161 259
-161 4 0 9 -19 12 -42z m-2796 -494 c436 -64 891 -299 1309 -678 l101 -91 8
--339 c4 -186 4 -797 0 -1358 l-8 -1019 -36 33 c-61 57 -141 122 -238 192 -412
-296 -880 482 -1270 503 l-113 6 0 1389 0 1388 73 -6 c39 -3 118 -12 174 -20z
-m3241 -1366 l2 -1388 -54 0 c-92 0 -277 -28 -418 -64 -243 -61 -527 -189 -766
--345 -74 -49 -118 -73 -112 -61 33 61 233 295 364 425 215 214 403 351 584
-425 42 18 86 41 97 51 20 19 20 34 23 1169 l2 1148 30 7 c36 8 197 23 225 21
-20 -1 20 -9 23 -1388z m-3648 -297 c0 -1158 1 -1200 19 -1222 17 -22 28 -24
-167 -30 315 -15 559 -81 866 -235 97 -49 288 -160 288 -168 0 -2 -48 12 -107
-29 -234 71 -448 104 -724 112 -235 7 -471 -13 -637 -54 l-22 -5 0 1370 0 1371
-63 14 c34 9 68 16 75 16 9 1 12 -245 12 -1198z m3880 1184 c19 -4 43 -9 53
--11 16 -5 17 -79 17 -1376 l0 -1370 -23 6 c-13 3 -82 16 -153 28 -175 30 -605
-33 -784 5 -140 -22 -311 -59 -421 -92 -45 -14 -84 -24 -85 -22 -7 6 185 117
-301 175 290 144 598 222 876 222 93 0 102 2 124 25 l25 24 0 1201 c0 1139 1
-1201 18 1196 9 -2 33 -7 52 -11z m-4190 -1784 l0 -1380 24 -28 24 -28 844 0
-843 0 93 48 92 47 58 -29 c108 -55 110 -49 -35 -118 -70 -34 -148 -67 -173
--72 -29 -7 -386 -11 -997 -11 l-953 0 0 1475 0 1475 90 0 90 0 0 -1379z m4600
--96 l0 -1475 -956 0 -955 0 -75 25 c-41 14 -118 47 -171 74 l-98 48 80 40 79
-40 100 -48 99 -49 856 2 856 3 2 1395 c2 767 5 1401 8 1408 3 8 31 12 90 12
-l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
--73 l-764 0 3 72 3 72 55 12 c48 11 211 36 320 48 78 9 470 -4 568 -18z m2987
--10 c82 -14 153 -30 158 -35 4 -4 7 -37 5 -72 l-3 -64 -761 -3 c-890 -3 -884
--3 -658 71 159 52 320 89 479 111 169 24 175 24 410 21 182 -3 246 -8 370 -29z"/>
-<path d="M1071 3613 c-12 -10 -24 -34 -27 -53 -10 -62 11 -75 186 -119 316
--79 606 -221 901 -442 77 -57 114 -79 136 -79 39 0 76 40 76 82 0 39 -35 71
--203 189 -286 200 -605 347 -900 415 -126 29 -141 29 -169 7z"/>
-<path d="M1093 2949 c-27 -10 -53 -47 -53 -76 0 -46 39 -71 140 -93 298 -63
-628 -219 925 -435 66 -48 129 -92 141 -97 48 -22 112 41 98 98 -14 53 -348
-280 -587 397 -249 123 -598 231 -664 206z"/>
-<path d="M1065 2175 c-26 -25 -32 -63 -15 -94 11 -21 43 -35 120 -51 323 -70
-655 -228 971 -464 58 -44 111 -76 125 -76 29 0 71 37 79 71 9 36 -25 73 -149
-164 -305 222 -632 378 -956 455 -113 27 -145 26 -175 -5z"/>
-</g></svg>
-      <span>Biblioteca</span>
+        <svg aria-hidden="true"><use href="./assets/icons/icons.svg#icon-library"></use></svg>
+        <span>Biblioteca</span>
     </button>
 
     <button type="button" class="mobile-nav-link" data-nav-filter="reading" aria-label="Lectura actual">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
+      <svg aria-hidden="true"><use href="./assets/icons/icons.svg#clock"></use></svg>
       <span>Lectura</span>
     </button>
 
     <button type="button" class="mobile-nav-link" data-nav-filter="favorites" aria-label="Favoritos">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-          d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-      </svg>
+      <svg aria-hidden="true"><use href="./assets/icons/icons.svg#star"></use></svg>
       <span>Favoritos</span>
     </button>
 
     <button type="button" class="mobile-nav-link" data-nav-filter="settings" aria-label="Ajustes">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-          d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
+      <svg aria-hidden="true"><use href="./assets/icons/icons.svg#settings"></use></svg>
       <span>Ajustes</span>
     </button>
 
     <button type="button" class="mobile-nav-link" id="btn-pwa-install-mobile" data-action="install-pwa" aria-label="Descargar aplicación">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-      </svg>
+      <svg aria-hidden="true"><use href="./assets/icons/icons.svg#download"></use></svg>
       <span>App</span>
     </button>
   </nav>
@@ -466,9 +299,7 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
     <header class="reader-header">
       <div class="reader-header-left">
         <button class="btn-reader-back" id="btn-reader-back" aria-label="Volver a la biblioteca">
-          <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
+          <svg class="icon-md" aria-hidden="true"><use href="./assets/icons/icons.svg#arrow-back"></use></svg>
           <span>Biblioteca</span>
         </button>
       </div>
@@ -482,35 +313,24 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
         <!-- Búsqueda Intra-Libro -->
         <button class="btn-reader-action" id="btn-reader-search" title="Buscar en este libro"
           aria-label="Buscar en el libro" aria-expanded="false" aria-controls="reader-search-panel">
-          <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
+          <svg class="icon-md" aria-hidden="true"><use href="./assets/icons/icons.svg#search"></use></svg>
         </button>
 
         <!-- Tabla de Contenidos -->
         <button class="btn-reader-action" id="btn-reader-toc" title="Capítulos" aria-label="Tabla de Contenidos" aria-expanded="false" aria-controls="reader-toc-drawer">
-          <svg class="icon-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h7" />
-          </svg>
+          <svg class="icon-lg" aria-hidden="true"><use href="./assets/icons/icons.svg#toc"></use></svg>
         </button>
 
         <!-- Ajustes de Lectura (Fuentes, Márgenes, etc.) -->
         <button class="btn-reader-action" id="btn-reader-settings" title="Ajustes de lectura y tipografía"
           aria-label="Ajustes de lectura" aria-expanded="false" aria-controls="reader-settings-panel">
-          <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-              d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-          </svg>
+          <svg class="icon-md" aria-hidden="true"><use href="./assets/icons/icons.svg#sliders"></use></svg>
         </button>
 
         <!-- Pantalla Completa -->
         <button class="btn-reader-action" id="btn-reader-fullscreen" title="Pantalla Completa"
           aria-label="Alternar pantalla completa" aria-pressed="false">
-          <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-              d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-          </svg>
+          <svg class="icon-md" aria-hidden="true"><use href="./assets/icons/icons.svg#fullscreen"></use></svg>
         </button>
       </div>
     </header>
@@ -538,9 +358,7 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
     <footer class="reader-footer">
       <button class="btn-footer-chapter" id="btn-footer-prev-chapter" title="Capítulo anterior"
         aria-label="Capítulo anterior">
-        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 19l-7-7 7-7" />
-        </svg>
+        <svg class="icon-sm" aria-hidden="true"><use href="./assets/icons/icons.svg#chevron-left"></use></svg>
         <span class="btn-chapter-label">Cap. anterior</span>
       </button>
 
@@ -552,9 +370,7 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
       <button class="btn-footer-chapter" id="btn-footer-next-chapter" title="Capítulo siguiente"
         aria-label="Capítulo siguiente">
         <span class="btn-chapter-label">Cap. siguiente</span>
-        <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5l7 7-7 7" />
-        </svg>
+        <svg class="icon-sm" aria-hidden="true"><use href="./assets/icons/icons.svg#chevron-right"></use></svg>
       </button>
     </footer>
 
@@ -564,7 +380,7 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
       <div class="toc-header">
         <h3 class="toc-title">Capítulos</h3>
         <button class="toc-close-btn btn--close" id="toc-close-btn" aria-label="Cerrar panel">
-          <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          <svg class="btn-icon-svg" aria-hidden="true"><use href="./assets/icons/icons.svg#close"></use></svg>
         </button>
       </div>
       <!-- Lista de Capítulos -->
@@ -577,15 +393,11 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
       <div class="search-panel-header">
         <h3 id="reader-search-title" class="sr-only">Búsqueda en el libro</h3>
         <div class="search-input-wrapper">
-          <svg class="icon-md search-icon-glass" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
+          <svg class="icon-md search-icon-glass" aria-hidden="true"><use href="./assets/icons/icons.svg#search"></use></svg>
           <label class="sr-only" for="input-reader-search">Buscar en el libro</label>
           <input type="text" id="input-reader-search" placeholder="Buscar en el libro..." autocomplete="off" aria-label="Buscar en el libro">
           <button type="button" id="btn-clear-reader-search" class="btn-search-clear" title="Borrar búsqueda" aria-label="Borrar búsqueda">
-            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <svg class="icon-sm" aria-hidden="true"><use href="./assets/icons/icons.svg#close"></use></svg>
           </button>
         </div>
         <div class="search-status-bar">
@@ -593,21 +405,15 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
           <div class="search-status-actions">
             <div class="search-nav-arrows" id="search-nav-arrows">
               <button type="button" id="btn-prev-search-result" class="btn-search-arrow" title="Coincidencia anterior" aria-label="Coincidencia anterior" disabled>
-                <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
-                </svg>
+                <svg class="icon-sm" aria-hidden="true"><use href="./assets/icons/icons.svg#chevron-up"></use></svg>
               </button>
               <button type="button" id="btn-next-search-result" class="btn-search-arrow" title="Coincidencia siguiente" aria-label="Coincidencia siguiente" disabled>
-                <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
+                <svg class="icon-sm" aria-hidden="true"><use href="./assets/icons/icons.svg#chevron-down"></use></svg>
               </button>
             </div>
             <button type="button" id="btn-go-to-search-result" class="btn-search-go-pill" title="Ir a esta sección del capítulo" aria-label="Ir a esta sección" disabled>
               <span>Ir a la sección</span>
-              <svg style="width: 14px; height: 14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
+              <svg style="width: 14px; height: 14px;" aria-hidden="true"><use href="./assets/icons/icons.svg#arrow-forward"></use></svg>
             </button>
             <button type="button" id="btn-close-reader-search" class="btn-search-close-pill btn btn--sm btn--ghost" aria-label="Cerrar búsqueda">
               <span>Cerrar</span>
@@ -675,16 +481,16 @@ l85 0 0 -1475z m-3492 -999 c156 -24 322 -63 476 -113 224 -74 233 -73 -661
         <span class="settings-group-label">Alineación de texto</span>
         <div class="settings-align-grid segmented-control" id="font-align-options">
           <button class="align-pill-btn active" data-align="left" title="Alinear a la izquierda" aria-label="Alinear a la izquierda">
-            <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h10M4 14h14M4 18h8"/></svg>
+            <svg class="icon-md" aria-hidden="true"><use href="./assets/icons/icons.svg#align-left"></use></svg>
           </button>
           <button class="align-pill-btn" data-align="justify" title="Justificar texto" aria-label="Justificar texto">
-            <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+            <svg class="icon-md" aria-hidden="true"><use href="./assets/icons/icons.svg#align-justify"></use></svg>
           </button>
           <button class="align-pill-btn" data-align="center" title="Centrar texto" aria-label="Centrar texto">
-            <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M6 10h12M5 14h14M8 18h8"/></svg>
+            <svg class="icon-md" aria-hidden="true"><use href="./assets/icons/icons.svg#align-center"></use></svg>
           </button>
           <button class="align-pill-btn" data-align="right" title="Alinear a la derecha" aria-label="Alinear a la derecha">
-            <svg class="icon-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M10 10h10M6 14h14M12 18h8"/></svg>
+            <svg class="icon-md" aria-hidden="true"><use href="./assets/icons/icons.svg#align-right"></use></svg>
           </button>
         </div>
       </div>

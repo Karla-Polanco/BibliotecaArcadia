@@ -11,8 +11,9 @@ import { appState } from '../state.js';
 
 export class NoteManager {
   /**
-   * Obtiene todas las notas asociadas a un libro.
+   * Obtiene todas las notas asociadas a un libro específico.
    * @param {string} bookId - ID del libro
+   * @returns {Promise<Array<Object>>}
    */
   static async getNotesForBook(bookId) {
     try {
@@ -25,6 +26,7 @@ export class NoteManager {
 
   /**
    * Obtiene todas las notas registradas en la biblioteca.
+   * @returns {Promise<Array<Object>>}
    */
   static async getAllNotes() {
     try {
@@ -35,8 +37,15 @@ export class NoteManager {
   }
 
   /**
-   * Crea una nota vinculada a una selección de texto o una nota libre.
-   * @param {Object} data - Datos de la nota
+   * Crea una nota vinculada a una selección de texto o una nota libre del libro.
+   * @param {Object} data
+   * @param {string} data.bookId - ID del libro obligatorio
+   * @param {string|null} [data.cfiRange=null] - Rango CFI si la nota está anclada a un texto
+   * @param {string} [data.selectedText=''] - Fragmento de texto subrayado o seleccionado
+   * @param {string} [data.title=''] - Título de la nota o capítulo
+   * @param {string} [data.content=''] - Contenido redactado por el usuario
+   * @param {string} [data.color='yellow'] - Color distintivo de la nota
+   * @returns {Promise<Object>} Nota persistida
    */
   static async createNote({ bookId, cfiRange = null, selectedText = '', title = '', content = '', color = 'yellow' }) {
     if (!bookId) throw new Error('Se requiere bookId para registrar una nota.');
@@ -64,7 +73,10 @@ export class NoteManager {
   }
 
   /**
-   * Actualiza una nota existente.
+   * Actualiza el contenido, título o propiedades de una nota existente.
+   * @param {string} noteId - ID de la nota
+   * @param {Object} updates - Propiedades a actualizar
+   * @returns {Promise<Object>}
    */
   static async updateNote(noteId, updates) {
     const existing = await dbManager.get('notes', noteId);
@@ -82,7 +94,9 @@ export class NoteManager {
   }
 
   /**
-   * Elimina una nota por su ID.
+   * Elimina una nota por su ID de IndexedDB y notifica el cambio.
+   * @param {string} noteId - ID de la nota a eliminar
+   * @returns {Promise<boolean>}
    */
   static async deleteNote(noteId) {
     await dbManager.delete('notes', noteId);

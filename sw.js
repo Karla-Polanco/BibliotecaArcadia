@@ -1,34 +1,24 @@
-/* ======================================
-   ARCADIA SERVICE WORKER
-   PWA + OFFLINE CACHE + AUTO UPDATE
-   ====================================== */
+/* ============================================================================
+   ARCADIA SERVICE WORKER - PWA, Caché Offline y Actualización Automática
+   ============================================================================ */
 
 const CACHE_NAME = 'arcadia-pwa-v160';
 
-/*
- * =============================================
- * APP SHELL
- * =============================================
- * 
- * Estos archivos forman la aplicación principal.
- * 
- * Se almacenan durante la instalación para que
- * Arcadia pueda arrancar incluso sin conexión.
- */
-
+// App Shell: Archivos esenciales precacheados durante la instalación para soporte offline
 const APP_SHELL_ASSETS = [
     './',
     './index.html',
     './manifest.json',
 
-    // Iconos y Favicons exclusivos de Android y Web
+    // Iconos y Favicons
+    './assets/icons/icons.svg',
     './assets/icons/icon-192.png',
     './assets/icons/icon-512.png',
     './assets/icons/favicon.svg',
     './assets/icons/favicon.ico',
     './assets/icons/logo-transparent.png',
 
-    // CSS
+    // Hojas de estilo
     './css/tokens.css',
     './css/themes.css',
     './css/main.css',
@@ -37,42 +27,42 @@ const APP_SHELL_ASSETS = [
     './css/reader.css',
     './css/responsive.css',
 
-    // JavaScript Principal
+    // Módulos JS principales
     './js/app.js',
     './js/db.js',
     './js/state.js',
     './js/utils.js',
 
-    // EPUB
+    // Motor EPUB
     './js/epub/EPUBParser.js',
     './js/epub/EPUBValidator.js',
 
-    // Library
+    // Biblioteca y almacenamiento
     './js/library/BookManager.js',
     './js/library/CollectionManager.js',
     './js/library/LibraryView.js',
     './js/library/StorageWidget.js',
 
-    // Reader
+    // Lector y navegación
     './js/reader/LocationsManager.js',
     './js/reader/ReaderManager.js',
     './js/reader/ReaderSettings.js',
     './js/reader/ReaderView.js',
     './js/reader/SearchManager.js',
 
-    // Annotations
+    // Anotaciones y notas
     './js/annotations/AnnotationManager.js',
     './js/annotations/AnnotationsView.js',
     './js/annotations/NoteManager.js',
 
-    // Vocabulary
+    // Vocabulario
     './js/vocabulary/VocabularyManager.js',
     './js/vocabulary/VocabularyView.js',
 
-    // PWA
+    // Integración PWA
     './js/pwa/PWAManager.js',
 
-    // UI
+    // Interfaz de usuario (UI)
     './js/ui/Icons.js',
     './js/ui/Modal.js',
     './js/ui/CollectionModal.js',
@@ -85,23 +75,12 @@ const APP_SHELL_ASSETS = [
     './js/ui/SettingsView.js',
     './js/ui/ReadingStatsManager.js',
 
-    // Librerías Locales
+    // Librerías de terceros locales
     './assets/libs/jszip.min.js',
     './assets/libs/epub.min.js'
 ];
 
-/*
- * ===================================================
- * CDN EXTERNOS
- * ===================================================
- * 
- * Solo estos dominios externos serán manejados por el 
- * Service Worker.
- * 
- * Los EPUB del usuario NO pasan por aquí.
- * Los EPUB permanecen en el IndexedDB.
- */
-
+// Dominios externos permitidos para almacenamiento en caché (los EPUB residen en IndexedDB)
 const EXTERNAL_CACHE_HOSTS = new Set([
     'fonts.googleapis.com',
     'fonts.gstatic.com',
@@ -109,32 +88,18 @@ const EXTERNAL_CACHE_HOSTS = new Set([
     'cdnjs.cloudflare.com'
 ]);
 
-/* 
- * ==================
- * 1. INSTALL
- * ==================
- */
-
+// 1. INSTALACIÓN: Precarga los recursos del App Shell de manera resiliente
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then(async (cache) => {
-
             console.log('[SW] Instalando:', CACHE_NAME);
 
-            /*
-             * Descargamos los recursos individualmente.
-             *
-             * Si un archivo falla, no impedimos que
-             * los demás se almacenen.
-             */
-
+            // Descarga individual para evitar que el fallo de un archivo bloquee la instalación
             const results = await Promise.allSettled(
                 APP_SHELL_ASSETS.map(async (asset) => {
                     try {
                         const response = await fetch(asset, { cache: 'no-cache' });
-
                         if (!response.ok) { throw new Error(`HTTP ${response.status}`); }
-
                         await cache.put(asset, response);
                         console.log('[SW] Precacheado:', asset);
                     } catch (error) {
@@ -144,22 +109,12 @@ self.addEventListener('install', (event) => {
             );
 
             console.log('[SW] Instalación terminada:', results.length, 'recursos procesados');
-
-            /*
-             * Activar inmediatamente el nuevo SW
-             */
-
             await self.skipWaiting();
         })
     );
 });
 
-/*
- * ==================
- * 2. ACTIVATE
- * ==================
- */
-
+// 2. ACTIVACIÓN: Limpia versiones antiguas de caché y toma control de los clientes
 self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
@@ -172,12 +127,6 @@ self.addEventListener('activate', (event) => {
                     })
             );
         })
-
-            /*
-             * El nuevo SW comienza a controlar
-             * las páginas inmediatamente.
-             */
-
             .then(() => self.clients.claim())
             .then(() => console.log('[SW] Activado:', CACHE_NAME))
     );
@@ -210,250 +159,110 @@ self.addEventListener('fetch', (event) => {
      */
 
     if (url.origin !== self.location.origin) {
-        /*
-         * Si el dominio no está autorizado,
-         * dejamos que el navegador maneje la petición.
-         */
-
+        // Recursos de terceros: solo interceptar si pertenecen a dominios CDN autorizados
         if (!EXTERNAL_CACHE_HOSTS.has(url.hostname)) return;
         event.respondWith(handleExternalRequest(request));
-        return
+        return;
     }
 
-    /*
-     * ==================
-     * NAVEGACIÓN
-     * ==================
-     *
-     * Arcadia es una SPA.
-     * 
-     * Libros, Colecciones, Lector, etc. se muestran dentro
-     * de index.html.
-     */
-
+    // Navegación SPA: servir index.html como shell contenedor
     if (request.mode === 'navigate' || request.destination === 'document') {
         event.respondWith(handleNavigation(request));
         return;
     }
 
-    /*
-     * ======================
-     * RECURSOS ESTÁTICOS
-     * ======================
-     */
-
+    // Recursos estáticos locales (CSS, JS, iconos, fuentes locales)
     event.respondWith(handleStaticAsset(request));
 });
 
-/*
- * ==================
- * 4. NAVEGACIÓN
- * ==================
- * 
- * Estrategia:
- * 
- * CACHE FIRST
- * 
- * 1. Buscar index.html en caché.
- * 2. Mostrarlo inmediatamente.
- * 3. Actualizarlo desde Internet en segundo plano.
- * 4. Si no existe caché, intentar red.
- */
-
+// 4. NAVEGACIÓN: Estrategia Cache-First con revalidación en segundo plano para el index.html
 async function handleNavigation(request) {
     const cache = await caches.open(CACHE_NAME);
-
-    /*
-     * Como Arcadia es un SPA, usamos index.html
-     * como App Shell principal.
-     */
-
     const cachedIndex = await cache.match('./index.html');
 
-    /*
-     * Si tenemos index.html:
-     *
-     * lo devolvemos inmediatamente.
-     */
-
+    // Si ya existe en caché, devolver de inmediato y revalidar en segundo plano
     if (cachedIndex) {
-
-        /*
-         * Actualizamos en segundo plano
-         */
-
         updateNavigationCache(request, cache);
         return cachedIndex;
     }
 
-    /*
-     * Si todavía no tenemos caché,
-     * intentamos conectarnos a Internet.
-     */
-
+    // Si no está en caché, intentar obtenerlo de la red
     try {
         const networkResponse = await fetch(request);
-
         if (networkResponse.ok) await cache.put('./index.html', networkResponse.clone());
         return networkResponse;
     } catch (error) {
         console.warn('[SW] Navegación sin conexión:', request.url);
     }
 
-    /*
-     * Último resurso
-     */
+    // Fallback cuando no hay caché ni conexión de red
     return offlineResponse();
 }
 
-/*
- * ============================
- * 5. ACTUALIZAR INDEX.HTML
- * ============================
- */
-
+// 5. ACTUALIZACIÓN DE NAVEGACIÓN: Revalida index.html sin bloquear la carga actual
 async function updateNavigationCache(request, cache) {
     try {
-
         const networkResponse = await fetch(request, { cache: 'no-cache' });
-
         if (!networkResponse.ok) return;
-
-        /*
-         * Guardamos siempre index.html
-         */
-
-        await cache.put('index.html', networkResponse.clone());
+        await cache.put('./index.html', networkResponse.clone());
         console.log('[SW] index.html actualizado');
     } catch (error) {
-        /* 
-         * Sin Internet:
-         *
-         * no hacemos nada.
-         * 
-         * La versión anterior sigue siendo válida.
-         */
+        // Modo offline: se conserva la versión previa en caché sin error
     }
 }
 
-/* 
- * ========================
- * 6. RECURSOS ESTÁTICOS
- * ========================
- * 
- * Estrategia:
- * 
- * CACHE FIRST + actualización en segundo plano
- */
-
+// 6. RECURSOS ESTÁTICOS: Cache-First con revalidación en segundo plano
 async function handleStaticAsset(request) {
-
     const cache = await caches.open(CACHE_NAME);
     const cacheResponse = await cache.match(request);
 
-    /*
-     * Tenemos una copia local.
-     */
-
+    // Servir desde caché y refrescar de fondo si hay conexión
     if (cacheResponse) {
-
-        /*
-         * Actualización silenciosa.
-         */
-
         revalidateInBackground(request, cache);
         return cacheResponse;
     }
 
-    /*
-     * No está en caché.
-     *
-     * Intentamos Internet.
-     */
-
+    // Descarga desde red y almacenamiento en caché si es del mismo origen
     try {
-
         const networkResponse = await fetch(request);
-
-        /*
-         * Solo guardamos respuestas válidad
-         * del mismo origen.
-         */
-
         if (networkResponse.ok && networkResponse.type === 'basic') {
             await cache.put(request, networkResponse.clone());
         }
-
         return networkResponse;
     } catch (error) {
         console.warn('[SW] Recurso no disponible:', request.url);
-
-        /*
-         * El recurso no está disponible.
-         */
-
         return new Response('Offline: recurso no disponible', { status: 503, statusText: 'Offline' });
     }
 }
 
-/*
- * ===================================
- * 7. REVALIDACIÓN EN SEGUNDO PLANO
- * ===================================
- */
-
+// 7. REVALIDACIÓN EN SEGUNDO PLANO: Actualiza silenciosamente recursos estáticos locales
 async function revalidateInBackground(request, cache) {
     try {
-
         const networkResponse = await fetch(request, { cache: 'no-cache' });
-
         if (networkResponse.ok && networkResponse.type === 'basic') {
-
             await cache.put(request, networkResponse.clone());
             console.log('[SW] Caché actualizada:', request.url);
         }
     } catch (error) {
-
-        /*
-         * Sin Internet:
-         *
-         * conservamos la versión existente.
-         */
+        // Silencioso en desconexión: se preserva la versión en caché
     }
 }
 
-/*
- * ==============================
- * 8. RECURSOS EXTERNOS / CDN
- * ==============================
- */
-
+// 8. RECURSOS EXTERNOS (CDN): Cache-First para fuentes y librerías externas
 async function handleExternalRequest(request) {
-
     const cache = await caches.open(CACHE_NAME);
     const cacheResponse = await cache.match(request);
-
-    /*
-     * Tenemos una copia.
-     */
 
     if (cacheResponse) {
         revalidateExternalInBackground(request, cache);
         return cacheResponse;
     }
 
-    /*
-     * Primera visita:
-     * necesitamos Internet.
-     */
-
     try {
         const networkResponse = await fetch(request);
-
         if (networkResponse.ok) {
             await cache.put(request, networkResponse.clone());
         }
-
         return networkResponse;
     } catch (error) {
         console.warn('[SW] CDN no disponible:', request.url);
@@ -461,36 +270,18 @@ async function handleExternalRequest(request) {
     }
 }
 
-/*
- * ==========================
- * 9. REVALIDACIÓN DE CDN
- * ==========================
- */
-
+// 9. REVALIDACIÓN DE CDN: Actualiza recursos externos de forma no bloqueante
 async function revalidateExternalInBackground(request, cache) {
-
     try {
-
         const networkResponse = await fetch(request, { cache: 'no-cache' });
-
         if (networkResponse.ok) await cache.put(request, networkResponse.clone());
     } catch (error) {
-
-        /*
-         * Sin Internet:
-         * mantenemos la copia almacenada.
-         */
+        // Silencioso en desconexión
     }
 }
 
-/*
- * =========================
- * 10. RESPUESTA OFFLINE
- * =========================
- */
-
+// 10. RESPUESTA OFFLINE: Página mínima de contingencia cuando falla la carga inicial sin caché
 function offlineResponse() {
-
     return new Response(
         `
         <!DOCTYPE html>
@@ -525,26 +316,8 @@ function offlineResponse() {
     );
 }
 
-/*
- * ============================
- * 11. MENSAJES DESDE LA APP
- * ============================
- */
-
+// 11. COMUNICACIÓN CLIENTE-SW: Atiende solicitudes de activación inmediata (SKIP_WAITING)
 self.addEventListener('message', (event) => {
     if (!event.data) return;
-
-    /*
-     * Permite que la aplicació solicite
-     * la activación inmediata del nuevo SW.
-     * 
-     * Desde la aplicación:
-     * 
-     * navigator.serviceWorker.controller?.postMessage({ 
-     *     type: 'SKIP_WAITING' 
-     * }); 
-     * 
-     */
-
     if (event.data.type === 'SKIP_WAITING') self.skipWaiting();
 });

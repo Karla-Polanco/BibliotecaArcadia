@@ -67,10 +67,7 @@ export class SettingsView {
         <div class="header-card-top">
           <div class="header-card-brand-group">
             <div class="header-card-icon-box" style="background: color-mix(in srgb, var(--color-primary-light) 18%, var(--color-surface)); color: var(--color-primary-light);">
-              <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
+              <svg style="width: 24px; height: 24px;" aria-hidden="true"><use href="./assets/icons/icons.svg#settings"></use></svg>
             </div>
             <div class="header-card-text">
               <span class="panel-category-tag" style="color: var(--color-primary-light);">CONFIGURACIÓN Y HÁBITOS</span>
@@ -88,7 +85,7 @@ export class SettingsView {
           <div style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
             <div>
               <h3 style="font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text); margin: 0 0 2px 0; display: flex; align-items: center; gap: 8px;">
-                <svg style="width: 18px; height: 18px; color: var(--color-primary);" fill="currentColor" viewBox="0 0 6.35 6.35" aria-hidden="true"><path fill="currentColor" d="m 0.26485,5.8204456 a 0.2645835,0.2645835 0 0 0 -0.26563,0.26563 0.2645835,0.2645835 0 0 0 0.26563,0.26367 h 5.82031 a 0.2645835,0.2645835 0 0 0 0.26562,-0.26367 0.2645835,0.2645835 0 0 0 -0.26562,-0.26563 z"/><path fill="currentColor" d="m 1.16328,3.9688856 c -0.34722,0 -0.63476,0.28754 -0.63476,0.63477 v 1.48242 a 0.26460996,0.26460996 0 0 0 0.26562,0.26367 h 1.0586 a 0.26460996,0.26460996 0 0 0 0.26367,-0.26367 v -1.48242 c 0,-0.34723 -0.28755,-0.63477 -0.63477,-0.63477 z"/><path fill="currentColor" d="m 3.0168,3.0684956 c -0.34722,0 -0.63477,0.28753 -0.63477,0.63477 v 2.38281 a 0.26460996,0.26460996 0 0 0 0.26367,0.26367 h 1.0586 a 0.26460996,0.26460996 0 0 0 0.26367,-0.26367 v -2.38281 c 0,-0.34724 -0.28755,-0.63477 -0.63477,-0.63477 z"/><path fill="currentColor" d="m 4.86836,2.2755256 c -0.34722,0 -0.63477,0.28754 -0.63477,0.63477 v 3.17578 a 0.26460996,0.26460996 0 0 0 0.26368,0.26367 h 1.05859 a 0.26460996,0.26460996 0 0 0 0.26563,-0.26367 v -3.17578 c 0,-0.34723 -0.2895,-0.63477 -0.63672,-0.63477 z"/><path fill="currentColor" d="M 4.6205208,2.5237e-4 A 0.2645835,0.2645835 0 0 0 4.3564534,0.26380219 0.2645835,0.2645835 0 0 0 4.6205208,0.52941905 H 4.8938883 C 3.3974791,1.8159538 1.8306324,2.6151331 0.2161369,2.9142865 A 0.2645835,0.2645835 0 0 0 0.0052984,3.2227949 0.2645835,0.2645835 0 0 0 0.3117388,3.4357016 C 2.050091,3.1136013 3.722697,2.2498105 5.2923138,0.88753671 V 1.1991456 A 0.2645835,0.2645835 0 0 0 5.5558626,1.4647625 0.2645835,0.2645835 0 0 0 5.8214805,1.1991456 V 0.41986501 C 5.8215308,0.19150501 5.62816,2.0237e-4 5.3998008,2.5237e-4 Z"/></svg>
+                <svg style="width: 18px; height: 18px; color: var(--color-primary);" aria-hidden="true"><use href="./assets/icons/icons.svg#chart-bar"></use></svg>
                 Dashboard de Hábitos de Lectura
               </h3>
               <p style="font-size: 0.80rem; color: var(--color-text-secondary); margin: 0;">
@@ -139,7 +136,7 @@ export class SettingsView {
               <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #FFFFFF 0%, #DCCCE9 100%);">
                 <div class="theme-card-preview-top">
                   <div class="theme-card-check-badge">
-                    <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <svg style="width: 12px; height: 12px;" aria-hidden="true"><use href="./assets/icons/icons.svg#check"></use></svg>
                   </div>
                   <div class="theme-card-mini-pill"></div>
                 </div>
@@ -161,7 +158,7 @@ export class SettingsView {
               <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #FAFAF7 0%, #C8D7C3 100%);">
                 <div class="theme-card-preview-top">
                   <div class="theme-card-check-badge">
-                    <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <svg style="width: 12px; height: 12px;" aria-hidden="true"><use href="./assets/icons/icons.svg#check"></use></svg>
                   </div>
                   <div class="theme-card-mini-pill"></div>
                 </div>
@@ -183,7 +180,7 @@ export class SettingsView {
               <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #FFFFFF 0%, #D6D8E0 100%);">
                 <div class="theme-card-preview-top">
                   <div class="theme-card-check-badge">
-                    <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <svg style="width: 12px; height: 12px;" aria-hidden="true"><use href="./assets/icons/icons.svg#check"></use></svg>
                   </div>
                   <div class="theme-card-mini-pill"></div>
                 </div>
@@ -205,7 +202,7 @@ export class SettingsView {
               <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #FFFFFF 0%, #C2D5EE 100%);">
                 <div class="theme-card-preview-top">
                   <div class="theme-card-check-badge">
-                    <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <svg style="width: 12px; height: 12px;" aria-hidden="true"><use href="./assets/icons/icons.svg#check"></use></svg>
                   </div>
                   <div class="theme-card-mini-pill"></div>
                 </div>
@@ -227,7 +224,7 @@ export class SettingsView {
               <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #FAF4EC 0%, #D7C2AB 100%);">
                 <div class="theme-card-preview-top">
                   <div class="theme-card-check-badge">
-                    <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <svg style="width: 12px; height: 12px;" aria-hidden="true"><use href="./assets/icons/icons.svg#check"></use></svg>
                   </div>
                   <div class="theme-card-mini-pill"></div>
                 </div>
@@ -249,7 +246,7 @@ export class SettingsView {
               <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #242424 0%, #0D0D0D 100%);">
                 <div class="theme-card-preview-top">
                   <div class="theme-card-check-badge">
-                    <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <svg style="width: 12px; height: 12px;" aria-hidden="true"><use href="./assets/icons/icons.svg#check"></use></svg>
                   </div>
                   <div class="theme-card-mini-pill" style="background: rgba(255,255,255,0.2);"></div>
                 </div>

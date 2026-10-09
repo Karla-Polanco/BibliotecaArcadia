@@ -31,7 +31,6 @@ export class ReaderView {
     this.tocDrawerEl = document.getElementById('reader-toc-drawer');
     this.tocBackdropEl = document.getElementById('reader-toc-backdrop');
     this.tocListEl = document.getElementById('toc-content-list');
-    this.tabChaptersBtn = document.getElementById('tab-toc-chapters');
     this.spinnerEl = document.getElementById('reader-loading-spinner');
     this.settingsPanelEl = document.getElementById('reader-settings-panel');
     this.settingsBackdropEl = document.getElementById('reader-settings-backdrop');
@@ -1060,7 +1059,7 @@ export class ReaderView {
             <span class="search-result-loc">${this.escapeHtml(r.chapterTitle || `Párrafo ${idx + 1}`)}</span>
             <button type="button" class="btn-go-to-section" data-idx="${idx}" title="Ir a esta ubicación y cerrar buscador">
               <span>Ir a la sección</span>
-              <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              <svg style="width: 12px; height: 12px;" aria-hidden="true"><use href="./assets/icons/icons.svg#arrow-forward"></use></svg>
             </button>
           </div>
           <div class="search-result-snippet">

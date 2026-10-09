@@ -40,13 +40,14 @@
 - **Fuentes literarias optimizadas:** Literata, Source Serif 4, Lora, EB Garamond, Playfair Display, Poppins, Inter, Roboto y OpenDyslexic (para accesibilidad en dislexia).
 - **Control granular:** Tamaño de letra (12px a 36px), peso tipográfico (Normal / Medio / Negrita), interlineado (1.3, 1.6, 1.9) y 1–2 columnas (en escritorio).
 - **Persistencia por libro y global:** Cada ejemplar recuerda su propia configuración y su posición exacta mediante identificadores canónicos de fragmento (**CFI**); además se guardan preferencias globales en `localStorage`.
-- **Sistema de 6 apariencias:**
-  - *Nocturno Místico* (por defecto, oscuro y profundo)
-  - *Lavanda Claro* (luminoso y suave)
-  - *Niebla Serena (`serene-fog`)* (acuarela rosa/lavanda diurna)
-  - *Bosque de la Mañana (`enchanted-forest`)* (verdes salvia diurnos)
-  - *Cielo Claro (`clear-sky`)* (celeste/azul diurno)
-  - *Tema del Sistema* (resuelve automáticamente a Nocturno o Lavanda según el SO)
+- **Sistema de temas y personalización:**
+  - *Ciruela & Niebla (`plum`)*: Elegante, literario y femenino.
+  - *Salvia & Crema (`sage-cream`)*: Botánico, suave y descanso visual.
+  - *Clásico Claro (`light`)*: Limpio, universal y alto contraste.
+  - *Marino & Blanco (`navy-summit`)*: Ejecutivo, formal y preciso.
+  - *Beige & Brown (`cozy-brown`)*: Acogedor, cálido y café con leche.
+  - *Noir & Silver (`noir-silver`)*: Sobrio, lujoso y nocturno.
+  - *Tema Personalizado (`custom`)*: Creador interactivo con paleta dinámica (fondo, superficie, acento y texto).
 
 ### 4. ✍️ Motor de Selección, Resaltados, Subrayados y Notas
 - **Barra flotante contextual:** Se despliega automáticamente al seleccionar texto en las páginas.

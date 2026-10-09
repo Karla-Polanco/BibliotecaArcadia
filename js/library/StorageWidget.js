@@ -7,6 +7,10 @@
  */
 
 export class StorageWidget {
+  /**
+   * @param {HTMLElement} fillElement - Elemento visual de la barra de progreso
+   * @param {HTMLElement} textElement - Elemento que muestra el texto descriptivo
+   */
   constructor(fillElement, textElement) {
     this.fillEl = fillElement;
     this.textEl = textElement;
@@ -17,7 +21,7 @@ export class StorageWidget {
   }
 
   /**
-   * Inicializa la comprobación, eventos y solicita persistencia del almacenamiento.
+   * Inicializa eventos de colapso, solicita cuota persistente y actualiza las métricas.
    */
   async init() {
     this.setupMinimizeToggle();
@@ -26,7 +30,7 @@ export class StorageWidget {
   }
 
   /**
-   * Configura el botón minimizar / colapsar y restaura la preferencia en localStorage.
+   * Configura el botón para colapsar/expandir el widget y persiste la preferencia en localStorage.
    */
   setupMinimizeToggle() {
     if (!this.widgetEl) {
@@ -41,7 +45,7 @@ export class StorageWidget {
       this.headerEl = this.widgetEl.querySelector('.storage-header');
     }
 
-    // Restaurar estado colapsado si fue guardado previamente
+    // Restaurar estado colapsado guardado por el usuario
     const savedState = localStorage.getItem('arcadia_storage_collapsed');
     if (savedState === 'true') {
       this.widgetEl.classList.add('is-collapsed');
@@ -65,7 +69,7 @@ export class StorageWidget {
   }
 
   /**
-   * Solicita al navegador que no purgue los datos locales (IndexedDB).
+   * Solicita al navegador persistencia de datos para prevenir desalojos automáticos de IndexedDB.
    */
   async requestPersistence() {
     if (navigator.storage && navigator.storage.persist) {
@@ -81,7 +85,7 @@ export class StorageWidget {
   }
 
   /**
-   * Actualiza los valores cuantitativos y visuales del medidor.
+   * Consulta el uso actual y la cuota total con navigator.storage.estimate y actualiza el DOM.
    */
   async update() {
     const setProgress = (pct) => {

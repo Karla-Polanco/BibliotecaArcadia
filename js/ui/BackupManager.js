@@ -159,6 +159,10 @@ export class BackupManager {
         document.documentElement.setAttribute('data-theme', t);
       }
 
+      if (backup.data.readerPrefs) {
+        localStorage.setItem('arcadia_reader_prefs', typeof backup.data.readerPrefs === 'string' ? backup.data.readerPrefs : JSON.stringify(backup.data.readerPrefs));
+      }
+
       Toast.success('¡Copia de seguridad restaurada con éxito!');
       setTimeout(() => {
         window.location.reload();

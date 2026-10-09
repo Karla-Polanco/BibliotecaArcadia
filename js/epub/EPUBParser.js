@@ -66,7 +66,7 @@ export class EPUBParser {
     const opfDoc = domParser.parseFromString(opfXmlText, 'application/xml');
 
     // 4. Extraer Metadatos (con valores seguros de respaldo)
-    const title = this._getXmlText(opfDoc, 'title') || file.name.replace(/\.epub$/i, '') || 'Título desconocido';
+    const title = this._getXmlText(opfDoc, 'title') || file.name?.replace(/\.epub$/i, '') || 'Título desconocido';
     const author = this._getXmlText(opfDoc, 'creator') || 'Autor desconocido';
     const description = this._getXmlText(opfDoc, 'description') || '';
     const publisher = this._getXmlText(opfDoc, 'publisher') || 'Publicación independiente';

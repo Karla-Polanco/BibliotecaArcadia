@@ -69,12 +69,12 @@ export class CollectionManager {
   }
 
   /**
-   * Obtiene todas las colecciones creadas por el usuario.
+   * Obtiene la lista de colecciones creadas por el usuario.
+   * @returns {Promise<Array<Object>>}
    */
   static async getAllCollections() {
     try {
       const all = await dbManager.getAll('collections');
-      // Filtrar cualquier residuo de prueba si existiese
       const testIds = ['col-filosofia', 'col-ficcion', 'col-clasicos'];
       return (all || []).filter(c => !testIds.includes(c.id));
     } catch (e) {
@@ -83,7 +83,11 @@ export class CollectionManager {
   }
 
   /**
-   * Crea una nueva colección personalizada.
+   * Crea una nueva colección personalizada con nombre, descripción y color distintivo.
+   * @param {string} name - Nombre de la colección
+   * @param {string} [description=''] - Descripción opcional
+   * @param {string} [color='#5B4CC4'] - Código hexadecimal de color
+   * @returns {Promise<Object>} Colección creada
    */
   static async createCollection(name, description = '', color = '#5B4CC4') {
     if (!name || !name.trim()) throw new Error('El nombre de la colección es obligatorio.');
@@ -103,7 +107,10 @@ export class CollectionManager {
   }
 
   /**
-   * Actualiza los datos de una colección.
+   * Actualiza el nombre, descripción o color de una colección existente.
+   * @param {string} id - ID de la colección
+   * @param {Object} updates - Campos a modificar
+   * @returns {Promise<Object>}
    */
   static async updateCollection(id, updates) {
     const existing = await dbManager.get('collections', id);
@@ -121,11 +128,12 @@ export class CollectionManager {
   }
 
   /**
-   * Elimina una colección y todas sus relaciones con libros en cascada de forma 100% segura.
-   * El store usa keyPath compuesto [bookId, collectionId]: se borra por clave compuesta.
+   * Elimina una colección y todas sus relaciones en cascada de la tabla intermedia.
+   * @param {string} id - ID de la colección
+   * @returns {Promise<boolean>}
    */
   static async deleteCollection(id) {
-    // 1. Eliminar relaciones asociadas en book_collections vía índice
+    // 1. Purgar relaciones asociadas en book_collections
     try {
       let rels = [];
       try {
@@ -143,22 +151,23 @@ export class CollectionManager {
       console.warn('Aviso limpiando relaciones de colección:', err);
     }
 
-    // 2. Eliminar la colección directamente del store 'collections'
+    // 2. Eliminar la colección de la base de datos
     await dbManager.delete('collections', id);
 
-    // 3. Notificar a toda la aplicación
+    // 3. Notificar a los suscriptores
     appState.notify('collectionDeleted', id);
     return true;
   }
 
   /**
-   * Asocia un libro a una colección (evita duplicados).
-   * No usa campo `id`: la clave es [bookId, collectionId].
+   * Asocia un libro a una colección evitando duplicidades.
+   * @param {string} bookId - ID del libro
+   * @param {string} collectionId - ID de la colección
    */
   static async addBookToCollection(bookId, collectionId) {
     if (!bookId || !collectionId) return;
     try {
-      // Comprobación rápida por índice
+      // Comprobar existencia previa mediante índice
       let exists = false;
       try {
         const byBook = await dbManager.getByIndex('book_collections', 'by_book', bookId);
@@ -183,7 +192,9 @@ export class CollectionManager {
   }
 
   /**
-   * Desasocia un libro de una colección.
+   * Desvincula un libro de una colección específica.
+   * @param {string} bookId - ID del libro
+   * @param {string} collectionId - ID de la colección
    */
   static async removeBookFromCollection(bookId, collectionId) {
     if (!bookId || !collectionId) return;
@@ -196,7 +207,9 @@ export class CollectionManager {
   }
 
   /**
-   * Obtiene las colecciones a las que pertenece un libro (vía índice).
+   * Obtiene todas las colecciones a las que pertenece un libro.
+   * @param {string} bookId - ID del libro
+   * @returns {Promise<Array<Object>>}
    */
   static async getCollectionsForBook(bookId) {
     try {
@@ -216,7 +229,9 @@ export class CollectionManager {
   }
 
   /**
-   * Obtiene todos los libros asignados a una colección (vía índice).
+   * Obtiene la lista completa de libros asignados a una colección.
+   * @param {string} collectionId - ID de la colección
+   * @returns {Promise<Array<Object>>}
    */
   static async getBooksInCollection(collectionId) {
     try {
@@ -236,7 +251,8 @@ export class CollectionManager {
   }
 
   /**
-   * Obtiene el número de libros contenidos en cada colección.
+   * Retorna un mapa con el conteo de libros asociados a cada ID de colección.
+   * @returns {Promise<Object<string, number>>}
    */
   static async getCollectionCounts() {
     try {

@@ -16,7 +16,7 @@ export class ScaleManager {
   static currentScale = ScaleManager.DEFAULT_SCALE;
 
   /**
-   * Inicializa la escala guardada en localStorage o la predeterminada.
+   * Inicializa la escala guardada en localStorage o la predeterminada del sistema.
    */
   static init() {
     try {
@@ -35,9 +35,9 @@ export class ScaleManager {
   }
 
   /**
-   * Aplica la escala al elemento raíz del documento.
+   * Aplica la escala calculada en píxeles al elemento raíz del documento.
    * @param {number} percent - Porcentaje de escala (ej. 90, 100, 115, 130)
-   * @param {boolean} persist - Si debe guardarse en localStorage
+   * @param {boolean} [persist=true] - Si debe guardarse en localStorage
    */
   static applyScale(percent, persist = true) {
     const scale = Math.max(this.MIN_SCALE, Math.min(this.MAX_SCALE, Math.round(percent)));
@@ -56,9 +56,9 @@ export class ScaleManager {
     this.updateControlsUI();
   }
 
-/**
-    * Sincroniza los controles del modal de Ajustes con la escala activa.
-    */
+  /**
+   * Sincroniza los controles del modal de Ajustes con la escala activa.
+   */
   static updateControlsUI() {
     const labelEl = document.getElementById('label-scale-percent');
     if (labelEl) {
@@ -71,8 +71,8 @@ export class ScaleManager {
   }
 
   /**
-    * Vincula los controles de escala.
-    */
+   * Vincula los controles interactivos de incremento y decremento de escala.
+   */
   static initControls() {
     this.updateControlsUI();
     const btnDecrease = document.getElementById('btn-scale-decrease');

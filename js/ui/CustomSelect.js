@@ -45,7 +45,7 @@ export class CustomSelect {
     const chev = doc.createElement('span');
     chev.className = 'cselect-chev';
     chev.setAttribute('aria-hidden', 'true');
-    chev.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>';
+    chev.innerHTML = '<svg aria-hidden="true"><use href="./assets/icons/icons.svg#chevron-down"></use></svg>';
 
     btn.append(label, chev);
 
@@ -54,7 +54,7 @@ export class CustomSelect {
     menu.setAttribute('role', 'listbox');
     menu.hidden = true;
 
-    const CHECK_SVG = '<svg class="cselect-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+    const CHECK_SVG = '<svg class="cselect-check" aria-hidden="true"><use href="./assets/icons/icons.svg#check"></use></svg>';
 
     const syncFromNative = () => {
       const opt = selectEl.selectedOptions.length > 0 ? selectEl.selectedOptions[0] : null;

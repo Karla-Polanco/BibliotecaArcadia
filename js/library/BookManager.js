@@ -56,14 +56,17 @@ export class BookManager {
   }
 
   /**
-   * Retorna todos los libros disponibles.
+   * Retorna la lista en memoria de todos los libros cargados.
+   * @returns {Array<Object>}
    */
   getAllBooks() {
     return this.books;
   }
 
   /**
-   * Obtiene un libro por su ID.
+   * Obtiene la entidad de un libro desde IndexedDB por su ID.
+   * @param {string} id - Identificador único del libro
+   * @returns {Promise<Object|null>}
    */
   async getBook(id) {
     return await dbManager.get('books', id);
@@ -71,20 +74,20 @@ export class BookManager {
 
   /**
    * Importa un archivo EPUB validándolo, parseando metadatos y guardándolo en IndexedDB.
-   * @param {File|Blob} file - Archivo EPUB
+   * @param {File|Blob} file - Archivo EPUB subido
    * @returns {Promise<Object>} Entidad Libro creada
    */
   async importEpub(file) {
-    // 1. Validar integridad y formato
+    // 1. Validar integridad de cabecera y límites de archivo
     const validation = await EPUBValidator.validate(file);
     if (!validation.valid) {
       throw new Error(validation.error || 'Archivo EPUB no válido.');
     }
 
-    // 2. Parsear metadatos y extraer portada
+    // 2. Parsear metadatos y extraer portada desde el paquete ZIP
     const newBook = await EPUBParser.parse(file);
 
-    // 3. Guardar en IndexedDB
+    // 3. Persistir libro binario y metadatos en IndexedDB
     await dbManager.put('books', newBook);
 
     // 4. Inicializar registro de progreso por defecto
@@ -100,7 +103,6 @@ export class BookManager {
     });
 
     // 5. Inicializar configuración visual personalizada por libro
-    // Alineada con ReaderSettings.DEFAULT_SETTINGS (sin campos muertos)
     await dbManager.put('readerSettings', {
       bookId: newBook.id,
       fontFamily: 'Literata',
@@ -123,7 +125,10 @@ export class BookManager {
   }
 
   /**
-   * Actualiza propiedades de un libro (ej. título, autor, status).
+   * Actualiza propiedades editables de un libro (título, autor, estado, etc.).
+   * @param {string} id - ID del libro
+   * @param {Object} fields - Campos a modificar
+   * @returns {Promise<Object>}
    */
   async updateBook(id, fields) {
     const book = await dbManager.get('books', id);
@@ -143,6 +148,8 @@ export class BookManager {
 
   /**
    * Alterna el estado de favorito de un libro.
+   * @param {string} id - ID del libro
+   * @returns {Promise<Object>}
    */
   async toggleFavorite(id) {
     const book = this.books.find(b => b.id === id);
@@ -153,15 +160,16 @@ export class BookManager {
   }
 
   /**
-   * Elimina un libro de IndexedDB y purga sus registros relacionales.
-   * Limpia progreso, ajustes, anotaciones, notas, vocabulario,
-   * relaciones N:M, historial de búsqueda y de posiciones.
+   * Elimina un libro de IndexedDB y purga en cascada todos sus registros relacionales
+   * (progreso, ajustes, anotaciones, notas, vocabulario, enlaces a colecciones e historiales).
+   * @param {string} id - ID del libro a eliminar
+   * @returns {Promise<boolean>}
    */
   async deleteBook(id) {
-    // Eliminar libro
+    // 1. Eliminar registro principal del libro
     await dbManager.delete('books', id);
 
-    // Eliminar progreso y ajustes asociados
+    // 2. Purgar progreso, ajustes visuales y datos asociados
     try {
       await dbManager.delete('readingProgress', id).catch(() => {});
       await dbManager.delete('readerSettings', id).catch(() => {});

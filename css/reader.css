@@ -38,7 +38,7 @@
  */
 body.reader-open,
 html.reader-open {
-  overflow: hidden !important;
+  overflow: hidden;
 }
 
 .reader-view,
@@ -280,7 +280,7 @@ html.reader-open {
 
 #reader-content .epub-container::-webkit-scrollbar,
 #reader-content .epub-view::-webkit-scrollbar {
-  display: none !important;
+  display: none;
 }
 
 /* Indicador de Carga */
@@ -436,7 +436,7 @@ html.reader-open {
   opacity: 0;
   visibility: hidden;
   transition: opacity var(--transition-normal);
-  pointer-events: none !important;
+  pointer-events: none;
   z-index: 10;
   box-sizing: border-box;
 }
@@ -532,8 +532,13 @@ html.reader-open {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.toc-content-list::-webkit-scrollbar {
+  display: none;
+  width: 0;
 }
 
 .toc-item {
@@ -664,17 +669,13 @@ html.reader-open {
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--transition-normal), transform var(--transition-normal);
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .reader-settings-panel::-webkit-scrollbar {
-  width: 5px;
-}
-
-.reader-settings-panel::-webkit-scrollbar-thumb {
-  background-color: var(--color-border);
-  border-radius: var(--radius-full);
+  display: none;
+  width: 0;
 }
 
 .reader-settings-panel.open {
@@ -784,20 +785,20 @@ html.reader-open {
 
 /* --- 1. TIPOGRAFÍA: tarjetas idénticas a Tema de Lectura --- */
 .typography-grid {
-  display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
-  gap: 12px 8px !important;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 8px;
 }
 .typography-grid .setting-pill-btn {
   position: relative;
   width: 100%;
-  height: auto !important;
-  min-height: 0 !important;
+  height: auto;
+  min-height: 0;
   box-sizing: border-box;
-  padding: 0 !important;
-  border: none !important;
-  border-radius: 0 !important;
-  background: transparent !important;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
   color: var(--color-text-muted);
   display: flex;
   flex-direction: column;
@@ -808,7 +809,7 @@ html.reader-open {
   font-family: inherit;
   user-select: none;
   font-size: 0.80rem;
-  box-shadow: none !important;
+  box-shadow: none;
   text-align: center;
   white-space: normal;
   overflow: visible;
@@ -821,7 +822,7 @@ html.reader-open {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  font-family: inherit !important;
+  font-family: inherit;
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 1;
@@ -835,16 +836,16 @@ html.reader-open {
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
 }
 
-.setting-pill-btn.font-literata .font-aa { font-family: 'Literata', Georgia, serif !important; }
-.setting-pill-btn.font-source-serif .font-aa { font-family: 'Source Serif 4', Georgia, serif !important; }
-.setting-pill-btn.font-lora .font-aa { font-family: 'Lora', Georgia, serif !important; }
-.setting-pill-btn.font-garamond .font-aa { font-family: 'EB Garamond', Garamond, serif !important; }
-.setting-pill-btn.font-playfair .font-aa { font-family: 'Playfair Display', Georgia, serif !important; }
-.setting-pill-btn.font-atkinson .font-aa { font-family: 'Atkinson Hyperlegible', sans-serif !important; }
-.setting-pill-btn.font-poppins .font-aa { font-family: 'Poppins', sans-serif !important; }
-.setting-pill-btn.font-inter .font-aa { font-family: 'Inter', sans-serif !important; }
-.setting-pill-btn.font-roboto .font-aa { font-family: 'Roboto', sans-serif !important; }
-.setting-pill-btn.font-opendyslexic .font-aa { font-family: 'OpenDyslexic', 'Lexend', sans-serif !important; }
+.setting-pill-btn.font-literata .font-aa { font-family: 'Literata', Georgia, serif; }
+.setting-pill-btn.font-source-serif .font-aa { font-family: 'Source Serif 4', Georgia, serif; }
+.setting-pill-btn.font-lora .font-aa { font-family: 'Lora', Georgia, serif; }
+.setting-pill-btn.font-garamond .font-aa { font-family: 'EB Garamond', Garamond, serif; }
+.setting-pill-btn.font-playfair .font-aa { font-family: 'Playfair Display', Georgia, serif; }
+.setting-pill-btn.font-atkinson .font-aa { font-family: 'Atkinson Hyperlegible', sans-serif; }
+.setting-pill-btn.font-poppins .font-aa { font-family: 'Poppins', sans-serif; }
+.setting-pill-btn.font-inter .font-aa { font-family: 'Inter', sans-serif; }
+.setting-pill-btn.font-roboto .font-aa { font-family: 'Roboto', sans-serif; }
+.setting-pill-btn.font-opendyslexic .font-aa { font-family: 'OpenDyslexic', 'Lexend', sans-serif; }
 .typography-grid .setting-pill-btn .font-aa::before {
   content: '';
   position: absolute;
@@ -885,8 +886,8 @@ html.reader-open {
   padding: 0 2px;
 }
 .typography-grid .setting-pill-btn:hover {
-  background: transparent !important;
-  border: none !important;
+  background: transparent;
+  border: none;
   color: var(--color-text);
   transform: translateY(-1px);
 }
@@ -894,9 +895,9 @@ html.reader-open {
   filter: brightness(0.97);
 }
 .typography-grid .setting-pill-btn.active {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
+  background: transparent;
+  border: none;
+  box-shadow: none;
   transform: translateY(-1px);
 }
 .typography-grid .setting-pill-btn.active .font-aa {
@@ -933,7 +934,7 @@ html.reader-open {
 
 /* --- 2. SEGMENTED CONTROLS (Grosor / Interlineado / Alineación) --- */
 .segmented-control {
-  display: flex !important;
+  display: flex;
   background-color: var(--color-surface-secondary);
   border: 1px solid var(--color-border-subtle);
   border-radius: 999px;
@@ -1024,9 +1025,9 @@ html.reader-open {
    -------------------------------------------------------------------------- */
 
 .reader-theme-swatches {
-  display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
-  gap: 12px 8px !important;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 8px;
 }
 
 /* Tarjetas grandes con miniatura, etiqueta debajo y check de selección */
@@ -1132,7 +1133,7 @@ html.reader-open {
 .reader-theme-chip,
 .reader-theme-chip *,
 .reader-theme-name {
-  text-decoration: none !important;
+  text-decoration: none;
 }
 
 /* Etiqueta debajo de la tarjeta */
@@ -1250,9 +1251,9 @@ html.reader-open {
 }
 
 .search-input-wrapper:focus-within {
-  border-color: var(--color-border-focus) !important;
-  background-color: var(--color-surface) !important;
-  box-shadow: var(--focus-ring) !important;
+  border-color: var(--color-border-focus);
+  background-color: var(--color-surface);
+  box-shadow: var(--focus-ring);
 }
 
 .search-icon-glass {
@@ -1266,15 +1267,15 @@ html.reader-open {
 .search-input-wrapper input:focus,
 .search-input-wrapper input:focus-visible {
   flex: 1;
-  height: 100% !important;
-  background: transparent !important;
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-  font-size: 0.92rem !important;
-  color: var(--color-text) !important;
-  padding: 0 !important;
-  margin: 0 !important;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  font-size: 0.92rem;
+  color: var(--color-text);
+  padding: 0;
+  margin: 0;
 }
 
 .btn-search-clear {
@@ -1443,17 +1444,13 @@ html.reader-open {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .search-results-list::-webkit-scrollbar {
-  width: 5px;
-}
-
-.search-results-list::-webkit-scrollbar-thumb {
-  background-color: var(--color-border);
-  border-radius: var(--radius-full);
+  display: none;
+  width: 0;
 }
 
 /* Tarjeta de Coincidencia de Resultado (Forma suave) */
@@ -1838,7 +1835,7 @@ html.reader-open {
   }
 
   #btn-reader-fullscreen {
-    display: none !important;
+    display: none;
   }
 
   .reader-viewport {
@@ -1884,7 +1881,7 @@ html.reader-open {
 
   .typography-grid,
   .reader-theme-swatches {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
 
@@ -1918,9 +1915,9 @@ html.reader-open {
   }
 
   .search-input-wrapper input {
-    font-size: 0.9rem !important;
-    min-width: 0 !important;
-    flex: 1 1 0% !important;
+    font-size: 0.9rem;
+    min-width: 0;
+    flex: 1 1 0%;
   }
 
   #btn-submit-reader-search {
@@ -1943,11 +1940,11 @@ html.reader-open {
   }
 
   .menu-color-btn {
-    width: 24px !important;
-    height: 24px !important;
-    min-width: 24px !important;
-    min-height: 24px !important;
-    border-width: 1.5px !important;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    border-width: 1.5px;
   }
 
   .floating-btn {
@@ -1976,10 +1973,10 @@ html.reader-open {
 
 @media (max-width: 640px) and (hover: none) and (pointer: coarse) {
   .menu-color-btn {
-    width: 26px !important;
-    height: 26px !important;
-    min-width: 26px !important;
-    min-height: 26px !important;
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    min-height: 26px;
   }
 
   .floating-btn {

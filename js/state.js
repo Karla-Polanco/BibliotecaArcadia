@@ -5,6 +5,12 @@
  * Maneja el estado global de la interfaz sin acoplamiento a frameworks.
  */
 
+/**
+ * Lee de forma segura una clave de localStorage con valor de respaldo si falla.
+ * @param {string} key
+ * @param {*} [fallback=null]
+ * @returns {string|null}
+ */
 function safeGet(key, fallback = null) {
   try {
     const v = localStorage.getItem(key);
@@ -14,6 +20,11 @@ function safeGet(key, fallback = null) {
   }
 }
 
+/**
+ * Guarda de forma segura una clave en localStorage ignorando errores de cuota o privacidad.
+ * @param {string} key
+ * @param {string} value
+ */
 function safeSet(key, value) {
   try {
     localStorage.setItem(key, value);
@@ -23,14 +34,15 @@ function safeSet(key, value) {
 export class AppState {
   constructor() {
     this.state = {
-      activeView: 'library',       // 'library', 'current', 'favorites', 'annotations', 'vocabulary', 'settings'
-      activeFilter: safeGet('arcadia_active_filter', 'all') || 'all', // 'all', 'to_read', 'reading', 'completed', 'favorites'
-      viewMode: safeGet('arcadia_view_mode', 'grid') || 'grid', // 'grid' | 'list'
-      sortBy: 'recent',            // 'recent', 'title', 'author', 'progress'
-      searchQuery: '',
-      currentReadingId: null,  // ID del libro en lectura activa (null = ninguno)
+      activeView: 'library',       // Vista activa: 'library', 'current', 'favorites', 'annotations', 'vocabulary', 'settings'
+      activeFilter: safeGet('arcadia_active_filter', 'all') || 'all', // Filtro de catálogo: 'all', 'to_read', 'reading', 'completed', 'favorites' o 'collection:ID'
+      viewMode: safeGet('arcadia_view_mode', 'grid') || 'grid', // Modo de presentación: 'grid' o 'list'
+      sortBy: 'recent',            // Criterio de ordenación: 'recent', 'title', 'author', 'progress'
+      searchQuery: '',             // Término de búsqueda textual en biblioteca
+      currentReadingId: null,      // ID del libro en lectura activa (null = ninguno)
       selectedTheme: (()=>{
         let t = safeGet('arcadia_theme', 'light') || 'light';
+        // Normalización y migración retrocompatible de temas antiguos
         if (t === 'cerulean-light' || t === 'boreal-blue') t = 'navy-summit';
         if (t === 'lavender-light' || t === 'twilight-lavender') t = 'plum';
         if (t === 'clear-sky' || t === 'classic-ivory') t = 'cozy-brown';
@@ -41,23 +53,29 @@ export class AppState {
       })()
     };
 
+    // Mapa de suscriptores reactivos: key -> Set<callback>
     this.subscribers = new Map();
   }
 
   /**
-   * Obtiene un valor del estado.
+   * Obtiene el valor actual de una clave del estado reactivo.
+   * @param {string} key
+   * @returns {*}
    */
   get(key) {
     return this.state[key];
   }
 
   /**
-   * Actualiza una propiedad del estado y notifica a los suscriptores.
+   * Actualiza una propiedad del estado, persiste cambios clave y notifica a suscriptores.
+   * @param {string} key
+   * @param {*} value
    */
   set(key, value) {
     if (this.state[key] === value) return;
     this.state[key] = value;
 
+    // Sincronización persistente en almacenamiento local
     if (key === 'viewMode') {
       safeSet('arcadia_view_mode', value);
     }
@@ -72,7 +90,10 @@ export class AppState {
   }
 
   /**
-   * Suscribe un callback a cambios de una propiedad específica.
+   * Registra un callback que reacciona a cambios de una clave específica.
+   * @param {string} key
+   * @param {Function} callback - Recibe (nuevoValor, estadoCompleto)
+   * @returns {Function} Función para cancelar la suscripción
    */
   subscribe(key, callback) {
     if (!this.subscribers.has(key)) {
@@ -86,7 +107,9 @@ export class AppState {
   }
 
   /**
-   * Notifica a los suscriptores.
+   * Emite la notificación de cambio a todos los observadores registrados.
+   * @param {string} key
+   * @param {*} value
    */
   notify(key, value) {
     if (this.subscribers.has(key)) {
@@ -101,5 +124,5 @@ export class AppState {
   }
 }
 
-// Instancia singleton para toda la aplicación
+// Instancia singleton compartida en toda la aplicación
 export const appState = new AppState();

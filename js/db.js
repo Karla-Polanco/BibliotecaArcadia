@@ -142,7 +142,10 @@ export class DatabaseManager {
   }
 
   /**
-   * Obtiene un registro por clave primaria.
+   * Obtiene un registro por su clave primaria.
+   * @param {string} storeName - Nombre del almacén de objetos
+   * @param {IDBValidKey} key - Clave primaria del registro
+   * @returns {Promise<*>}
    */
   async get(storeName, key) {
     const db = await this.init();
@@ -157,7 +160,9 @@ export class DatabaseManager {
   }
 
   /**
-   * Obtiene todos los registros de una tienda.
+   * Obtiene todos los registros almacenados en una tienda de objetos.
+   * @param {string} storeName - Nombre del almacén de objetos
+   * @returns {Promise<Array<*>>}
    */
   async getAll(storeName) {
     const db = await this.init();
@@ -172,7 +177,10 @@ export class DatabaseManager {
   }
 
   /**
-   * Inserta o actualiza un registro.
+   * Inserta o actualiza un registro en la tienda especificada.
+   * @param {string} storeName - Nombre del almacén de objetos
+   * @param {*} value - Objeto a guardar
+   * @returns {Promise<IDBValidKey>} Clave generada o asignada
    */
   async put(storeName, value) {
     const db = await this.init();
@@ -187,7 +195,10 @@ export class DatabaseManager {
   }
 
   /**
-   * Elimina un registro por clave primaria.
+   * Elimina un registro según su clave primaria.
+   * @param {string} storeName - Nombre del almacén de objetos
+   * @param {IDBValidKey} key - Clave del registro a eliminar
+   * @returns {Promise<boolean>}
    */
   async delete(storeName, key) {
     const db = await this.init();
@@ -202,7 +213,11 @@ export class DatabaseManager {
   }
 
   /**
-   * Consulta registros utilizando un índice específico.
+   * Consulta registros utilizando un índice secundario.
+   * @param {string} storeName - Nombre del almacén de objetos
+   * @param {string} indexName - Nombre del índice
+   * @param {IDBValidKey|IDBKeyRange} queryValue - Valor buscado
+   * @returns {Promise<Array<*>>}
    */
   async getByIndex(storeName, indexName, queryValue) {
     const db = await this.init();
@@ -218,7 +233,9 @@ export class DatabaseManager {
   }
 
   /**
-   * Cuenta la cantidad de registros en una tienda.
+   * Retorna el recuento total de registros en una tienda de objetos.
+   * @param {string} storeName - Nombre del almacén de objetos
+   * @returns {Promise<number>}
    */
   async count(storeName) {
     const db = await this.init();
@@ -233,7 +250,9 @@ export class DatabaseManager {
   }
 
   /**
-   * Limpia todos los registros de una tienda.
+   * Elimina todos los registros de una tienda de objetos.
+   * @param {string} storeName - Nombre del almacén de objetos
+   * @returns {Promise<boolean>}
    */
   async clear(storeName) {
     const db = await this.init();
@@ -248,5 +267,5 @@ export class DatabaseManager {
   }
 }
 
-// Instancia singleton compartida
+// Instancia singleton compartida de la base de datos
 export const dbManager = new DatabaseManager();
