@@ -2019,7 +2019,10 @@ textarea.vocab-modal-field {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: auto;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 /* Toast Notifications — sistema unificado (sin inline styles) */

@@ -119,6 +119,11 @@
     line-height: 1.15;
     text-align: center;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    max-width: 100%;
+    flex-shrink: 1;
     color: var(--brand-wordmark-color, var(--color-primary-light));
     display: inline-block;
     vertical-align: middle;

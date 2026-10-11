@@ -57,6 +57,7 @@
   pointer-events: none;
   flex: 1;
   min-width: 0;
+  overflow: hidden;
 }
 
 
@@ -72,23 +73,41 @@
   flex: 0 0 auto;
   width: auto;
   max-width: none;
-  background-color: color-mix(in srgb, var(--color-primary) 12%, var(--color-surface));
-  color: var(--color-primary);
-  border: 1px solid color-mix(in srgb, var(--color-primary) 25%, transparent);
-  box-shadow: none;
-  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border: 1px solid var(--color-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
 }
 
-#mobile-upload-trigger:hover,
+#mobile-upload-trigger:hover {
+  background-color: var(--color-primary-dark);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary-dark);
+  box-shadow: var(--shadow-sm);
+}
+
 #mobile-upload-trigger:active {
-  background-color: color-mix(in srgb, var(--color-primary) 20%, var(--color-surface));
-  color: var(--color-primary);
-  border-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
+  transform: scale(var(--press-scale, 0.97));
+  background-color: var(--color-primary-dark);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary-dark);
+}
+
+#mobile-upload-trigger:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
 }
 
 #mobile-upload-trigger svg {
   width: 13px;
   height: 13px;
+  color: var(--color-text-inverse);
+}
+
+#mobile-upload-trigger:hover svg,
+#mobile-upload-trigger:active svg {
+  color: var(--color-text-inverse);
 }
 
 /* Bottom Navigation Bar fija (Móvil) — glass premium con safe-area */
