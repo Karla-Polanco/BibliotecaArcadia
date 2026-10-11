@@ -1,20 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <!-- ==========================================================================
-       ARCADIA DESIGN SYSTEM - CATÁLOGO DE ICONOS SVG (SPRITE SHEET)
-       Todos los iconos están organizados con identificadores (<symbol id="...">)
-       y comentarios descriptivos para facilitar su mantenimiento y reutilización.
+       ARCADIA DESIGN SYSTEM - CATÃLOGO DE ICONOS SVG (SPRITE SHEET)
+       Todos los iconos estÃ¡n organizados con identificadores (<symbol id="...">)
+       y comentarios descriptivos para facilitar su mantenimiento y reutilizaciÃ³n.
        Uso: <svg class="icon-md" aria-hidden="true"><use href="./assets/icons/icons.svg#id"></use></svg>
        ========================================================================== -->
 
-  <!-- ========================================================================== -->
-  <!-- Icono: Destello Arcadia (Wordmark Sparkle) (Destello de 4 puntas de la marca Arcadia) -->
-  <!-- ========================================================================== -->
-  <symbol id="arcSparkle" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 1.5C12.9 8.2 15.8 11.1 22.5 12C15.8 12.9 12.9 15.8 12 22.5C11.1 15.8 8.2 12.9 1.5 12C8.2 11.1 11.1 8.2 12 1.5Z" fill="currentColor"/>
-  </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Menú Hamburguesa (Apertura del cajón lateral en móvil) -->
+  <!-- Icono: Menú Hamburguesa (Apertura del cajÃ³n lateral en mÃ³vil) -->
   <!-- ========================================================================== -->
   <symbol id="menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M4 6h16M4 12h16M4 18h16"/>
@@ -100,7 +94,7 @@
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Lápiz / Subrayado (Rotulador) (Icono de notas y anotaciones) -->
+  <!-- Icono: LÃ¡piz / Subrayado (Rotulador) (Icono de notas y anotaciones) -->
   <!-- ========================================================================== -->
   <symbol id="pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
@@ -114,7 +108,7 @@
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Ajustes / Configuración (Engranaje de configuración de la aplicación) -->
+  <!-- Icono: Ajustes / ConfiguraciÃ³n (Engranaje de configuraciÃ³n de la aplicaciÃ³n) -->
   <!-- ========================================================================== -->
   <symbol id="settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -128,7 +122,7 @@
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Añadir / Crear (+) (Signo más para crear elementos o colecciones) -->
+  <!-- Icono: AÃ±adir / Crear (+) (Signo mÃ¡s para crear elementos o colecciones) -->
   <!-- ========================================================================== -->
   <symbol id="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
@@ -156,63 +150,63 @@
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Chevron Izquierda (Flecha hacia la izquierda para navegación anterior) -->
+  <!-- Icono: Chevron Izquierda (Flecha hacia la izquierda para navegaciÃ³n anterior) -->
   <!-- ========================================================================== -->
   <symbol id="chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d="M15 19l-7-7 7-7"/>
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Chevron Derecha (Flecha hacia la derecha para navegación siguiente) -->
+  <!-- Icono: Chevron Derecha (Flecha hacia la derecha para navegaciÃ³n siguiente) -->
   <!-- ========================================================================== -->
   <symbol id="chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d="M9 5l7 7-7 7"/>
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Buscar (Lupa) (Icono de búsqueda y filtro) -->
+  <!-- Icono: Buscar (Lupa) (Icono de bÃºsqueda y filtro) -->
   <!-- ========================================================================== -->
   <symbol id="search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M21 21l-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"/>
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Vista Cuadrícula (Grid) (Conmutador de visualización en tarjetas de biblioteca) -->
+  <!-- Icono: Vista CuadrÃ­cula (Grid) (Conmutador de visualizaciÃ³n en tarjetas de biblioteca) -->
   <!-- ========================================================================== -->
   <symbol id="view-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M4 6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6zM14 6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2V6zM4 16a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2zM14 16a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-2z"/>
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Vista Lista (Conmutador de visualización en lista de biblioteca) -->
+  <!-- Icono: Vista Lista (Conmutador de visualizaciÃ³n en lista de biblioteca) -->
   <!-- ========================================================================== -->
   <symbol id="view-list" viewBox="0 0 612 612" fill="currentColor">
     <path d="M59.226,88.839C26.513,88.839,0,115.352,0,148.064s26.513,59.226,59.226,59.226s59.226-26.514,59.226-59.226 S91.938,88.839,59.226,88.839z M59.226,246.774C26.513,246.774,0,273.288,0,306c0,32.713,26.513,59.226,59.226,59.226 s59.226-26.513,59.226-59.226C118.452,273.288,91.938,246.774,59.226,246.774z M59.226,404.71C26.513,404.71,0,431.223,0,463.936 c0,32.712,26.513,59.226,59.226,59.226s59.226-26.514,59.226-59.226C118.452,431.223,91.938,404.71,59.226,404.71z M197.419,187.548h375.096c21.815,0,39.484-17.669,39.484-39.484s-17.669-39.484-39.484-39.484H197.419 c-21.815,0-39.484,17.669-39.484,39.484S175.604,187.548,197.419,187.548z M197.419,345.484h375.096 c21.815,0,39.484-17.669,39.484-39.484s-17.669-39.484-39.484-39.484H197.419c-21.815,0-39.484,17.669-39.484,39.484 S175.604,345.484,197.419,345.484z M197.419,503.419h375.096c21.815,0,39.484-17.669,39.484-39.484s-17.669-39.484-39.484-39.484 H197.419c-21.815,0-39.484,17.669-39.484,39.484S175.604,503.419,197.419,503.419z"/>
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Volver Atrás (Flecha) (Volver a la biblioteca desde el lector) -->
+  <!-- Icono: Volver AtrÃ¡s (Flecha) (Volver a la biblioteca desde el lector) -->
   <!-- ========================================================================== -->
   <symbol id="arrow-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Ir a Sección / Adelante (Navegar hacia adelante o saltar a sección) -->
+  <!-- Icono: Ir a SecciÃ³n / Adelante (Navegar hacia adelante o saltar a secciÃ³n) -->
   <!-- ========================================================================== -->
   <symbol id="arrow-forward" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
     <path d="M14 5l7 7m0 0l-7 7m7-7H3"/>
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Tabla de Contenidos (Capítulos) (Acceso al índice y lista de capítulos) -->
+  <!-- Icono: Tabla de Contenidos (CapÃ­tulos) (Acceso al Ã­ndice y lista de capÃ­tulos) -->
   <!-- ========================================================================== -->
   <symbol id="toc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d="M4 6h16M4 12h16M4 18h7"/>
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Deslizadores / Ajustes de Lectura (Configuración de tipografía, margen e interlineado) -->
+  <!-- Icono: Deslizadores / Ajustes de Lectura (ConfiguraciÃ³n de tipografÃ­a, margen e interlineado) -->
   <!-- ========================================================================== -->
   <symbol id="sliders" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
@@ -233,35 +227,35 @@
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Alinear a la Izquierda (Alineación de texto en el lector) -->
+  <!-- Icono: Alinear a la Izquierda (AlineaciÃ³n de texto en el lector) -->
   <!-- ========================================================================== -->
   <symbol id="align-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M4 6h16M4 10h10M4 14h14M4 18h8"/>
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Justificar Texto (Alineación justificada en el lector) -->
+  <!-- Icono: Justificar Texto (AlineaciÃ³n justificada en el lector) -->
   <!-- ========================================================================== -->
   <symbol id="align-justify" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Centrar Texto (Alineación centrada en el lector) -->
+  <!-- Icono: Centrar Texto (AlineaciÃ³n centrada en el lector) -->
   <!-- ========================================================================== -->
   <symbol id="align-center" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M4 6h16M6 10h12M5 14h14M8 18h8"/>
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Alinear a la Derecha (Alineación a la derecha en el lector) -->
+  <!-- Icono: Alinear a la Derecha (AlineaciÃ³n a la derecha en el lector) -->
   <!-- ========================================================================== -->
   <symbol id="align-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M4 6h16M10 10h10M6 14h14M12 18h8"/>
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Papelera / Eliminar (Safacón / cubo de basura para borrar libros o notas) -->
+  <!-- Icono: Papelera / Eliminar (SafacÃ³n / cubo de basura para borrar libros o notas) -->
   <!-- ========================================================================== -->
   <symbol id="trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M3 6h18m-2 0v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6m3 0V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2m-6 5v6m4-6v6"/>
@@ -275,14 +269,14 @@
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Confirmar / Éxito (Check) (Palomita / marca de verificación o éxito) -->
+  <!-- Icono: Confirmar / Ã‰xito (Check) (Palomita / marca de verificaciÃ³n o Ã©xito) -->
   <!-- ========================================================================== -->
   <symbol id="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="20 6 9 17 4 12"/>
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Editar (Lápiz en documento) (Lápiz sobre recuadro del Design System) -->
+  <!-- Icono: Editar (LÃ¡piz en documento) (LÃ¡piz sobre recuadro del Design System) -->
   <!-- ========================================================================== -->
   <symbol id="edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
@@ -303,42 +297,30 @@
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Copiar al Portapapeles (Portapapeles con páginas duplicadas) -->
+  <!-- Icono: Copiar al Portapapeles (Portapapeles con pÃ¡ginas duplicadas) -->
   <!-- ========================================================================== -->
   <symbol id="copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Altavoz / Audio (Pronunciación de palabras de vocabulario) -->
+  <!-- Icono: Altavoz / Audio (PronunciaciÃ³n de palabras de vocabulario) -->
   <!-- ========================================================================== -->
   <symbol id="speaker" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Flecha Derecha Simple (Navegación secuencial a la derecha) -->
+  <!-- Icono: Flecha Derecha Simple (NavegaciÃ³n secuencial a la derecha) -->
   <!-- ========================================================================== -->
   <symbol id="arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
   </symbol>
 
-  <!-- ========================================================================== -->
-  <!-- Icono: Flecha Izquierda Simple (Navegación secuencial a la izquierda) -->
-  <!-- ========================================================================== -->
-  <symbol id="arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
-  </symbol>
+
 
   <!-- ========================================================================== -->
-  <!-- Icono: Corazón (Favoritos alternativo) (Icono de corazón para favoritos) -->
-  <!-- ========================================================================== -->
-  <symbol id="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-  </symbol>
-
-  <!-- ========================================================================== -->
-  <!-- Icono: Más Opciones (3 Puntos) (Tres puntos verticales para menús contextuales) -->
+  <!-- Icono: MÃ¡s Opciones (3 Puntos) (Tres puntos verticales para menÃºs contextuales) -->
   <!-- ========================================================================== -->
   <symbol id="more" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="19" r="1.5"/>
@@ -351,15 +333,9 @@
     <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
   </symbol>
 
-  <!-- ========================================================================== -->
-  <!-- Icono: Emblema EPUB (Logotipo oficial de formato de libro electrónico EPUB) -->
-  <!-- ========================================================================== -->
-  <symbol id="epub-logo" viewBox="0 0 64 64" fill="currentColor">
-    <path fill="currentColor" d="M57.063 20.218l1.029-1.698s.906-1.502.906-3.085c0-3.39-2.748-6.138-6.138-6.138-.636 0-1.25.1-1.83.279l.975-1.605s.908-1.502.908-3.085c0-3.39-2.749-6.139-6.139-6.139-1.92 0-3.618.892-4.743 2.274l-8.68 14.307c-.439-.089-.888-.146-1.352-.146-3.391 0-6.139 2.749-6.139 6.139 0 .638.106 1.247.288 1.823l-1.614-.979s-1.503-.907-3.085-.907c-3.39 0-6.138 2.748-6.138 6.138 0 1.919.892 3.618 2.274 4.743l14.316 8.683c-.092.446-.149.902-.149 1.374 0 3.391 2.748 6.139 6.138 6.139.638 0 1.251-.1 1.831-.28l-.98 1.616s-.908 1.502-.908 3.085c0 3.39 2.748 6.138 6.138 6.138 1.918 0 3.616-.893 4.743-2.275l8.679-14.305c.44.09.892.147 1.357.147 3.39 0 6.138-2.748 6.138-6.139 0-.638-.103-1.249-.282-1.828l1.609.983s1.502.906 3.085.906c3.39 0 6.138-2.748 6.138-6.138 0-1.921-.893-3.621-2.278-4.746l-14.308-8.686c.091-.439.146-.889.146-1.352 0-3.39-2.748-6.139-6.138-6.139-.636 0-1.246.104-1.822.284l14.312-23.593c.379-.623.367-1.127.146-1.428-.219-.297-.674-.471-1.393-.471-1.111 0-2.589.444-4.225 1.118l-15.669 6.452c.281 1.054.439 2.164.439 3.312 0 3.39-2.748 6.138-6.138 6.138-1.026 0-1.986-.263-2.842-.713l-6.444 15.666c-.675 1.637-1.119 3.114-1.119 4.226 0 .719.174 1.173.472 1.392.3.221.805.234 1.428-.145l23.585-14.314c-.179.577-.282 1.189-.282 1.826 0 3.39 2.748 6.138 6.138 6.138 1.148 0 2.259-.158 3.312-.439l6.453 15.67c.674 1.635 1.117 3.113 1.117 4.225 0 .719-.174 1.173-.471 1.393-.301.221-.806.233-1.428-.146l-23.587-14.314c.178-.576.28-1.187.28-1.825 0-3.39-2.748-6.139-6.138-6.139-1.148 0-2.258.158-3.312.439l-6.453-15.671c-.674-1.635-1.118-3.113-1.118-4.225 0-.719.174-1.174.471-1.394.301-.22.806-.232 1.429.146l23.588 14.313c-.179.578-.282 1.19-.282 1.828 0 3.39 2.748 6.138 6.138 6.138 1.027 0 1.988-.263 2.844-.715l6.443-15.664c.675-1.637 1.119-3.114 1.119-4.226 0-.719-.174-1.173-.472-1.392-.301-.222-.806-.234-1.429.145l-23.584 14.313c.18-.578.283-1.191.283-1.829 0-3.39-2.748-6.138-6.138-6.138-1.148 0-2.258.158-3.312.439l-6.453-15.67c-.675-1.636-1.118-3.114-1.118-4.225 0-.719.174-1.174.471-1.393.302-.222.807-.234 1.43.144l15.67-9.518-7.376 15.668c-.674 1.636-1.118 3.114-1.118 4.226 0 .719.174 1.173.471 1.393.302.221.806.233 1.429-.146l15.669-9.516-7.376 15.669c-.674 1.636-1.118 3.114-1.118 4.226 0 .719.174 1.173.471 1.392.302.222.806.234 1.429-.145l15.669-9.517 9.518 15.67c.379.623.367 1.127.146 1.428-.22.298-.675.472-1.393.472-1.112 0-2.589-.444-4.226-1.119l-15.669-6.452 7.376-15.669c.674-1.636 1.118-3.113 1.118-4.225 0-.719-.174-1.174-.471-1.393-.302-.222-.806-.234-1.43.144l-15.668 9.517 9.517 15.67c.379.623.367 1.127.146 1.428-.219.298-.674.472-1.392.472-1.112 0-2.59-.444-4.226-1.118l-15.67-6.453 7.376-15.668c.674-1.637 1.118-3.115 1.118-4.226 0-.719-.174-1.174-.471-1.394-.302-.221-.806-.233-1.43.146l-15.668 9.517 9.517 15.669c.379.624.367 1.127.146 1.428-.22.298-.674.472-1.392.472-1.112 0-2.59-.444-4.226-1.118l-6.453-15.67c-.675-1.636-1.119-3.114-1.119-4.226 0-.719.174-1.173.472-1.393.3-.221.805-.233 1.428.146l15.669 9.518 7.376-15.669"/>
-  </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Cajón / Colección / Archivo (Cajón archivador para colecciones) -->
+  <!-- Icono: CajÃ³n / ColecciÃ³n / Archivo (CajÃ³n archivador para colecciones) -->
   <!-- ========================================================================== -->
   <symbol id="archive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M19 11H5m14 0a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2m14 0V9a2 2 0 0 0-2-2M5 11V9a2 2 0 0 1 2-2m0 0V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2M7 7h10"/>
@@ -372,36 +348,24 @@
     <path d="M11 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-5m-1.414-9.414a2 2 0 1 1 2.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
   </symbol>
 
-  <!-- ========================================================================== -->
-  <!-- Icono: Deshacer / Restaurar (Flecha curva para restaurar estilos o notas) -->
-  <!-- ========================================================================== -->
-  <symbol id="undo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M3 10h10a5 5 0 0 1 5 5v2m0 0l-3-3m3 3l3-3"/>
-  </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Globo de Diálogo / Comentario (Bocadillo para comentarios de anotación) -->
+  <!-- Icono: Globo de DiÃ¡logo / Comentario (Bocadillo para comentarios de anotaciÃ³n) -->
   <!-- ========================================================================== -->
   <symbol id="message-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
   </symbol>
 
-  <!-- ========================================================================== -->
-  <!-- Icono: Filtro de Notas (Icono para filtrar solo anotaciones con texto) -->
-  <!-- ========================================================================== -->
-  <symbol id="notes-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-3l-4 4z"/><path d="M4 21h16"/>
-  </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Alerta / Advertencia (Triángulo) (Triángulo de advertencia para modales y avisos) -->
+  <!-- Icono: Alerta / Advertencia (TriÃ¡ngulo) (TriÃ¡ngulo de advertencia para modales y avisos) -->
   <!-- ========================================================================== -->
   <symbol id="alert-triangle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Información (Círculo) (Círculo con letra i informativa) -->
+  <!-- Icono: InformaciÃ³n (CÃ­rculo) (CÃ­rculo con letra i informativa) -->
   <!-- ========================================================================== -->
   <symbol id="info-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
@@ -414,26 +378,8 @@
     <path d="M8 2V5"/><path d="M16 2V5"/><path d="M3.5 9.09H20.5"/><path d="M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z"/><path d="M15.6947 13.7H15.7037"/><path d="M15.6947 16.7H15.7037"/><path d="M11.9955 13.7H12.0045"/><path d="M11.9955 16.7H12.0045"/><path d="M8.29431 13.7H8.30329"/><path d="M8.29431 16.7H8.30329"/>
   </symbol>
 
-  <!-- ========================================================================== -->
-  <!-- Icono: Carpeta / Colección Vacía (Carpeta de archivos para colecciones) -->
-  <!-- ========================================================================== -->
-  <symbol id="folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-6l-2-2H5a2 2 0 0 0-2 2z"/>
-  </symbol>
 
-  <!-- ========================================================================== -->
-  <!-- Icono: Sol / Brillo / Tema (Sol para temas claro / oscuro de lectura) -->
-  <!-- ========================================================================== -->
-  <symbol id="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/>
-  </symbol>
 
-  <!-- ========================================================================== -->
-  <!-- Icono: Sello / Marca Arcadia (Isotipo oficial de Arcadia) -->
-  <!-- ========================================================================== -->
-  <symbol id="arcadia-logo" viewBox="0 0 6.35 6.35" fill="currentColor">
-    <path fill="currentColor" d="m 3.1750002,1.3831e-4 c -0.1659998,0 -0.3283201,0.0664977 -0.4478335,0.18579047 C 2.5029415,0.40994197 1.8384218,1.4880097 1.096336,2.2300958 0.50550478,2.8209269 1.1578e-4,3.1750002 1.1578e-4,3.1750002 c 0,0 0.505389,0.3540733 1.09622022,0.9449044 0.7420858,0.7420861 1.4066055,1.8201538 1.6308307,2.0441668 0.2390268,0.2390268 0.6566402,0.2390268 0.895667,0 0.2242252,-0.224013 0.8887449,-1.3020807 1.6308307,-2.0441668 C 5.8444952,3.5290735 6.3498842,3.1750002 6.3498842,3.1750002 c 0,0 -0.505389,-0.3540733 -1.0962202,-0.9449044 C 4.5115782,1.4880097 3.8470585,0.40994197 3.6228337,0.18592877 3.5033203,0.066636 3.3409999,1.3831e-4 3.1750002,1.3831e-4 Z m -0.6276189,2.54714659 c 0.1659998,0 0.3283201,0.066498 0.4478335,0.1857904 0.1242252,0.1240132 0.7887449,1.2020809 1.5308307,1.944167 0.5908312,0.5908311 1.0962202,0.9449045 1.0962202,0.9449045 0,0 -0.505389,0.3540733 -1.0962202,0.9449044 -0.7420858,0.7420861 -1.4066055,1.8201538 -1.6308307,2.0441668 -0.2390268,0.2390268 -0.6566402,0.2390268 -0.895667,0 -0.2242252,-0.224013 -0.8887449,-1.3020807 -1.6308307,-2.0441668 C 0.72792601,8.0289417 0.22253701,7.6748684 0.22253701,7.6748684 c 0,0 0.505389,-0.3540734 1.09622019,-0.9449045 0.7420858,-0.7420861 1.4066055,-1.8201538 1.6308307,-2.044167 0.1195134,-0.1192924 0.2818338,-0.1857904 0.4478334,-0.1857904 z M 5.3998008,2.5237e-4 c -0.062,0 -0.1239846,0.024984 -0.1687258,0.069725 -0.084877,0.084734 -0.5401918,0.82496733 -1.0465355,1.33131093 -0.4031649,0.4031649 -0.7479709,0.6444853 -0.7479709,0.6444853 0,0 0.344806,0.2413204 0.7479709,0.6444853 0.5063437,0.5063436 0.9616585,1.2465767 1.0465355,1.3313111 0.089482,0.089482 0.2479693,0.089482 0.3374516,0 0.084877,-0.084734 0.5401918,-0.8249675 1.0465355,-1.3313111 C 7.018227,4.2869591 7.363033,4.0456387 7.363033,4.0456387 c 0,0 -0.344806,-0.2413204 -0.7479709,-0.6444853 C 6.1087184,2.8948098 5.6534036,2.1545765 5.5685266,2.0698421 5.5237854,2.0251009 5.4618008,2.0003737 5.3998008,2.0003737 Z"/>
-  </symbol>
 
   <!-- ========================================================================== -->
   <!-- Icono: Pluma Caligráfica / Vocabulario (Pluma estilográfica para términos literarios) -->
@@ -457,14 +403,14 @@
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Imagen / Fotografía (Marcador de posición de portada o imagen) -->
+  <!-- Icono: Imagen / FotografÃ­a (Marcador de posiciÃ³n de portada o imagen) -->
   <!-- ========================================================================== -->
   <symbol id="image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d="M4 16l4.586-4.586a2 2 0 0 1 2.828 0L16 16m-2-2l1.586-1.586a2 2 0 0 1 2.828 0L20 14m-6-6h.01M6 20h12a2 2 0 0 0 2-2V6a2 2 0 0 0 2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z"/>
   </symbol>
 
   <!-- ========================================================================== -->
-  <!-- Icono: Gráfica de Barras / Hábitos (Icono de estadísticas de lectura) -->
+  <!-- Icono: GrÃ¡fica de Barras / HÃ¡bitos (Icono de estadÃ­sticas de lectura) -->
   <!-- ========================================================================== -->
   <symbol id="chart-bar" viewBox="0 0 6.35 6.35" fill="currentColor">
     <path fill="currentColor" d="m 0.26485,5.8204456 a 0.2645835,0.2645835 0 0 0 -0.26563,0.26563 0.2645835,0.2645835 0 0 0 0.26563,0.26367 h 5.82031 a 0.2645835,0.2645835 0 0 0 0.26562,-0.26367 0.2645835,0.2645835 0 0 0 -0.26562,-0.26563 z"/><path fill="currentColor" d="m 1.16328,3.9688856 c -0.34722,0 -0.63476,0.28754 -0.63476,0.63477 v 1.48242 a 0.26460996,0.26460996 0 0 0 0.26562,0.26367 h 1.0586 a 0.26460996,0.26460996 0 0 0 0.26367,-0.26367 v -1.48242 c 0,-0.34723 -0.28755,-0.63477 -0.63477,-0.63477 z"/><path fill="currentColor" d="m 3.0168,3.0684956 c -0.34722,0 -0.63477,0.28753 -0.63477,0.63477 v 2.38281 a 0.26460996,0.26460996 0 0 0 0.26367,0.26367 h 1.0586 a 0.26460996,0.26460996 0 0 0 0.26367,-0.26367 v -2.38281 c 0,-0.34724 -0.28755,-0.63477 -0.63477,-0.63477 z"/><path fill="currentColor" d="m 4.86836,2.2755256 c -0.34722,0 -0.63477,0.28754 -0.63477,0.63477 v 3.17578 a 0.26460996,0.26460996 0 0 0 0.26368,0.26367 h 1.05859 a 0.26460996,0.26460996 0 0 0 0.26563,-0.26367 v -3.17578 c 0,-0.34723 -0.2895,-0.63477 -0.63672,-0.63477 z"/><path fill="currentColor" d="M 4.6205208,2.5237e-4 A 0.2645835,0.2645835 0 0 0 4.3564534,0.26380219 0.2645835,0.2645835 0 0 0 4.6205208,0.52941905 H 4.8938883 C 3.3974791,1.8159538 1.8306324,2.6151331 0.2161369,2.9142865 A 0.2645835,0.2645835 0 0 0 0.0052984,3.2227949 0.2645835,0.2645835 0 0 0 0.3117388,3.4357016 C 2.050091,3.1136013 3.722697,2.2498105 5.2923138,0.88753671 V 1.1991456 A 0.2645835,0.2645835 0 0 0 5.5558626,1.4647625 0.2645835,0.2645835 0 0 0 5.8214805,1.1991456 V 0.41986501 C 5.8215308,0.19150501 5.62816,2.0237e-4 5.3998008,2.5237e-4 Z"/>
@@ -475,5 +421,51 @@
   <!-- ========================================================================== -->
   <symbol id="clipboard-export" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d="M8 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1M8 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M8 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m0 0h2a2 2 0 0 1 2 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+  </symbol>
+
+  <!-- ========================================================================== -->
+  <!-- Icono: Fuego / Racha (Llama multicolor para dÃ­as seguidos) -->
+  <!-- ========================================================================== -->
+  <symbol id="fire" viewBox="0 0 48 64">
+    <path fill="#ff7f00" d="M48,41.22C48,53.8,37.25,64,24,64S0,53.8,0,41.22C0,27.79,15.78,7.54,21.75.37A1,1,0,0,1,23.56,1c-.51,6-.16,18.84,10,.58,25.24A1,1,0,0,0,35.51,26a13.14,13.14,0,0,0,2.25-6.69,1,1,0,0,1,1.89-.4C44.22,26.43,48,34.64,48,41.22Z"/>
+    <path fill="#ffda00" d="M9,49.76C9,57.63,15.72,64,24,64s15-6.37,15-14.24S30.31,30.25,26.16,25.15a1,1,0,0,0-1.82.63c.15,4-.55,10.77-6.35,14.45a1,1,0,0,1-1.41-.32,8.06,8.06,0,0,1-1-2.8,1,1,0,0,0-1.9-.32C11.05,41.22,9,45.93,9,49.76Z"/>
+    <path fill="#fff" d="M32.25,56.17A8,8,0,0,1,24,64a8,8,0,0,1-8.25-7.83c0-3.87,3.8-9.37,6.25-12.51a1,1,0,0,1,1.82.53,8.34,8.34,0,0,0,3,6.38,1,1,0,0,0,1.59-.41l0,0A1,1,0,0,1,30.25,50,14.07,14.07,0,0,1,32.25,56.17Z"/>
+  </symbol>
+
+  <!-- ========================================================================== -->
+  <!-- Icono: Reloj Turquesa / Tiempo Total (Reloj multicolor para tarjeta de tiempo) -->
+  <!-- ========================================================================== -->
+  <symbol id="clock-color" viewBox="0 0 30.585936 30.585936">
+    <g transform="translate(-103.92762,-147.31671)">
+      <g transform="matrix(0.35277777,0,0,-0.35277777,26.616955,266.82834)">
+        <g transform="translate(240.1211,273.0454)">
+          <path d="m 0,0 c -12.357,12.359 -12.358,32.396 0,44.754 12.359,12.359 32.396,12.359 44.755,0 z" fill="#abe7e5"/>
+        </g>
+        <g transform="translate(262.499,333.4385)">
+          <path d="m 0,0 c -20.962,0 -38.016,-17.054 -38.016,-38.016 0,-20.962 17.054,-38.015 38.016,-38.015 20.961,0 38.015,17.053 38.015,38.015 C 38.015,-17.054 20.961,0 0,0 m 0,-78.531 c -22.341,0 -40.516,18.175 -40.516,40.515 C -40.516,-15.675 -22.341,2.5 0,2.5 22.34,2.5 40.515,-15.675 40.515,-38.016 40.515,-60.356 22.34,-78.531 0,-78.531" fill="#47b9bc"/>
+        </g>
+        <g transform="translate(262.499,326.0684)">
+          <path d="m 0,0 c -16.897,0 -30.646,-13.748 -30.646,-30.646 0,-16.897 13.749,-30.645 30.646,-30.645 16.898,0 30.646,13.748 30.646,30.645 C 30.646,-13.748 16.898,0 0,0 m 0,-63.291 c -18.001,0 -32.646,14.645 -32.646,32.645 C -32.646,-12.645 -18.001,2 0,2 c 18.001,0 32.646,-14.645 32.646,-32.646 0,-18 -14.645,-32.645 -32.646,-32.645" fill="#47b9bc"/>
+        </g>
+        <g transform="translate(262.498,292.4229)">
+          <path d="m 0,0 c -1.656,0 -3,1.343 -3,3 v 18.411 c 0,1.656 1.344,3 3,3 1.656,0 3,-1.344 3,-3 V 3 C 3,1.343 1.656,0 0,0" fill="#47b9bc"/>
+        </g>
+        <g transform="translate(262.498,292.4229)">
+          <path d="m 0,0 c -0.776,0 -1.552,0.299 -2.139,0.896 l -17.002,17.292 c -1.161,1.182 -1.144,3.081 0.037,4.243 1.182,1.161 3.081,1.145 4.243,-0.036 l 17,-17.291 C 3.301,3.922 3.285,2.022 2.104,0.861 1.52,0.287 0.76,0 0,0" fill="#47b9bc"/>
+        </g>
+        <g transform="translate(244.0879,294.4229)">
+          <path d="m 0,0 h -5.809 c -0.552,0 -1,0.448 -1,1 0,0.552 0.448,1 1,1 H 0 C 0.553,2 1,1.552 1,1 1,0.448 0.553,0 0,0" fill="#47b9bc"/>
+        </g>
+        <g transform="translate(286.7188,294.4229)">
+          <path d="m 0,0 h -5.81 c -0.552,0 -1,0.448 -1,1 0,0.552 0.448,1 1,1 H 0 C 0.553,2 1,1.552 1,1 1,0.448 0.553,0 0,0" fill="#47b9bc"/>
+        </g>
+        <g transform="translate(262.498,312.8335)">
+          <path d="m 0,0 c -0.553,0 -1,0.448 -1,1 v 5.81 c 0,0.552 0.447,1 1,1 0.553,0 1,-0.448 1,-1 V 1 C 1,0.448 0.553,0 0,0" fill="#47b9bc"/>
+        </g>
+        <g transform="translate(262.498,270.2026)">
+          <path d="m 0,0 c -0.553,0 -1,0.448 -1,1 v 5.81 c 0,0.552 0.447,1 1,1 0.553,0 1,-0.448 1,-1 V 1 C 1,0.448 0.553,0 0,0" fill="#47b9bc"/>
+        </g>
+      </g>
+    </g>
   </symbol>
 </svg>

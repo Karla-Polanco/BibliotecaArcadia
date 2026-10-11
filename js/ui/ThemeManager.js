@@ -2,17 +2,17 @@
  * ============================================================================
  * THEME MANAGER - CONTROLADOR DE TEMAS CSS Y CREADOR DE TEMAS PERSONALIZADOS
  * ============================================================================
- * Soporta Azul Boreal, Lavanda Crepuscular, Marfil Clásico, Verde Oliva,
- * Rosa Antiguo, Noche de Tinta y Creador de Temas Personalizados (Color Picker).
+ * Soporta Marino & Blanco, Amatista & Marfil, Oliva & Marfil, Clásico Claro,
+ * Sepia & Café, Negro & Plateado y Creador de Temas Personalizados (Color Picker).
  */
 
 export class ThemeManager {
   static THEMES = {
-    PLUM: 'plum',
-    SAGE_CREAM: 'sage-cream',
-    LIGHT: 'light',
-    NAVY_SUMMIT: 'navy-summit',
-    COZY_BROWN: 'cozy-brown',
+    NAVY_WHITE: 'navy-white',
+    AMETHYST_IVORY: 'amethyst-ivory',
+    OLIVE_IVORY: 'olive-ivory',
+    CLASSIC_LIGHT: 'classic-light',
+    SEPIA_COFFEE: 'sepia-coffee',
     NOIR_SILVER: 'noir-silver',
     CUSTOM: 'custom'
   };
@@ -28,7 +28,7 @@ export class ThemeManager {
   };
 
   constructor() {
-    this.currentTheme = localStorage.getItem(ThemeManager.STORAGE_KEY) || ThemeManager.THEMES.LIGHT;
+    this.currentTheme = localStorage.getItem(ThemeManager.STORAGE_KEY) || ThemeManager.THEMES.CLASSIC_LIGHT;
     this.mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     this._handleSystemThemeChange = this._handleSystemThemeChange.bind(this);
   }
@@ -73,36 +73,38 @@ export class ThemeManager {
    */
   applyTheme(themeName, customColors = null) {
     if (!themeName || typeof themeName !== 'string') {
-      themeName = ThemeManager.THEMES.LIGHT;
+      themeName = ThemeManager.THEMES.CLASSIC_LIGHT;
     }
     themeName = themeName.trim();
 
     // Normalizar temas legacy → nuevos nombres
-    // boreal-blue / cerulean-light → navy-summit (azul ejecutivo)
-    if (themeName === 'cerulean-light' || themeName === 'boreal-blue') themeName = ThemeManager.THEMES.NAVY_SUMMIT;
-    // twilight-lavender / lavender-light → plum (ciruela & lavanda)
-    else if (themeName === 'lavender-light' || themeName === 'twilight-lavender') themeName = ThemeManager.THEMES.PLUM;
-    // classic-ivory / clear-sky → cozy-brown (beige & brown)
-    else if (themeName === 'clear-sky' || themeName === 'classic-ivory') themeName = ThemeManager.THEMES.COZY_BROWN;
-    // olive-green / enchanted-forest / mint → sage-cream (salvia & crema)
-    else if (themeName === 'enchanted-forest' || themeName === 'mint' || themeName === 'olive-green') themeName = ThemeManager.THEMES.SAGE_CREAM;
+    // boreal-blue / cerulean-light / navy-summit → navy-white (académico azul)
+    if (themeName === 'cerulean-light' || themeName === 'boreal-blue' || themeName === 'navy-summit') themeName = ThemeManager.THEMES.NAVY_WHITE;
+    // twilight-lavender / lavender-light / plum → amethyst-ivory (amatista)
+    else if (themeName === 'lavender-light' || themeName === 'twilight-lavender' || themeName === 'plum') themeName = ThemeManager.THEMES.AMETHYST_IVORY;
+    // classic-ivory / clear-sky / cozy-brown → sepia-coffee (cálido)
+    else if (themeName === 'clear-sky' || themeName === 'classic-ivory' || themeName === 'cozy-brown') themeName = ThemeManager.THEMES.SEPIA_COFFEE;
+    // olive-green / enchanted-forest / mint / sage-cream → olive-ivory (oliva)
+    else if (themeName === 'enchanted-forest' || themeName === 'mint' || themeName === 'olive-green' || themeName === 'sage-cream') themeName = ThemeManager.THEMES.OLIVE_IVORY;
+    // light → classic-light (nuevo nombre del tema por defecto)
+    else if (themeName === 'light') themeName = ThemeManager.THEMES.CLASSIC_LIGHT;
     // oscuros cálidos y fríos → noir-silver (único oscuro)
     else if (themeName === 'serene-fog' || themeName === 'wine-poetry' || themeName === 'wine' || themeName === 'antique-pink' || themeName === 'toasted-ash') themeName = ThemeManager.THEMES.NOIR_SILVER;
     else if (themeName === 'abyss-dark' || themeName === 'mystic-night' || themeName === 'deep-twilight' || themeName === 'system' || themeName === 'night-ink') themeName = ThemeManager.THEMES.NOIR_SILVER;
 
     const knownThemes = new Set([
-      ThemeManager.THEMES.PLUM,
-      ThemeManager.THEMES.SAGE_CREAM,
-      ThemeManager.THEMES.LIGHT,
-      ThemeManager.THEMES.NAVY_SUMMIT,
-      ThemeManager.THEMES.COZY_BROWN,
+      ThemeManager.THEMES.NAVY_WHITE,
+      ThemeManager.THEMES.AMETHYST_IVORY,
+      ThemeManager.THEMES.OLIVE_IVORY,
+      ThemeManager.THEMES.CLASSIC_LIGHT,
+      ThemeManager.THEMES.SEPIA_COFFEE,
       ThemeManager.THEMES.NOIR_SILVER,
       ThemeManager.THEMES.CUSTOM
     ]);
 
     if (!knownThemes.has(themeName)) {
-      console.warn(`[ThemeManager] Tema desconocido "${themeName}", usando light`);
-      themeName = ThemeManager.THEMES.LIGHT;
+      console.warn(`[ThemeManager] Tema desconocido "${themeName}", usando classic-light`);
+      themeName = ThemeManager.THEMES.CLASSIC_LIGHT;
     }
 
     this.currentTheme = themeName;
@@ -175,15 +177,15 @@ export class ThemeManager {
 
   _updateThemeColor(themeName) {
     const themeColors = {
-      'plum': { bg: '#EEE9F2', surface: '#F8F5FA', dark: false },
-      'sage-cream': { bg: '#E5ECE1', surface: '#F5F7F2', dark: false },
-      'light': { bg: '#F0F0F2', surface: '#FAFAFB', dark: false },
-      'navy-summit': { bg: '#E5EBF4', surface: '#F4F7FC', dark: false },
-      'cozy-brown': { bg: '#EDE1D1', surface: '#FAF4EC', dark: false },
-      'noir-silver': { bg: '#0D0D0D', surface: '#181818', dark: true }
+      'navy-white': { bg: '#EDF1F6', surface: '#F9FBFD', dark: false },
+      'amethyst-ivory': { bg: '#F2F0F3', surface: '#FBF9FC', dark: false },
+      'olive-ivory': { bg: '#F0F1EC', surface: '#FAFAF6', dark: false },
+      'classic-light': { bg: '#F1F1F2', surface: '#FAFAFA', dark: false },
+      'sepia-coffee': { bg: '#F3F0EA', surface: '#FBFAF7', dark: false },
+      'noir-silver': { bg: '#101214', surface: '#17191C', dark: true }
     };
 
-    let current = themeColors[themeName] || themeColors['light'];
+    let current = themeColors[themeName] || themeColors['classic-light'];
     if (themeName === ThemeManager.THEMES.CUSTOM) {
       const cc = this.getCustomColors();
       current = { bg: cc.bg, surface: cc.surface, dark: true };

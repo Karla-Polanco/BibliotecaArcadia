@@ -54,11 +54,7 @@ export class PWAManager {
     ['btn-pwa-install', 'btn-pwa-install-mobile'].forEach((id) => {
       const btn = document.getElementById(id);
       if (!btn) return;
-      if (installed) {
-        btn.style.setProperty('display', 'none', 'important');
-      } else {
-        btn.style.removeProperty('display');
-      }
+      btn.classList.toggle('hidden', installed);
     });
   }
 

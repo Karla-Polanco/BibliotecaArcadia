@@ -1,411 +1,420 @@
 /* ============================================================================
-   SISTEMA DE TEMAS DINÁMICOS - BIBLIOTECA ARCADIA (OPTIMIZADO)
+   SISTEMA DE TEMAS DINÁMICOS - BIBLIOTECA ARCADIA
    ============================================================================ */
 
 /* ============================================================================
-   1. CIRUELA & LAVANDA (PLUM)
+   01. MARINO & BLANCO (NAVY & WHITE)
    ----------------------------------------------------------------------------
-   Identidad: Misterioso · Espiritual · Elegante · Pensamiento reflexivo
-   Ambiente: Lecturas de introspección, filosofía y noche temprana
+   Identidad: Académico · Sobrio · Preciso · Editorial
+   Ambiente: Estudio · Documentación · Ensayos · Lectura Analítica
    ============================================================================ */
 
-[data-theme="plum"] {
+[data-theme="navy-white"] {
   /* Lienzo y Superficies */
-  --color-background: #EEE9F2;
-  --color-surface: #F8F5FA;
-  --color-surface-secondary: #DDD3E6;
+  --color-background: #EDF1F6;
+  --color-surface: #F9FBFD;
+  --color-surface-secondary: #DCE3EC;
   --color-surface-elevated: #FFFFFF;
 
-  --color-surface-hover: rgba(97, 61, 125, 0.06);
-  --color-surface-active: rgba(97, 61, 125, 0.12);
+  --color-surface-hover: rgba(48, 72, 97, 0.045);
+  --color-surface-active: rgba(48, 72, 97, 0.09);
 
   /* Paleta Primaria y Secundaria */
-  --color-primary-dark: #3E2154;
-  --color-primary: #633C84;
-  --color-primary-light: #895FA8;
-  --color-primary-glow: rgba(99, 60, 132, 0.22);
+  --color-primary-dark: #1C2D40;
+  --color-primary: #304861;
+  --color-primary-light: #62778F;
+  --color-primary-glow: rgba(48, 72, 97, 0.16);
 
-  --color-secondary: #A788C4;
+  --color-secondary: #8797A9;
 
   /* Tipografía y Lectura */
-  --color-text: #22152E;
-  --color-text-secondary: #432E56;
-  --color-text-muted: #6E5782;
+  --color-text: #18222D;
+  --color-text-secondary: #3B4A59;
+  --color-text-muted: #697887;
   --color-text-inverse: #FFFFFF;
 
   /* Bordes, Divisiones y Anillos */
-  --color-border: #C8BAD6;
-  --color-border-subtle: #E3D9EC;
-  --color-border-focus: #633C84;
-  --focus-ring: 0 0 0 3px rgba(99, 60, 132, 0.28);
+  --color-border: #C6D0DC;
+  --color-border-subtle: #E0E6ED;
+  --color-border-focus: #304861;
+  --focus-ring: 0 0 0 3px rgba(48, 72, 97, 0.20);
 
   /* Etiquetas, Badges y Acentos */
-  --color-badge-bg: rgba(99, 60, 132, 0.08);
-  --color-accent-gold: #96702D;
+  --color-badge-bg: rgba(48, 72, 97, 0.065);
+  --color-accent-gold: #9A7A3D;
+  --color-gold: #C8A561;
 
   /* Estados semánticos */
-  --state-success: #357B57;
-  --state-success-bg: rgba(53, 123, 87, 0.12);
-  --state-danger: #B53F54;
-  --state-danger-bg: rgba(181, 63, 84, 0.12);
-  --color-gold: #CCA04D;
+  --state-success: #477A5B;
+  --state-success-bg: rgba(71, 122, 91, 0.11);
+  --state-danger: #A95752;
+  --state-danger-bg: rgba(169, 87, 82, 0.11);
+  --state-warning: #B45309;
 
   /* Modales y Capas Superpuestas */
-  --modal-backdrop: rgba(34, 21, 46, 0.58);
-  --shadow-sm: 0 1px 3px rgba(34, 21, 46, 0.06);
-  --shadow-xl: 0 20px 35px -5px rgba(34, 21, 46, 0.12), 0 10px 15px -5px rgba(34, 21, 46, 0.06);
+  --modal-backdrop: rgba(24, 34, 45, 0.52);
+  --shadow-sm: 0 1px 3px rgba(24, 34, 45, 0.045);
+  --shadow-xl: 0 20px 35px -5px rgba(24, 34, 45, 0.11), 0 10px 15px -5px rgba(24, 34, 45, 0.045);
 
   /* Gráficos de Encabezado y Marca */
-  --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #ECE3F5 52%, #D1BFE4 100%);
-  --brand-wordmark-color: #3E2154;
+  --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #E9EEF4 52%, #D5DFEA 100%);
+  --brand-wordmark-color: #1C2D40;
 
   /* Motor de Lectura */
-  --reader-bg: #F3EEF7;
-  --reader-text: #1F122B;
+  --reader-bg: #F6F8FA;
+  --reader-text: #1A222C;
 
   /* Patrón de Fondo Global */
-  --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #F1EAF7 55%, #DCCCE9 100%);
+  --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #EEF2F6 55%, #D9E2EB 100%);
 
   color-scheme: light;
 }
 
 /* ============================================================================
-   2. SALVIA & CREMA (NATURELLE)
+   02. AMATISTA & MARFIL (AMETHYST & IVORY)
    ----------------------------------------------------------------------------
-   Identidad: Botánico nórdico · Suave · Mínimo contraste agresivo
-   Ambiente: Alivio de tensión ocular y fatiga de pantalla
+   Identidad: Culto · Sereno · Elegante · Reflexivo
+   Ambiente: Literatura · Filosofía · Poesía · Lectura Contemplativa
    ============================================================================ */
 
-[data-theme="sage-cream"] {
+[data-theme="amethyst-ivory"] {
   /* Lienzo y Superficies */
-  --color-background: #E5ECE1;
-  --color-surface: #F5F7F2;
-  --color-surface-secondary: #D4DFD0;
-  --color-surface-elevated: #FAFAF7;
+  --color-background: #F2F0F3;
+  --color-surface: #FBF9FC;
+  --color-surface-secondary: #E5DFE8;
+  --color-surface-elevated: #FFFFFF;
 
-  --color-surface-hover: rgba(73, 94, 66, 0.06);
-  --color-surface-active: rgba(73, 94, 66, 0.12);
+  --color-surface-hover: rgba(88, 75, 95, 0.045);
+  --color-surface-active: rgba(88, 75, 95, 0.09);
 
   /* Paleta Primaria y Secundaria */
-  --color-primary-dark: #2F4129;
-  --color-primary: #4C6843;
-  --color-primary-light: #708C68;
-  --color-primary-glow: rgba(76, 104, 67, 0.20);
+  --color-primary-dark: #332A38;
+  --color-primary: #584B5F;
+  --color-primary-light: #796C80;
+  --color-primary-glow: rgba(88, 75, 95, 0.16);
 
-  --color-secondary: #97A88F;
+  --color-secondary: #918593;
 
   /* Tipografía y Lectura */
-  --color-text: #192317;
-  --color-text-secondary: #354531;
-  --color-text-muted: #596B55;
-  --color-text-inverse: #FAFAF7;
+  --color-text: #272129;
+  --color-text-secondary: #473E4A;
+  --color-text-muted: #706773;
+  --color-text-inverse: #FFFFFF;
 
   /* Bordes, Divisiones y Anillos */
-  --color-border: #BDCBB7;
-  --color-border-subtle: #D8E2D4;
-  --color-border-focus: #4C6843;
-  --focus-ring: 0 0 0 3px rgba(76, 104, 67, 0.26);
+  --color-border: #CEC6D1;
+  --color-border-subtle: #E5E0E7;
+  --color-border-focus: #584B5F;
+  --focus-ring: 0 0 0 3px rgba(88, 75, 95, 0.20);
 
   /* Etiquetas, Badges y Acentos */
-  --color-badge-bg: rgba(76, 104, 67, 0.08);
-  --color-accent-gold: #967A32;
-
-  /* Estados semánticos */
-  --state-success: #387D4E;
-  --state-success-bg: rgba(56, 125, 78, 0.12);
-  --state-danger: #B44A3D;
-  --state-danger-bg: rgba(180, 74, 61, 0.12);
+  --color-badge-bg: rgba(88, 75, 95, 0.065);
+  --color-accent-gold: #967C4A;
   --color-gold: #C7A656;
 
+  /* Estados semánticos */
+  --state-success: #4A795D;
+  --state-success-bg: rgba(74, 121, 93, 0.11);
+  --state-danger: #A6535B;
+  --state-danger-bg: rgba(166, 83, 91, 0.11);
+  --state-warning: #B45309;
+
   /* Modales y Capas Superpuestas */
-  --modal-backdrop: rgba(25, 35, 23, 0.58);
-  --shadow-sm: 0 1px 3px rgba(25, 35, 23, 0.06);
-  --shadow-xl: 0 20px 35px -5px rgba(25, 35, 23, 0.12), 0 10px 15px -5px rgba(25, 35, 23, 0.06);
+  --modal-backdrop: rgba(39, 33, 41, 0.52);
+  --shadow-sm: 0 1px 3px rgba(39, 33, 41, 0.045);
+  --shadow-xl: 0 20px 35px -5px rgba(39, 33, 41, 0.11), 0 10px 15px -5px rgba(39, 33, 41, 0.045);
 
   /* Gráficos de Encabezado y Marca */
-  --banner-gradient: linear-gradient(135deg, #FAFAF7 0%, #E3EBE0 52%, #BFCEBA 100%);
-  --brand-wordmark-color: #2F4129;
+  --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #F0ECF2 52%, #DDD5E1 100%);
+  --brand-wordmark-color: #332A38;
 
   /* Motor de Lectura */
-  --reader-bg: #EEF3EB;
-  --reader-text: #172115;
+  --reader-bg: #F7F5F8;
+  --reader-text: #29232B;
 
   /* Patrón de Fondo Global */
-  --theme-bg-pattern: linear-gradient(135deg, #FAFAF7 0%, #E9EFE6 55%, #C8D7C3 100%);
+  --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #F1EDF2 55%, #DDD6E0 100%);
 
   color-scheme: light;
 }
 
 /* ============================================================================
-   3. CLÁSICO CLARO (LIGHT)
+   03. OLIVA & MARFIL (OLIVE & IVORY)
    ----------------------------------------------------------------------------
-   Identidad: Limpio · Universal · Alto contraste · Papel natural
-   Ambiente: Uso diurno general y todo tipo de textos
+   Identidad: Natural · Sereno · Editorial · Atemporal
+   Ambiente: Ensayos · Historia · Literatura · Lecturas Prolongadas
    ============================================================================ */
 
-[data-theme="light"] {
+[data-theme="olive-ivory"] {
   /* Lienzo y Superficies */
-  --color-background: #F0F0F2;
-  --color-surface: #FAFAFB;
-  --color-surface-secondary: #E3E4E8;
+  --color-background: #F0F1EC;
+  --color-surface: #FAFAF6;
+  --color-surface-secondary: #E0E4D9;
   --color-surface-elevated: #FFFFFF;
 
-  --color-surface-hover: rgba(30, 30, 35, 0.05);
-  --color-surface-active: rgba(30, 30, 35, 0.10);
+  --color-surface-hover: rgba(79, 91, 72, 0.045);
+  --color-surface-active: rgba(79, 91, 72, 0.09);
 
   /* Paleta Primaria y Secundaria */
-  --color-primary-dark: #111114;
-  --color-primary: #2B2C34;
-  --color-primary-light: #525462;
-  --color-primary-glow: rgba(43, 44, 52, 0.18);
+  --color-primary-dark: #2A3228;
+  --color-primary: #4F5B48;
+  --color-primary-light: #707C69;
+  --color-primary-glow: rgba(79, 91, 72, 0.16);
 
-  --color-secondary: #747787;
+  --color-secondary: #919A8B;
 
   /* Tipografía y Lectura */
-  --color-text: #121316;
-  --color-text-secondary: #353740;
-  --color-text-muted: #646775;
+  --color-text: #20251B;
+  --color-text-secondary: #394137;
+  --color-text-muted: #687164;
   --color-text-inverse: #FFFFFF;
 
   /* Bordes, Divisiones y Anillos */
-  --color-border: #CACCD4;
-  --color-border-subtle: #E2E3E8;
-  --color-border-focus: #2B2C34;
-  --focus-ring: 0 0 0 3px rgba(43, 44, 52, 0.25);
+  --color-border: #CBD1C5;
+  --color-border-subtle: #E2E5DE;
+  --color-border-focus: #4F5B48;
+  --focus-ring: 0 0 0 3px rgba(79, 91, 72, 0.20);
 
   /* Etiquetas, Badges y Acentos */
-  --color-badge-bg: rgba(43, 44, 52, 0.07);
-  --color-accent-gold: #966C23;
+  --color-badge-bg: rgba(79, 91, 72, 0.065);
+  --color-accent-gold: #927C4A;
+  --color-gold: #C7A656;
 
   /* Estados semánticos */
-  --state-success: #2B7A4B;
-  --state-success-bg: rgba(43, 122, 75, 0.12);
-  --state-danger: #B93C3C;
-  --state-danger-bg: rgba(185, 60, 60, 0.12);
-  --color-gold: #CE9B3A;
+  --state-success: #4F7A5B;
+  --state-success-bg: rgba(79, 122, 91, 0.11);
+  --state-danger: #A65C50;
+  --state-danger-bg: rgba(166, 92, 80, 0.11);
+  --state-warning: #A16207;
 
   /* Modales y Capas Superpuestas */
-  --modal-backdrop: rgba(18, 19, 22, 0.55);
-  --shadow-sm: 0 1px 3px rgba(18, 19, 22, 0.05);
-  --shadow-xl: 0 20px 35px -5px rgba(18, 19, 22, 0.12), 0 10px 15px -5px rgba(18, 19, 22, 0.05);
+  --modal-backdrop: rgba(32, 38, 30, 0.52);
+  --shadow-sm: 0 1px 3px rgba(32, 38, 30, 0.045);
+  --shadow-xl: 0 20px 35px -5px rgba(32, 38, 30, 0.11), 0 10px 15px -5px rgba(32, 38, 30, 0.045);
 
   /* Gráficos de Encabezado y Marca */
-  --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #E9EAEE 52%, #D2D5DC 100%);
-  --brand-wordmark-color: #111114;
+  --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #EDF0E9 52%, #D9DED3 100%);
+  --brand-wordmark-color: #2A3228;
 
   /* Motor de Lectura */
-  --reader-bg: #F4F4F6;
-  --reader-text: #121316;
+  --reader-bg: #F6F7F3;
+  --reader-text: #222720;
 
   /* Patrón de Fondo Global */
-  --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #EDEDF1 55%, #D6D8E0 100%);
+  --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #EFF1EB 55%, #DBE0D5 100%);
 
   color-scheme: light;
 }
 
 /* ============================================================================
-   4. MARINO & BLANCO (SUMMIT NAVY)
+   04. CLÁSICO CLARO (CLASSIC LIGHT)
    ----------------------------------------------------------------------------
-   Identidad: Ejecutivo · Formal · Máxima precisión · Confiable
-   Ambiente: Textos técnicos, leyes, documentación y estudio analítico
+   Identidad: Atemporal · Universal · Limpio · Editorial
+   Ambiente: Lectura Cotidiana · Novelas · Estudio · Cualquier Contenido
    ============================================================================ */
 
-[data-theme="navy-summit"] {
+[data-theme="classic-light"] {
   /* Lienzo y Superficies */
-  --color-background: #E5EBF4;
-  --color-surface: #F4F7FC;
-  --color-surface-secondary: #D0DCED;
+  --color-background: #F1F1F2;
+  --color-surface: #FAFAFA;
+  --color-surface-secondary: #E4E4E6;
   --color-surface-elevated: #FFFFFF;
 
-  --color-surface-hover: rgba(20, 42, 79, 0.06);
-  --color-surface-active: rgba(20, 42, 79, 0.12);
+  --color-surface-hover: rgba(38, 39, 43, 0.04);
+  --color-surface-active: rgba(38, 39, 43, 0.08);
 
   /* Paleta Primaria y Secundaria */
-  --color-primary-dark: #0A1529;
-  --color-primary: #142A4F;
-  --color-primary-light: #2D4F82;
-  --color-primary-glow: rgba(20, 42, 79, 0.22);
+  --color-primary-dark: #17181B;
+  --color-primary: #34363C;
+  --color-primary-light: #60636B;
+  --color-primary-glow: rgba(52, 54, 60, 0.15);
 
-  --color-secondary: #637FAD;
+  --color-secondary: #858890;
 
   /* Tipografía y Lectura */
-  --color-text: #0B1321;
-  --color-text-secondary: #20314C;
-  --color-text-muted: #516483;
+  --color-text: #17181B;
+  --color-text-secondary: #3D3F45;
+  --color-text-muted: #696C74;
   --color-text-inverse: #FFFFFF;
 
   /* Bordes, Divisiones y Anillos */
-  --color-border: #B2C3DE;
-  --color-border-subtle: #D5E0EF;
-  --color-border-focus: #142A4F;
-  --focus-ring: 0 0 0 3px rgba(20, 42, 79, 0.28);
+  --color-border: #CBCDD2;
+  --color-border-subtle: #E3E4E7;
+  --color-border-focus: #34363C;
+  --focus-ring: 0 0 0 3px rgba(52, 54, 60, 0.19);
 
   /* Etiquetas, Badges y Acentos */
-  --color-badge-bg: rgba(20, 42, 79, 0.08);
-  --color-accent-gold: #9C7426;
+  --color-badge-bg: rgba(52, 54, 60, 0.055);
+  --color-accent-gold: #987B45;
+  --color-gold: #C8A261;
 
   /* Estados semánticos */
-  --state-success: #297A52;
-  --state-success-bg: rgba(41, 122, 82, 0.12);
-  --state-danger: #B83C3C;
-  --state-danger-bg: rgba(184, 60, 60, 0.12);
-  --color-gold: #D2A849;
+  --state-success: #4E785C;
+  --state-success-bg: rgba(78, 120, 92, 0.10);
+  --state-danger: #A65752;
+  --state-danger-bg: rgba(166, 87, 82, 0.10);
+  --state-warning: #B45309;
 
   /* Modales y Capas Superpuestas */
-  --modal-backdrop: rgba(11, 19, 33, 0.60);
-  --shadow-sm: 0 1px 3px rgba(11, 19, 33, 0.07);
-  --shadow-xl: 0 20px 35px -5px rgba(11, 19, 33, 0.15), 0 10px 15px -5px rgba(11, 19, 33, 0.07);
+  --modal-backdrop: rgba(23, 24, 27, 0.50);
+  --shadow-sm: 0 1px 3px rgba(23, 24, 27, 0.045);
+  --shadow-xl: 0 20px 35px -5px rgba(23, 24, 27, 0.11), 0 10px 15px -5px rgba(23, 24, 27, 0.045);
 
   /* Gráficos de Encabezado y Marca */
-  --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #DCE5F3 52%, #B5C9E4 100%);
-  --brand-wordmark-color: #0A1529;
+  --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #ECECEE 52%, #DCDDE0 100%);
+  --brand-wordmark-color: #17181B;
 
   /* Motor de Lectura */
-  --reader-bg: #EFF3FA;
-  --reader-text: #0E1726;
+  --reader-bg: #F7F7F7;
+  --reader-text: #1B1C20;
 
   /* Patrón de Fondo Global */
-  --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #E7EFF9 55%, #C2D5EE 100%);
+  --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #F0F0F2 55%, #DEDFE2 100%);
 
   color-scheme: light;
 }
 
 /* ============================================================================
-   5. BEIGE & BROWN (COZY EDIT)
+   05. SEPIA & CAFÉ (SEPIA & COFFEE)
    ----------------------------------------------------------------------------
-   Identidad: Acogedor · Orgánico · Café con leche · Tonalidad cálida
-   Ambiente: Lecturas de tarde, narrativa, libros y ensayos
+   Identidad: Cálido · Literario · Clásico · Acogedor
+   Ambiente: Novelas · Historia · Lectura Vespertina · Libros Tradicionales
    ============================================================================ */
 
-[data-theme="cozy-brown"] {
+[data-theme="sepia-coffee"] {
   /* Lienzo y Superficies */
-  --color-background: #EDE1D1;
-  --color-surface: #FAF4EC;
-  --color-surface-secondary: #E3D1BC;
-  --color-surface-elevated: #FFFDF9;
+  --color-background: #F3F0EA;
+  --color-surface: #FBFAF7;
+  --color-surface-secondary: #E7E1D7;
+  --color-surface-elevated: #FFFFFF;
 
-  --color-surface-hover: rgba(107, 78, 61, 0.06);
-  --color-surface-active: rgba(107, 78, 61, 0.12);
+  --color-surface-hover: rgba(78, 66, 54, 0.045);
+  --color-surface-active: rgba(78, 66, 54, 0.09);
 
   /* Paleta Primaria y Secundaria */
-  --color-primary-dark: #473226;
-  --color-primary: #6B4E3D;
-  --color-primary-light: #8E6B55;
-  --color-primary-glow: rgba(107, 78, 61, 0.20);
+  --color-primary-dark: #332C25;
+  --color-primary: #5B5146;
+  --color-primary-light: #7B7063;
+  --color-primary-glow: rgba(91, 81, 70, 0.16);
 
-  --color-secondary: #A67C52;
+  --color-secondary: #958A7C;
 
   /* Tipografía y Lectura */
-  --color-text: #2B1D15;
-  --color-text-secondary: #4F392D;
-  --color-text-muted: #7A6253;
-  --color-text-inverse: #FAF4EC;
+  --color-text: #27231E;
+  --color-text-secondary: #484138;
+  --color-text-muted: #70685E;
+  --color-text-inverse: #FFFFFF;
 
   /* Bordes, Divisiones y Anillos */
-  --color-border: #D1BBA2;
-  --color-border-subtle: #E7D8C6;
-  --color-border-focus: #6B4E3D;
-  --focus-ring: 0 0 0 3px rgba(107, 78, 61, 0.26);
+  --color-border: #D3CCC1;
+  --color-border-subtle: #E9E4DC;
+  --color-border-focus: #5B5146;
+  --focus-ring: 0 0 0 3px rgba(91, 81, 70, 0.20);
 
   /* Etiquetas, Badges y Acentos */
-  --color-badge-bg: rgba(107, 78, 61, 0.08);
-  --color-accent-gold: #9E7428;
-
-  /* Estados semánticos */
-  --state-success: #3E7955;
-  --state-success-bg: rgba(62, 121, 85, 0.12);
-  --state-danger: #B34839;
-  --state-danger-bg: rgba(179, 72, 57, 0.12);
+  --color-badge-bg: rgba(91, 81, 70, 0.065);
+  --color-accent-gold: #92784A;
   --color-gold: #C59A45;
 
+  /* Estados semánticos */
+  --state-success: #52765D;
+  --state-success-bg: rgba(82, 118, 93, 0.11);
+  --state-danger: #A65D52;
+  --state-danger-bg: rgba(166, 93, 82, 0.11);
+  --state-warning: #A16207;
+
   /* Modales y Capas Superpuestas */
-  --modal-backdrop: rgba(43, 29, 21, 0.58);
-  --shadow-sm: 0 1px 3px rgba(43, 29, 21, 0.06);
-  --shadow-xl: 0 20px 35px -5px rgba(43, 29, 21, 0.13), 0 10px 15px -5px rgba(43, 29, 21, 0.06);
+  --modal-backdrop: rgba(39, 35, 30, 0.52);
+  --shadow-sm: 0 1px 3px rgba(48, 40, 32, 0.045);
+  --shadow-xl: 0 20px 35px -5px rgba(48, 40, 32, 0.11), 0 10px 15px -5px rgba(48, 40, 32, 0.045);
 
   /* Gráficos de Encabezado y Marca */
-  --banner-gradient: linear-gradient(135deg, #FAF4EC 0%, #E8D7C2 52%, #CBB397 100%);
-  --brand-wordmark-color: #473226;
+  --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #F1EDE6 52%, #DDD5C8 100%);
+  --brand-wordmark-color: #332C25;
 
   /* Motor de Lectura */
-  --reader-bg: #F4EBE0;
-  --reader-text: #261911;
+  --reader-bg: #F8F5EF;
+  --reader-text: #28231D;
 
   /* Patrón de Fondo Global */
-  --theme-bg-pattern: linear-gradient(135deg, #FAF4EC 0%, #EFE3D4 55%, #D7C2AB 100%);
+  --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #F3EEE7 55%, #DFD6C9 100%);
 
   color-scheme: light;
 }
 
 /* ============================================================================
-   6. NOIR & SILVER (MODO OSCURO MONOCROMÁTICO)
+   06. NEGRO & PLATEADO (NOIR & SILVER)
    ----------------------------------------------------------------------------
-   Identidad: Sobrio · Lujoso · Alto contraste tenue · Nocturno
-   Ambiente: Lecturas en entornos oscuros o nocturnas prolongadas
+   Identidad: Elegante · Sobrio · Cinemático · Refinado
+   Ambiente: Lectura Nocturna · Bibliotecas Oscuras · Sesiones Prolongadas
    ============================================================================ */
 
 [data-theme="noir-silver"] {
   /* Lienzo y Superficies */
-  --color-background: #0D0D0D;
-  --color-surface: #181818;
-  --color-surface-secondary: #242424;
-  --color-surface-elevated: #2B2B2B;
+  --color-background: #101214;
+  --color-surface: #17191C;
+  --color-surface-secondary: #1E2125;
+  --color-surface-elevated: #25292E;
 
-  --color-surface-hover: rgba(230, 230, 230, 0.06);
-  --color-surface-active: rgba(230, 230, 230, 0.12);
+  --color-surface-hover: rgba(235, 238, 242, 0.055);
+  --color-surface-active: rgba(235, 238, 242, 0.10);
 
   /* Paleta Primaria y Secundaria */
   --color-primary-dark: #FFFFFF;
-  --color-primary: #E6E6E6;
-  --color-primary-light: #B5B5B5;
-  --color-primary-glow: rgba(230, 230, 230, 0.18);
+  --color-primary: #E2E5E8;
+  --color-primary-light: #B8BEC5;
+  --color-primary-glow: rgba(226, 229, 232, 0.16);
 
-  --color-secondary: #8E8E8E;
+  --color-secondary: #969DA5;
 
   /* Tipografía y Lectura */
-  --color-text: #F2F2F2;
-  --color-text-secondary: #B8B8B8;
-  --color-text-muted: #7E7E7E;
-  --color-text-inverse: #0D0D0D;
+  --color-text: #EDEFF1;
+  --color-text-secondary: #B8BEC5;
+  --color-text-muted: #7F8790;
+  --color-text-inverse: #101214;
 
   /* Bordes, Divisiones y Anillos */
-  --color-border: #383838;
-  --color-border-subtle: #262626;
-  --color-border-focus: #E6E6E6;
-  --focus-ring: 0 0 0 3px rgba(230, 230, 230, 0.25);
+  --color-border: #343940;
+  --color-border-subtle: #282C31;
+  --color-border-focus: #DCE1E5;
+  --focus-ring: 0 0 0 3px rgba(226, 229, 232, 0.22);
 
   /* Etiquetas, Badges y Acentos */
-  --color-badge-bg: rgba(230, 230, 230, 0.10);
-  --color-accent-gold: #D1B168;
-
-  /* Estados semánticos */
-  --state-success: #4EAA77;
-  --state-success-bg: rgba(78, 170, 119, 0.15);
-  --state-danger: #D86358;
-  --state-danger-bg: rgba(216, 99, 88, 0.15);
+  --color-badge-bg: rgba(226, 229, 232, 0.085);
+  --color-accent-gold: #C8A96B;
   --color-gold: #DFBD6C;
 
+  /* Estados semánticos */
+  --state-success: #69B58A;
+  --state-success-bg: rgba(105, 181, 138, 0.14);
+  --state-danger: #D97870;
+  --state-danger-bg: rgba(217, 120, 112, 0.14);
+  --state-warning: #F59E0B;
+
   /* Modales y Capas Superpuestas */
-  --modal-backdrop: rgba(0, 0, 0, 0.78);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.40);
-  --shadow-xl: 0 20px 35px -5px rgba(0, 0, 0, 0.65), 0 10px 15px -5px rgba(0, 0, 0, 0.40);
+  --modal-backdrop: rgba(5, 6, 7, 0.80);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 10px -2px rgba(0, 0, 0, 0.45), 0 2px 4px -2px rgba(0, 0, 0, 0.30);
+  --shadow-lg: 0 10px 22px -3px rgba(0, 0, 0, 0.55), 0 4px 8px -2px rgba(0, 0, 0, 0.35);
+  --shadow-xl: 0 20px 35px -5px rgba(0, 0, 0, 0.62), 0 10px 15px -5px rgba(0, 0, 0, 0.42);
 
   /* Gráficos de Encabezado y Marca */
-  --banner-gradient: linear-gradient(135deg, #242424 0%, #171717 52%, #0D0D0D 100%);
-  --brand-wordmark-color: #FFFFFF;
+  --banner-gradient: linear-gradient(135deg, #272B30 0%, #1B1E22 50%, #101214 100%);
+  --brand-wordmark-color: #F5F6F7;
 
   /* Motor de Lectura */
-  --reader-bg: #121212;
-  --reader-text: #E5E5E5;
+  --reader-bg: #14171A;
+  --reader-text: #D9DDE1;
 
   /* Patrón de Fondo Global */
-  --theme-bg-pattern: linear-gradient(135deg, #1A1A1A 0%, #121212 55%, #0A0A0A 100%);
+  --theme-bg-pattern: linear-gradient(135deg, #1C1F23 0%, #15181B 55%, #101214 100%);
 
   color-scheme: dark;
 }
 
 /* ============================================================================
    07. TEMA PERSONALIZADO (CONTROL DINÁMICO POR EL USUARIO)
+   ----------------------------------------------------------------------------
    Inyecta o actualiza directamente las 4 variables maestras en el elemento:
      --custom-bg
      --custom-surface
@@ -415,99 +424,65 @@
    ============================================================================ */
 
 [data-theme="custom"] {
-    /* --- 4 Variables Maestras Configurables (Valores iniciales de tu interfaz) --- */
-    --color-background: var(--custom-bg, #10141A);
-    --color-surface: var(--custom-surface, #1A202C);
-    --color-text: var(--custom-text, #F3F4F6);
-    --color-primary: var(--custom-primary, #3B82F6);
+  /* 4 Variables Maestras Configurables */
+  --color-background: var(--custom-bg, #10141A);
+  --color-surface: var(--custom-surface, #1A202C);
+  --color-text: var(--custom-text, #F3F4F6);
+  --color-primary: var(--custom-primary, #3B82F6);
 
-    /* --- Superficies y Capas Derivadas --- */
-    --color-surface-secondary: color-mix(in srgb, var(--color-surface) 85%, var(--color-text) 15%);
-    --color-surface-elevated: color-mix(in srgb, var(--color-surface) 90%, #FFFFFF 10%);
+  /* Superficies y Capas Derivadas */
+  --color-surface-secondary: color-mix(in srgb, var(--color-surface) 85%, var(--color-text) 15%);
+  --color-surface-elevated: color-mix(in srgb, var(--color-surface) 90%, #FFFFFF 10%);
 
-    --color-surface-hover: color-mix(in srgb, var(--color-text) 6%, transparent);
-    --color-surface-active: color-mix(in srgb, var(--color-text) 12%, transparent);
+  --color-surface-hover: color-mix(in srgb, var(--color-text) 6%, transparent);
+  --color-surface-active: color-mix(in srgb, var(--color-text) 12%, transparent);
 
-    /* --- Paleta Primaria Derivada --- */
-    --color-primary-dark: color-mix(in srgb, var(--color-primary) 70%, #000000 30%);
-    --color-primary-light: color-mix(in srgb, var(--color-primary) 75%, #FFFFFF 25%);
-    --color-primary-glow: color-mix(in srgb, var(--color-primary) 20%, transparent);
-    --color-secondary: color-mix(in srgb, var(--color-text) 55%, var(--color-surface) 45%);
+  /* Paleta Primaria Derivada */
+  --color-primary-dark: color-mix(in srgb, var(--color-primary) 70%, #000000 30%);
+  --color-primary-light: color-mix(in srgb, var(--color-primary) 75%, #FFFFFF 25%);
+  --color-primary-glow: color-mix(in srgb, var(--color-primary) 20%, transparent);
+  --color-secondary: color-mix(in srgb, var(--color-text) 55%, var(--color-surface) 45%);
 
-    /* --- Tipografía --- */
-    --color-text-secondary: color-mix(in srgb, var(--color-text) 75%, var(--color-surface) 25%);
-    --color-text-muted: color-mix(in srgb, var(--color-text) 50%, var(--color-surface) 50%);
-    --color-text-inverse: var(--color-background);
+  /* Tipografía */
+  --color-text-secondary: color-mix(in srgb, var(--color-text) 75%, var(--color-surface) 25%);
+  --color-text-muted: color-mix(in srgb, var(--color-text) 50%, var(--color-surface) 50%);
+  --color-text-inverse: var(--color-background);
 
-    /* --- Bordes y Foco --- */
-    --color-border: color-mix(in srgb, var(--color-surface) 75%, var(--color-text) 25%);
-    --color-border-subtle: color-mix(in srgb, var(--color-surface) 88%, var(--color-text) 12%);
-    --color-border-focus: var(--color-primary);
-    --focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-primary) 30%, transparent);
+  /* Bordes y Foco */
+  --color-border: color-mix(in srgb, var(--color-surface) 75%, var(--color-text) 25%);
+  --color-border-subtle: color-mix(in srgb, var(--color-surface) 88%, var(--color-text) 12%);
+  --color-border-focus: var(--color-primary);
+  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-primary) 30%, transparent);
 
-    /* --- Insignias y Acentos --- */
-    --color-badge-bg: color-mix(in srgb, var(--color-primary) 12%, transparent);
-    --color-accent-gold: #C8A261;
-    --color-gold: #C8A261;
+  /* Insignias y Acentos */
+  --color-badge-bg: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  --color-accent-gold: #C8A261;
+  --color-gold: #C8A261;
 
-    /* --- Estados Semánticos --- */
-    --state-success: #52B788;
-    --state-success-bg: rgba(82, 183, 136, 0.14);
-    --state-danger: #E07A70;
-    --state-danger-bg: rgba(224, 122, 112, 0.14);
+  /* Estados Semánticos */
+  --state-success: #52B788;
+  --state-success-bg: rgba(82, 183, 136, 0.14);
+  --state-danger: #E07A70;
+  --state-danger-bg: rgba(224, 122, 112, 0.14);
+  --state-warning: #F59E0B;
 
-    /* --- Modales y Sombras --- */
-    --modal-backdrop: rgba(0, 0, 0, 0.75);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.40);
-    --shadow-xl: 0 20px 35px -5px rgba(0, 0, 0, 0.65), 0 10px 15px -5px rgba(0, 0, 0, 0.45);
+  /* Modales y Sombras */
+  --modal-backdrop: rgba(0, 0, 0, 0.75);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.40);
+  --shadow-md: 0 4px 10px -2px rgba(0, 0, 0, 0.45), 0 2px 4px -2px rgba(0, 0, 0, 0.30);
+  --shadow-lg: 0 10px 22px -3px rgba(0, 0, 0, 0.55), 0 4px 8px -2px rgba(0, 0, 0, 0.35);
+  --shadow-xl: 0 20px 35px -5px rgba(0, 0, 0, 0.65), 0 10px 15px -5px rgba(0, 0, 0, 0.45);
 
-    /* --- Encabezado y Motor de Lectura --- */
-    --banner-gradient: linear-gradient(135deg, var(--color-surface-secondary) 0%, var(--color-surface) 50%, var(--color-background) 100%);
-    --brand-wordmark-color: var(--color-text);
+  /* Encabezado y Motor de Lectura */
+  --banner-gradient: linear-gradient(135deg, var(--color-surface-secondary) 0%, var(--color-surface) 50%, var(--color-background) 100%);
+  --brand-wordmark-color: var(--color-text);
 
-    --reader-bg: var(--color-background);
-    --reader-text: var(--color-text);
-    --theme-bg-pattern: linear-gradient(135deg, var(--color-surface) 0%, var(--color-background) 100%);
+  --reader-bg: var(--color-background);
+  --reader-text: var(--color-text);
+  --theme-bg-pattern: linear-gradient(135deg, var(--color-surface) 0%, var(--color-background) 100%);
 
-    color-scheme: dark;
+  color-scheme: dark;
 }
 
-/* ============================================================================
-   SWATCHES ACTUALIZADAS
-   ============================================================================ */
-
-/* 1. Ciruela & Lavanda (Plum) */
-.swatch-plum-1 { background-color: #EEE9F2; border: 1px solid #C8BAD6; }
-.swatch-plum-2 { background-color: #F8F5FA; border: 1px solid #C8BAD6; }
-.swatch-plum-3 { background-color: #633C84; }
-.swatch-plum-4 { background-color: #895FA8; }
-
-/* 2. Salvia & Crema */
-.swatch-sc-1 { background-color: #E5ECE1; border: 1px solid #BDCBB7; }
-.swatch-sc-2 { background-color: #F5F7F2; border: 1px solid #BDCBB7; }
-.swatch-sc-3 { background-color: #4C6843; }
-.swatch-sc-4 { background-color: #708C68; }
-
-/* 3. Clásico Claro (Light) */
-.swatch-light-1 { background-color: #F0F0F2; border: 1px solid #CACCD4; }
-.swatch-light-2 { background-color: #FAFAFB; border: 1px solid #CACCD4; }
-.swatch-light-3 { background-color: #2B2C34; }
-.swatch-light-4 { background-color: #525462; }
-
-/* 4. Marino & Blanco (Summit Navy) */
-.swatch-ns-1 { background-color: #E5EBF4; border: 1px solid #B2C3DE; }
-.swatch-ns-2 { background-color: #F4F7FC; border: 1px solid #B2C3DE; }
-.swatch-ns-3 { background-color: #142A4F; }
-.swatch-ns-4 { background-color: #2D4F82; }
-
-/* 5. Beige & Brown (Cozy) */
-.swatch-cb-1 { background-color: #EDE1D1; border: 1px solid #D1BBA2; }
-.swatch-cb-2 { background-color: #FAF4EC; border: 1px solid #D1BBA2; }
-.swatch-cb-3 { background-color: #6B4E3D; }
-.swatch-cb-4 { background-color: #8E6B55; }
-
-/* 6. Noir & Silver */
-.swatch-noir-1 { background-color: #0D0D0D; border: 1px solid #383838; }
-.swatch-noir-2 { background-color: #181818; border: 1px solid #383838; }
-.swatch-noir-3 { background-color: #E6E6E6; }
-.swatch-noir-4 { background-color: #B5B5B5; }
+/* NOTA: las vistas previas de tema usan .theme-card-preview-box y
+   .theme-dot (library.css); no se necesitan swatches por tema. */

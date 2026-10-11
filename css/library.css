@@ -41,27 +41,28 @@
 .library-title-group {
    display: flex;
    align-items: center;
-   gap: 22px;
+   gap: var(--space-lg);
    min-width: 0;
    flex-wrap: wrap;
 }
 
-/* Botón de Subida de Libros (EPUB) */
+/* Botón de Subida de Libros (EPUB) — variante píldora del BDS */
 .btn-upload-epub {
    background-color: var(--color-surface-hover);
    color: var(--color-primary);
    border: 1px solid var(--color-border);
-   padding: 0 16px;
-   height: 38px;
-   min-height: 38px;
-   border-radius: var(--radius-full);
-   font-size: var(--text-xs);
-   font-weight: var(--weight-semibold);
+   padding: 0 var(--control-padding-x-md, 14px);
+   height: var(--control-height-md, 38px);
+   min-height: var(--control-height-md, 38px);
+   border-radius: var(--radius-full, 999px);
+   font-family: var(--font-sans);
+   font-size: var(--control-font-size-md, 0.84rem);
+   font-weight: var(--weight-semibold, 600);
    letter-spacing: 0.02em;
    display: inline-flex;
    align-items: center;
    justify-content: center;
-   gap: 6px;
+   gap: 7px;
    cursor: pointer;
    white-space: nowrap;
    box-shadow: none;
@@ -74,31 +75,31 @@
 }
 
 .btn-upload-epub:focus-visible {
-   outline: 2px solid var(--color-border-focus);
-   outline-offset: 2px;
+   outline: none;
+   box-shadow: var(--focus-ring);
 }
 
 .btn-upload-epub:hover {
-   background-color: var(--color-primary);
-   color: var(--color-text-inverse, #FFFFFF);
-   border-color: var(--color-primary);
-   transform: translateY(-1px);
-   box-shadow: 0 2px 6px var(--color-primary-glow);
+   background-color: color-mix(in srgb, var(--color-primary) 10%, var(--color-surface-elevated, #FFFFFF));
+   color: var(--color-primary);
+   border-color: color-mix(in srgb, var(--color-primary) 30%, var(--color-border));
+   box-shadow: none;
 }
 
 .btn-upload-epub:active {
-   transform: scale(0.98);
-   background-color: var(--color-primary-dark);
-   color: var(--color-text-inverse, #FFFFFF);
+   transform: scale(var(--press-scale, 0.97));
+   background-color: color-mix(in srgb, var(--color-primary) 18%, var(--color-surface-elevated, #FFFFFF));
+   color: var(--color-primary);
 }
 
 .btn-upload-epub svg {
-   transition: transform var(--transition-fast);
+   width: var(--control-icon-size-sm, 14px);
+   height: var(--control-icon-size-sm, 14px);
+   flex-shrink: 0;
 }
 
-.btn-upload-epub:hover svg {
-   transform: none;
-}
+/* Los botones de acción principal (Guardar/Añadir/Instalar) usan el
+   esquema claro unificado de .btn--primary (ver css/main.css). */
 
 /* ------------------------------------------------------------------
    Filtros, Buscador y Conmutador de Vistas
@@ -135,6 +136,7 @@
 
 .search-box:hover {
    border-color: var(--color-text-secondary);
+   background-color: var(--color-surface-hover);
 }
 
 .search-box:focus-within {
@@ -151,7 +153,8 @@
 
 .search-input,
 .search-box .search-input,
-.search-box input#libary-search,
+.search-box input#library-search,
+.search-box .search-input:hover,
 .search-box .search-input:focus,
 .search-box .search-input:focus-visible {
    width: 100%;
@@ -230,13 +233,13 @@
 }
 
 .sort-icon-chevron {
-   width: 15px;
-   height: 15px;
+   width: 14px;
+   height: 14px;
    color: var(--color-text-muted);
    position: absolute;
    right: 12px;
    pointer-events: none;
-   transition: color 0.2s ease;
+   transition: color var(--transition-normal);
 }
 
 .sort-select-wrapper:hover .sort-icon-chevron {
@@ -288,20 +291,15 @@
 }
 
 .toggle-btn.active {
-   background-color: var(--color-surface-elevated, #FFFFFF);
+   background-color: color-mix(in srgb, var(--color-surface-elevated, #FFFFFF) 62%, var(--color-surface-secondary) 38%);
    color: var(--color-text);
    font-weight: var(--weight-semibold, 600);
    box-shadow: var(--shadow-xs);
 }
 
-.toggle-btn:focus-visible {
-   outline: 2px solid var(--color-border-focus);
-   outline-offset: 1px;
-}
-
 .toggle-btn svg {
-   width: 15px;
-   height: 15px;
+   width: 14px;
+   height: 14px;
 }
 
 /* ==================================================================
@@ -452,9 +450,11 @@
    position: absolute;
    top: 8px;
    right: 8px;
-   width: 34px;
-   height: 34px;
-   border-radius: var(--radius-full);
+   width: 32px;
+   height: 32px;
+   min-width: 32px;
+   min-height: 32px;
+   border-radius: 50%;
    background: rgba(8, 12, 22, 0.52);
    backdrop-filter: blur(10px) saturate(1.2);
    -webkit-backdrop-filter: blur(10px) saturate(1.2);
@@ -472,6 +472,18 @@
    justify-content: center;
    z-index: 4;
    box-shadow: 0 2px 8px rgb(0, 0, 0, 0.22);
+   flex-shrink: 0;
+}
+
+.btn-book-fav svg {
+   width: var(--control-icon-size-md, 16px);
+   height: var(--control-icon-size-md, 16px);
+   flex-shrink: 0;
+}
+
+.btn-book-fav--left {
+   left: 8px;
+   right: auto;
 }
 
 .book-card:hover .btn-book-fav,
@@ -502,7 +514,7 @@
 }
 
 .btn-book-fav:active {
-   transform: scale(0.96);
+   transform: scale(var(--press-scale-sm, 0.94));
 }
 
 
@@ -611,7 +623,7 @@
    stroke: var(--color-primary-light);
    stroke-width: 3.2;
    stroke-linecap: round;
-   transition: stroke-dashoffset 0.3s ease;
+   transition: stroke-dashoffset var(--transition-slow);
 }
 
 .grid-progress-text {
@@ -640,7 +652,7 @@
    border-radius: var(--radius-lg);
    margin: 6px 0 var(--space-md);
    box-shadow: var(--shadow-sm);
-   animation: fadeIn 0.25s ease;
+   animation: fadeIn var(--transition-smooth) ease;
 }
 
 @keyframes fadeIn {
@@ -667,11 +679,6 @@
    justify-content: center;
    color: var(--color-primary);
    box-shadow: none;
-}
-
-.empty-state-icon svg {
-   width: 22px;
-   height: 22px;
 }
 
 .empty-state-title {
@@ -707,7 +714,7 @@
    align-items: flex-start;
    gap: 14px;
    padding: 10px 14px;
-   background-color: var(--color-surface);
+   background-color: color-mix(in srgb, var(--color-surface) 40%, var(--color-surface-secondary) 60%);
    border: 1px solid var(--color-border);
    border-radius: var(--radius-md, 12px);
    cursor: pointer;
@@ -716,7 +723,7 @@
 }
 
 .book-list-item:hover {
-   background-color: var(--color-surface-hover);
+   background-color: color-mix(in srgb, var(--color-surface) 25%, var(--color-surface-secondary) 75%);
    border-color: var(--color-border);
 }
 
@@ -836,7 +843,7 @@
    height: 100%;
    background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
    border-radius: var(--radius-full);
-   transition: width 0.3s ease;
+   transition: width var(--transition-slow);
 }
 
 .list-progress-text {
@@ -905,56 +912,82 @@
 .btn-list-action {
    background: transparent;
    border: 1px solid transparent;
-   width: 34px;
-   height: 34px;
-   border-radius: var(--radius-full);
+   width: 32px;
+   height: 32px;
+   min-width: 32px;
+   min-height: 32px;
+   border-radius: 50%;
    color: var(--color-text-muted);
    display: inline-flex;
    align-items: center;
    justify-content: center;
    cursor: pointer;
-   transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+   flex-shrink: 0;
+   transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-list-action svg {
+   width: var(--control-icon-size-md, 16px);
+   height: var(--control-icon-size-md, 16px);
+   flex-shrink: 0;
 }
 
 .btn-list-action:hover {
    background-color: var(--color-surface-hover);
    color: var(--color-text);
-   border-color: var(--color-border);
+   border-color: var(--color-border-subtle);
+}
+
+.btn-list-action:active {
+   transform: scale(var(--press-scale-sm, 0.94));
 }
 
 .btn-list-action.is-fav {
    color: var(--color-accent-gold, #C8A261);
 }
 
+.btn-list-action.is-fav:hover {
+   color: var(--color-accent-gold, #C8A261);
+   background-color: var(--color-surface-hover);
+}
+
 /* ==================================================================
    05. STEPPER DE ESCALA (A- / % / A+)
    ================================================================== */
 
-/* Control modular de tamaño tipográfico (mismas medidas que .font-size-control). */
-.scale-stepper-wrapper {
+/* Control modular de tamaño [ A- ] [ valor ] [ A+ ] — sistema único.
+   Agrupa .scale-stepper-wrapper (Ajustes) y .font-size-control (Lector):
+   mismo contenedor, mismos botones, mismo valor, mismos estados. */
+.scale-stepper-wrapper,
+.font-size-control {
    display: flex;
    align-items: center;
    justify-content: space-between;
    gap: 8px;
    background-color: var(--color-surface-secondary);
    border: 1px solid var(--color-border-subtle);
-   border-radius: 12px;
+   border-radius: var(--radius-md, 12px);
    padding: 6px 10px;
    width: 100%;
    max-width: none;
-   flex: 1 1 100%;
    box-sizing: border-box;
 }
 
-.scale-stepper-wrapper .btn-scale-step {
+.scale-stepper-wrapper {
+   flex: 1 1 100%;
+}
+
+.scale-stepper-wrapper .btn-scale-step,
+.btn-font-size-step {
    width: 48px;
    height: 40px;
    min-width: 48px;
    padding: 0;
    border-radius: var(--radius-sm, 8px);
-   background-color: var(--color-surface);
+   background-color: color-mix(in srgb, var(--color-surface) 65%, var(--color-surface-secondary) 35%);
    border: 1px solid var(--color-border-subtle);
    color: var(--color-text);
+   font-family: var(--font-sans);
    font-size: var(--text-sm, 0.95rem);
    font-weight: 700;
    line-height: 1;
@@ -974,25 +1007,28 @@
    font-weight: 700;
 }
 
-/* Interacción Hover / Active */
-.scale-stepper-wrapper .btn-scale-step:hover {
+/* Interacción Hover / Active / Foco */
+.scale-stepper-wrapper .btn-scale-step:hover,
+.btn-font-size-step:hover {
    background-color: var(--color-surface-hover);
    color: var(--color-primary);
    border-color: var(--color-border);
 }
 
-.scale-stepper-wrapper .btn-scale-step:active {
-   transform: scale(0.97);
+.scale-stepper-wrapper .btn-scale-step:active,
+.btn-font-size-step:active {
+   transform: scale(var(--press-scale, 0.97));
 }
 
-.scale-stepper-wrapper .btn-scale-step:focus,
-.scale-stepper-wrapper .btn-scale-step:focus-visible {
+.scale-stepper-wrapper .btn-scale-step:focus-visible,
+.btn-font-size-step:focus-visible {
    outline: 2px solid var(--color-primary);
    outline-offset: 2px;
-   box-shadow: none;
 }
 
-.scale-stepper-wrapper .label-scale-value {
+.scale-stepper-wrapper .label-scale-value,
+.font-size-value {
+   font-family: var(--font-sans);
    font-size: var(--text-md, 1.1rem);
    font-weight: 700;
    color: var(--color-text);
@@ -1001,19 +1037,11 @@
    font-variant-numeric: tabular-nums;
 }
 
-.scale-stepper-wrapper .btn-scale-step:disabled {
-   opacity: 0.38;
-   cursor: default;
-   background-color: var(--color-surface);
-   color: var(--color-text-muted);
-   border-color: var(--color-border-subtle);
-}
-
-.scale-stepper-wrapper .btn-scale-step:disabled:hover {
-   background-color: var(--color-surface);
-   color: var(--color-text-muted);
-   border-color: var(--color-border-subtle);
-   transform: none;
+.scale-stepper-wrapper .btn-scale-step:disabled,
+.btn-font-size-step:disabled {
+   opacity: var(--disabled-opacity, 0.45);
+   cursor: not-allowed;
+   pointer-events: none;
 }
 
 /* ==================================================================
@@ -1030,7 +1058,7 @@
 .theme-card-item {
     background: var(--color-surface);
     border: 1.5px solid var(--color-border);
-    border-radius: 12px;
+    border-radius: var(--radius-md, 12px);
     padding: 5px;
     cursor: pointer;
     transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
@@ -1041,14 +1069,14 @@
 }
 
 .theme-card-item:hover {
-    transform: translateY(-1px);
+    transform: var(--hover-lift, translateY(-1px));
     border-color: var(--color-border-focus);
     box-shadow: var(--hover-shadow-sm, 0 3px 8px rgba(0, 0, 0, 0.04));
 }
 
 .theme-card-item.selected {
     border-color: var(--theme-accent-color, var(--color-primary-light));
-    box-shadow: 0 0 0 1px var(--theme-accent-color, var(--color-primary-light)), 0 3px 10px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 0 1px var(--theme-accent-color, var(--color-primary-light)), var(--shadow-md);
 }
 
 .theme-card-preview-box {
@@ -1080,7 +1108,7 @@
     height: 22px;
     border-radius: 50%;
     background: var(--theme-accent-color, var(--color-primary-light));
-    color: #FFFFFF;
+    color: var(--color-text-inverse);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1224,12 +1252,12 @@
    align-items: center;
    color: var(--color-text-muted);
    flex-shrink: 0;
-   transition: transform 0.2s ease, color 0.2s ease;
+   transition: transform var(--transition-normal), color var(--transition-normal);
 }
 
 .cselect-chev svg {
-   width: 15px;
-   height: 15px;
+   width: 14px;
+   height: 14px;
    display: block;
 }
 
@@ -1289,9 +1317,10 @@
 }
 
 .cselect-check {
-   width: 15px;
-   height: 15px;
+   width: 14px;
+   height: 14px;
    flex-shrink: 0;
+   margin-left: auto;
    color: var(--color-primary-light);
    opacity: 0;
    transition: opacity var(--transition-fast);
@@ -1299,6 +1328,28 @@
 
 .cselect-option.selected .cselect-check {
    opacity: 1;
+}
+
+/* Cabecera del menú (p. ej. «ORDEN») + icono por opción */
+.cselect-menu-title {
+   padding: 7px 10px 5px;
+   font-size: 0.68rem;
+   font-weight: var(--weight-bold, 700);
+   letter-spacing: 0.08em;
+   text-transform: uppercase;
+   color: var(--color-text-muted);
+   white-space: nowrap;
+}
+
+.cselect-opt-icon {
+   width: 15px;
+   height: 15px;
+   flex-shrink: 0;
+   color: var(--color-text-muted);
+}
+
+.cselect-option.selected .cselect-opt-icon {
+   color: var(--color-primary);
 }
 
 /* ------------------------------------------------------------------
@@ -1380,7 +1431,7 @@
 .header-card-icon-box {
    width: 44px;
    height: 44px;
-   border-radius: 12px;
+   border-radius: var(--radius-md, 12px);
    background-color: var(--color-badge-bg);
    border: 1px solid var(--color-border-subtle);
    color: var(--color-primary);
@@ -1492,31 +1543,42 @@
    align-items: center;
    gap: 8px;
    background-color: var(--color-surface);
-   border: 1px solid var(--color-border-subtle);
-   border-radius: var(--radius-full);
+   border: 1px solid var(--color-border);
+   border-radius: var(--radius-sm, 8px);
    padding: 0 14px;
-   height: 36px;
-   min-height: 36px;
+   height: 38px;
+   min-height: 38px;
    width: 100%;
    max-width: 100%;
    box-sizing: border-box;
-   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+   transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+}
+
+.panel-search-bar:hover {
+   border-color: var(--color-text-secondary);
+   background-color: var(--color-surface-hover);
 }
 
 .panel-search-bar:focus-within {
    border-color: var(--color-border-focus);
    box-shadow: var(--focus-ring);
-   background-color: var(--color-surface-elevated, #FFFFFF);
+   background-color: var(--color-surface);
 }
 
 .collection-header-panel .panel-search-bar {
-   background-color: var(--color-surface-elevated, #FFFFFF);
-   border: 1px solid color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 25%, var(--color-border-subtle));
+   background-color: var(--color-surface);
+   border: 1px solid var(--color-border);
+}
+
+.collection-header-panel .panel-search-bar:hover {
+   border-color: var(--color-text-secondary);
+   background-color: var(--color-surface-hover);
 }
 
 .collection-header-panel .panel-search-bar:focus-within {
-   border-color: var(--col-accent, var(--color-primary-light));
-   box-shadow: 0 0 0 3px color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 20%, transparent);
+   border-color: var(--color-border-focus);
+   box-shadow: var(--focus-ring);
+   background-color: var(--color-surface);
 }
 
 .panel-search-input,
@@ -1621,7 +1683,7 @@
 .annotation-type-badge {
    font-size: 0.66rem;
    text-transform: uppercase;
-   font-weight: 800;
+   font-weight: var(--weight-bold, 700);
    padding: 4px 11px;
    border-radius: var(--radius-full);
    letter-spacing: 0.05em;
@@ -1635,8 +1697,8 @@
 }
 
 .annotation-type-badge svg {
-   width: 13px;
-   height: 13px;
+   width: 14px;
+   height: 14px;
    flex-shrink: 0;
 }
 
@@ -1657,35 +1719,33 @@
 }
 
 .annotation-date svg {
-   width: 15px;
-   height: 15px;
+   width: 14px;
+   height: 14px;
    flex-shrink: 0;
 }
 
-.btn-card-action {
-   color: var(--state-danger, #C85A54);
-   width: 30px;
-   height: 30px;
-   border-radius: var(--btn-radius, 8px);
-   cursor: pointer;
-   background: var(--state-danger-bg, rgba(200, 90, 84, 0.12));
-   border: 1px solid color-mix(in srgb, var(--state-danger, #C85A54) 28%, transparent);
-   display: inline-flex;
-   align-items: center;
-   justify-content: center;
+/* Botones icono en tarjetas — tamaño único 32px circular.
+   Se usan como `btn btn--icon btn--circle` + variante. Este bloque solo
+   garantiza el tamaño cuando se combinan clases legacy. */
+.btn-card-edit,
+.btn-card-del,
+.btn-card-speak,
+.btn-delete-annot {
+   width: 32px;
+   min-width: 32px;
+   height: 32px;
+   min-height: 32px;
+   border-radius: 50%;
+   padding: 0;
    flex-shrink: 0;
-   transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast);
 }
 
-.btn-card-action svg {
-   width: 16px;
-   height: 16px;
-}
-
-.btn-card-action:hover {
-   color: #FFFFFF;
-   background-color: var(--state-danger, #C85A54);
-   border-color: var(--state-danger, #C85A54);
+.btn-card-edit svg,
+.btn-card-del svg,
+.btn-card-speak svg,
+.btn-delete-annot svg {
+   width: var(--control-icon-size-md, 16px);
+   height: var(--control-icon-size-md, 16px);
 }
 
 .annotation-quote {
@@ -1714,7 +1774,7 @@
    display: flex;
    align-items: center;
    gap: 6px;
-   font-weight: 800;
+   font-weight: var(--weight-bold, 700);
    font-size: 0.68rem;
    text-transform: uppercase;
    letter-spacing: 0.06em;
@@ -1760,16 +1820,16 @@
 }
 
 .annot-book-row svg {
-   width: 19px;
-   height: 19px;
-   color: var(--color-primary-light, #5B8DEF);
+   width: 18px;
+   height: 18px;
+   color: var(--color-primary-light, #525462);
    flex-shrink: 0;
 }
 
 .annot-book-title {
    font-size: 0.86rem;
    font-weight: 700;
-   color: var(--color-text, #1F2A44);
+   color: var(--color-text, #121316);
    font-family: var(--font-sans);
    white-space: nowrap;
    overflow: hidden;
@@ -1779,13 +1839,13 @@
 .btn-jump-cfi {
    background-color: var(--annot-soft);
    color: var(--annot-deep);
-   font-size: 0.82rem;
-   font-weight: 700;
+   font-size: var(--control-font-size-md, 0.84rem);
+   font-weight: var(--weight-semibold, 600);
    font-family: var(--font-sans);
-   padding: 6px 14px;
-   height: 32px;
-   min-height: 32px;
-   border-radius: var(--radius-full);
+   padding: 0 var(--control-padding-x-md, 14px);
+   height: var(--control-height-sm, 30px);
+   min-height: var(--control-height-sm, 30px);
+   border-radius: var(--radius-full, 999px);
    border: 1px solid var(--annot-dash);
    cursor: pointer;
    display: inline-flex;
@@ -1793,6 +1853,7 @@
    gap: 6px;
    margin-left: auto;
    flex-shrink: 0;
+   white-space: nowrap;
    transition: background-color var(--transition-fast),
                color var(--transition-fast),
                border-color var(--transition-fast),
@@ -1802,29 +1863,26 @@
 
 .btn-jump-cfi svg,
 .btn-jump-cfi .btn-icon-svg {
-   width: 14px;
-   height: 14px;
+   width: var(--control-icon-size-sm, 14px);
+   height: var(--control-icon-size-sm, 14px);
    flex-shrink: 0;
    color: inherit;
-   transition: transform var(--transition-fast);
 }
 
 .btn-jump-cfi:hover {
-   background-color: var(--annot-deep);
-   color: #FFFFFF;
-   border-color: var(--annot-deep);
-   transform: translateY(-1px);
-   box-shadow: 0 3px 8px color-mix(in srgb, var(--annot-deep) 25%, transparent);
+   background-color: color-mix(in srgb, var(--annot-deep) 16%, var(--annot-soft));
+   color: var(--annot-deep);
+   border-color: color-mix(in srgb, var(--annot-deep) 45%, transparent);
+   box-shadow: 0 1px 4px color-mix(in srgb, var(--annot-deep) 18%, transparent);
 }
 
 .btn-jump-cfi:hover svg,
 .btn-jump-cfi:hover .btn-icon-svg {
-   color: #FFFFFF;
-   transform: translateX(2px);
+   color: var(--annot-deep);
 }
 
 .btn-jump-cfi:active {
-   transform: scale(0.97);
+   transform: scale(var(--press-scale, 0.97));
 }
 
 /* ==================================================================
@@ -1890,11 +1948,12 @@
 
 .vocab-word-title {
    font-family: var(--font-display);
-   font-size: 1.25rem;
-   font-weight: 700;
+   font-size: var(--text-lg, 1.20rem);
+   font-weight: var(--weight-bold, 700);
    color: var(--color-text);
    margin: 0;
    line-height: 1.2;
+   letter-spacing: 0.01em;
    white-space: nowrap;
    overflow: hidden;
    text-overflow: ellipsis;
@@ -1908,27 +1967,27 @@
 }
 
 .btn-card-edit {
-   background: var(--color-surface-hover);
+   background-color: var(--color-surface-hover);
    color: var(--color-text-secondary);
    border-color: var(--color-border);
 }
 
 .btn-card-edit:hover {
-   background: var(--color-primary);
-   color: var(--color-text-inverse, #FFFFFF);
-   border-color: var(--color-primary);
+   background-color: color-mix(in srgb, var(--color-primary) 14%, var(--color-surface));
+   color: var(--color-primary);
+   border-color: color-mix(in srgb, var(--color-primary) 35%, transparent);
 }
 
 .btn-card-del {
-   background: var(--state-danger-bg, rgba(200, 90, 84, 0.12));
-   color: var(--state-danger, #C85A54);
-   border-color: color-mix(in srgb, var(--state-danger, #C85A54) 28%, transparent);
+   background-color: var(--state-danger-bg);
+   color: var(--state-danger);
+   border-color: color-mix(in srgb, var(--state-danger) 28%, transparent);
 }
 
 .btn-card-del:hover {
-   background: var(--state-danger, #C85A54);
-   color: #FFFFFF;
-   border-color: var(--state-danger, #C85A54);
+   background-color: color-mix(in srgb, var(--state-danger) 18%, transparent);
+   color: var(--state-danger);
+   border-color: color-mix(in srgb, var(--state-danger) 45%, transparent);
 }
 
 .vocab-phonetic-row {
@@ -1943,11 +2002,11 @@
    align-items: center;
    gap: 5px;
    padding: 3px 10px;
-   border-radius: 9999px;
+   border-radius: var(--radius-full, 999px);
    background: color-mix(in srgb, var(--color-primary-light) 12%, var(--color-surface));
    color: var(--color-primary-light);
-   font-size: 0.78rem;
-   font-weight: 500;
+   font-size: var(--control-font-size-sm, 0.76rem);
+   font-weight: var(--weight-medium, 500);
    font-family: var(--font-mono);
 }
 
@@ -1962,9 +2021,9 @@
 
 .vocab-definition-text {
    font-family: var(--font-serif);
-   font-size: 0.92rem;
+   font-size: var(--text-sm, 0.88rem);
    color: var(--color-text);
-   line-height: 1.45;
+   line-height: 1.55;
    margin: 0;
    padding-right: 16px;
 }
@@ -1981,13 +2040,13 @@
 .vocab-context-box {
    background: color-mix(in srgb, var(--color-primary-light) 4%, var(--color-surface));
    border-left: 3px solid color-mix(in srgb, var(--color-primary-light) 50%, transparent);
-   border-radius: 8px;
+   border-radius: var(--radius-sm, 8px);
    padding: 8px 12px;
    font-family: var(--font-serif);
-   font-size: 0.88rem;
+   font-size: var(--text-sm, 0.88rem);
    color: var(--color-text);
    font-style: italic;
-   line-height: 1.4;
+   line-height: 1.55;
 }
 
 .vocab-card-footer {
@@ -2032,46 +2091,59 @@
 }
 
 .vocab-pill-btn {
-   display: inline-flex;
-   align-items: center;
-   gap: 5px;
-   padding: 6px 14px;
-   border-radius: 9999px;
-   font-size: 0.8rem;
-   font-weight: 600;
-   border: none;
-   cursor: pointer;
-   transition: background-color var(--transition-fast), color var(--transition-fast);
+   border-radius: var(--radius-full, 999px);
+}
+
+.vocab-pill-btn svg,
+.vocab-pill-btn .btn-icon-svg {
+   width: var(--control-icon-size-sm, 14px);
+   height: var(--control-icon-size-sm, 14px);
 }
 
 .btn-listen-word {
-   background: color-mix(in srgb, var(--color-primary-light) 12%, var(--color-surface));
+   background-color: color-mix(in srgb, var(--color-primary-light) 12%, var(--color-surface));
    color: var(--color-primary-light);
+   border-color: transparent;
 }
 
 .btn-listen-word:hover {
-   background: var(--color-primary-light);
-   color: #FFFFFF;
+   background-color: color-mix(in srgb, var(--color-primary-light) 22%, var(--color-surface));
+   color: var(--color-primary);
+   border-color: color-mix(in srgb, var(--color-primary-light) 35%, transparent);
 }
 
 .btn-copy-word {
-   background: color-mix(in srgb, var(--color-primary-light) 8%, var(--color-surface));
+   background-color: color-mix(in srgb, var(--color-primary-light) 8%, var(--color-surface));
    color: color-mix(in srgb, var(--color-text) 80%, var(--color-primary-light));
+   border-color: transparent;
 }
 
 .btn-copy-word:hover {
-   background: color-mix(in srgb, var(--color-primary-light) 16%, var(--color-surface));
+   background-color: color-mix(in srgb, var(--color-primary-light) 16%, var(--color-surface));
    color: var(--color-text);
+   border-color: transparent;
 }
 
 /* ==================================================================
-   12. VISTA DE AJUSTES (SETTINGS CARD SECTIONS)
+   12. VISTA DE AJUSTES (SETTINGS CARD SECTIONS) — UNIFICADA
    ================================================================== */
 .settings-card-section {
-   background: var(--color-surface);
+   background-color: var(--color-surface);
    border: 1px solid var(--color-border);
-   border-radius: 16px;
+   border-radius: var(--radius-lg, 16px);
    padding: 24px;
+   width: 100%;
+   box-sizing: border-box;
+   overflow: hidden;
+}
+
+.settings-content-wrapper {
+   margin-top: var(--space-md, 20px);
+   display: flex;
+   flex-direction: column;
+   gap: var(--space-md, 20px);
+   width: 100%;
+   box-sizing: border-box;
 }
 
 .settings-section-row {
@@ -2082,19 +2154,54 @@
    gap: 16px;
 }
 
+.settings-section-head {
+   margin-bottom: 16px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   flex-wrap: wrap;
+   gap: 10px;
+}
+
+.settings-section-head--stack {
+   margin-bottom: 18px;
+}
+
 .settings-section-title {
-   font-size: 0.95rem;
-   font-weight: 700;
+   font-family: var(--font-sans);
+   font-size: var(--text-sm, 0.90rem);
+   font-weight: var(--weight-bold, 700);
    text-transform: uppercase;
    letter-spacing: 0.05em;
    color: var(--color-text);
    margin: 0 0 4px 0;
+   display: flex;
+   align-items: center;
+   gap: 8px;
+}
+
+.settings-section-title svg {
+   width: var(--control-icon-size-md, 16px);
+   height: var(--control-icon-size-md, 16px);
+   color: var(--color-primary);
+   flex-shrink: 0;
 }
 
 .settings-section-desc {
-   font-size: 0.82rem;
+   font-size: var(--text-xs, 0.82rem);
    color: var(--color-text-secondary);
    margin: 0;
+   line-height: 1.45;
+}
+
+.settings-offline-badge {
+   font-size: var(--text-2xs, 0.70rem);
+   padding: 3px 9px;
+   border-radius: var(--radius-full, 999px);
+   background: color-mix(in srgb, var(--color-primary-light) 12%, transparent);
+   color: var(--color-primary);
+   font-weight: var(--weight-semibold, 600);
+   white-space: nowrap;
 }
 
 .settings-btn-group {
@@ -2107,7 +2214,89 @@
    display: inline-flex;
    align-items: center;
    gap: 8px;
-   font-weight: 600;
+   font-weight: var(--weight-semibold, 600);
+}
+
+.btn-backup-action svg,
+.btn-backup-action .btn-icon-svg {
+   width: var(--control-icon-size-md, 16px);
+   height: var(--control-icon-size-md, 16px);
+}
+
+/* Icono de cabecera de ajustes — hereda de .header-card-icon-box */
+.settings-header-icon {
+   background-color: color-mix(in srgb, var(--color-primary-light) 18%, var(--color-surface));
+   color: var(--color-primary-light);
+}
+
+.settings-header-icon svg {
+   width: 22px;
+   height: 22px;
+}
+
+/* Creador de tema personalizado */
+.custom-creator-block {
+   margin-top: 24px;
+   padding-top: 20px;
+   border-top: 1px dashed var(--color-border);
+}
+
+.custom-creator-title {
+   font-size: var(--text-sm, 0.90rem);
+   font-weight: var(--weight-bold, 700);
+   color: var(--color-text);
+   margin: 0;
+   display: flex;
+   align-items: center;
+   gap: 6px;
+   line-height: 1.3;
+}
+
+.custom-preset-row {
+   display: flex;
+   gap: 8px;
+   flex-wrap: wrap;
+   margin: 12px 0 16px 0;
+}
+
+.custom-preset-pill {
+   display: inline-flex;
+   align-items: center;
+   gap: 7px;
+   padding: 5px 12px 5px 5px;
+   border-radius: var(--radius-full, 999px);
+   border: 1px solid var(--color-border);
+   background-color: var(--color-surface);
+   font-family: var(--font-sans);
+   font-size: var(--control-font-size-sm, 0.78rem);
+   font-weight: var(--weight-semibold, 600);
+   color: var(--color-text);
+   cursor: pointer;
+   transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.custom-preset-pill:hover {
+   background-color: var(--color-surface-hover);
+   border-color: var(--color-border-focus);
+}
+
+.custom-preset-pill:active {
+   transform: scale(var(--press-scale, 0.97));
+}
+
+.custom-preset-pill.active {
+   border-color: var(--color-primary);
+   background-color: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface));
+}
+
+.custom-apply-row {
+   display: flex;
+   gap: 10px;
+   margin-top: 16px;
+}
+
+.custom-apply-row .btn--pill {
+   flex: 1;
 }
 
 /* Creador de tema personalizado: presets 50/50 y swatches limpios */
@@ -2170,8 +2359,16 @@ input[type="color"].custom-color-input::-moz-color-swatch {
 }
 
 .custom-color-card {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   background-color: var(--color-surface-elevated);
+   padding: 10px 12px;
+   border-radius: var(--radius-md, 12px);
+   border: 1px solid var(--color-border-subtle);
    min-width: 0;
    overflow: hidden;
+   box-sizing: border-box;
 }
 
 .custom-color-card > div {
@@ -2179,11 +2376,24 @@ input[type="color"].custom-color-input::-moz-color-swatch {
    overflow: hidden;
 }
 
+.custom-color-card label {
+   font-size: var(--control-font-size-sm, 0.78rem);
+   font-weight: var(--weight-medium, 500);
+   display: block;
+   color: var(--color-text-muted);
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
 .custom-color-card span[id^="custom-hex"] {
    display: block;
    white-space: nowrap;
    overflow: hidden;
    text-overflow: ellipsis;
+   font-size: var(--control-font-size-md, 0.84rem);
+   font-weight: var(--weight-bold, 700);
+   color: var(--color-text);
 }
 
 @media (max-width: 480px) {
@@ -2193,20 +2403,20 @@ input[type="color"].custom-color-input::-moz-color-swatch {
    }
 
    .custom-color-card {
-      padding: 8px 10px !important;
-      gap: 8px !important;
-      border-radius: 12px !important;
+      padding: 8px 10px;
+      gap: 8px;
+      border-radius: var(--radius-md, 12px);
    }
 
    .custom-color-card label {
-      font-size: 0.72rem !important;
+      font-size: var(--text-2xs, 0.70rem);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
    }
 
    .custom-color-card span[id^="custom-hex"] {
-      font-size: 0.76rem !important;
+      font-size: var(--control-font-size-sm, 0.76rem);
    }
 
    input[type="color"].custom-color-input {
@@ -2214,15 +2424,15 @@ input[type="color"].custom-color-input::-moz-color-swatch {
       height: 36px;
       min-width: 36px;
       min-height: 36px;
-      border-radius: 12px;
+      border-radius: var(--radius-md, 12px);
    }
 
    input[type="color"].custom-color-input::-webkit-color-swatch {
-      border-radius: 12px;
+      border-radius: var(--radius-md, 12px);
    }
 
    input[type="color"].custom-color-input::-moz-color-swatch {
-      border-radius: 12px;
+      border-radius: var(--radius-md, 12px);
    }
 }
 
@@ -2237,7 +2447,7 @@ body.drag-over-active::after {
    left: 0;
    width: 100vw;
    height: 100vh;
-   background-color: var(--modal-backdrop, rgba(16, 32, 44, 0.75));
+   background-color: var(--modal-backdrop, rgba(18, 19, 22, 0.55));
    backdrop-filter: blur(8px);
    -webkit-backdrop-filter: blur(8px);
    z-index: 9999;
@@ -2269,4 +2479,83 @@ body.drag-over-active::after {
    #btn-pwa-install {
       display: none !important;
    }
+}
+
+/* ==================================================================
+   13. UTILIDADES PARA REEMPLAZO DE ESTILOS INLINE (UNIFICACIÓN)
+   ================================================================== */
+
+/* Iconos con tamaño del sistema dentro de insignias y filas */
+.collection-badge-icon svg {
+   width: var(--control-icon-size-md, 16px);
+   height: var(--control-icon-size-md, 16px);
+   flex-shrink: 0;
+}
+
+.btn-col-options svg {
+   width: var(--control-icon-size-sm, 14px);
+   height: var(--control-icon-size-sm, 14px);
+   flex-shrink: 0;
+}
+
+.header-card-icon-box svg {
+   width: 22px;
+   height: 22px;
+   flex-shrink: 0;
+}
+
+.collection-count-pill svg {
+   width: var(--control-icon-size-sm, 14px);
+   height: var(--control-icon-size-sm, 14px);
+   flex-shrink: 0;
+}
+
+.panel-search-bar > svg {
+   width: var(--control-icon-size-sm, 14px);
+   height: var(--control-icon-size-sm, 14px);
+   color: var(--color-text-muted);
+   flex-shrink: 0;
+   pointer-events: none;
+}
+
+.empty-state-icon svg {
+   width: 22px;
+   height: 22px;
+   color: var(--color-primary-light);
+   flex-shrink: 0;
+}
+
+/* Portadas generadas — logo y espaciado unificados */
+.list-cover-placeholder img {
+   width: 36px;
+   height: auto;
+   opacity: 0.92;
+   filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5));
+}
+
+/* Marcador de carga de vistas (Biblioteca delega a Notas/Vocabulario/Ajustes) */
+.view-loading {
+   min-height: 220px;
+}
+
+/* Iconos estadísticos con color propio (el fondo va por clase) */
+.stat-card-icon--streak {
+   background: rgba(255, 107, 107, 0.12);
+   color: #FF6B6B;
+}
+
+.stat-card-icon--time {
+   background: rgba(71, 185, 188, 0.15);
+   color: #47b9bc;
+}
+
+.stat-card-icon--time .icon-clock-color {
+   width: 20px;
+   height: 20px;
+}
+
+/* Check de tarjeta de tema */
+.theme-card-check-badge svg {
+   width: 12px;
+   height: 12px;
 }

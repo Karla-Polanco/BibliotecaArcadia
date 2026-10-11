@@ -67,7 +67,7 @@ export class ReaderSettings {
    * @param {Object} settings - Configuración a aplicar
    * @param {string} effectiveTheme - Tema visual activo
    */
-  static apply(rendition, settings, effectiveTheme = 'light') {
+  static apply(rendition, settings, effectiveTheme = 'classic-light') {
     if (!rendition) return;
 
     // 1. Determinar tema de color (heredado lee variables CSS reales)
@@ -474,59 +474,60 @@ export class ReaderSettings {
    */
   static _getThemeColors(themeName) {
     // Alias legacy → nuevos nombres
-    if (themeName === 'cerulean-light' || themeName === 'boreal-blue') themeName = 'navy-summit';
-    if (themeName === 'lavender-light' || themeName === 'twilight-lavender') themeName = 'plum';
-    if (themeName === 'clear-sky' || themeName === 'classic-ivory') themeName = 'cozy-brown';
-    if (themeName === 'enchanted-forest' || themeName === 'mint' || themeName === 'olive-green') themeName = 'sage-cream';
+    if (themeName === 'cerulean-light' || themeName === 'boreal-blue' || themeName === 'navy-summit') themeName = 'navy-white';
+    if (themeName === 'lavender-light' || themeName === 'twilight-lavender' || themeName === 'plum') themeName = 'amethyst-ivory';
+    if (themeName === 'clear-sky' || themeName === 'classic-ivory' || themeName === 'cozy-brown') themeName = 'sepia-coffee';
+    if (themeName === 'enchanted-forest' || themeName === 'mint' || themeName === 'olive-green' || themeName === 'sage-cream') themeName = 'olive-ivory';
+    if (themeName === 'light') themeName = 'classic-light';
     if (themeName === 'serene-fog' || themeName === 'wine-poetry' || themeName === 'wine' || themeName === 'antique-pink' || themeName === 'toasted-ash') themeName = 'noir-silver';
     if (themeName === 'abyss-dark' || themeName === 'mystic-night' || themeName === 'deep-twilight' || themeName === 'night-ink') themeName = 'noir-silver';
 
-    if (themeName === 'navy-summit') {
+    if (themeName === 'navy-white') {
       return {
-        bg: '#EFF3FA',
-        text: '#0E1726',
-        heading: '#0A1529',
-        accent: '#142A4F'
+        bg: '#F6F8FA',
+        text: '#1A222C',
+        heading: '#1C2D40',
+        accent: '#304861'
       };
     }
-    if (themeName === 'plum') {
+    if (themeName === 'amethyst-ivory') {
       return {
-        bg: '#F3EEF7',
-        text: '#1F122B',
-        heading: '#3E2154',
-        accent: '#633C84'
+        bg: '#F7F5F8',
+        text: '#29232B',
+        heading: '#332A38',
+        accent: '#584B5F'
       };
     }
-    if (themeName === 'cozy-brown') {
+    if (themeName === 'olive-ivory') {
       return {
-        bg: '#F4EBE0',
-        text: '#261911',
-        heading: '#473226',
-        accent: '#6B4E3D'
+        bg: '#F6F7F3',
+        text: '#222720',
+        heading: '#2A3228',
+        accent: '#4F5B48'
       };
     }
-    if (themeName === 'sage-cream') {
+    if (themeName === 'classic-light') {
       return {
-        bg: '#EEF3EB',
-        text: '#172115',
-        heading: '#2F4129',
-        accent: '#4C6843'
+        bg: '#F7F7F7',
+        text: '#1B1C20',
+        heading: '#17181B',
+        accent: '#34363C'
       };
     }
-    if (themeName === 'light') {
+    if (themeName === 'sepia-coffee') {
       return {
-        bg: '#F4F4F6',
-        text: '#121316',
-        heading: '#111114',
-        accent: '#2B2C34'
+        bg: '#F8F5EF',
+        text: '#28231D',
+        heading: '#332C25',
+        accent: '#5B5146'
       };
     }
     if (themeName === 'noir-silver') {
       return {
-        bg: '#121212',
-        text: '#E5E5E5',
+        bg: '#14171A',
+        text: '#D9DDE1',
         heading: '#FFFFFF',
-        accent: '#B5B5B5'
+        accent: '#E2E5E8'
       };
     }
     if (themeName === 'pergamino') {
@@ -610,12 +611,12 @@ export class ReaderSettings {
         accent: '#B87B32'
       };
     }
-    // light por defecto
+    // classic-light por defecto
     return {
-      bg: '#F4F4F6',
-      text: '#121316',
-      heading: '#111114',
-      accent: '#2B2C34'
+      bg: '#F7F7F7',
+      text: '#1B1C20',
+      heading: '#17181B',
+      accent: '#34363C'
     };
   }
 }

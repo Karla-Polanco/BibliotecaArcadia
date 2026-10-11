@@ -12,7 +12,7 @@
         "minimal-ui"
     ],
     "orientation": "any",
-    "background_color": "#000000",
+    "background_color": "#F1F1F2",
     "theme_color": "#EEF3F7",
     "lang": "es",
     "dir": "ltr",

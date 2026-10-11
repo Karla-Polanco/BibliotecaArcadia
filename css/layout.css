@@ -203,27 +203,54 @@
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.12em;
-    color: var(--color-primary-dark, #484393);
+    color: var(--color-primary-dark, #111114);
     text-transform: uppercase;
 }
 
 .btn-create-col {
-    width: 28px;
-    height: 28px;
-    border-radius: var(--radius-sm);
-    display: flex;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-primary-light);
+    color: var(--color-text-inverse, #FFFFFF);
     cursor: pointer;
-    background: transparent;
+    background-color: var(--color-primary);
     border: none;
-    transition: background-color var(--transition-fast), color var(--transition-fast);
+    flex-shrink: 0;
+    transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.btn-create-col:hover {
-    background-color: color-mix(in srgb, var(--color-primary-light) 12%, transparent);
+.btn-create-col svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+}
+
+/* Hover unificado para los botones de icono compactos del sidebar */
+.btn-col-options:hover,
+.btn-storage-toggle:hover {
+    background-color: color-mix(in srgb, var(--color-primary-light) 14%, transparent);
     color: var(--color-primary);
+}
+
+/* Botón circular de agregar colección (+) con color del tema */
+.btn-create-col:hover {
+    background-color: color-mix(in srgb, var(--color-primary) 86%, #FFFFFF 14%);
+    color: var(--color-text-inverse, #FFFFFF);
+    border-radius: 50%;
+}
+
+.btn-create-col:active {
+    transform: scale(0.92);
+    background-color: color-mix(in srgb, var(--color-primary) 80%, #000000 20%);
+    color: var(--color-text-inverse, #FFFFFF);
+}
+
+.btn-create-col:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
 }
 
 .custom-collections-list {
@@ -324,8 +351,8 @@ button.collection-nav-link {
 }
 
 .btn-col-options {
-    width: 22px;
-    height: 22px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -335,11 +362,6 @@ button.collection-nav-link {
     background: transparent;
     border: none;
     transition: background-color var(--transition-fast), color var(--transition-fast);
-}
-
-.btn-col-options:hover {
-    background-color: color-mix(in srgb, var(--color-primary-light) 15%, transparent);
-    color: var(--color-primary-light);
 }
 
 /* =======================================================
@@ -399,7 +421,7 @@ button.collection-nav-link {
 
 .nav-item:active {
     background-color: var(--color-surface-secondary);
-    transform: scale(0.99);
+    transform: scale(var(--press-scale, 0.97));
 }
 
 .nav-item.active {
@@ -416,11 +438,6 @@ button.collection-nav-link {
 
 .nav-item.active:hover {
     background-color: var(--color-surface-secondary);
-}
-
-.nav-item:focus-visible {
-    outline: 2px solid var(--color-primary-light);
-    outline-offset: 1px;
 }
 
 .nav-item-content {
@@ -508,8 +525,8 @@ button.collection-nav-link {
 }
 
 .btn-storage-toggle {
-    width: 22px;
-    height: 22px;
+    width: 26px;
+    height: 26px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -523,10 +540,6 @@ button.collection-nav-link {
 
 .btn-storage-toggle svg {
     transition: transform var(--transition-fast);
-}
-
-.btn-storage-toggle:hover {
-    background-color: color-mix(in srgb, var(--color-primary-light) 15%, transparent);
 }
 
 .storage-progress-bar {
@@ -545,7 +558,7 @@ button.collection-nav-link {
     background: linear-gradient(90deg, var(--color-primary-light), var(--color-primary));
     border-radius: var(--radius-full);
     box-shadow: 0 0 6px var(--color-primary-glow);
-    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: width var(--transition-slow) var(--ease-out);
 }
 
 .storage-info-text {

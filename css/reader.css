@@ -97,9 +97,9 @@ html.reader-open {
   border: 1px solid transparent;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-    background-color 0.2s ease, color 0.2s ease,
-    border-color 0.2s ease, box-shadow 0.22s ease;
+  transition: transform var(--transition-normal) var(--ease-out),
+    background-color var(--transition-normal), color var(--transition-normal),
+    border-color var(--transition-normal), box-shadow var(--transition-normal);
 }
 
 .reader-header-center {
@@ -170,7 +170,7 @@ html.reader-open {
 }
 
 .btn-reader-action:active {
-  transform: scale(0.96);
+  transform: scale(var(--press-scale, 0.97));
 }
 
 @media (hover: none), (max-width: 600px) {
@@ -187,10 +187,10 @@ html.reader-open {
 }
 
 :is(.btn-reader-action, .btn-reader-back):hover {
-  background-color: var(--color-surface-hover);
-  border-color: var(--color-border);
-  color: var(--color-text);
-  box-shadow: var(--hover-shadow-sm, 0 1px 4px rgba(0, 0, 0, 0.04));
+   background-color: var(--color-surface-hover);
+   border-color: var(--color-border-subtle);
+   color: var(--color-text);
+   box-shadow: none;
 }
 
 :is(.btn-reader-action, .btn-reader-back):hover svg {
@@ -198,7 +198,7 @@ html.reader-open {
 }
 
 :is(.btn-reader-action, .btn-reader-back):active {
-  transform: scale(0.97);
+  transform: scale(var(--press-scale, 0.97));
   background-color: var(--color-surface-secondary);
   box-shadow: none;
   transition-duration: 0.08s;
@@ -373,15 +373,23 @@ html.reader-open {
   gap: 6px;
   background-color: var(--color-surface-secondary);
   border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-sm, 8px);
   padding: 5px 12px;
+  min-height: var(--control-height-sm, 30px);
   color: var(--color-text-secondary);
-  font-size: 0.75rem;
-  font-weight: var(--weight-medium);
+  font-family: var(--font-sans);
+  font-size: var(--control-font-size-sm, 0.76rem);
+  font-weight: var(--weight-medium, 500);
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
   transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-footer-chapter svg {
+  width: var(--control-icon-size-sm, 14px);
+  height: var(--control-icon-size-sm, 14px);
+  flex-shrink: 0;
 }
 
 .btn-footer-chapter:hover {
@@ -391,21 +399,21 @@ html.reader-open {
 }
 
 .btn-footer-chapter:active {
-  transform: scale(0.97);
+  transform: scale(var(--press-scale, 0.97));
 }
 
 .btn-footer-chapter:disabled {
-  opacity: 0.38;
+  opacity: var(--disabled-opacity, 0.45);
   cursor: default;
   background-color: var(--color-surface-secondary);
   color: var(--color-text-muted);
-  border-color: rgba(255, 255, 255, 0.05);
+  border-color: var(--color-border-subtle);
 }
 
 .btn-footer-chapter:disabled:hover {
   background-color: var(--color-surface-secondary);
   color: var(--color-text-muted);
-  border-color: rgba(255, 255, 255, 0.05);
+  border-color: var(--color-border-subtle);
   transform: none;
 }
 
@@ -715,35 +723,8 @@ html.reader-open {
   gap: 8px;
 }
 
-.align-pill-btn {
-  width: 100%;
-  box-sizing: border-box;
-  height: var(--control-height-md, 38px);
-  min-height: var(--control-height-md, 38px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm, 8px);
-  color: var(--color-text-muted);
-  cursor: pointer;
-  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
-}
-
-.align-pill-btn:hover {
-  border-color: var(--color-border);
-  color: var(--color-text);
-  background-color: var(--color-surface-hover);
-}
-
-.align-pill-btn.active {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
-  color: var(--color-text-inverse, #FFFFFF);
-  box-shadow: 0 1px 4px var(--color-primary-glow);
-}
-
+/* Píldoras de opción — base única (Grosor / Interlineado / Alineación / Sangría) */
+.align-pill-btn,
 .setting-pill-btn {
   width: 100%;
   box-sizing: border-box;
@@ -753,6 +734,7 @@ html.reader-open {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm, 8px);
@@ -766,30 +748,55 @@ html.reader-open {
   text-overflow: ellipsis;
   cursor: pointer;
   box-shadow: var(--shadow-xs);
-  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
 }
 
+.align-pill-btn svg,
+.setting-pill-btn svg {
+  width: var(--control-icon-size-sm, 14px);
+  height: var(--control-icon-size-sm, 14px);
+  flex-shrink: 0;
+}
+
+.align-pill-btn:hover,
 .setting-pill-btn:hover {
   background-color: var(--color-surface-hover);
   color: var(--color-text);
   border-color: var(--color-border);
 }
 
-.setting-pill-btn.active {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
-  color: var(--color-text-inverse, #FFFFFF);
-  font-weight: var(--weight-bold, 700);
-  box-shadow: 0 1px 4px var(--color-primary-glow);
+.align-pill-btn:active,
+.setting-pill-btn:active {
+  transform: scale(0.97);
 }
 
-/* --- 1. TIPOGRAFÍA: tarjetas idénticas a Tema de Lectura --- */
-.typography-grid {
+.align-pill-btn.active,
+.setting-pill-btn.active {
+  background-color: color-mix(in srgb, var(--color-primary) 24%, var(--color-surface-elevated, #FFFFFF));
+  border-color: color-mix(in srgb, var(--color-primary) 55%, transparent);
+  color: var(--color-primary);
+  font-weight: var(--weight-bold, 700);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-primary) 30%, transparent), var(--shadow-xs);
+}
+
+.align-pill-btn:focus-visible,
+.setting-pill-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* --- 1. TARJETAS DE SELECCIÓN (Tipografía + Tema de Lectura: un solo sistema) ---
+   .typography-grid .setting-pill-btn y .reader-theme-chip comparten
+   miniatura (76px / radio 16px), etiqueta, hover, activo y check ✓. */
+.typography-grid,
+.reader-theme-swatches {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px 8px;
 }
-.typography-grid .setting-pill-btn {
+/* Contenedor de tarjeta */
+.typography-grid .setting-pill-btn,
+.reader-theme-chip {
   position: relative;
   width: 100%;
   height: auto;
@@ -806,15 +813,18 @@ html.reader-open {
   gap: 6px;
   cursor: pointer;
   transition: transform var(--transition-fast);
-  font-family: inherit;
+  font-family: var(--font-sans);
+  font-size: var(--control-font-size-sm, 0.78rem);
   user-select: none;
-  font-size: 0.80rem;
   box-shadow: none;
   text-align: center;
   white-space: normal;
   overflow: visible;
+  -webkit-tap-highlight-color: transparent;
 }
-.typography-grid .setting-pill-btn .font-aa {
+/* Miniatura (Aa / vista previa del tema) */
+.typography-grid .setting-pill-btn .font-aa,
+.reader-theme-preview {
   position: relative;
   height: 76px;
   width: 100%;
@@ -829,7 +839,7 @@ html.reader-open {
   color: var(--color-text);
   background-color: var(--color-surface-secondary);
   border: 2px solid var(--color-border);
-  border-radius: 16px;
+  border-radius: var(--radius-lg, 16px);
   box-sizing: border-box;
   overflow: hidden;
   padding-bottom: 12px;
@@ -846,251 +856,8 @@ html.reader-open {
 .setting-pill-btn.font-inter .font-aa { font-family: 'Inter', sans-serif; }
 .setting-pill-btn.font-roboto .font-aa { font-family: 'Roboto', sans-serif; }
 .setting-pill-btn.font-opendyslexic .font-aa { font-family: 'OpenDyslexic', 'Lexend', sans-serif; }
-.typography-grid .setting-pill-btn .font-aa::before {
-  content: '';
-  position: absolute;
-  left: 16%;
-  bottom: 12px;
-  width: 48%;
-  height: 9px;
-  border-radius: 999px;
-  background: var(--pv-bar, rgba(255, 255, 255, 0.9));
-  pointer-events: none;
-}
-.typography-grid .setting-pill-btn .font-aa::after {
-  content: '';
-  position: absolute;
-  right: 12%;
-  bottom: 10px;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background: var(--pv-dot, var(--color-primary-light, #8FA8FF));
-  pointer-events: none;
-}
-.typography-grid .setting-pill-btn .font-name {
-  height: auto;
-  min-height: 32px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  text-align: center;
-  font-size: 0.76rem;
-  font-weight: 500;
-  line-height: 1.25;
-  color: var(--color-text);
-  font-family: var(--font-sans);
-  background: transparent;
-  white-space: normal;
-  pointer-events: none;
-  padding: 0 2px;
-}
-.typography-grid .setting-pill-btn:hover {
-  background: transparent;
-  border: none;
-  color: var(--color-text);
-  transform: translateY(-1px);
-}
-.typography-grid .setting-pill-btn:hover .font-aa {
-  filter: brightness(0.97);
-}
-.typography-grid .setting-pill-btn.active {
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  transform: translateY(-1px);
-}
-.typography-grid .setting-pill-btn.active .font-aa {
-  color: var(--color-text);
-  border-color: var(--color-primary-light);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary-light) 35%, transparent), 0 4px 12px rgba(0, 0, 0, 0.12);
-}
-.typography-grid .setting-pill-btn.active .font-name {
-  color: var(--color-text);
-  font-weight: 600;
-}
-.typography-grid .setting-pill-btn.active::after {
-  content: '✓';
-  position: absolute;
-  top: 38px;
-  left: calc(50% - 18px);
-  right: auto;
-  margin: 0;
-  transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--color-primary-light);
-  color: #FFFFFF;
-  font-size: 18px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
-  pointer-events: none;
-  z-index: 2;
-}
-
-/* --- 2. SEGMENTED CONTROLS (Grosor / Interlineado / Alineación) --- */
-.segmented-control {
-  display: flex;
-  background-color: var(--color-surface-secondary);
-  border: 1px solid var(--color-border-subtle);
-  border-radius: 999px;
-  padding: 4px;
-  gap: 4px;
-}
-.segmented-control .setting-pill-btn,
-.segmented-control .align-pill-btn {
-  flex: 1;
-  height: 36px;
-  min-height: 36px;
-  border-radius: 999px;
-  border: none;
-  background: transparent;
-  color: var(--color-text-muted);
-  font-size: 0.78rem;
-  font-weight: 500;
-  box-shadow: none;
-  padding: 0 8px;
-}
-.segmented-control .setting-pill-btn:hover,
-.segmented-control .align-pill-btn:hover {
-  background-color: var(--color-surface-hover);
-  color: var(--color-text);
-  transform: none;
-  border-color: transparent;
-}
-.segmented-control .setting-pill-btn.active,
-.segmented-control .align-pill-btn.active {
-  background-color: var(--color-primary);
-  color: var(--color-text-inverse, #FFFFFF);
-  font-weight: 700;
-  box-shadow: 0 1px 4px var(--color-primary-glow);
-  border-color: transparent;
-}
-#font-align-options.segmented-control .align-pill-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Control de Tamaño de Fuente [ A- ] [ 18px ] [ A+ ] */
-.font-size-control {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: var(--color-surface-secondary);
-  border: 1px solid var(--color-border-subtle);
-  border-radius: 12px;
-  padding: 6px 10px;
-}
-
-.btn-font-size-step {
-  width: 48px;
-  height: 40px;
-  border-radius: var(--radius-sm);
-  background-color: var(--color-surface);
-  color: var(--color-text);
-  font-weight: 700;
-  font-size: var(--text-sm, 0.95rem);
-  cursor: pointer;
-  border: 1px solid var(--color-border-subtle);
-  transition: background-color var(--transition-fast),
-    color var(--transition-fast),
-    border-color var(--transition-fast),
-    transform var(--transition-fast);
-}
-
-.btn-font-size-step:hover {
-  background-color: var(--color-surface-hover);
-  color: var(--color-primary);
-  border-color: var(--color-border);
-}
-
-.btn-font-size-step:active {
-  transform: scale(0.97);
-}
-
-.font-size-value {
-  font-size: var(--text-md, 1.1rem);
-  font-weight: 700;
-  color: var(--color-text);
-  font-variant-numeric: tabular-nums;
-}
-
-/* --------------------------------------------------------------------------
-   Chips Temáticos del Lector (Sincronizados con los 6 Temas Oficiales)
-   -------------------------------------------------------------------------- */
-
-.reader-theme-swatches {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px 8px;
-}
-
-/* Tarjetas grandes con miniatura, etiqueta debajo y check de selección */
-.reader-theme-chip {
-  position: relative;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0;
-  border: none;
-  border-radius: 0;
-  background: transparent;
-  color: var(--color-text-muted);
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 6px;
-  cursor: pointer;
-  transition: transform var(--transition-fast);
-  font-family: inherit;
-  user-select: none;
-  font-size: 0.80rem;
-}
-
-.reader-theme-chip:hover {
-  transform: translateY(-1px);
-  filter: none;
-}
-
-.reader-theme-chip:hover .reader-theme-preview {
-  filter: brightness(0.97);
-}
-
-.reader-theme-chip.active {
-  transform: translateY(-1px);
-}
-
-.reader-theme-chip:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-}
-
-/* Miniatura compacta con barra + punto decorativos y Aa centrado */
-.reader-theme-preview {
-  position: relative;
-  height: 76px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  border-radius: 16px;
-  border: 2px solid var(--color-border);
-  overflow: hidden;
-  box-sizing: border-box;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-}
-.reader-theme-chip.active .reader-theme-preview {
-  border-color: var(--pv-check, var(--color-primary-light));
-  box-shadow: 0 0 0 2px var(--pv-check-soft, color-mix(in srgb, var(--color-primary-light) 35%, transparent)), 0 4px 12px rgba(0, 0, 0, 0.12);
-}
-.reader-theme-preview .preview-line { display: none; }
-.reader-theme-preview .preview-aa { font-size: 1.25rem; font-weight: 700; padding-bottom: 12px; }
-/* Barra inferior decorativa */
+/* Barra y punto decorativos de la miniatura */
+.typography-grid .setting-pill-btn .font-aa::before,
 .reader-theme-preview::before {
   content: '';
   position: absolute;
@@ -1102,7 +869,7 @@ html.reader-open {
   background: var(--pv-bar, rgba(255, 255, 255, 0.9));
   pointer-events: none;
 }
-/* Punto decorativo */
+.typography-grid .setting-pill-btn .font-aa::after,
 .reader-theme-preview::after {
   content: '';
   position: absolute;
@@ -1111,9 +878,165 @@ html.reader-open {
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background: var(--pv-dot, #8FA8FF);
+  background: var(--pv-dot, var(--color-primary-light, #8FA8FF));
   pointer-events: none;
 }
+/* Etiqueta bajo la tarjeta */
+.typography-grid .setting-pill-btn .font-name,
+.reader-theme-name {
+  height: auto;
+  min-height: 32px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: center;
+  font-size: var(--control-font-size-sm, 0.76rem);
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  background: transparent;
+  white-space: normal;
+  pointer-events: none;
+  padding: 0 2px;
+  text-decoration: none;
+}
+/* Hover: elevación + miniatura apenas más luminosa */
+.typography-grid .setting-pill-btn:hover,
+.reader-theme-chip:hover {
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  transform: translateY(-1px);
+  filter: none;
+}
+.typography-grid .setting-pill-btn:hover .font-aa,
+.reader-theme-chip:hover .reader-theme-preview {
+  filter: brightness(0.97);
+}
+/* Activo: borde acento + anillo + etiqueta en seminegrita */
+.typography-grid .setting-pill-btn.active,
+.reader-theme-chip.active {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transform: translateY(-1px);
+}
+.typography-grid .setting-pill-btn.active .font-aa,
+.reader-theme-chip.active .reader-theme-preview {
+  color: var(--color-text);
+  border-color: var(--pv-check, var(--color-primary-light));
+  box-shadow: 0 0 0 2px var(--pv-check-soft, color-mix(in srgb, var(--color-primary-light) 35%, transparent)), 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+.typography-grid .setting-pill-btn.active .font-name,
+.reader-theme-chip.active .reader-theme-name {
+  color: var(--color-text);
+  font-weight: 600;
+}
+/* Check circular de selección — idéntico en ambos sistemas */
+.typography-grid .setting-pill-btn.active::after,
+.reader-theme-chip.active::after {
+  content: '✓';
+  position: absolute;
+  top: 38px;
+  left: calc(50% - 18px);
+  right: auto;
+  margin: 0;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  color: var(--color-text-inverse);
+  font-size: 18px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  z-index: 2;
+}
+.typography-grid .setting-pill-btn:focus-visible,
+.reader-theme-chip:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* --- 2. CONTROLES SEGMENTADOS (Grosor / Interlineado / Alineación / Sangría) ---
+   Todos los grupos de opciones comparten contenedor píldora y botones píldora.
+   #first-line-indent-options se suma por CSS (su HTML usa .settings-btn-grid). */
+.segmented-control,
+#first-line-indent-options {
+  display: flex;
+  background-color: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 999px;
+  padding: 4px;
+  gap: 4px;
+}
+.segmented-control .setting-pill-btn,
+.segmented-control .align-pill-btn,
+#first-line-indent-options .setting-pill-btn {
+  flex: 1;
+  height: 36px;
+  min-height: 36px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: var(--control-font-size-sm, 0.78rem);
+  font-weight: 500;
+  box-shadow: none;
+  padding: 0 8px;
+}
+.segmented-control .setting-pill-btn:hover,
+.segmented-control .align-pill-btn:hover,
+#first-line-indent-options .setting-pill-btn:hover {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text);
+  transform: none;
+  border-color: transparent;
+}
+.segmented-control .setting-pill-btn.active,
+.segmented-control .align-pill-btn.active,
+#first-line-indent-options .setting-pill-btn.active {
+  background-color: color-mix(in srgb, var(--color-primary) 26%, var(--color-surface-elevated, #FFFFFF));
+  color: var(--color-primary);
+  border-color: transparent;
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-primary) 38%, transparent), 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+.segmented-control .setting-pill-btn.active:hover,
+.segmented-control .align-pill-btn.active:hover,
+#first-line-indent-options .setting-pill-btn.active:hover {
+  background-color: color-mix(in srgb, var(--color-primary) 30%, var(--color-surface-elevated, #FFFFFF));
+  color: var(--color-primary);
+}
+.segmented-control .setting-pill-btn:focus-visible,
+.segmented-control .align-pill-btn:focus-visible,
+#first-line-indent-options .setting-pill-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+#font-align-options.segmented-control .align-pill-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Control de Tamaño de Fuente [ A- ] [ 18px ] [ A+ ] — heredado del
+   sistema único de stepper (ver library.css §05: .scale-stepper-wrapper). */
+
+/* --------------------------------------------------------------------------
+   Chips Temáticos del Lector (Sincronizados con los 6 Temas Oficiales)
+   -------------------------------------------------------------------------- */
+
+/* (Contenedor, miniatura, hover, activo y check heredados del sistema
+   unificado de tarjetas de selección — ver §1. Aquí solo la paleta.) */
+.reader-theme-preview .preview-line { display: none; }
+.reader-theme-preview .preview-aa { padding-bottom: 12px; }
+/* (Barra y punto decorativos heredados del sistema unificado — ver §1.) */
 /* Auto en dos colores: mitad clara con Aa oscuro, mitad oscura con Aa claro */
 .preview-auto { padding: 0; gap: 0; --pv-bar: linear-gradient(90deg, #FFFFFF 50%, #6E6E6E 50%); --pv-dot: #A9C7FF; --pv-check: #A9C7FF; --pv-check-soft: rgba(169, 199, 255, 0.35); --pv-check-ink: #0F111A; }
 .preview-auto-half { flex: 1 1 50%; height: 100%; display: flex; align-items: center; justify-content: center; }
@@ -1131,51 +1054,8 @@ html.reader-open {
 .preview-melocoton { background-color: #FBEFE3; --pv-bar: #FFFFFF; --pv-dot: #C27D6B; --pv-check: #C27D6B; --pv-check-soft: rgba(194, 125, 107, 0.30); --pv-check-ink: #FFFFFF; } .preview-melocoton .preview-aa { color: #3B2B28; }
 
 .reader-theme-chip,
-.reader-theme-chip *,
-.reader-theme-name {
+.reader-theme-chip * {
   text-decoration: none;
-}
-
-/* Etiqueta debajo de la tarjeta */
-.reader-theme-name {
-  height: auto;
-  min-height: 32px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  text-align: center;
-  font-size: 0.76rem;
-  font-weight: 500;
-  line-height: 1.25;
-  color: var(--color-text);
-  background: transparent;
-  white-space: normal;
-  pointer-events: none;
-  padding: 0 2px;
-}
-.reader-theme-chip.active .reader-theme-name { color: var(--color-text); font-weight: 600; }
-/* Check circular de selección con el color de Tipografía */
-.reader-theme-chip.active::after {
-  content: '✓';
-  position: absolute;
-  top: 38px;
-  left: calc(50% - 18px);
-  right: auto;
-  margin: 0;
-  transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--color-primary-light);
-  color: #FFFFFF;
-  font-size: 18px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
-  pointer-events: none;
-  z-index: 2;
 }
 
 .reader-settings-backdrop {
@@ -1210,7 +1090,7 @@ html.reader-open {
   max-height: calc(100dvh - 36px);
   background-color: var(--color-surface);
   border: 1px solid var(--color-border-subtle);
-  border-radius: 20px;
+  border-radius: var(--radius-xl, 20px);
   box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.22), 0 0 0 1px var(--color-border-subtle);
   z-index: 250;
   display: flex;
@@ -1264,6 +1144,7 @@ html.reader-open {
 }
 
 .search-input-wrapper input,
+.search-input-wrapper input:hover,
 .search-input-wrapper input:focus,
 .search-input-wrapper input:focus-visible {
   flex: 1;
@@ -1288,7 +1169,7 @@ html.reader-open {
   border-radius: var(--radius-full);
   align-items: center;
   justify-content: center;
-  transition: color 0.15s ease, background-color 0.15s ease;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
 }
 
 .btn-search-clear:hover {
@@ -1338,7 +1219,7 @@ html.reader-open {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
+  border-radius: var(--radius-sm, 8px);
   border: none;
   background: transparent;
   color: var(--color-text-secondary);
@@ -1353,7 +1234,7 @@ html.reader-open {
 }
 
 .btn-search-arrow:disabled {
-  opacity: 0.30;
+  opacity: var(--disabled-opacity, 0.45);
   cursor: default;
 }
 
@@ -1379,28 +1260,36 @@ html.reader-open {
   border-color: var(--color-border);
 }
 
-/* Botón Ir a la Sección (Barra Superior y Tarjetas) */
+/* Botón Ir a la Sección (Barra Superior y Tarjetas) — esquema claro unificado */
 .btn-search-go-pill {
   display: inline-flex;
   align-items: center;
   gap: 5px;
   padding: 5px 12px;
   border-radius: var(--radius-md);
-  background-color: var(--color-primary);
-  color: #ffffff;
-  border: 1px solid var(--color-primary);
+  background-color: var(--color-surface-hover);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
   font-size: 0.80rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color var(--transition-fast), color var(--transition-fast), opacity var(--transition-fast);
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), opacity var(--transition-fast);
 }
 
 .btn-search-go-pill:hover:not(:disabled) {
-  opacity: 0.94;
+  background-color: color-mix(in srgb, var(--color-primary) 10%, var(--color-surface-elevated, #FFFFFF));
+  color: var(--color-primary);
+  border-color: color-mix(in srgb, var(--color-primary) 30%, var(--color-border));
+  opacity: 1;
+}
+
+.btn-search-go-pill:active:not(:disabled) {
+  background-color: color-mix(in srgb, var(--color-primary) 18%, var(--color-surface-elevated, #FFFFFF));
+  color: var(--color-primary);
 }
 
 .btn-search-go-pill:disabled {
-  opacity: 0.35;
+  opacity: var(--disabled-opacity, 0.45);
   cursor: default;
 }
 
@@ -1409,20 +1298,29 @@ html.reader-open {
   align-items: center;
   gap: 4px;
   padding: 3px 9px;
-  border-radius: 6px;
+  border-radius: var(--radius-xs, 4px);
   background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
   color: var(--color-primary);
   border: 1px solid color-mix(in srgb, var(--color-primary) 25%, transparent);
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-family: var(--font-sans);
+  font-size: var(--text-2xs, 0.70rem);
+  font-weight: var(--weight-bold, 700);
   cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
   transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 }
 
+.btn-go-to-section svg {
+  width: var(--control-icon-size-sm, 14px);
+  height: var(--control-icon-size-sm, 14px);
+  flex-shrink: 0;
+}
+
 .btn-go-to-section:hover {
-  background-color: var(--color-primary);
-  color: #ffffff;
-  border-color: var(--color-primary);
+  background-color: color-mix(in srgb, var(--color-primary) 20%, transparent);
+  color: var(--color-primary);
+  border-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
 }
 
 .kbd-badge {
@@ -1456,7 +1354,7 @@ html.reader-open {
 /* Tarjeta de Coincidencia de Resultado (Forma suave) */
 .search-result-item {
   padding: 12px 14px;
-  border-radius: 12px;
+  border-radius: var(--radius-md, 12px);
   background-color: var(--color-surface-secondary);
   border: 1px solid transparent;
   cursor: pointer;
@@ -1493,7 +1391,7 @@ html.reader-open {
   color: #1E293B;
   font-weight: 600;
   padding: 1px 4px;
-  border-radius: 3px;
+  border-radius: var(--radius-xs, 4px);
 }
 
 [data-theme="noir-silver"] .search-match-highlight,
@@ -1538,7 +1436,7 @@ html.reader-open {
   opacity: 0;
   pointer-events: none;
   transform: translate(-50%, -100%) scale(0.92);
-  transition: opacity 0.18s ease, transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity var(--transition-normal), transform var(--transition-normal) var(--ease-out);
   max-width: min(700px, calc(100vw - 16px));
   width: max-content;
   box-sizing: border-box;
@@ -1576,13 +1474,12 @@ html.reader-open {
 }
 
 .menu-color-btn:hover {
-  transform: scale(1.02);
   border-color: #FFFFFF;
   box-shadow: 0 0 0 2px var(--color-primary-light, #4A7A99);
 }
 
 .menu-color-btn:active {
-  transform: scale(0.97);
+  transform: scale(var(--press-scale-sm, 0.94));
 }
 
 .line-color-btn {
@@ -1631,7 +1528,6 @@ html.reader-open {
 }
 
 .line-color-dot:hover {
-  transform: scale(1.06);
   border-color: #FFFFFF;
 }
 
@@ -1639,6 +1535,10 @@ html.reader-open {
   transform: scale(1.06);
   border-color: #FFFFFF;
   box-shadow: 0 0 0 2px var(--color-border-focus);
+}
+
+.line-color-dot:active {
+  transform: scale(var(--press-scale-sm, 0.94));
 }
 
 .floating-btn {
@@ -1649,12 +1549,13 @@ html.reader-open {
   justify-content: center;
   gap: 4px;
   padding: 8px 10px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-sm, 8px);
   border: 1px solid transparent;
   background: transparent;
   color: var(--color-text);
-  font-size: 12px;
-  font-weight: 600;
+  font-family: var(--font-sans);
+  font-size: var(--control-font-size-sm, 0.76rem);
+  font-weight: var(--weight-semibold, 600);
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
@@ -1666,10 +1567,39 @@ html.reader-open {
     transform var(--transition-fast);
 }
 
+.floating-btn svg {
+  width: var(--control-icon-size-sm, 14px);
+  height: var(--control-icon-size-sm, 14px);
+  flex-shrink: 0;
+}
+
 .floating-btn#btn-float-note,
 .floating-btn#btn-float-define {
   flex-shrink: 0;
   white-space: nowrap;
+}
+
+/* Botones T de subrayado — tipografía y decoración en CSS, color vía JS */
+.floating-btn--underline {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 14px;
+  font-weight: var(--weight-bold, 700);
+  line-height: 1;
+}
+
+.floating-btn--underline[data-style="underline"] {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.floating-btn--underline[data-style="strikethrough"] {
+  text-decoration: line-through;
+}
+
+.floating-btn--underline[data-style="wavy"] {
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2.5px;
 }
 
 .floating-btn:hover {
@@ -1679,7 +1609,7 @@ html.reader-open {
 }
 
 .floating-btn:active {
-  transform: scale(0.97);
+  transform: scale(var(--press-scale, 0.97));
   background-color: var(--color-surface-secondary);
   box-shadow: none;
   transition-duration: 0.08s;
@@ -1701,6 +1631,63 @@ html.reader-open {
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   margin-left: 2px;
   padding-left: 12px;
+}
+
+/* Botón circular de escucha en modal Definir — unificado 32px */
+.btn-speak-circle {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 50%;
+  background-color: var(--color-surface-hover);
+  border: 1px solid var(--color-border);
+  color: var(--color-gold, #C8A261);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-speak-circle svg {
+  width: var(--control-icon-size-md, 16px);
+  height: var(--control-icon-size-md, 16px);
+}
+
+.btn-speak-circle:hover {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-text);
+  border-color: var(--color-border-focus);
+}
+
+.btn-speak-circle:active {
+  transform: scale(var(--press-scale-sm, 0.94));
+}
+
+/* Estados vacíos / carga dentro de paneles del lector */
+.search-state-empty {
+  padding: 20px;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm, 0.88rem);
+  line-height: 1.5;
+}
+
+.search-loading-ring {
+  width: 24px;
+  height: 24px;
+  margin: 0 auto 10px;
+  border-width: 2px;
+}
+
+.search-result-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  gap: 8px;
 }
 
 
@@ -1918,11 +1905,6 @@ html.reader-open {
     font-size: 0.9rem;
     min-width: 0;
     flex: 1 1 0%;
-  }
-
-  #btn-submit-reader-search {
-    padding: 6px 14px;
-    font-size: 0.78rem;
   }
 }
 

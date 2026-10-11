@@ -6,23 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="description"
     content="Biblioteca Arcadia - Biblioteca virtual y lector EPUB personal local-first, inspirado en la experiencia Kindle.">
-  <meta name="theme-color" content="#F0F0F2">
+  <meta name="theme-color" content="#F1F1F2">
   <script>
     (function () {
       try {
-        var savedTheme = localStorage.getItem('arcadia_theme') || 'light';
-        if (savedTheme === 'cerulean-light' || savedTheme === 'boreal-blue') savedTheme = 'navy-summit';
-        if (savedTheme === 'lavender-light' || savedTheme === 'twilight-lavender') savedTheme = 'plum';
-        if (savedTheme === 'clear-sky' || savedTheme === 'classic-ivory') savedTheme = 'cozy-brown';
-        if (savedTheme === 'enchanted-forest' || savedTheme === 'mint' || savedTheme === 'olive-green') savedTheme = 'sage-cream';
+        var savedTheme = localStorage.getItem('arcadia_theme') || 'classic-light';
+        if (savedTheme === 'cerulean-light' || savedTheme === 'boreal-blue' || savedTheme === 'navy-summit') savedTheme = 'navy-white';
+        if (savedTheme === 'lavender-light' || savedTheme === 'twilight-lavender' || savedTheme === 'plum') savedTheme = 'amethyst-ivory';
+        if (savedTheme === 'clear-sky' || savedTheme === 'classic-ivory' || savedTheme === 'cozy-brown') savedTheme = 'sepia-coffee';
+        if (savedTheme === 'enchanted-forest' || savedTheme === 'mint' || savedTheme === 'olive-green' || savedTheme === 'sage-cream') savedTheme = 'olive-ivory';
+        if (savedTheme === 'light') savedTheme = 'classic-light';
         if (savedTheme === 'serene-fog' || savedTheme === 'wine-poetry' || savedTheme === 'wine' || savedTheme === 'antique-pink' || savedTheme === 'toasted-ash') savedTheme = 'noir-silver';
         if (savedTheme === 'abyss-dark' || savedTheme === 'mystic-night' || savedTheme === 'deep-twilight' || savedTheme === 'night-ink' || savedTheme === 'system') savedTheme = 'noir-silver';
 
-        var known = ['plum','sage-cream','light','navy-summit','cozy-brown','noir-silver','custom'];
-        if (known.indexOf(savedTheme) === -1) savedTheme = 'light';
+        var known = ['navy-white','amethyst-ivory','olive-ivory','classic-light','sepia-coffee','noir-silver','custom'];
+        if (known.indexOf(savedTheme) === -1) savedTheme = 'classic-light';
         document.documentElement.setAttribute('data-theme', savedTheme);
-        var themeColors = { 'plum':'#EEE9F2','sage-cream':'#E5ECE1','light':'#F0F0F2','navy-summit':'#E5EBF4','cozy-brown':'#EDE1D1','noir-silver':'#0D0D0D','custom':'#10141A' };
-        var tc = themeColors[savedTheme] || '#F0F0F2';
+        var themeColors = { 'navy-white':'#EDF1F6','amethyst-ivory':'#F2F0F3','olive-ivory':'#F0F1EC','classic-light':'#F1F1F2','sepia-coffee':'#F3F0EA','noir-silver':'#101214','custom':'#10141A' };
+        var tc = themeColors[savedTheme] || '#F1F1F2';
         var meta = document.querySelector('meta[name="theme-color"]');
         if (meta) meta.setAttribute('content', tc);
         var savedScale = localStorage.getItem('arcadia_ui_scale');
@@ -230,11 +231,11 @@
             <div class="view-actions">
               <!-- Selector Dropdown de Ordenación -->
               <div class="sort-select-wrapper">
-                <select id="library-sort" class="sort-select" aria-label="Ordenar biblioteca">
-                  <option value="recent">Más reciente</option>
-                  <option value="title">Título A-Z</option>
-                  <option value="author">Autor</option>
-                  <option value="progress">Progreso de lectura</option>
+                <select id="library-sort" class="sort-select" aria-label="Ordenar biblioteca" data-menu-title="Orden">
+                  <option value="recent" data-icon="clock">Más reciente</option>
+                  <option value="title" data-icon="file-text">Título A-Z</option>
+                  <option value="author" data-icon="quill">Autor</option>
+                  <option value="progress" data-icon="chart-bar">Progreso de lectura</option>
                 </select>
                 <svg class="sort-icon-chevron" aria-hidden="true"><use href="./assets/icons/icons.svg#chevron-down"></use></svg>
               </div>
@@ -348,9 +349,9 @@
 
       <!-- Overlay persistente para modo paginación -->
       <div class="reader-paginated-info" id="reader-paginated-info">
-        <span class="info-title" id="reader-info-title"></span>
+        <span id="reader-info-title"></span>
         <span class="info-chapter" id="reader-info-chapter"></span>
-        <span class="info-progress" id="reader-info-progress"></span>
+        <span id="reader-info-progress"></span>
       </div>
     </div>
 
@@ -413,7 +414,7 @@
             </div>
             <button type="button" id="btn-go-to-search-result" class="btn-search-go-pill" title="Ir a esta sección del capítulo" aria-label="Ir a esta sección" disabled>
               <span>Ir a la sección</span>
-              <svg style="width: 14px; height: 14px;" aria-hidden="true"><use href="./assets/icons/icons.svg#arrow-forward"></use></svg>
+              <svg class="icon-sm" aria-hidden="true"><use href="./assets/icons/icons.svg#arrow-forward"></use></svg>
             </button>
             <button type="button" id="btn-close-reader-search" class="btn-search-close-pill btn btn--sm btn--ghost" aria-label="Cerrar búsqueda">
               <span>Cerrar</span>

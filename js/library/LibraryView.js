@@ -133,7 +133,7 @@ export class LibraryView {
       const defaultColors = ['#EC4899', '#3B82F6', '#8B5CF6', '#10B981', '#F59E0B'];
       const colColor = col.color || defaultColors[idx % defaultColors.length];
 
-      const iconSvg = `<svg style="width: 16px; height: 16px;" aria-hidden="true"><use href="./assets/icons/icons.svg#epub-logo"></use></svg>`;
+      const iconSvg = `<svg width="16" height="16" fill="currentColor" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M57.063 20.218l1.029-1.698s.906-1.502.906-3.519c0-4.886-4.662-4.757-4.662-4.757L44.179 7.479L38.638 2l-7.291 1.985l-2.391-.651l-1.817 1.797l-10.497 2.858s-4.04-.111-4.04 4.123c0 1.748.786 3.05.786 3.05l1.351 2.23l-1.187 1.172l-5.86 1.596s-4.662-.129-4.662 4.757a7.56 7.56 0 0 0 .779 3.281L2 29.987l.949.376c.021.051.029.108.07.149c1.835 1.839 1.684 4.309 1.422 5.643l-1.109 1.111l8.401 4.039L23.271 60.35c1.849 2.906 5.774 1.088 5.774 1.088l29.649-14.256l-1.109-1.111c-.262-1.334-.413-3.804 1.422-5.644c.041-.041.049-.098.07-.148l.949-.377l-5.513-5.45l6.33-3.043l-.961-.963c-.227-1.156-.358-3.297 1.233-4.891c.035-.036.041-.084.06-.129l.825-.327l-4.937-4.881m-5.685-8.835l-1.25 1.978l-3.234-3.198l4.484 1.22M39.176 7.144l4.643 4.963l-16.789 6.067l-3.965-6.156l16.111-4.874M15.744 19.052l11.457 18.911l-21.827-8.658l10.37-10.253m-4.775 2.067l-1.345 1.33l-.538-.825l1.883-.505m-4.247 1.034l1.252 1.927l-2.713 2.682a5.586 5.586 0 0 1-.331-1.845c0-1.826.906-2.521 1.792-2.764M5.154 37.026l.015-.058l25.147 11.007l-24.95-11.894c.023-.135.041-.284.06-.434l19.533 8.18l-19.465-9.116a7.723 7.723 0 0 0-.086-1.245l18.079 7.445L5.165 32.4a6.048 6.048 0 0 0-.47-1.137l24.883 10.625l.566.934c1.167 1.834 3.284 1.495 4.351 1.177c1.475.728 4.119 2.412 3.442 4.893c-.357 1.312-1.142 1.948-2.399 1.948c-1.273 0-2.544-.666-2.557-.675L5.154 37.026M30.2 50.185l-1.966.814l-1.67-2.563l3.636 1.749m-7.614 5.381l-7.729-12.759l7.682 3.693l3.633 5.592c-1.465.626-3.102 2.055-3.586 3.474m34.033-12.184a7.731 7.731 0 0 0-.086 1.245l-19.465 9.116l19.533-8.18c.019.149.036.299.06.434l-24.95 11.895l25.147-11.007a.982.982 0 0 1 .015.058L29.046 60.08c-.013.009-1.282.675-2.557.675c-1.258 0-2.042-.637-2.399-1.948c-.918-3.367 4.302-5.276 4.38-5.305l4.575-1.952c.491.209 3.994 1.584 5.711-1.115l1.083-1.786l17.494-7.47a6.12 6.12 0 0 0-.471 1.137L38.54 50.827l18.079-7.445m.034-4.161l-14.825 6.144l4.114-6.791l6.767-3.253l3.944 3.9m2.393-11.107a6.9 6.9 0 0 0-.075 1.079l-16.868 7.9l16.928-7.089c.017.129.031.26.052.376L37.459 40.688l21.794-9.539a.46.46 0 0 1 .013.05L35.149 42.586c-.011.007-1.112.585-2.216.585c-1.091 0-1.77-.553-2.079-1.689c-.796-2.918 3.728-4.572 3.796-4.597l25.014-10.68a5.268 5.268 0 0 0-.407.986l-15.88 7.376l15.669-6.453" /></svg>`;
 
       return `
         <div class="collection-nav-item ${isColActive ? 'active' : ''}" style="--col-accent: ${colColor};" data-col-item-id="${col.id}">
@@ -145,7 +145,7 @@ export class LibraryView {
           </button>
           <div class="collection-nav-right">
             <button class="btn-col-options" data-col-id="${col.id}" title="Opciones de colección" aria-label="Opciones de colección ${this.escapeAttr(col.name)}">
-              <svg style="width: 13px; height: 13px;" aria-hidden="true"><use href="./assets/icons/icons.svg#more"></use></svg>
+              <svg width="16" height="16" aria-hidden="true"><use href="./assets/icons/icons.svg#more"></use></svg>
             </button>
           </div>
         </div>
@@ -288,7 +288,7 @@ export class LibraryView {
             <div class="header-card-top">
               <div class="header-card-brand-group">
                 <div class="header-card-icon-box">
-                  <svg style="width: 24px; height: 24px;" aria-hidden="true"><use href="./assets/icons/icons.svg#epub-logo"></use></svg>
+                  <svg width="22" height="22" fill="currentColor" viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M57.063 20.218l1.029-1.698s.906-1.502.906-3.519c0-4.886-4.662-4.757-4.662-4.757L44.179 7.479L38.638 2l-7.291 1.985l-2.391-.651l-1.817 1.797l-10.497 2.858s-4.04-.111-4.04 4.123c0 1.748.786 3.05.786 3.05l1.351 2.23l-1.187 1.172l-5.86 1.596s-4.662-.129-4.662 4.757a7.56 7.56 0 0 0 .779 3.281L2 29.987l.949.376c.021.051.029.108.07.149c1.835 1.839 1.684 4.309 1.422 5.643l-1.109 1.111l8.401 4.039L23.271 60.35c1.849 2.906 5.774 1.088 5.774 1.088l29.649-14.256l-1.109-1.111c-.262-1.334-.413-3.804 1.422-5.644c.041-.041.049-.098.07-.148l.949-.377l-5.513-5.45l6.33-3.043l-.961-.963c-.227-1.156-.358-3.297 1.233-4.891c.035-.036.041-.084.06-.129l.825-.327l-4.937-4.881m-5.685-8.835l-1.25 1.978l-3.234-3.198l4.484 1.22M39.176 7.144l4.643 4.963l-16.789 6.067l-3.965-6.156l16.111-4.874M15.744 19.052l11.457 18.911l-21.827-8.658l10.37-10.253m-4.775 2.067l-1.345 1.33l-.538-.825l1.883-.505m-4.247 1.034l1.252 1.927l-2.713 2.682a5.586 5.586 0 0 1-.331-1.845c0-1.826.906-2.521 1.792-2.764M5.154 37.026l.015-.058l25.147 11.007l-24.95-11.894c.023-.135.041-.284.06-.434l19.533 8.18l-19.465-9.116a7.723 7.723 0 0 0-.086-1.245l18.079 7.445L5.165 32.4a6.048 6.048 0 0 0-.47-1.137l24.883 10.625l.566.934c1.167 1.834 3.284 1.495 4.351 1.177c1.475.728 4.119 2.412 3.442 4.893c-.357 1.312-1.142 1.948-2.399 1.948c-1.273 0-2.544-.666-2.557-.675L5.154 37.026M30.2 50.185l-1.966.814l-1.67-2.563l3.636 1.749m-7.614 5.381l-7.729-12.759l7.682 3.693l3.633 5.592c-1.465.626-3.102 2.055-3.586 3.474m34.033-12.184a7.731 7.731 0 0 0-.086 1.245l-19.465 9.116l19.533-8.18c.019.149.036.299.06.434l-24.95 11.895l25.147-11.007a.982.982 0 0 1 .015.058L29.046 60.08c-.013.009-1.282.675-2.557.675c-1.258 0-2.042-.637-2.399-1.948c-.918-3.367 4.302-5.276 4.38-5.305l4.575-1.952c.491.209 3.994 1.584 5.711-1.115l1.083-1.786l17.494-7.47a6.12 6.12 0 0 0-.471 1.137L38.54 50.827l18.079-7.445m.034-4.161l-14.825 6.144l4.114-6.791l6.767-3.253l3.944 3.9m2.393-11.107a6.9 6.9 0 0 0-.075 1.079l-16.868 7.9l16.928-7.089c.017.129.031.26.052.376L37.459 40.688l21.794-9.539a.46.46 0 0 1 .013.05L35.149 42.586c-.011.007-1.112.585-2.216.585c-1.091 0-1.77-.553-2.079-1.689c-.796-2.918 3.728-4.572 3.796-4.597l25.014-10.68a5.268 5.268 0 0 0-.407.986l-15.88 7.376l15.669-6.453" /></svg>
                 </div>
                 <div class="header-card-text">
                   <span class="panel-category-tag" style="color: ${this.escapeAttr(colColor)};">COLECCIÓN</span>
@@ -298,7 +298,7 @@ export class LibraryView {
               </div>
               <div class="panel-actions-row">
                 <span class="collection-count-pill">
-                  <svg style="width: 13px; height: 13px;" aria-hidden="true"><use href="./assets/icons/icons.svg#icon-library"></use></svg>
+                  <svg width="16" height="16" aria-hidden="true"><use href="./assets/icons/icons.svg#icon-library"></use></svg>
                   ${books.length} ${books.length === 1 ? 'libro' : 'libros'}
                 </span>
                 <button type="button" id="btn-edit-active-col" class="btn btn--sm btn--ghost" title="Editar colección">
@@ -313,7 +313,7 @@ export class LibraryView {
             </div>
 
             <div class="panel-search-bar">
-              <svg style="width: 14px; height: 14px; color: var(--color-text-muted); flex-shrink: 0; pointer-events: none;" aria-hidden="true"><use href="./assets/icons/icons.svg#search"></use></svg>
+              <svg width="14" height="14" aria-hidden="true"><use href="./assets/icons/icons.svg#search"></use></svg>
               <input type="text" id="input-col-search" class="panel-search-input" value="${this.escapeHtml(this.collectionSearchQuery || '')}" placeholder="Buscar en esta colección...">
             </div>
           `;
@@ -469,14 +469,14 @@ export class LibraryView {
         ${this.renderCollectionHeader()}
         <div class="library-empty-state">
           <div class="empty-state-icon">
-            <svg style="width: 36px; height: 36px; color: var(--color-primary-light);" aria-hidden="true"><use href="./assets/icons/icons.svg#icon-library"></use></svg>
+            <svg class="icon-lg" width="22" height="22" aria-hidden="true"><use href="./assets/icons/icons.svg#icon-library"></use></svg>
           </div>
           <h3 class="empty-state-title">${emptyTitle}</h3>
           <p class="empty-state-desc">
             ${emptyDesc}
           </p>
           ${showUploadBtn ? `
-            <button id="btn-empty-upload" class="btn btn--primary">
+            <button id="btn-empty-upload" class="btn btn--ghost">
               ${Icons.IMPORT}
               <span>Subir libro (EPUB)</span>
             </button>
@@ -551,12 +551,12 @@ export class LibraryView {
 
           <!-- Botón de Favorito -->
           <button class="btn-book-fav ${book.favorite ? 'is-fav' : ''}" data-action="toggle-fav" data-id="${book.id}" aria-label="Favorito">
-            <svg style="width: 16px; height: 16px;" aria-hidden="true"><use href="./assets/icons/icons.svg#${book.favorite ? 'star-fill' : 'star'}"></use></svg>
+            <svg width="16" height="16" aria-hidden="true"><use href="./assets/icons/icons.svg#${book.favorite ? 'star-fill' : 'star'}"></use></svg>
           </button>
 
           <!-- Botón Menú de Opciones -->
-          <button class="btn-book-fav" style="top: 8px; left: 8px; right: auto;" data-action="book-options" data-id="${book.id}" aria-label="Opciones del libro">
-            <svg style="width: 16px; height: 16px;" aria-hidden="true"><use href="./assets/icons/icons.svg#more"></use></svg>
+          <button class="btn-book-fav btn-book-fav--left" data-action="book-options" data-id="${book.id}" aria-label="Opciones del libro">
+            <svg width="16" height="16" aria-hidden="true"><use href="./assets/icons/icons.svg#more"></use></svg>
           </button>
 
 
@@ -598,8 +598,6 @@ export class LibraryView {
       } else if (book.lastReadChapterTitle && !book.lastReadChapterTitle.includes('%')) {
         helper = book.lastReadChapterTitle;
       }
-      const bookIconSvg = `<svg style="width:12px;height:12px;flex-shrink:0" aria-hidden="true"><use href="./assets/icons/icons.svg#icon-library"></use></svg>`;
-
       return `
       <div class="book-list-item" data-book-id="${book.id}">
         <div class="list-cover-wrapper">
@@ -608,7 +606,7 @@ export class LibraryView {
             <img src="${book.coverDataUrl}" alt="${this.escapeHtml(book.title)}" class="list-cover-thumb" loading="lazy">
           ` : `
             <div class="list-cover-thumb list-cover-placeholder" style="background: ${book.coverGradient || 'var(--banner-gradient)'};">
-              <img src="assets/icons/logo-transparent.png" alt="" style="width: 36px; height: auto; opacity: 0.92; filter: drop-shadow(0 1px 4px rgba(0,0,0,0.5));">
+              <img src="assets/icons/logo-transparent.png" alt="" class="placeholder-icon-emblem">
             </div>
           `}
         </div>
@@ -623,10 +621,10 @@ export class LibraryView {
 
             <div class="list-item-actions-row">
               <button class="btn-list-action ${book.favorite ? 'is-fav' : ''}" data-action="toggle-fav" data-id="${book.id}" aria-label="Favorito" title="Favorito">
-                <svg style="width: 18px; height: 18px;" aria-hidden="true"><use href="./assets/icons/icons.svg#${book.favorite ? 'star-fill' : 'star'}"></use></svg>
+                <svg width="16" height="16" aria-hidden="true"><use href="./assets/icons/icons.svg#${book.favorite ? 'star-fill' : 'star'}"></use></svg>
               </button>
               <button class="btn-list-action" data-action="book-options" data-id="${book.id}" aria-label="Menú de opciones" title="Menú de opciones">
-                <svg style="width: 18px; height: 18px;" aria-hidden="true"><use href="./assets/icons/icons.svg#more"></use></svg>
+                <svg width="16" height="16" aria-hidden="true"><use href="./assets/icons/icons.svg#more"></use></svg>
               </button>
             </div>
           </div>
@@ -740,29 +738,29 @@ export class LibraryView {
     menu.style.left = `${Math.min(window.innerWidth - menuWidth - 10, Math.max(10, rect.right - menuWidth))}px`;
 
     menu.innerHTML = `
-      <button class="menu-action-btn" data-opt="read" style="background: color-mix(in srgb, var(--color-primary-light) 12%, transparent);">
+      <button class="menu-action-btn menu-action-btn--active" data-opt="read">
         ${Icons.BOOK}
-        <span style="flex:1; text-align:left;">Leer libro</span>
-        <svg style="width:14px;height:14px;opacity:.5" aria-hidden="true"><use href="./assets/icons/icons.svg#chevron-right"></use></svg>
+        <span class="menu-action-label">Leer libro</span>
+        <svg class="menu-action-chevron" width="14" height="14" aria-hidden="true"><use href="./assets/icons/icons.svg#chevron-right"></use></svg>
       </button>
       <button class="menu-action-btn" data-opt="edit">
         ${Icons.EDIT}
-        <span style="flex:1; text-align:left;">Editar detalles</span>
+        <span class="menu-action-label">Editar detalles</span>
       </button>
       <button class="menu-action-btn" data-opt="collections">
         <svg class="btn-icon-svg" aria-hidden="true"><use href="./assets/icons/icons.svg#archive"></use></svg>
-        <span style="flex:1; text-align:left;">Colecciones...</span>
-        <svg style="width:14px;height:14px;opacity:.5" aria-hidden="true"><use href="./assets/icons/icons.svg#chevron-right"></use></svg>
+        <span class="menu-action-label">Colecciones...</span>
+        <svg class="menu-action-chevron" width="14" height="14" aria-hidden="true"><use href="./assets/icons/icons.svg#chevron-right"></use></svg>
       </button>
       <button class="menu-action-btn" data-opt="download">
         ${Icons.EXPORT}
-        <span style="flex:1; text-align:left;">Descargar EPUB</span>
-        <span style="font-size:0.62rem; padding:2px 6px; border-radius:999px; background:color-mix(in srgb, var(--color-primary-light) 14%, transparent); color:var(--color-primary); font-weight:700;">EPUB</span>
+        <span class="menu-action-label">Descargar EPUB</span>
+        <span class="menu-action-tag">EPUB</span>
       </button>
-      <div style="height:1px; background:var(--color-border); margin:4px 0; opacity:.6;"></div>
-      <button class="menu-action-btn" data-opt="delete" style="background: var(--state-danger-bg, rgba(200, 90, 84, 0.12)); color: var(--state-danger, #C85A54);">
+      <div class="context-menu-divider" aria-hidden="true"></div>
+      <button class="menu-action-btn menu-action-btn--danger" data-opt="delete">
         ${Icons.TRASH}
-        <span style="flex:1; text-align:left; font-weight:600;">Eliminar libro</span>
+        <span class="menu-action-label menu-action-label--strong">Eliminar libro</span>
       </button>
     `;
 

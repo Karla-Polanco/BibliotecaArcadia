@@ -59,33 +59,30 @@ export class FloatingMenu {
       </button>
 
       <!-- 3 Opciones de Subrayado / Decoración (Imagen 4) -->
-      <button class="floating-btn floating-btn--underline" id="btn-float-underline" data-style="underline" title="Subrayado recto" aria-label="Subrayado recto"
-        style="font-family: serif; font-size: 14px; font-weight: bold; text-decoration: underline; text-underline-offset: 2px;">T</button>
-      <button class="floating-btn floating-btn--underline" id="btn-float-strikethrough" data-style="strikethrough" title="Tachado" aria-label="Tachado"
-        style="font-family: serif; font-size: 14px; font-weight: bold; text-decoration: line-through;">T</button>
-      <button class="floating-btn floating-btn--underline" id="btn-float-wavy" data-style="wavy" title="Subrayado punteado" aria-label="Subrayado punteado"
-        style="font-family: serif; font-size: 14px; font-weight: bold; text-decoration: underline dotted; text-underline-offset: 3px; text-decoration-thickness: 2.5px;">T</button>
+      <button class="floating-btn floating-btn--underline" id="btn-float-underline" data-style="underline" title="Subrayado recto" aria-label="Subrayado recto">T</button>
+      <button class="floating-btn floating-btn--underline" id="btn-float-strikethrough" data-style="strikethrough" title="Tachado" aria-label="Tachado">T</button>
+      <button class="floating-btn floating-btn--underline" id="btn-float-wavy" data-style="wavy" title="Subrayado punteado" aria-label="Subrayado punteado">T</button>
 
       <!-- Nota -->
       <button class="floating-btn" id="btn-float-note" title="Añadir nota" aria-label="Añadir nota">
-        <svg style="width: 14px; height: 14px;" aria-hidden="true"><use href="./assets/icons/icons.svg#pencil"></use></svg>
+        <svg width="14" height="14" aria-hidden="true"><use href="./assets/icons/icons.svg#pencil"></use></svg>
         <span>Nota</span>
       </button>
 
       <!-- Definir Vocabulario -->
       <button class="floating-btn" id="btn-float-define" title="Definición y fonética" aria-label="Definir palabra">
-        <svg style="width: 14px; height: 14px;" aria-hidden="true"><use href="./assets/icons/icons.svg#icon-library"></use></svg>
+        <svg aria-hidden="true"><use href="./assets/icons/icons.svg#icon-library"></use></svg>
         <span>Definir</span>
       </button>
 
       <!-- Copiar -->
       <button class="floating-btn floating-btn--icon" id="btn-float-copy" title="Copiar texto" aria-label="Copiar texto">
-        <svg style="width: 14px; height: 14px;" aria-hidden="true"><use href="./assets/icons/icons.svg#clipboard-export"></use></svg>
+        <svg aria-hidden="true"><use href="./assets/icons/icons.svg#clipboard-export"></use></svg>
       </button>
 
       <!-- Cerrar -->
       <button class="floating-btn floating-btn--close" id="btn-float-close" title="Cerrar barra" aria-label="Cerrar barra">
-        <svg style="width: 14px; height: 14px;" aria-hidden="true"><use href="./assets/icons/icons.svg#close"></use></svg>
+        <svg aria-hidden="true"><use href="./assets/icons/icons.svg#close"></use></svg>
       </button>
     `;
 
@@ -598,42 +595,38 @@ export class FloatingMenu {
     overlay.className = 'theme-modal-overlay';
 
     overlay.innerHTML = `
-      <div class="theme-modal-dialog" style="max-width: 440px;">
-        <div class="theme-modal-header" style="margin-bottom: 16px;">
+      <div class="theme-modal-dialog arcadia-modal-card--md">
+        <div class="theme-modal-header">
           <div>
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <h2 class="theme-modal-title" style="font-family: 'Cinzel', serif; font-size: 1.35rem; letter-spacing: 0.03em; text-transform: capitalize;">${this.escapeHtml(defData.word)}</h2>
-              <button id="btn-speak-word" title="Escuchar pronunciación fonética" style="
-                width: 32px; height: 32px; border-radius: 50%; background: var(--color-surface-hover); border: 1px solid var(--color-border); color: var(--color-gold, #D4AF37); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.18s ease;
-              ">
-                <svg style="width: 16px; height: 16px;" aria-hidden="true"><use href="./assets/icons/icons.svg#speaker"></use></svg>
+            <div class="def-modal-title-row">
+              <h2 class="theme-modal-title def-modal-word">${this.escapeHtml(defData.word)}</h2>
+              <button id="btn-speak-word" class="btn-speak-circle" title="Escuchar pronunciación fonética" aria-label="Escuchar pronunciación">
+                <svg aria-hidden="true"><use href="./assets/icons/icons.svg#speaker"></use></svg>
               </button>
             </div>
-            ${defData.phonetic ? `<span style="font-family: monospace; font-size: var(--text-xs); color: var(--color-primary-light);">${this.escapeHtml(defData.phonetic)}</span>` : ''}
+            ${defData.phonetic ? `<span class="def-modal-phonetic">${this.escapeHtml(defData.phonetic)}</span>` : ''}
           </div>
-          <button class="theme-modal-close" id="btn-close-def-modal" aria-label="Cerrar modal">
-            <svg style="width: 18px; height: 18px;" aria-hidden="true"><use href="./assets/icons/icons.svg#close"></use></svg>
+          <button class="theme-modal-close btn--close" id="btn-close-def-modal" aria-label="Cerrar modal">
+            <svg aria-hidden="true"><use href="./assets/icons/icons.svg#close"></use></svg>
           </button>
         </div>
 
-        <div style="margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px;">
-          <!-- Definición editable -->
-          <div class="arcadia-modal-field" style="margin-bottom: 0;">
-            <label style="color: var(--color-gold, #D4AF37);">Definición</label>
-            <textarea id="def-modal-definition" rows="3" style="width: 100%; min-height: 70px; resize: vertical; box-sizing: border-box;">${this.escapeHtml(defData.definition)}</textarea>
+        <div class="def-modal-stack">
+          <div class="arcadia-modal-field">
+            <label for="def-modal-definition">Definición</label>
+            <textarea id="def-modal-definition" rows="3">${this.escapeHtml(defData.definition)}</textarea>
           </div>
 
-          <!-- Contexto en el libro (siempre visible y editable) -->
-          <div class="arcadia-modal-field" style="margin-bottom: 0;">
-            <label>Contexto en el libro</label>
-            <textarea id="def-modal-context" rows="2" style="width: 100%; min-height: 50px; font-style: italic; resize: vertical; box-sizing: border-box; color: var(--color-text-secondary);">${this.escapeHtml(selection.text)}</textarea>
+          <div class="arcadia-modal-field">
+            <label for="def-modal-context">Contexto en el libro</label>
+            <textarea id="def-modal-context" rows="2">${this.escapeHtml(selection.text)}</textarea>
           </div>
         </div>
 
         <div class="arcadia-modal-actions">
-          <button id="btn-cancel-def" class="arcadia-modal-btn arcadia-modal-btn--ghost">Cerrar</button>
-          <button id="btn-save-vocab" class="arcadia-modal-btn arcadia-modal-btn--primary" style="display: inline-flex; align-items: center; gap: 6px;">
-            <svg style="width: 14px; height: 14px;" aria-hidden="true"><use href="./assets/icons/icons.svg#plus"></use></svg>
+          <button id="btn-cancel-def" class="btn btn--ghost">Cerrar</button>
+          <button id="btn-save-vocab" class="btn btn--primary">
+            <svg class="btn-icon-svg" aria-hidden="true"><use href="./assets/icons/icons.svg#save"></use></svg>
             <span>Guardar</span>
           </button>
         </div>

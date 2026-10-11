@@ -38,19 +38,15 @@ export const Icons = {
   // 10. Escuchar / Pronunciar (Altavoz)
   SPEAKER: `<svg class="btn-icon-svg" aria-hidden="true"><use href="./assets/icons/icons.svg#speaker"></use></svg>`,
 
-  // 11. Flechas de Navegación
+  // 11. Flecha de Navegación
   ARROW_RIGHT: `<svg class="btn-icon-svg" aria-hidden="true"><use href="./assets/icons/icons.svg#arrow-right"></use></svg>`,
-  ARROW_LEFT: `<svg class="btn-icon-svg" aria-hidden="true"><use href="./assets/icons/icons.svg#arrow-left"></use></svg>`,
 
-  // 12. Buscar (Lupa)
-  SEARCH: `<svg class="btn-icon-svg" aria-hidden="true"><use href="./assets/icons/icons.svg#search"></use></svg>`,
+  // 12. Leer / Libro
+  BOOK: `<svg class="btn-icon-svg" aria-hidden="true"><use href="./assets/icons/icons.svg#book"></use></svg>`,
 
-  // 13. Favorito (Corazón)
-  HEART: `<svg class="btn-icon-svg" aria-hidden="true"><use href="./assets/icons/icons.svg#heart"></use></svg>`,
+  // 13. Fuego / Racha (llama multicolor días seguidos)
+  FIRE: `<svg class="icon-md" aria-hidden="true"><use href="./assets/icons/icons.svg#fire"></use></svg>`,
 
-  // 14. Más opciones (3 puntos verticales)
-  MORE: `<svg class="btn-icon-svg" aria-hidden="true"><use href="./assets/icons/icons.svg#more"></use></svg>`,
-
-  // 15. Leer / Libro
-  BOOK: `<svg class="btn-icon-svg" aria-hidden="true"><use href="./assets/icons/icons.svg#book"></use></svg>`
+  // 14. Reloj turquesa / Tiempo total (multicolor)
+  CLOCK_COLOR: `<svg class="icon-md icon-clock-color" aria-hidden="true"><use href="./assets/icons/icons.svg#clock-color"></use></svg>`
 };

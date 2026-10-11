@@ -30,7 +30,7 @@ export class CustomSelect {
     const host = wrapper.parentElement;
     if (host) {
       const oldChevron = host.querySelector(':scope > .sort-icon-chevron');
-      if (oldChevron) oldChevron.style.display = 'none';
+      if (oldChevron) oldChevron.classList.add('hidden');
     }
 
     const btn = doc.createElement('button');
@@ -55,6 +55,10 @@ export class CustomSelect {
     menu.hidden = true;
 
     const CHECK_SVG = '<svg class="cselect-check" aria-hidden="true"><use href="./assets/icons/icons.svg#check"></use></svg>';
+    const iconSvg = (name) => {
+      const safe = String(name || '').replace(/[^a-z0-9-]/gi, '');
+      return safe ? `<svg class="cselect-opt-icon" aria-hidden="true"><use href="./assets/icons/icons.svg#${safe}"></use></svg>` : '';
+    };
 
     const syncFromNative = () => {
       const opt = selectEl.selectedOptions.length > 0 ? selectEl.selectedOptions[0] : null;
@@ -69,6 +73,14 @@ export class CustomSelect {
 
     const buildMenu = () => {
       menu.innerHTML = '';
+      const menuTitle = (selectEl.dataset.menuTitle || '').trim();
+      if (menuTitle) {
+        const h = doc.createElement('div');
+        h.className = 'cselect-menu-title';
+        h.setAttribute('aria-hidden', 'true');
+        h.textContent = menuTitle;
+        menu.appendChild(h);
+      }
       Array.from(selectEl.options).forEach(opt => {
         const text = opt.textContent.trim();
         const o = doc.createElement('div');
@@ -76,7 +88,7 @@ export class CustomSelect {
         o.setAttribute('role', 'option');
         o.dataset.value = opt.value;
         o.title = text;
-        o.innerHTML = CHECK_SVG + '<span class="cselect-text"></span>';
+        o.innerHTML = iconSvg(opt.dataset.icon) + '<span class="cselect-text"></span>' + CHECK_SVG;
         o.querySelector('.cselect-text').textContent = text;
         o.addEventListener('click', () => {
           if (selectEl.value !== opt.value) {

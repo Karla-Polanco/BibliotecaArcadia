@@ -542,7 +542,7 @@ export class ReaderView {
 
     if (!tocItems || tocItems.length === 0) {
       this.tocListEl.innerHTML = `
-        <div style="padding: 20px; text-align: center; color: var(--color-text-muted); font-size: var(--text-sm);">
+        <div class="search-state-empty">
           No se encontró tabla de contenidos en este ejemplar.
         </div>
       `;
@@ -825,19 +825,21 @@ export class ReaderView {
     document.querySelectorAll('#reader-theme-options [data-reader-theme]').forEach(chip => {
       const themeVal = (settings.theme || 'inherit');
       const normalize = v => {
-        if (v === 'cerulean-light' || v === 'boreal-blue') return 'navy-summit';
-        if (v === 'lavender-light' || v === 'twilight-lavender') return 'plum';
-        if (v === 'clear-sky' || v === 'classic-ivory') return 'cozy-brown';
-        if (v === 'enchanted-forest' || v === 'mint' || v === 'olive-green') return 'sage-cream';
-        if (v === 'serene-fog' || v === 'wine-poetry' || v === 'wine' || v === 'antique-pink' || v === 'toasted-ash') return 'noir-silver';
-        if (v === 'abyss-dark' || v === 'mystic-night' || v === 'deep-twilight' || v === 'night-ink') return 'noir-silver';
-        // Migración de tarjetas anteriores a las nuevas
+        // Migración de tarjetas anteriores a las nuevas (prefs de lector guardadas)
         if (v === 'paper') return 'pergamino';
         if (v === 'neutral') return 'pizarra';
         if (v === 'oled') return 'ambar';
         if (v === 'plum') return 'melocoton';
         if (v === 'sage-cream') return 'terracota';
-        if (v === 'plum' || v === 'sage-cream' || v === 'light' || v === 'navy-summit' || v === 'cozy-brown' || v === 'noir-silver') return v;
+        // Alias legacy de temas de la app → nuevos nombres
+        if (v === 'cerulean-light' || v === 'boreal-blue' || v === 'navy-summit') return 'navy-white';
+        if (v === 'lavender-light' || v === 'twilight-lavender') return 'amethyst-ivory';
+        if (v === 'clear-sky' || v === 'classic-ivory' || v === 'cozy-brown') return 'sepia-coffee';
+        if (v === 'enchanted-forest' || v === 'mint' || v === 'olive-green') return 'olive-ivory';
+        if (v === 'light') return 'classic-light';
+        if (v === 'serene-fog' || v === 'wine-poetry' || v === 'wine' || v === 'antique-pink' || v === 'toasted-ash') return 'noir-silver';
+        if (v === 'abyss-dark' || v === 'mystic-night' || v === 'deep-twilight' || v === 'night-ink') return 'noir-silver';
+        if (v === 'navy-white' || v === 'amethyst-ivory' || v === 'olive-ivory' || v === 'classic-light' || v === 'sepia-coffee' || v === 'noir-silver') return v;
         if (v === 'pergamino' || v === 'terracota' || v === 'moca' || v === 'ambar' || v === 'niebla' || v === 'pizarra' || v === 'melocoton') return v;
         return v;
       };
@@ -999,8 +1001,8 @@ export class ReaderView {
     }
     if (this.searchResultsList && !this.searchResultsList.children.length) {
       this.searchResultsList.innerHTML = `
-        <div style="text-align: center; padding: 24px; color: var(--color-text-muted); font-size: var(--text-sm);">
-          <div class="loading-ring" style="width: 24px; height: 24px; margin: 0 auto 10px; border-width: 2px;"></div>
+        <div class="search-state-empty">
+          <div class="loading-ring search-loading-ring"></div>
           <span>Buscando coincidencias...</span>
         </div>
       `;
@@ -1035,7 +1037,7 @@ export class ReaderView {
       if (this.nextSearchBtn) this.nextSearchBtn.disabled = true;
       if (this.goToSearchBtn) this.goToSearchBtn.disabled = true;
       this.searchResultsList.innerHTML = `
-        <div style="text-align: center; padding: 28px 16px; color: var(--color-text-muted); font-size: var(--text-sm);">
+        <div class="search-state-empty">
           No se encontraron coincidencias para «${this.escapeHtml(query)}».
         </div>
       `;
@@ -1055,11 +1057,11 @@ export class ReaderView {
       const highlightedSnippet = this.escapeHtml(r.excerpt).replace(qRegex, '<mark class="search-match-highlight">$1</mark>');
       return `
         <div class="search-result-item ${idx === 0 ? 'selected' : ''}" data-idx="${idx}">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <div class="search-result-head">
             <span class="search-result-loc">${this.escapeHtml(r.chapterTitle || `Párrafo ${idx + 1}`)}</span>
             <button type="button" class="btn-go-to-section" data-idx="${idx}" title="Ir a esta ubicación y cerrar buscador">
               <span>Ir a la sección</span>
-              <svg style="width: 12px; height: 12px;" aria-hidden="true"><use href="./assets/icons/icons.svg#arrow-forward"></use></svg>
+              <svg aria-hidden="true"><use href="./assets/icons/icons.svg#arrow-forward"></use></svg>
             </button>
           </div>
           <div class="search-result-snippet">

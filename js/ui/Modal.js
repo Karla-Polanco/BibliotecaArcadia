@@ -39,16 +39,17 @@ export class Modal {
       const confirmLabel = `${btnIcon}<span>${this.escapeHtml(confirmText)}</span>`;
 
       const defaultIcon = danger
-        ? `<svg style="width: 22px; height: 22px; color: #EF4444;" aria-hidden="true"><use href="./assets/icons/icons.svg#alert-triangle"></use></svg>`
-        : `<svg style="width: 22px; height: 22px; color: var(--color-gold, #D4AF37);" aria-hidden="true"><use href="./assets/icons/icons.svg#info-circle"></use></svg>`;
+        ? `<svg aria-hidden="true"><use href="./assets/icons/icons.svg#alert-triangle"></use></svg>`
+        : `<svg aria-hidden="true"><use href="./assets/icons/icons.svg#info-circle"></use></svg>`;
+      const iconModifier = danger ? ' arcadia-modal-icon--danger' : ' arcadia-modal-icon--info';
 
       overlay.innerHTML = `
         <div class="arcadia-modal-card arcadia-modal-card--sm">
           <div class="arcadia-modal-row">
-            <div class="arcadia-modal-icon">
+            <div class="arcadia-modal-icon${icon ? '' : iconModifier}">
               ${icon || defaultIcon}
             </div>
-            <div style="flex: 1; min-width: 0;">
+            <div class="modal-flex-row">
               <h3 class="arcadia-modal-title">${this.escapeHtml(title)}</h3>
               <p class="arcadia-modal-text">${this.escapeHtml(message)}</p>
             </div>
@@ -226,7 +227,6 @@ export class Modal {
 
           <div class="note-margin-actions">
             <button id="note-margin-cancel" class="note-margin-btn btn btn--ghost">
-              ${Icons.CLOSE}
               <span>Cancelar</span>
             </button>
             <button id="note-margin-save" class="note-margin-btn btn btn--primary">
@@ -308,7 +308,7 @@ export class Modal {
 
           <div class="note-view-divider" aria-hidden="true"></div>
 
-          <p class="note-view-content">${safeContent || '<span style="opacity:.6">Sin contenido</span>'}</p>
+          <p class="note-view-content">${safeContent || '<span class="note-view-empty">Sin contenido</span>'}</p>
 
           <div class="note-view-actions">
             <button id="note-view-delete" class="note-view-btn btn btn--danger">
@@ -316,7 +316,7 @@ export class Modal {
               <span>Eliminar</span>
             </button>
             <span class="note-view-spacer"></span>
-            <button id="note-view-edit" class="note-view-btn btn btn--primary">
+            <button id="note-view-edit" class="note-view-btn btn btn--ghost">
               ${Icons.EDIT}
               <span>Editar</span>
             </button>
@@ -367,7 +367,7 @@ export class Modal {
       overlay.innerHTML = `
         <div class="arcadia-modal-card arcadia-modal-card--md">
           <div>
-            <h3 class="arcadia-modal-title" style="font-size: 1.2rem;">Editar información del libro</h3>
+            <h3 class="arcadia-modal-title">Editar información del libro</h3>
             <p class="arcadia-modal-text">Modifica la portada, título, autor y saga de este ejemplar.</p>
           </div>
 
@@ -375,36 +375,36 @@ export class Modal {
             <!-- Selector y Vista Previa de Portada -->
             <div class="arcadia-modal-field">
               <label>Portada del libro</label>
-              <div style="display: flex; gap: 14px; align-items: center; background: var(--color-surface-secondary); padding: 12px; border-radius: 12px; border: 1px solid var(--color-border-subtle);">
-                <div id="edit-cover-preview-box" style="width: 54px; height: 80px; border-radius: 6px; overflow: hidden; background: var(--color-surface); flex-shrink: 0; border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center;">
+              <div class="edit-cover-box">
+                <div id="edit-cover-preview-box" class="edit-cover-preview">
                   ${currentCoverDataUrl ? `
-                    <img src="${currentCoverDataUrl}" alt="Portada" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="${currentCoverDataUrl}" alt="Portada">
                   ` : `
-                    <svg style="width: 24px; height: 24px; color: var(--color-text-muted);" aria-hidden="true"><use href="./assets/icons/icons.svg#image"></use></svg>
+                    <svg aria-hidden="true"><use href="./assets/icons/icons.svg#image"></use></svg>
                   `}
                 </div>
-                <div style="display: flex; flex-direction: column; gap: 6px;">
-                  <button type="button" id="btn-change-cover-trigger" class="btn btn--ghost btn--sm" style="font-size: 0.78rem; padding: 6px 12px; height: auto;">
+                <div class="edit-cover-meta">
+                  <button type="button" id="btn-change-cover-trigger" class="btn btn--ghost btn--sm">
                     Seleccionar nueva portada
                   </button>
-                  <input type="file" id="edit-book-cover-input" accept="image/*" style="display: none;">
-                  <span style="font-size: 0.72rem; color: var(--color-text-muted);">Formatos aceptados: JPG, PNG, WEBP.</span>
+                  <input type="file" id="edit-book-cover-input" accept="image/*" class="hidden">
+                  <span class="edit-cover-hint">Formatos aceptados: JPG, PNG, WEBP.</span>
                 </div>
               </div>
             </div>
 
             <div class="arcadia-modal-field">
-              <label>Título del libro</label>
-              <input type="text" id="edit-book-title" value="${this.escapeHtml(book.title)}" required>
+              <label for="edit-book-title">Título del libro</label>
+              <input type="text" id="edit-book-title" value="${this.escapeHtml(book.title)}" required autocomplete="off">
             </div>
 
             <div class="arcadia-modal-field">
-              <label>Autor</label>
-              <input type="text" id="edit-book-author" value="${this.escapeHtml(book.author)}" required>
+              <label for="edit-book-author">Autor</label>
+              <input type="text" id="edit-book-author" value="${this.escapeHtml(book.author)}" required autocomplete="off">
             </div>
 
             <div class="arcadia-modal-field">
-              <label>Saga <span style="font-weight: 400; opacity: 0.7;">(opcional)</span></label>
+              <label for="edit-book-saga">Saga <span class="modal-label-optional">(opcional)</span></label>
               <input type="text" id="edit-book-saga" value="${this.escapeHtml(book.saga || '')}" placeholder="Ej: Trono de Cristal" autocomplete="off">
             </div>
 
@@ -435,7 +435,7 @@ export class Modal {
             reader.onload = (evt) => {
               currentCoverDataUrl = evt.target.result;
               if (previewBox) {
-                previewBox.innerHTML = `<img src="${currentCoverDataUrl}" alt="Portada" style="width: 100%; height: 100%; object-fit: cover;">`;
+                previewBox.innerHTML = `<img src="${currentCoverDataUrl}" alt="Portada">`;
               }
             };
             reader.readAsDataURL(file);
@@ -477,7 +477,7 @@ export class Modal {
         <div class="arcadia-modal-card col-action-modal" style="--col-accent: ${collection.color || '#5B4CC4'};">
           <div class="col-action-head">
             <span class="col-action-badge" aria-hidden="true">
-              <svg width="18" height="18" aria-hidden="true"><use href="./assets/icons/icons.svg#epub-logo"></use></svg>
+              <svg width="18" height="18" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true"><path fill="currentColor" d="M57.063 20.218l1.029-1.698s.906-1.502.906-3.519c0-4.886-4.662-4.757-4.662-4.757L44.179 7.479L38.638 2l-7.291 1.985l-2.391-.651l-1.817 1.797l-10.497 2.858s-4.04-.111-4.04 4.123c0 1.748.786 3.05.786 3.05l1.351 2.23l-1.187 1.172l-5.86 1.596s-4.662-.129-4.662 4.757a7.56 7.56 0 0 0 .779 3.281L2 29.987l.949.376c.021.051.029.108.07.149c1.835 1.839 1.684 4.309 1.422 5.643l-1.109 1.111l8.401 4.039L23.271 60.35c1.849 2.906 5.774 1.088 5.774 1.088l29.649-14.256l-1.109-1.111c-.262-1.334-.413-3.804 1.422-5.644c.041-.041.049-.098.07-.148l.949-.377l-5.513-5.45l6.33-3.043l-.961-.963c-.227-1.156-.358-3.297 1.233-4.891c.035-.036.041-.084.06-.129l.825-.327l-4.937-4.881m-5.685-8.835l-1.25 1.978l-3.234-3.198l4.484 1.22M39.176 7.144l4.643 4.963l-16.789 6.067l-3.965-6.156l16.111-4.874M15.744 19.052l11.457 18.911l-21.827-8.658l10.37-10.253m-4.775 2.067l-1.345 1.33l-.538-.825l1.883-.505m-4.247 1.034l1.252 1.927l-2.713 2.682a5.586 5.586 0 0 1-.331-1.845c0-1.826.906-2.521 1.792-2.764M5.154 37.026l.015-.058l25.147 11.007l-24.95-11.894c.023-.135.041-.284.06-.434l19.533 8.18l-19.465-9.116a7.723 7.723 0 0 0-.086-1.245l18.079 7.445L5.165 32.4a6.048 6.048 0 0 0-.47-1.137l24.883 10.625l.566.934c1.167 1.834 3.284 1.495 4.351 1.177c1.475.728 4.119 2.412 3.442 4.893c-.357 1.312-1.142 1.948-2.399 1.948c-1.273 0-2.544-.666-2.557-.675L5.154 37.026M30.2 50.185l-1.966.814l-1.67-2.563l3.636 1.749m-7.614 5.381l-7.729-12.759l7.682 3.693l3.633 5.592c-1.465.626-3.102 2.055-3.586 3.474m34.033-12.184a7.731 7.731 0 0 0-.086 1.245l-19.465 9.116l19.533-8.18c.019.149.036.299.06.434l-24.95 11.895l25.147-11.007a.982.982 0 0 1 .015.058L29.046 60.08c-.013.009-1.282.675-2.557.675c-1.258 0-2.042-.637-2.399-1.948c-.918-3.367 4.302-5.276 4.38-5.305l4.575-1.952c.491.209 3.994 1.584 5.711-1.115l1.083-1.786l17.494-7.47a6.12 6.12 0 0 0-.471 1.137L38.54 50.827l18.079-7.445m.034-4.161l-14.825 6.144l4.114-6.791l6.767-3.253l3.944 3.9m2.393-11.107a6.9 6.9 0 0 0-.075 1.079l-16.868 7.9l16.928-7.089c.017.129.031.26.052.376L37.459 40.688l21.794-9.539a.46.46 0 0 1 .013.05L35.149 42.586c-.011.007-1.112.585-2.216.585c-1.091 0-1.77-.553-2.079-1.689c-.796-2.918 3.728-4.572 3.796-4.597l25.014-10.68a5.268 5.268 0 0 0-.407.986l-15.88 7.376l15.669-6.453" /></svg>
             </span>
             <h3 class="col-action-name">${this.escapeHtml(collection.name)}</h3>
             <button class="col-action-close btn--close" id="btn-col-action-x" aria-label="Cerrar">
@@ -538,72 +538,55 @@ export class Modal {
       overlay.className = 'arcadia-modal-overlay';
 
       overlay.innerHTML = `
-        <div class="arcadia-modal-card arcadia-modal-card--lg">
-          <!-- Encabezado con Icono -->
-          <div style="display: flex; gap: 16px; align-items: center;">
-            <div style="
-              width: 52px;
-              height: 52px;
-              border-radius: 14px;
-              background: linear-gradient(135deg, var(--color-primary, #30256F), var(--color-primary-light, #5B4CC4));
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              flex-shrink: 0;
-              box-shadow: 0 8px 20px -4px var(--color-primary-glow, rgba(91, 76, 196, 0.4));
-              border: 1px solid rgba(255, 255, 255, 0.15);
-            ">
-              <svg style="width: 24px; height: 24px; color: #FFF;" aria-hidden="true"><use href="./assets/icons/icons.svg#download"></use></svg>
+        <div class="arcadia-modal-card arcadia-modal-card--md">
+          <div class="install-hero">
+            <div class="install-hero-icon" aria-hidden="true">
+              <svg aria-hidden="true"><use href="./assets/icons/icons.svg#download"></use></svg>
             </div>
             <div>
-              <span style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-primary-light, #5B4CC4);">Aplicación Web Progresiva</span>
-              <h3 style="font-family: 'Cinzel', serif; font-size: 1.25rem; font-weight: 700; margin: 2px 0 0 0; color: var(--color-text); letter-spacing: 0.02em;">Instalar Biblioteca Arcadia</h3>
+              <span class="install-eyebrow">Aplicación Web Progresiva</span>
+              <h3 class="install-title">Instalar Biblioteca Arcadia</h3>
             </div>
           </div>
 
-          <!-- Descripción -->
-          <p style="font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.5; margin: 0;">
+          <p class="install-desc">
             Instala Arcadia en tu equipo o dispositivo móvil para disfrutar de una lectura fluida, privada y a pantalla completa.
           </p>
 
-          <!-- Beneficios -->
-          <div style="
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            background: var(--color-surface-secondary, rgba(255, 255, 255, 0.03));
-            border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.08));
-            border-radius: 12px;
-            padding: 14px 16px;
-          ">
-            <div style="display: flex; gap: 12px; align-items: flex-start;">
-              <span style="font-size: 1.1rem; line-height: 1.2;">⚡</span>
+          <div class="install-benefits">
+            <div class="install-benefit">
+              <span class="install-benefit-icon" aria-hidden="true">
+                <svg aria-hidden="true"><use href="./assets/icons/icons.svg#fullscreen"></use></svg>
+              </span>
               <div>
-                <strong style="font-size: 0.84rem; display: block; color: var(--color-text);">Acceso directo y pantalla completa</strong>
-                <span style="font-size: 0.78rem; color: var(--color-text-muted);">Ábrela desde el escritorio o inicio sin barras de navegación del explorador.</span>
+                <strong>Acceso directo y pantalla completa</strong>
+                <span>Ábrela desde el escritorio o inicio sin barras de navegación del explorador.</span>
               </div>
             </div>
 
-            <div style="display: flex; gap: 12px; align-items: flex-start;">
-              <span style="font-size: 1.1rem; line-height: 1.2;">📖</span>
+            <div class="install-benefit">
+              <span class="install-benefit-icon" aria-hidden="true">
+                <svg aria-hidden="true"><use href="./assets/icons/icons.svg#icon-library"></use></svg>
+              </span>
               <div>
-                <strong style="font-size: 0.84rem; display: block; color: var(--color-text);">Lectura 100% sin conexión</strong>
-                <span style="font-size: 0.78rem; color: var(--color-text-muted);">Todos tus libros EPUB, notas, marcas y citas disponibles sin internet.</span>
+                <strong>Lectura 100% sin conexión</strong>
+                <span>Todos tus libros EPUB, notas, marcas y citas disponibles sin internet.</span>
               </div>
             </div>
 
-            <div style="display: flex; gap: 12px; align-items: flex-start;">
-              <span style="font-size: 1.1rem; line-height: 1.2;">🔒</span>
+            <div class="install-benefit">
+              <span class="install-benefit-icon" aria-hidden="true">
+                <svg aria-hidden="true"><use href="./assets/icons/icons.svg#settings"></use></svg>
+              </span>
               <div>
-                <strong style="font-size: 0.84rem; display: block; color: var(--color-text);">Totalmente privada y local</strong>
-                <span style="font-size: 0.78rem; color: var(--color-text-muted);">Tus libros se almacenan en tu dispositivo; cero rastreo y cero servidores externos.</span>
+                <strong>Totalmente privada y local</strong>
+                <span>Tus libros se almacenan en tu dispositivo; cero rastreo y cero servidores externos.</span>
               </div>
             </div>
           </div>
 
-          <div id="install-instruction-box" style="display: none; font-size: 0.82rem; color: var(--color-text-secondary); background: rgba(91, 76, 196, 0.08); border: 1px solid var(--color-primary-glow); border-radius: 8px; padding: 12px 14px; line-height: 1.5;"></div>
+          <div id="install-instruction-box" class="install-info-box" role="status"></div>
 
-          <!-- Botones de Acción -->
           <div class="arcadia-modal-actions">
             <button id="btn-cancel-install" class="btn btn--ghost">Cancelar</button>
 
@@ -636,9 +619,9 @@ export class Modal {
       confirmBtn.addEventListener('click', async () => {
         if (isStandalone) {
           const infoBox = overlay.querySelector('#install-instruction-box');
-          infoBox.style.display = 'block';
-          infoBox.innerHTML = '✨ <strong>¡Ya estás usando la aplicación instalada!</strong> Arcadia ya se encuentra ejecutándose como app en este dispositivo.';
-          confirmBtn.style.display = 'none';
+          infoBox.classList.add('visible');
+          infoBox.innerHTML = '<strong>¡Ya estás usando la aplicación instalada!</strong> Arcadia ya se encuentra ejecutándose como app en este dispositivo.';
+          confirmBtn.classList.add('hidden');
           return;
         }
 
@@ -655,12 +638,12 @@ export class Modal {
         } else {
           // Instrucciones para instalación en navegador
           const infoBox = overlay.querySelector('#install-instruction-box');
-          infoBox.style.display = 'block';
+          infoBox.classList.add('visible');
           infoBox.innerHTML = `
             <strong>Instalación manual según tu navegador:</strong><br>
-            • <strong>Chrome / Edge:</strong> Haz clic en el icono 🖥️ o ➕ en el lado derecho de la barra de direcciones superior, o ve al menú (tres puntos) &gt; <em>Instalar aplicación</em>.<br>
-            • <strong>Safari (iPhone / iPad):</strong> Pulsa el botón Compartir ⬆️ y selecciona <em>«Añadir a pantalla de inicio»</em>.<br>
-            • <strong>Android:</strong> Pulsa el menú (⋮) de tu navegador y selecciona <em>«Instalar aplicación»</em> o <em>«Añadir a inicio»</em>.
+            • <strong>Chrome / Edge:</strong> Usa el menú (tres puntos) &gt; <em>Instalar aplicación</em>.<br>
+            • <strong>Safari (iPhone / iPad):</strong> Pulsa Compartir y selecciona <em>«Añadir a pantalla de inicio»</em>.<br>
+            • <strong>Android:</strong> Pulsa el menú de tu navegador y selecciona <em>«Instalar aplicación»</em> o <em>«Añadir a inicio»</em>.
           `;
           overlay.querySelector('#btn-confirm-install-text').textContent = '¡Entendido!';
           confirmBtn.onclick = () => close(true);

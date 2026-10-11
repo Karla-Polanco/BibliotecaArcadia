@@ -174,7 +174,7 @@ export class AnnotationsView {
         ${filtered.length === 0 ? `
           <div class="library-empty-state">
             <div class="empty-state-icon">
-              <svg class="icon-xl color-primary-light" aria-hidden="true"><use href="./assets/icons/icons.svg#pencil"></use></svg>
+              <svg class="icon-lg color-primary-light" aria-hidden="true"><use href="./assets/icons/icons.svg#pencil"></use></svg>
             </div>
             <h3 class="empty-state-title">${this.searchQuery ? 'Sin resultados' : 'Aún no hay notas'}</h3>
             <p class="empty-state-desc">
@@ -212,7 +212,7 @@ export class AnnotationsView {
             </span>
           </div>
 
-          <button class="btn-delete-annot btn btn--icon btn--danger btn-card-action" data-action="delete" data-id="${item.id}" data-kind="${item.kind}" title="Eliminar cita/nota" aria-label="Eliminar">
+          <button class="btn btn--icon btn--circle btn--danger btn-delete-annot" data-action="delete" data-id="${item.id}" data-kind="${item.kind}" title="Eliminar cita/nota" aria-label="Eliminar">
             ${Icons.TRASH}
           </button>
         </div>
@@ -240,7 +240,7 @@ export class AnnotationsView {
           </div>
 
           ${item.cfi ? `
-            <button type="button" class="btn-jump-cfi btn btn--sm" data-action="jump" data-book-id="${item.bookId}" data-cfi="${item.cfi}">
+            <button type="button" class="btn btn--sm btn--pill btn-jump-cfi" data-action="jump" data-book-id="${item.bookId}" data-cfi="${item.cfi}">
               <span>Ir al pasaje</span>
               ${Icons.ARROW_RIGHT}
             </button>

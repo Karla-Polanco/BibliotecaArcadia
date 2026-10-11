@@ -50,7 +50,7 @@
   /* ----------------------------------------------------------
      03. ALTURAS Y DIMENSIONES DE CONTROLES
      ---------------------------------------------------------- */
-  --control-height-sm: 30px;
+  --control-height-sm: 32px;
   --control-height-md: 38px;  /* Estándar universal botones/inputs/selects */
   --control-height-lg: 44px;  /* Formularios amplios y móvil accesible */
 
@@ -95,6 +95,13 @@
   --transition-fast: 140ms ease;
   --transition-normal: 180ms ease;
   --transition-smooth: 220ms ease;
+  --transition-slow: 300ms ease;   /* Actualizaciones de datos (barras, anillos) */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Escala única de "presión" (estado :active) y atenuación (disabled) */
+  --press-scale: 0.97;      /* Controles estándar (≥ 36px) */
+  --press-scale-sm: 0.94;   /* Botones de icono pequeños (≤ 32px) */
+  --disabled-opacity: 0.45;
 
   --hover-lift: translateY(-1px);
   --hover-scale: 1.01;
@@ -132,8 +139,8 @@
   /* ----------------------------------------------------------
      08. ACCESIBILIDAD, FOCO Y SELECCIÓN
      ---------------------------------------------------------- */
-  --color-border-focus: var(--color-primary, #235677);
-  --focus-ring: 0 0 0 3px var(--color-primary-glow, rgba(35, 86, 119, 0.25));
+  --color-border-focus: var(--color-primary, #2B2C34);
+  --focus-ring: 0 0 0 3px var(--color-primary-glow, rgba(43, 44, 52, 0.25));
 
   /* ----------------------------------------------------------
      09. ESTADOS SEMÁNTICOS (por tema)
