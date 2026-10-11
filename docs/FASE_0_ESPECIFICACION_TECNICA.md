@@ -107,8 +107,8 @@ La arquitectura general del sistema sigue el paradigma **Offline-First Clean Arc
 |  - Book Entity                 | |  - EPUBParser / Engine         |
 |  - ReadingLocation (CFI)       | |    (epub.js wrapper)           |
 |  - Annotation / Note Entity    | |  - DictionaryService           |
-|  - Bookmark Entity             | |  - StorageQuotaService         |
-|  - Collection Entity           | |  - QuotesService               |
+|  - Collection Entity           | |  - StorageQuotaService         |
+|                                | |  - QuotesService               |
 +--------------------------------+ +--------------------------------+
                  │                               │
                  └───────────────┬───────────────┘
@@ -168,7 +168,6 @@ Versión: 1
 | **`readerSettings`** | `bookId` (string UUIDv4) | No | *(Sin índices secundarios)* | Preferencias visuales personalizadas por libro (fuente, tamaño, interlineado, columnas, tema). |
 | **`annotations`** | `id` (string UUIDv4) | No | - `by_bookId` (`bookId`, unique: false)<br>- `by_type` (`type`, unique: false)<br>- `by_color` (`color`, unique: false)<br>- `by_createdAt` (`createdAt`, unique: false) | Resaltados y subrayados basados en rango EPUB CFI (`cfiRange`), texto seleccionado y color. |
 | **`notes`** | `id` (string UUIDv4) | No | - `by_bookId` (`bookId`, unique: false)<br>- `by_cfi` (`cfiRange`, unique: false)<br>- `by_createdAt` (`createdAt`, unique: false) | Notas asociadas a selecciones de texto o notas libres/independientes. |
-| **`bookmarks`** | `id` (string UUIDv4) | No | - `by_bookId` (`bookId`, unique: false)<br>- `by_createdAt` (`createdAt`, unique: false) | Marcadores manuales con posición CFI exacta, título de capítulo y progreso. |
 | **`collections`** | `id` (string) | No | - `by_name` (`name`, unique: true)<br>- `by_order` (`orderIndex`, unique: false) | Metadatos de colecciones (nombre, icono, regla dinámica o lista manual de IDs). |
 | **`book_collections`** | `[bookId, collectionId]` | No | - `by_book` (`bookId`, unique: false)<br>- `by_collection` (`collectionId`, unique: false) | Tabla relacional intermedia N:M entre libros y colecciones. |
 | **`words`** | `id` (string UUIDv4) | No | - `by_word` (`word`, unique: false)<br>- `by_bookId` (`bookId`, unique: false)<br>- `by_createdAt` (`createdAt`, unique: false) | Vocabulario personal: términos consultados, definición, transcripción fonética y libro de origen. |
@@ -256,16 +255,7 @@ interface Note {
   updatedAt: number;
 }
 
-// 6. Marcadores (Bookmarks)
-interface Bookmark {
-  id: string;                      // UUIDv4
-  bookId: string;                  // FK -> Book.id
-  cfi: string;                     // Posición exacta del marcador
-  chapterTitle: string;            // Nombre de la sección o capítulo
-  percentage: number;              // Porcentaje al momento de marcar
-  previewText: string;             // Fragmento inicial visible para identificación rápida
-  createdAt: number;
-}
+// 6. Marcadores (Bookmarks) — RETIRADO del producto (ver FASE 6 y sección 10).
 
 // 7. Vocabulario (Word Entry)
 interface VocabularyWord {
@@ -385,14 +375,9 @@ rendition.on('selected', (cfiRange, contents) => {
 
 ---
 
-## 10. SISTEMA DE MARCADORES (BOOKMARKS)
+## 10. SISTEMA DE MARCADORES (BOOKMARKS) — RETIRADO
 
-### 10.1 Creación y Eliminación con 1 Clic
-- En la cabecera del lector reside un icono de cinta de marcador (bookmark). Si la posición actual ya tiene un marcador guardado, el icono se muestra iluminado en color acento.
-- Al pulsarlo, se obtiene la posición actual mediante `rendition.currentLocation().start.cfi` y se almacena en el store `bookmarks` junto con el nombre del capítulo y un extracto de texto de los primeros 100 caracteres.
-
-### 10.2 Navegación Rápida
-- En el panel de «Tabla de Contenidos y Marcadores», se listan en orden cronológico o de lectura. Al hacer clic en un marcador, el lector ejecuta `rendition.display(bookmark.cfi)`, transportando al usuario de inmediato.
+Función retirada del producto por decisión de alcance (ver FASE 6): la navegación es por capítulos, búsqueda y notas. No existe UI, store ni código de marcadores; el store heredado `bookmarks` se elimina en la migración de `db.js`.
 
 ---
 

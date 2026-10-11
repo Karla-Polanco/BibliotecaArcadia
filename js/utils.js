@@ -53,3 +53,22 @@ export function formatBytes(bytes) {
   const i = Math.floor(Math.log(bytes) / Math.log(1024));
   return `${(bytes / Math.pow(1024, i)).toFixed(1)} ${units[i]}`;
 }
+
+/**
+ * Normaliza nombres de temas antiguos a su equivalente actual.
+ * Fuente única de verdad para la migración retrocompatible de temas.
+ * NOTA: el script inline de index.html mantiene su propia copia porque
+ * se ejecuta antes de que los módulos estén disponibles (evita flash).
+ * @param {string} t - Nombre de tema guardado
+ * @returns {string} Nombre de tema normalizado
+ */
+export function normalizeThemeName(t) {
+  if (t === 'cerulean-light' || t === 'boreal-blue' || t === 'navy-summit') t = 'navy-white';
+  if (t === 'lavender-light' || t === 'twilight-lavender' || t === 'plum') t = 'amethyst-ivory';
+  if (t === 'clear-sky' || t === 'classic-ivory' || t === 'cozy-brown') t = 'sepia-coffee';
+  if (t === 'enchanted-forest' || t === 'mint' || t === 'olive-green' || t === 'sage-cream') t = 'olive-ivory';
+  if (t === 'light') t = 'classic-light';
+  if (t === 'serene-fog' || t === 'wine-poetry' || t === 'wine' || t === 'antique-pink' || t === 'toasted-ash') t = 'noir-silver';
+  if (t === 'abyss-dark' || t === 'mystic-night' || t === 'deep-twilight' || t === 'night-ink' || t === 'system') t = 'noir-silver';
+  return t;
+}

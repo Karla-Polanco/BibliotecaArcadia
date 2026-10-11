@@ -774,7 +774,11 @@ const effectiveSpread = (!isMobile && this.currentSettings.columns === 2) ? 'alw
       try {
         const resp = await fetch(url);
         if (resp && resp.ok) {
-          return await resp.arrayBuffer();
+          const arrayBuffer = await resp.arrayBuffer();
+          // Validar que efectivamente tenga contenido EPUB
+          if (arrayBuffer && arrayBuffer.byteLength > 0) {
+            return arrayBuffer;
+          }
         }
       } catch (_) {
         // probar siguiente candidato

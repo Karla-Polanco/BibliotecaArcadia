@@ -9,6 +9,7 @@ import { Icons } from './Icons.js';
 
 export class Toast {
   static container = null;
+  static MAX_VISIBLE = 5;
 
   static _ensureContainer() {
     if (!this.container) {
@@ -47,6 +48,12 @@ export class Toast {
     `;
 
     container.appendChild(toastEl);
+
+    // Tope de apilado: en ráfagas (p. ej. importar varios EPUB) se descarta
+    // el más antiguo para no tapar la interfaz. Su timer muere con el nodo.
+    while (container.children.length > this.MAX_VISIBLE) {
+      container.firstElementChild?.remove();
+    }
 
     // Animación de entrada (vía clase, sin inline styles)
     requestAnimationFrame(() => {

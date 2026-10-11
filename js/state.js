@@ -5,6 +5,8 @@
  * Maneja el estado global de la interfaz sin acoplamiento a frameworks.
  */
 
+import { normalizeThemeName } from './utils.js';
+
 /**
  * Lee de forma segura una clave de localStorage con valor de respaldo si falla.
  * @param {string} key
@@ -41,16 +43,9 @@ export class AppState {
       searchQuery: '',             // Término de búsqueda textual en biblioteca
       currentReadingId: null,      // ID del libro en lectura activa (null = ninguno)
       selectedTheme: (()=>{
-        let t = safeGet('arcadia_theme', 'classic-light') || 'classic-light';
+        const t = safeGet('arcadia_theme', 'classic-light') || 'classic-light';
         // Normalización y migración retrocompatible de temas antiguos
-        if (t === 'cerulean-light' || t === 'boreal-blue' || t === 'navy-summit') t = 'navy-white';
-        if (t === 'lavender-light' || t === 'twilight-lavender' || t === 'plum') t = 'amethyst-ivory';
-        if (t === 'clear-sky' || t === 'classic-ivory' || t === 'cozy-brown') t = 'sepia-coffee';
-        if (t === 'enchanted-forest' || t === 'mint' || t === 'olive-green' || t === 'sage-cream') t = 'olive-ivory';
-        if (t === 'light') t = 'classic-light';
-        if (t === 'serene-fog' || t === 'wine-poetry' || t === 'wine' || t === 'antique-pink' || t === 'toasted-ash') t = 'noir-silver';
-        if (t === 'abyss-dark' || t === 'mystic-night' || t === 'deep-twilight' || t === 'night-ink' || t === 'system') t = 'noir-silver';
-        return t;
+        return normalizeThemeName(t);
       })()
     };
 

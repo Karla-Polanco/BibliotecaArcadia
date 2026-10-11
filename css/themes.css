@@ -37,7 +37,7 @@
   --color-border: #C6D0DC;
   --color-border-subtle: #E0E6ED;
   --color-border-focus: #304861;
-  --focus-ring: 0 0 0 3px rgba(48, 72, 97, 0.20);
+  --focus-ring: 0 0 0 2px rgba(48, 72, 97, 0.12);
 
   /* Etiquetas, Badges y Acentos */
   --color-badge-bg: rgba(48, 72, 97, 0.065);
@@ -105,7 +105,7 @@
   --color-border: #CEC6D1;
   --color-border-subtle: #E5E0E7;
   --color-border-focus: #584B5F;
-  --focus-ring: 0 0 0 3px rgba(88, 75, 95, 0.20);
+  --focus-ring: 0 0 0 2px rgba(88, 75, 95, 0.12);
 
   /* Etiquetas, Badges y Acentos */
   --color-badge-bg: rgba(88, 75, 95, 0.065);
@@ -173,7 +173,7 @@
   --color-border: #CBD1C5;
   --color-border-subtle: #E2E5DE;
   --color-border-focus: #4F5B48;
-  --focus-ring: 0 0 0 3px rgba(79, 91, 72, 0.20);
+  --focus-ring: 0 0 0 2px rgba(79, 91, 72, 0.12);
 
   /* Etiquetas, Badges y Acentos */
   --color-badge-bg: rgba(79, 91, 72, 0.065);
@@ -241,7 +241,7 @@
   --color-border: #CBCDD2;
   --color-border-subtle: #E3E4E7;
   --color-border-focus: #34363C;
-  --focus-ring: 0 0 0 3px rgba(52, 54, 60, 0.19);
+  --focus-ring: 0 0 0 2px rgba(52, 54, 60, 0.12);
 
   /* Etiquetas, Badges y Acentos */
   --color-badge-bg: rgba(52, 54, 60, 0.055);
@@ -309,7 +309,7 @@
   --color-border: #D3CCC1;
   --color-border-subtle: #E9E4DC;
   --color-border-focus: #5B5146;
-  --focus-ring: 0 0 0 3px rgba(91, 81, 70, 0.20);
+  --focus-ring: 0 0 0 2px rgba(91, 81, 70, 0.12);
 
   /* Etiquetas, Badges y Acentos */
   --color-badge-bg: rgba(91, 81, 70, 0.065);
@@ -377,7 +377,7 @@
   --color-border: #343940;
   --color-border-subtle: #282C31;
   --color-border-focus: #DCE1E5;
-  --focus-ring: 0 0 0 3px rgba(226, 229, 232, 0.22);
+  --focus-ring: 0 0 0 2px rgba(226, 229, 232, 0.14);
 
   /* Etiquetas, Badges y Acentos */
   --color-badge-bg: rgba(226, 229, 232, 0.085);
@@ -452,7 +452,7 @@
   --color-border: color-mix(in srgb, var(--color-surface) 75%, var(--color-text) 25%);
   --color-border-subtle: color-mix(in srgb, var(--color-surface) 88%, var(--color-text) 12%);
   --color-border-focus: var(--color-primary);
-  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-primary) 30%, transparent);
+  --focus-ring: 0 0 0 2px color-mix(in srgb, var(--color-primary) 18%, transparent);
 
   /* Insignias y Acentos */
   --color-badge-bg: color-mix(in srgb, var(--color-primary) 12%, transparent);

@@ -103,17 +103,6 @@ export class LibraryView {
    * Actualiza el estado derivado del sidebar (sin badges).
    */
   async updateBadges() {
-    const books = this.bookManager.getAllBooks();
-    const totalCount = books.length;
-
-    if (totalCount > 0) {
-      const currentId = appState.get('currentReadingId');
-      const readingBook = books.find(b => b.id === currentId) || books[0];
-      if (readingBook) {
-        this.selectCurrentBook(readingBook);
-      }
-    }
-
     // Renderizar colecciones dinámicas en el sidebar
     await this.renderSidebarCollections();
   }

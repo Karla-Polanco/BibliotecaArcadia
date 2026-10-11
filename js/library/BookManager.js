@@ -87,32 +87,44 @@ export class BookManager {
     // 2. Parsear metadatos y extraer portada desde el paquete ZIP
     const newBook = await EPUBParser.parse(file);
 
-    // 3. Persistir libro binario y metadatos en IndexedDB
-    await dbManager.put('books', newBook);
+    // 3-5. Persistir libro, progreso y ajustes. Si un put falla a mitad
+    // (p. ej. cuota excedida), compensar borrando lo ya guardado para no
+    // dejar un libro fantasma sin registros asociados.
+    try {
+      // 3. Persistir libro binario y metadatos en IndexedDB
+      await dbManager.put('books', newBook);
 
-    // 4. Inicializar registro de progreso por defecto
-    await dbManager.put('readingProgress', {
-      bookId: newBook.id,
-      currentCfi: '',
-      chapterHref: '',
-      chapterTitle: 'Inicio',
-      percentage: 0,
-      currentPage: 1,
-      totalPages: 1,
-      updatedAt: Date.now()
-    });
+      // 4. Inicializar registro de progreso por defecto
+      await dbManager.put('readingProgress', {
+        bookId: newBook.id,
+        currentCfi: '',
+        chapterHref: '',
+        chapterTitle: 'Inicio',
+        percentage: 0,
+        currentPage: 1,
+        totalPages: 1,
+        updatedAt: Date.now()
+      });
 
-    // 5. Inicializar configuración visual personalizada por libro
-    await dbManager.put('readerSettings', {
-      bookId: newBook.id,
-      fontFamily: 'Literata',
-      fontSize: 18,
-      fontWeight: 'normal',
-      lineHeight: 1.6,
-      columns: 1,
-      flowMode: 'scrolled-doc',
-      theme: 'inherit'
-    });
+      // 5. Inicializar configuración visual personalizada por libro
+      await dbManager.put('readerSettings', {
+        bookId: newBook.id,
+        fontFamily: 'Literata',
+        fontSize: 18,
+        fontWeight: 'normal',
+        lineHeight: 1.6,
+        columns: 1,
+        flowMode: 'scrolled-doc',
+        theme: 'inherit'
+      });
+    } catch (err) {
+      try {
+        await dbManager.delete('books', newBook.id).catch(() => {});
+        await dbManager.delete('readingProgress', newBook.id).catch(() => {});
+        await dbManager.delete('readerSettings', newBook.id).catch(() => {});
+      } catch (_) {}
+      throw err;
+    }
 
     // 6. Actualizar memoria y cuota de almacenamiento
     this.books.unshift(newBook);

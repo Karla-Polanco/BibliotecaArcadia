@@ -25,7 +25,16 @@
         var themeColors = { 'navy-white':'#EDF1F6','amethyst-ivory':'#F2F0F3','olive-ivory':'#F0F1EC','classic-light':'#F1F1F2','sepia-coffee':'#F3F0EA','noir-silver':'#101214','custom':'#10141A' };
         var tc = themeColors[savedTheme] || '#F1F1F2';
         var meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.setAttribute('content', tc);
+        if (meta) { meta.setAttribute('content', tc); }
+
+        // Function to update theme-color when theme changes programmatically
+        window.updateArcadiaThemeColor = function() {
+          var currentTheme = document.documentElement.getAttribute('data-theme') || 'classic-light';
+          var themeColors = { 'navy-white':'#EDF1F6','amethyst-ivory':'#F2F0F3','olive-ivory':'#F0F1EC','classic-light':'#F1F1F2','sepia-coffee':'#F3F0EA','noir-silver':'#101214','custom':'#10141A' };
+          var tc = themeColors[currentTheme] || '#F1F1F2';
+          if (meta) meta.setAttribute('content', tc);
+        };
+
         var savedScale = localStorage.getItem('arcadia_ui_scale');
         if (savedScale && !isNaN(parseInt(savedScale))) {
           var scale = Math.max(80, Math.min(130, parseInt(savedScale)));
@@ -43,6 +52,19 @@
         document.documentElement.setAttribute('data-boot-view', bootView);
       } catch (e) { }
     })();
+ 
+  // Observador para actualizar theme-color cuando data-theme cambia dinámicamente
+  (function() {
+    var lastTheme = '';
+    var themeObserver = new MutationObserver(function(mutations) {
+      var currentTheme = document.documentElement.getAttribute('data-theme') || 'classic-light';
+      if (currentTheme !== lastTheme) {
+        lastTheme = currentTheme;
+        window.updateArcadiaThemeColor();
+      }
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  })();
   </script>
   <title>Biblioteca Arcadia · App de lectura</title>
 

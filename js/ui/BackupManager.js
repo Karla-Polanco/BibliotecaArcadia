@@ -10,6 +10,7 @@
 import { dbManager } from '../db.js';
 import { Toast } from './Toast.js';
 import { Modal } from './Modal.js';
+import { normalizeThemeName } from '../utils.js';
 
 export class BackupManager {
   /**
@@ -100,9 +101,27 @@ export class BackupManager {
         throw new Error('El archivo no tiene el formato de copia de seguridad de Arcadia.');
       }
 
+      // Los EPUB binarios no viajan en el JSON: solo se restaura lo que
+      // pertenezca a libros presentes en este dispositivo. Lo huérfano se omite.
+      let existingIds = new Set();
+      try {
+        const existingBooks = await dbManager.getAll('books').catch(() => []);
+        existingIds = new Set((existingBooks || []).map(b => b && b.id).filter(Boolean));
+      } catch (_) {}
+
+      const isLegacyWord = (w) => !w || !w.bookId || w.bookId === 'default' || w.bookId === 'general';
+      const annots = (backup.data.annotations || []).filter(a => a && existingIds.has(a.bookId));
+      const notes = (backup.data.notes || []).filter(n => n && existingIds.has(n.bookId));
+      const progress = (backup.data.readingProgress || []).filter(p => p && existingIds.has(p.bookId));
+      const words = (backup.data.words || []).filter(w => isLegacyWord(w) || existingIds.has(w.bookId));
+      const skipped = (backup.data.annotations?.length || 0) - annots.length
+        + (backup.data.notes?.length || 0) - notes.length
+        + (backup.data.readingProgress?.length || 0) - progress.length
+        + (backup.data.words?.length || 0) - words.length;
+
       const confirmed = await Modal.confirm({
         title: 'Restaurar copia de seguridad',
-        message: `Se importarán:\n• ${backup.data.notes?.length || 0} notas y ${backup.data.annotations?.length || 0} subrayados\n• ${backup.data.collections?.length || 0} colecciones\n• ${backup.data.words?.length || 0} términos de vocabulario\n\n¿Deseas continuar?`,
+        message: `Se importarán:\n• ${notes.length} notas y ${annots.length} subrayados\n• ${backup.data.collections?.length || 0} colecciones\n• ${words.length} términos de vocabulario\n• ${progress.length} progresos de lectura\n\nLos archivos EPUB no están incluidos: reimporta primero tus .epub en este dispositivo.${skipped > 0 ? `\nSe omitirán ${skipped} registros de libros ausentes.` : ''}\n\n¿Deseas continuar?`,
         confirmText: 'Restaurar ahora'
       });
 
@@ -110,16 +129,12 @@ export class BackupManager {
 
       Toast.info('Restaurando datos...');
 
-      if (Array.isArray(backup.data.annotations)) {
-        for (const annot of backup.data.annotations) {
-          await dbManager.put('annotations', annot);
-        }
+      for (const annot of annots) {
+        await dbManager.put('annotations', annot);
       }
 
-      if (Array.isArray(backup.data.notes)) {
-        for (const note of backup.data.notes) {
-          await dbManager.put('notes', note);
-        }
+      for (const note of notes) {
+        await dbManager.put('notes', note);
       }
 
       if (Array.isArray(backup.data.collections)) {
@@ -129,32 +144,28 @@ export class BackupManager {
       }
 
       if (Array.isArray(backup.data.bookCollections)) {
+        let knownColIds = new Set();
+        try {
+          const cols = await dbManager.getAll('collections').catch(() => []);
+          knownColIds = new Set((cols || []).map(c => c && c.id).filter(Boolean));
+        } catch (_) {}
         for (const link of backup.data.bookCollections) {
-          await dbManager.put('book_collections', link);
+          if (link && existingIds.has(link.bookId) && knownColIds.has(link.collectionId)) {
+            await dbManager.put('book_collections', link);
+          }
         }
       }
 
-      if (Array.isArray(backup.data.readingProgress)) {
-        for (const prog of backup.data.readingProgress) {
-          await dbManager.put('readingProgress', prog);
-        }
+      for (const prog of progress) {
+        await dbManager.put('readingProgress', prog);
       }
 
-      if (Array.isArray(backup.data.words)) {
-        for (const w of backup.data.words) {
-          await dbManager.put('words', w);
-        }
+      for (const w of words) {
+        await dbManager.put('words', w);
       }
 
       if (backup.data.appTheme) {
-        let t = backup.data.appTheme;
-        if (t === 'cerulean-light' || t === 'boreal-blue' || t === 'navy-summit') t = 'navy-white';
-        if (t === 'lavender-light' || t === 'twilight-lavender' || t === 'plum') t = 'amethyst-ivory';
-        if (t === 'clear-sky' || t === 'classic-ivory' || t === 'cozy-brown') t = 'sepia-coffee';
-        if (t === 'enchanted-forest' || t === 'mint' || t === 'olive-green' || t === 'sage-cream') t = 'olive-ivory';
-        if (t === 'light') t = 'classic-light';
-        if (t === 'serene-fog' || t === 'wine-poetry' || t === 'wine' || t === 'antique-pink' || t === 'toasted-ash') t = 'noir-silver';
-        if (t === 'abyss-dark' || t === 'mystic-night' || t === 'deep-twilight' || t === 'night-ink' || t === 'system') t = 'noir-silver';
+        const t = normalizeThemeName(backup.data.appTheme);
 
         localStorage.setItem('arcadia_theme', t);
         document.documentElement.setAttribute('data-theme', t);
@@ -164,7 +175,9 @@ export class BackupManager {
         localStorage.setItem('arcadia_reader_prefs', typeof backup.data.readerPrefs === 'string' ? backup.data.readerPrefs : JSON.stringify(backup.data.readerPrefs));
       }
 
-      Toast.success('¡Copia de seguridad restaurada con éxito!');
+      Toast.success(skipped > 0
+        ? `Copia restaurada. ${skipped} registros omitidos (libros ausentes).`
+        : '¡Copia de seguridad restaurada con éxito!');
       setTimeout(() => {
         window.location.reload();
       }, 800);

@@ -94,7 +94,7 @@
      ---------------------------------------------------------- */
   --transition-fast: 140ms ease;
   --transition-normal: 180ms ease;
-  --transition-smooth: 220ms ease;
+  --transition-enter: 220ms ease;
   --transition-slow: 300ms ease;   /* Actualizaciones de datos (barras, anillos) */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -140,7 +140,7 @@
      08. ACCESIBILIDAD, FOCO Y SELECCIÓN
      ---------------------------------------------------------- */
   --color-border-focus: var(--color-primary);
-  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-primary) 32%, transparent);
+  --focus-ring: 0 0 0 2px color-mix(in srgb, var(--color-primary) 18%, transparent);
 
   /* ----------------------------------------------------------
      09. ESTADOS SEMÁNTICOS (por tema)

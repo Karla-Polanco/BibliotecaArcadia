@@ -2,7 +2,7 @@
    ARCADIA SERVICE WORKER - PWA, Caché Offline y Actualización Automática
    ============================================================================ */
 
-const CACHE_NAME = 'arcadia-pwa-v171';
+const CACHE_NAME = 'arcadia-pwa-v172';
 
 // App Shell: Archivos esenciales precacheados durante la instalación para soporte offline
 const APP_SHELL_ASSETS = [
@@ -281,6 +281,7 @@ async function revalidateExternalInBackground(request, cache) {
 }
 
 // 10. RESPUESTA OFFLINE: Página mínima de contingencia cuando falla la carga inicial sin caché
+// (Si hay biblioteca en caché, handleNavigation ya la sirvió antes de llegar aquí.)
 function offlineResponse() {
     return new Response(
         `
@@ -303,7 +304,7 @@ function offlineResponse() {
 
         <body>
         <h1>Arcadia</h1>
-        <p>La aplicación está sin conexión y no se pudo cargar.</p>
+        <p>La aplicación está sin conexión. Los libros previamente cargados siguen disponibles.</p>
         </body>
 
         </html>

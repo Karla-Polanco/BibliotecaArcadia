@@ -16,18 +16,18 @@ export class EPUBValidator {
       return { valid: false, error: 'No se ha seleccionado ningún archivo.' };
     }
 
-    // 1. Validación de tamaño (Mínimo 1 KB, máximo 500 MB)
+    // 1. Validación de extensión de nombre de archivo (si es File) - antes que size para evitar leer archivos gigantes sin extensión
+    if (file.name && !file.name.toLowerCase().endsWith('.epub')) {
+      return { valid: false, error: 'El archivo no tiene extensión .epub válida.' };
+    }
+
+    // 2. Validación de tamaño (Mínimo 1 KB, máximo 500 MB)
     if (file.size === 0) {
       return { valid: false, error: 'El archivo está vacío (0 bytes).' };
     }
 
     if (file.size > 500 * 1024 * 1024) {
       return { valid: false, error: 'El archivo excede el tamaño máximo permitido (500 MB).' };
-    }
-
-    // 2. Validación de extensión de nombre de archivo (si es File)
-    if (file.name && !file.name.toLowerCase().endsWith('.epub')) {
-      return { valid: false, error: 'El archivo no tiene extensión .epub válida.' };
     }
 
     // 3. Validación de cabecera binaria (Magic Bytes de contenedor ZIP: PK\x03\x04)

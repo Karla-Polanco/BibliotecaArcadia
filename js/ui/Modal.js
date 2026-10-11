@@ -78,7 +78,8 @@ export class Modal {
 
       const keyHandler = (e) => {
         if (e.key === 'Escape') close(false);
-        if (e.key === 'Enter') close(true);
+        // Sin atajo global de Enter: la activación nativa del botón enfocado
+        // ya resuelve (Enter en Cancelar debe cancelar, no confirmar).
       };
 
       window.addEventListener('keydown', keyHandler);
@@ -163,7 +164,8 @@ export class Modal {
 
       const keyHandler = (e) => {
         if (e.key === 'Escape') close(null);
-        if (e.key === 'Enter' && (!multiline || e.ctrlKey || e.metaKey)) {
+        // Enter solo cuando el foco está en el campo: en Cancelar debe cancelar.
+        if (e.key === 'Enter' && (!multiline || e.ctrlKey || e.metaKey) && e.target?.closest?.('#modal-prompt-input')) {
           const val = overlay.querySelector('#modal-prompt-input')?.value;
           close(val !== undefined ? val : null);
         }
@@ -256,7 +258,7 @@ export class Modal {
 
       const keyHandler = (e) => {
         if (e.key === 'Escape') close(null);
-        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && e.target?.closest?.('#note-margin-input')) {
           const val = overlay.querySelector('#note-margin-input')?.value;
           close(val !== undefined ? val : null);
         }
@@ -447,10 +449,16 @@ export class Modal {
         overlay.classList.remove('active');
         setTimeout(() => {
           overlay.remove();
+          window.removeEventListener('keydown', keyHandler);
           resolve(result);
         }, 260);
       };
 
+      const keyHandler = (e) => {
+        if (e.key === 'Escape') close(null);
+      };
+
+      window.addEventListener('keydown', keyHandler);
       overlay.querySelector('#modal-cancel-btn').addEventListener('click', () => close(null));
       overlay.querySelector('#edit-book-form').addEventListener('submit', (e) => {
         e.preventDefault();
@@ -513,10 +521,16 @@ export class Modal {
         overlay.classList.remove('active');
         setTimeout(() => {
           overlay.remove();
+          window.removeEventListener('keydown', keyHandler);
           resolve(action);
         }, 260);
       };
 
+      const keyHandler = (e) => {
+        if (e.key === 'Escape') close(null);
+      };
+
+      window.addEventListener('keydown', keyHandler);
       overlay.querySelector('#btn-col-action-edit').addEventListener('click', () => close('edit'));
       overlay.querySelector('#btn-col-action-delete').addEventListener('click', () => close('delete'));
       overlay.querySelector('#btn-col-action-cancel').addEventListener('click', () => close(null));
@@ -606,10 +620,16 @@ export class Modal {
         overlay.classList.remove('active');
         setTimeout(() => {
           overlay.remove();
+          window.removeEventListener('keydown', keyHandler);
           resolve(result);
         }, 260);
       };
 
+      const keyHandler = (e) => {
+        if (e.key === 'Escape') close(false);
+      };
+
+      window.addEventListener('keydown', keyHandler);
       overlay.querySelector('#btn-cancel-install').addEventListener('click', () => close(false));
       overlay.addEventListener('click', (e) => {
         if (e.target === overlay) close(false);

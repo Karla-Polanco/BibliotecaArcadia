@@ -62,6 +62,7 @@ export class SearchManager {
     }
 
     // Guardar término en el historial de IndexedDB (con ambos campos para compatibilidad de índices)
+    // y podar a las 50 más recientes para evitar crecimiento infinito.
     try {
       const now = Date.now();
       await dbManager.put('searchHistory', {
@@ -71,6 +72,14 @@ export class SearchManager {
         searchedAt: now,
         timestamp: now
       });
+      const allSearches = await dbManager.getAll('searchHistory').catch(() => []);
+      if ((allSearches || []).length > 50) {
+        const sorted = [...allSearches].sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+        const extras = sorted.slice(0, sorted.length - 50);
+        for (const old of extras) {
+          try { await dbManager.delete('searchHistory', old.id); } catch (_) {}
+        }
+      }
     } catch (e) {}
 
     for (let i = 0; i < spineItems.length; i++) {

@@ -150,9 +150,9 @@ button {
     transform var(--transition-fast);
 }
 
-/* Foco Accesible — el outline sigue el radio real del elemento */
+/* Foco Accesible ligero — el outline sigue el radio real del elemento */
 :focus-visible {
-  outline: 3px solid var(--color-border-focus, var(--color-primary-light));
+  outline: 2px solid var(--color-border-focus, var(--color-primary-light));
   outline-offset: 2px;
 }
 
@@ -2056,7 +2056,7 @@ textarea.vocab-modal-field {
   pointer-events: auto;
   transform: translateY(12px);
   opacity: 0;
-  transition: transform var(--transition-smooth) var(--ease-out), opacity var(--transition-smooth) ease;
+  transition: transform var(--transition-enter) var(--ease-out), opacity var(--transition-enter) ease;
 }
 
 .toast-message.toast-visible {

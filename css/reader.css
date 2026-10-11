@@ -63,9 +63,9 @@ html.reader-open {
   left: 0;
   right: 0;
   min-height: var(--header-height, 56px);
-  background-color: color-mix(in srgb, var(--color-surface) 86%, transparent);
-  backdrop-filter: blur(14px) saturate(1.2);
-  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  background-color: color-mix(in srgb, var(--color-surface) 88%, transparent);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
   border-bottom: 1px solid var(--color-border-subtle);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   display: flex;
@@ -115,26 +115,26 @@ html.reader-open {
 }
 
 .reader-book-title {
-  font-family: var(--font-display, 'Cinzel', Georgia, serif);
-  font-size: 0.95rem;
-  font-weight: var(--weight-bold, 700);
-  letter-spacing: 0.03em;
-  color: var(--color-text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-  width: 100%;
+   font-family: var(--font-display, 'Cinzel', Georgia, serif);
+   font-size: var(--text-md, 1.15rem);
+   font-weight: var(--weight-bold, 700);
+   letter-spacing: 0.03em;
+   color: var(--color-text);
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   max-width: 100%;
+   width: 100%;
 }
 
 .reader-chapter-title {
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-  width: 100%;
+   font-size: var(--text-2xs);
+   color: var(--color-text-muted);
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   max-width: 100%;
+   width: 100%;
 }
 
 .reader-chapter-title:empty {
@@ -216,7 +216,7 @@ html.reader-open {
 }
 
 :is(.btn-reader-action, .btn-reader-back):focus-visible {
-  outline: 3px solid var(--color-border-focus);
+  outline: 2px solid var(--color-border-focus);
   outline-offset: 2px;
 }
 
@@ -324,9 +324,9 @@ html.reader-open {
   left: 0;
   right: 0;
   min-height: 56px;
-  background-color: color-mix(in srgb, var(--color-surface) 86%, transparent);
-  backdrop-filter: blur(14px) saturate(1.2);
-  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  background-color: color-mix(in srgb, var(--color-surface) 88%, transparent);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
   border-top: 1px solid var(--color-border);
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
   display: flex;
@@ -359,12 +359,12 @@ html.reader-open {
 }
 
 .reader-progress-text {
-  font-size: var(--text-xs);
-  font-weight: var(--weight-bold);
-  color: var(--color-text-secondary);
-  min-width: 48px;
-  text-align: right;
-  font-variant-numeric: tabular-nums;
+   font-size: var(--text-2xs);
+   font-weight: var(--weight-bold);
+   color: var(--color-text-secondary);
+   min-width: 48px;
+   text-align: right;
+   font-variant-numeric: tabular-nums;
 }
 
 .btn-footer-chapter {
@@ -1622,7 +1622,7 @@ html.reader-open {
 
 .floating-btn:focus-visible,
 .menu-color-btn:focus-visible {
-  outline: 3px solid var(--color-border-focus);
+  outline: 2px solid var(--color-border-focus);
   outline-offset: 2px;
 }
 
