@@ -34,8 +34,18 @@
   flex-shrink: 0;
 }
 
-.mobile-nav-toggle:active {
+.mobile-nav-toggle:hover {
   background-color: var(--color-surface-hover);
+}
+
+.mobile-nav-toggle:active {
+  background-color: var(--color-surface-secondary);
+  transform: scale(var(--press-scale-sm, 0.94));
+}
+
+.mobile-nav-toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
 }
 
 .mobile-logo-wrap {

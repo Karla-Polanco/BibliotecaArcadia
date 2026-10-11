@@ -104,17 +104,47 @@ export class CustomSelect {
       syncFromNative();
     };
 
+    const getOptions = () => Array.from(menu.querySelectorAll('.cselect-option'));
+
+    const setFocusedIndex = (index) => {
+      const opts = getOptions();
+      if (opts.length === 0) return;
+      let nextIdx = Math.max(0, Math.min(index, opts.length - 1));
+      opts.forEach((o, idx) => {
+        const isFoc = idx === nextIdx;
+        o.classList.toggle('focused', isFoc);
+        if (isFoc) o.scrollIntoView({ block: 'nearest' });
+      });
+    };
+
+    const getFocusedIndex = () => {
+      const opts = getOptions();
+      return opts.findIndex(o => o.classList.contains('focused'));
+    };
+
+    const selectFocused = () => {
+      const opts = getOptions();
+      const idx = getFocusedIndex();
+      if (idx >= 0 && opts[idx]) {
+        opts[idx].click();
+      }
+    };
+
     const open = () => {
       buildMenu();
       menu.hidden = false;
       wrapper.classList.add('open');
       btn.setAttribute('aria-expanded', 'true');
+      const opts = getOptions();
+      const selectedIdx = opts.findIndex(o => o.classList.contains('selected'));
+      setFocusedIndex(selectedIdx >= 0 ? selectedIdx : 0);
     };
     const close = () => {
       if (menu.hidden) return;
       menu.hidden = true;
       wrapper.classList.remove('open');
       btn.setAttribute('aria-expanded', 'false');
+      getOptions().forEach(o => o.classList.remove('focused'));
     };
     const toggle = () => (menu.hidden ? open() : close());
 
@@ -125,15 +155,21 @@ export class CustomSelect {
     btn.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         close();
-      } else if ((e.key === 'Enter' || e.key === ' ') && menu.hidden) {
+      } else if (e.key === 'ArrowDown') {
         e.preventDefault();
-        open();
-      }
-    });
-    menu.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        close();
-        btn.focus();
+        if (menu.hidden) open();
+        else setFocusedIndex(getFocusedIndex() + 1);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (menu.hidden) open();
+        else setFocusedIndex(getFocusedIndex() - 1);
+      } else if ((e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        if (menu.hidden) {
+          open();
+        } else {
+          selectFocused();
+        }
       }
     });
     doc.addEventListener('pointerdown', (e) => {

@@ -139,8 +139,8 @@
   /* ----------------------------------------------------------
      08. ACCESIBILIDAD, FOCO Y SELECCIÓN
      ---------------------------------------------------------- */
-  --color-border-focus: var(--color-primary, #2B2C34);
-  --focus-ring: 0 0 0 3px var(--color-primary-glow, rgba(43, 44, 52, 0.25));
+  --color-border-focus: var(--color-primary);
+  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-primary) 32%, transparent);
 
   /* ----------------------------------------------------------
      09. ESTADOS SEMÁNTICOS (por tema)

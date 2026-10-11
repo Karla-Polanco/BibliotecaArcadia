@@ -772,11 +772,11 @@ html.reader-open {
 
 .align-pill-btn.active,
 .setting-pill-btn.active {
-  background-color: color-mix(in srgb, var(--color-primary) 24%, var(--color-surface-elevated, #FFFFFF));
-  border-color: color-mix(in srgb, var(--color-primary) 55%, transparent);
-  color: var(--color-primary);
+  background-color: color-mix(in srgb, var(--color-primary) 78%, var(--color-surface-elevated, #FFFFFF) 22%);
+  border-color: transparent;
+  color: var(--color-text-inverse);
   font-weight: var(--weight-bold, 700);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-primary) 30%, transparent), var(--shadow-xs);
+  box-shadow: 0 1px 4px var(--color-primary-glow);
 }
 
 .align-pill-btn:focus-visible,
@@ -998,20 +998,25 @@ html.reader-open {
   transform: none;
   border-color: transparent;
 }
+.segmented-control:focus-within,
+#first-line-indent-options:focus-within {
+  border-color: var(--color-border-focus);
+  box-shadow: var(--focus-ring);
+}
 .segmented-control .setting-pill-btn.active,
 .segmented-control .align-pill-btn.active,
 #first-line-indent-options .setting-pill-btn.active {
-  background-color: color-mix(in srgb, var(--color-primary) 26%, var(--color-surface-elevated, #FFFFFF));
-  color: var(--color-primary);
+  background-color: color-mix(in srgb, var(--color-primary) 78%, var(--color-surface-elevated, #FFFFFF) 22%);
+  color: var(--color-text-inverse);
   border-color: transparent;
   font-weight: 700;
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-primary) 38%, transparent), 0 1px 2px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 4px var(--color-primary-glow);
 }
 .segmented-control .setting-pill-btn.active:hover,
 .segmented-control .align-pill-btn.active:hover,
 #first-line-indent-options .setting-pill-btn.active:hover {
-  background-color: color-mix(in srgb, var(--color-primary) 30%, var(--color-surface-elevated, #FFFFFF));
-  color: var(--color-primary);
+  background-color: color-mix(in srgb, var(--color-primary) 70%, var(--color-surface-elevated, #FFFFFF) 30%);
+  color: var(--color-text-inverse);
 }
 .segmented-control .setting-pill-btn:focus-visible,
 .segmented-control .align-pill-btn:focus-visible,

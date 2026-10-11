@@ -581,27 +581,39 @@ body {
 
 /* 3. Variantes Visuales y Semánticas */
 
-/* Guardar / Confirmar / Crear / Acción Principal — esquema claro unificado */
+/* Guardar / Confirmar / Crear / Acción Principal — botón primario sólido y legible */
 .btn--primary {
-  background-color: var(--color-surface-hover);
-  color: var(--color-primary);
-  border-color: var(--color-border);
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary);
   font-weight: var(--weight-semibold, 600);
-  box-shadow: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.btn--primary svg,
+.btn--primary .btn-icon-svg {
+  color: var(--color-text-inverse);
 }
 
 .btn--primary:hover {
-  background-color: color-mix(in srgb, var(--color-primary) 10%, var(--color-surface-elevated, #FFFFFF));
-  border-color: color-mix(in srgb, var(--color-primary) 30%, var(--color-border));
-  color: var(--color-primary);
-  box-shadow: none;
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  color: var(--color-text-inverse);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
   filter: none;
 }
 
+.btn--primary:hover svg,
+.btn--primary:hover .btn-icon-svg {
+  color: var(--color-text-inverse);
+}
+
 .btn--primary:active {
-  background-color: color-mix(in srgb, var(--color-primary) 18%, var(--color-surface-elevated, #FFFFFF));
-  border-color: color-mix(in srgb, var(--color-primary) 30%, var(--color-border));
-  color: var(--color-primary);
+  transform: scale(var(--press-scale, 0.97));
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  color: var(--color-text-inverse);
 }
 
 /* Cancelar / Volver / Acción Secundaria o Ghost */
@@ -614,7 +626,8 @@ body {
 .btn--ghost:hover {
   background-color: var(--color-surface-hover);
   color: var(--color-text);
-  border-color: var(--color-border);
+  border-color: color-mix(in srgb, var(--color-primary) 35%, var(--color-border));
+  transform: translateY(-1px);
 }
 
 /* Eliminar / Acción Destructiva / Peligro */
@@ -639,9 +652,10 @@ body {
 .btn-card-del:hover,
 .btn-delete-annot:hover,
 .col-action-btn--delete:hover {
-  background-color: color-mix(in srgb, var(--state-danger, #C85A54) 18%, transparent);
+  background-color: color-mix(in srgb, var(--state-danger, #C85A54) 22%, transparent);
   color: var(--state-danger, #C85A54);
-  border-color: color-mix(in srgb, var(--state-danger, #C85A54) 45%, transparent);
+  border-color: color-mix(in srgb, var(--state-danger, #C85A54) 55%, transparent);
+  transform: translateY(-1px);
   box-shadow: none;
 }
 
@@ -653,7 +667,7 @@ body {
 }
 
 .btn--danger:focus-visible {
-  box-shadow: 0 0 0 3px rgba(200, 90, 84, 0.32);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--state-danger, #C85A54) 35%, transparent);
 }
 
 /* 4. Botones de Solo Icono (Icon Buttons) */

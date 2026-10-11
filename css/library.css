@@ -48,9 +48,9 @@
 
 /* Botón de Subida de Libros (EPUB) — variante píldora del BDS */
 .btn-upload-epub {
-   background-color: var(--color-surface-hover);
-   color: var(--color-primary);
-   border: 1px solid var(--color-border);
+   background-color: var(--color-primary);
+   color: var(--color-text-inverse);
+   border: 1px solid var(--color-primary);
    padding: 0 var(--control-padding-x-md, 14px);
    height: var(--control-height-md, 38px);
    min-height: var(--control-height-md, 38px);
@@ -65,7 +65,7 @@
    gap: 7px;
    cursor: pointer;
    white-space: nowrap;
-   box-shadow: none;
+   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
    -webkit-tap-highlight-color: transparent;
    transition: background-color var(--transition-fast),
       color var(--transition-fast),
@@ -74,28 +74,34 @@
       transform var(--transition-fast);
 }
 
+.btn-upload-epub svg {
+   color: var(--color-text-inverse);
+   width: var(--control-icon-size-sm, 14px);
+   height: var(--control-icon-size-sm, 14px);
+   flex-shrink: 0;
+}
+
 .btn-upload-epub:focus-visible {
    outline: none;
    box-shadow: var(--focus-ring);
 }
 
 .btn-upload-epub:hover {
-   background-color: color-mix(in srgb, var(--color-primary) 10%, var(--color-surface-elevated, #FFFFFF));
-   color: var(--color-primary);
-   border-color: color-mix(in srgb, var(--color-primary) 30%, var(--color-border));
-   box-shadow: none;
+   background-color: var(--color-primary-dark);
+   color: var(--color-text-inverse);
+   border-color: var(--color-primary-dark);
+   transform: translateY(-1px);
+   box-shadow: var(--shadow-sm);
+}
+
+.btn-upload-epub:hover svg {
+   color: var(--color-text-inverse);
 }
 
 .btn-upload-epub:active {
    transform: scale(var(--press-scale, 0.97));
-   background-color: color-mix(in srgb, var(--color-primary) 18%, var(--color-surface-elevated, #FFFFFF));
-   color: var(--color-primary);
-}
-
-.btn-upload-epub svg {
-   width: var(--control-icon-size-sm, 14px);
-   height: var(--control-icon-size-sm, 14px);
-   flex-shrink: 0;
+   background-color: var(--color-primary-dark);
+   color: var(--color-text-inverse);
 }
 
 /* Los botones de acción principal (Guardar/Añadir/Instalar) usan el
@@ -317,19 +323,20 @@
    display: flex;
    flex-direction: column;
    background-color: transparent;
-   border-radius: 0;
+   border-radius: var(--radius-sm, 8px);
    cursor: pointer;
-   transition: none;
    position: relative;
    user-select: none;
    height: 100%;
+   outline: none;
+   transition: transform var(--transition-normal);
 }
 
 .book-card:hover {
    transform: none;
 }
 
-/* Cubiertas de Libro: Plana, elegante con acabado de lomo curvo 3D */
+/* Cubiertas de Libro: Plana, elegante con acabado de lomo curvo 3D y elevación al hover */
 
 .book-cover-container {
    width: 100%;
@@ -337,12 +344,11 @@
    position: relative;
    border-radius: 4px 8px 8px 4px;
    overflow: hidden;
-   border: none;
-   box-shadow: none;
+   border: 1px solid var(--color-border-subtle);
+   box-shadow: var(--shadow-sm);
    background-color: var(--color-surface-secondary);
    margin-bottom: var(--space-sm);
-   transform: none;
-   transition: none;
+   transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
 }
 
 .book-spine-3d {
@@ -365,8 +371,15 @@
 }
 
 .book-card:hover .book-cover-container {
-   transform: none;
-   box-shadow: none;
+   transform: translateY(-4px);
+   box-shadow: var(--shadow-lg);
+   border-color: color-mix(in srgb, var(--color-primary-light) 40%, var(--color-border));
+}
+
+.book-card:focus-visible .book-cover-container {
+   border-color: var(--color-border-focus);
+   box-shadow: var(--focus-ring), var(--shadow-md);
+   transform: translateY(-2px);
 }
 
 .book-cover-img {
@@ -718,13 +731,22 @@
    border: 1px solid var(--color-border);
    border-radius: var(--radius-md, 12px);
    cursor: pointer;
-   transition: background-color var(--transition-fast), border-color var(--transition-fast);
+   outline: none;
+   transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
    box-sizing: border-box;
 }
 
 .book-list-item:hover {
-   background-color: color-mix(in srgb, var(--color-surface) 25%, var(--color-surface-secondary) 75%);
-   border-color: var(--color-border);
+   background-color: color-mix(in srgb, var(--color-surface) 20%, var(--color-surface-secondary) 80%);
+   border-color: color-mix(in srgb, var(--color-primary-light) 40%, var(--color-border));
+   transform: translateY(-1px);
+   box-shadow: var(--shadow-sm);
+}
+
+.book-list-item:focus-visible {
+   outline: none;
+   border-color: var(--color-border-focus);
+   box-shadow: var(--focus-ring);
 }
 
 .list-cover-wrapper {
@@ -1074,6 +1096,12 @@
     box-shadow: var(--hover-shadow-sm, 0 3px 8px rgba(0, 0, 0, 0.04));
 }
 
+.theme-card-item:focus-visible {
+    outline: none;
+    border-color: var(--color-border-focus);
+    box-shadow: var(--focus-ring);
+}
+
 .theme-card-item.selected {
     border-color: var(--theme-accent-color, var(--color-primary-light));
     box-shadow: 0 0 0 1px var(--theme-accent-color, var(--color-primary-light)), var(--shadow-md);
@@ -1305,7 +1333,8 @@
    text-overflow: ellipsis;
 }
 
-.cselect-option:hover {
+.cselect-option:hover,
+.cselect-option.focused {
    background-color: var(--color-surface-hover);
    color: var(--color-text);
 }

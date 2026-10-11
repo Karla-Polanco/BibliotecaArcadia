@@ -136,7 +136,7 @@ export class SettingsView {
 
           <div class="theme-options-grid">
             <!-- 1. Marino & Blanco -->
-            <div class="theme-card-item ${currentTheme === 'navy-white' ? 'selected' : ''}" data-theme-value="navy-white" style="--theme-accent-color: #304861;">
+            <div class="theme-card-item ${currentTheme === 'navy-white' ? 'selected' : ''}" data-theme-value="navy-white" style="--theme-accent-color: #304861;" tabindex="0" role="button" aria-pressed="${currentTheme === 'navy-white' ? 'true' : 'false'}">
               <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #FFFFFF 0%, #D9E2EB 100%);">
                 <div class="theme-card-preview-top">
                   <div class="theme-card-check-badge">
@@ -158,7 +158,7 @@ export class SettingsView {
             </div>
 
             <!-- 2. Amatista & Marfil -->
-            <div class="theme-card-item ${currentTheme === 'amethyst-ivory' ? 'selected' : ''}" data-theme-value="amethyst-ivory" style="--theme-accent-color: #584B5F;">
+            <div class="theme-card-item ${currentTheme === 'amethyst-ivory' ? 'selected' : ''}" data-theme-value="amethyst-ivory" style="--theme-accent-color: #584B5F;" tabindex="0" role="button" aria-pressed="${currentTheme === 'amethyst-ivory' ? 'true' : 'false'}">
               <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #FFFFFF 0%, #DDD6E0 100%);">
                 <div class="theme-card-preview-top">
                   <div class="theme-card-check-badge">
@@ -180,7 +180,7 @@ export class SettingsView {
             </div>
 
             <!-- 3. Oliva & Marfil -->
-            <div class="theme-card-item ${currentTheme === 'olive-ivory' ? 'selected' : ''}" data-theme-value="olive-ivory" style="--theme-accent-color: #4F5B48;">
+            <div class="theme-card-item ${currentTheme === 'olive-ivory' ? 'selected' : ''}" data-theme-value="olive-ivory" style="--theme-accent-color: #4F5B48;" tabindex="0" role="button" aria-pressed="${currentTheme === 'olive-ivory' ? 'true' : 'false'}">
               <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #FFFFFF 0%, #DBE0D5 100%);">
                 <div class="theme-card-preview-top">
                   <div class="theme-card-check-badge">
@@ -202,7 +202,7 @@ export class SettingsView {
             </div>
 
             <!-- 4. Clásico Claro -->
-            <div class="theme-card-item ${currentTheme === 'classic-light' ? 'selected' : ''}" data-theme-value="classic-light" style="--theme-accent-color: #34363C;">
+            <div class="theme-card-item ${currentTheme === 'classic-light' ? 'selected' : ''}" data-theme-value="classic-light" style="--theme-accent-color: #34363C;" tabindex="0" role="button" aria-pressed="${currentTheme === 'classic-light' ? 'true' : 'false'}">
               <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #FFFFFF 0%, #DEDFE2 100%);">
                 <div class="theme-card-preview-top">
                   <div class="theme-card-check-badge">
@@ -224,7 +224,7 @@ export class SettingsView {
             </div>
 
             <!-- 5. Sepia & Café -->
-            <div class="theme-card-item ${currentTheme === 'sepia-coffee' ? 'selected' : ''}" data-theme-value="sepia-coffee" style="--theme-accent-color: #5B5146;">
+            <div class="theme-card-item ${currentTheme === 'sepia-coffee' ? 'selected' : ''}" data-theme-value="sepia-coffee" style="--theme-accent-color: #5B5146;" tabindex="0" role="button" aria-pressed="${currentTheme === 'sepia-coffee' ? 'true' : 'false'}">
               <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #FFFFFF 0%, #DFD6C9 100%);">
                 <div class="theme-card-preview-top">
                   <div class="theme-card-check-badge">
@@ -246,7 +246,7 @@ export class SettingsView {
             </div>
 
             <!-- 6. Negro & Plateado -->
-            <div class="theme-card-item ${currentTheme === 'noir-silver' ? 'selected' : ''}" data-theme-value="noir-silver" style="--theme-accent-color: #969DA5;">
+            <div class="theme-card-item ${currentTheme === 'noir-silver' ? 'selected' : ''}" data-theme-value="noir-silver" style="--theme-accent-color: #969DA5;" tabindex="0" role="button" aria-pressed="${currentTheme === 'noir-silver' ? 'true' : 'false'}">
               <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #272B30 0%, #101214 100%);">
                 <div class="theme-card-preview-top">
                   <div class="theme-card-check-badge">
@@ -401,12 +401,21 @@ export class SettingsView {
 
     // Vincular tarjetas de tema predefinidas
     this.container.querySelectorAll('.theme-card-item').forEach(card => {
-      card.addEventListener('click', () => {
+      const selectCard = () => {
         const theme = card.dataset.themeValue;
         this.themeManager.applyTheme(theme);
         this.container.querySelectorAll('.theme-card-item').forEach(c => {
-          c.classList.toggle('selected', c.dataset.themeValue === theme);
+          const isSelected = c.dataset.themeValue === theme;
+          c.classList.toggle('selected', isSelected);
+          c.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
         });
+      };
+      card.addEventListener('click', selectCard);
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          selectCard();
+        }
       });
     });
 
