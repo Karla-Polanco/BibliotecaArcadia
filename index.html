@@ -22,6 +22,21 @@
         var known = ['navy-white','amethyst-ivory','olive-ivory','classic-light','sepia-coffee','noir-silver','custom'];
         if (known.indexOf(savedTheme) === -1) savedTheme = 'classic-light';
         document.documentElement.setAttribute('data-theme', savedTheme);
+        // Modo claro/oscuro temprano para tema personalizado (evita flash dark→light)
+        try {
+          if (savedTheme === 'custom') {
+            var rawCc = localStorage.getItem('arcadia_custom_colors');
+            var bgCc = '#10141A';
+            if (rawCc) { try { bgCc = (JSON.parse(rawCc).bg) || bgCc; } catch (e2) {} }
+            var hCc = String(bgCc).replace('#', '');
+            if (hCc.length === 3) hCc = hCc.split('').map(function(c){ return c + c; }).join('');
+            var rCc = parseInt(hCc.slice(0, 2), 16) / 255, gCc = parseInt(hCc.slice(2, 4), 16) / 255, bCc = parseInt(hCc.slice(4, 6), 16) / 255;
+            var lumCc = 0.2126 * rCc + 0.7152 * gCc + 0.0722 * bCc;
+            document.documentElement.setAttribute('data-custom-mode', lumCc > 0.5 ? 'light' : 'dark');
+          } else {
+            document.documentElement.removeAttribute('data-custom-mode');
+          }
+        } catch (e3) {}
         var themeColors = { 'navy-white':'#EDF1F6','amethyst-ivory':'#F2F0F3','olive-ivory':'#F0F1EC','classic-light':'#F1F1F2','sepia-coffee':'#F3F0EA','noir-silver':'#101214','custom':'#10141A' };
         var tc = themeColors[savedTheme] || '#F1F1F2';
         var meta = document.querySelector('meta[name="theme-color"]');

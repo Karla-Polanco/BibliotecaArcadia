@@ -130,6 +130,11 @@ export class ThemeManager {
       rootStyle.setProperty('--custom-surface', colors.surface);
       rootStyle.setProperty('--custom-text', colors.text);
       rootStyle.setProperty('--custom-primary', colors.primary);
+      // Activa la variante clara/oscura de themes.css:
+      // [data-theme="custom"][data-custom-mode="light"] vs base dark.
+      try {
+        root.setAttribute('data-custom-mode', ThemeManager.isLightColor(colors.bg) ? 'light' : 'dark');
+      } catch (_) {}
       // Limpieza de inyección legacy (derivadas directas) por migración:
       // antes se pisaban --color-* y --theme-bg-pattern en línea, lo que
       // rompía la derivación automática con color-mix.
@@ -141,6 +146,7 @@ export class ThemeManager {
     } else {
       // Limpiar propiedades en línea si se vuelve a un tema predefinido
       const rootStyle = document.documentElement.style;
+      try { root.removeAttribute('data-custom-mode'); } catch (_) {}
       ['--custom-bg', '--custom-surface', '--custom-text', '--custom-primary',
        '--color-background', '--color-surface', '--color-surface-secondary', '--color-surface-elevated',
        '--color-primary', '--color-primary-light', '--color-primary-dark', '--color-text',
@@ -173,6 +179,25 @@ export class ThemeManager {
     return this.currentTheme;
   }
 
+  /**
+   * Detecta si un color hex es claro (luminancia relativa > 0.5).
+   * Usado para activar [data-custom-mode="light"] y color-scheme correcto.
+   */
+  static isLightColor(hex) {
+    try {
+      let h = String(hex || '').trim().replace('#', '');
+      if (h.length === 3) h = h.split('').map(c => c + c).join('');
+      if (h.length !== 6) return false;
+      const r = parseInt(h.slice(0, 2), 16) / 255;
+      const g = parseInt(h.slice(2, 4), 16) / 255;
+      const b = parseInt(h.slice(4, 6), 16) / 255;
+      const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      return lum > 0.5;
+    } catch (_) {
+      return false;
+    }
+  }
+
   _handleSystemThemeChange(e) {}
 
   _updateThemeColor(themeName) {
@@ -188,7 +213,8 @@ export class ThemeManager {
     let current = themeColors[themeName] || themeColors['classic-light'];
     if (themeName === ThemeManager.THEMES.CUSTOM) {
       const cc = this.getCustomColors();
-      current = { bg: cc.bg, surface: cc.surface, dark: true };
+      const isLight = ThemeManager.isLightColor(cc.bg);
+      current = { bg: cc.bg, surface: cc.surface, dark: !isLight };
     }
 
     const color = current.bg;

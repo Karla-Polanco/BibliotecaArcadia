@@ -59,6 +59,11 @@ html {
   color-scheme: dark;
 }
 
+/* Personalizado claro: respeta data-custom-mode (themes.css define la variante) */
+[data-theme="custom"][data-custom-mode="light"] {
+  color-scheme: light;
+}
+
 /* Lienzo Principal (BODY) */
 body {
   font-family: var(--font-sans, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
@@ -1675,7 +1680,7 @@ textarea.vocab-modal-field {
 }
 
 .arcadia-modal-icon--info {
-  color: var(--color-gold, #C8A261);
+  color: var(--color-accent-gold-text, var(--color-gold, #C8A261));
 }
 
 /* Selector de color de colección — reemplaza inline styles */

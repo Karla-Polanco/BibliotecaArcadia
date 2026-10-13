@@ -1647,7 +1647,7 @@ html.reader-open {
   border-radius: 50%;
   background-color: var(--color-surface-hover);
   border: 1px solid var(--color-border);
-  color: var(--color-gold, #C8A261);
+  color: var(--color-accent-gold-text, var(--color-gold, #C8A261));
   display: inline-flex;
   align-items: center;
   justify-content: center;

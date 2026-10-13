@@ -553,8 +553,10 @@ export class LibraryView {
 
         <div class="book-meta">
           <h4 class="book-title" title="${this.escapeHtml(book.title)}">${this.escapeHtml(book.title)}</h4>
-          ${book.saga ? `<span class="book-saga">${this.escapeHtml(book.saga)}</span>` : `<span class="book-saga book-saga--empty" aria-hidden="true">&nbsp;</span>`}
-          <span class="book-author">${this.escapeHtml(book.author)}</span>
+          <div class="book-subline">
+            <span class="book-author">${this.escapeHtml(book.author)}</span>
+            ${book.saga ? `${book.author ? `<span class="list-sep" aria-hidden="true">·</span>` : ''}<span class="book-saga" title="${this.escapeHtml(book.saga)}">${this.escapeHtml(book.saga)}</span>` : ''}
+          </div>
           <div class="book-badge-info">
             <span class="book-status">${this.getStatusLabel(book.status)}</span>
             <span class="grid-progress" title="Progreso de lectura: ${pct}%">
@@ -567,7 +569,8 @@ export class LibraryView {
           </div>
         </div>
       </article>
-    `;}).join('');
+    `;
+    }).join('');
 
     this.container.innerHTML = headerHtml + cardsHtml;
   }
@@ -603,9 +606,11 @@ export class LibraryView {
         <div class="list-content-column">
           <div class="list-info-row">
             <div class="list-info">
-              ${book.saga ? `<span class="list-saga">${this.escapeHtml(book.saga)}</span>` : `<span class="list-saga list-saga--empty" aria-hidden="true">&nbsp;</span>`}
-              <h4 class="list-title">${this.escapeHtml(book.title)}</h4>
-              <span class="list-author">${this.escapeHtml(book.author)}</span>
+              <h4 class="list-title" title="${this.escapeAttr(book.title)}">${this.escapeHtml(book.title)}</h4>
+              <div class="list-subline">
+                <span class="list-author">${this.escapeHtml(book.author)}</span>
+                ${book.saga ? `${book.author ? `<span class="list-sep" aria-hidden="true">·</span>` : ''}<span class="list-saga" title="${this.escapeAttr(book.saga)}">${this.escapeHtml(book.saga)}</span>` : ''}
+              </div>
             </div>
 
             <div class="list-item-actions-row">
@@ -631,7 +636,8 @@ export class LibraryView {
           </div>
         </div>
       </div>
-    `;}).join('');
+    `;
+    }).join('');
     this.container.innerHTML = headerHtml + itemsHtml;
   }
 
@@ -714,7 +720,8 @@ export class LibraryView {
    * Despliega un menú contextual flotante para editar o eliminar el libro.
    */
   showBookOptionsMenu(book, triggerEl) {
-    // Eliminar menús previos si existen
+    // Cerrar menú previo + limpiar sus listeners para no fugar
+    if (this._cleanupBookMenu) this._cleanupBookMenu();
     document.querySelectorAll('.context-menu-floating').forEach(m => m.remove());
 
     const menu = document.createElement('div');
@@ -755,40 +762,58 @@ export class LibraryView {
 
     document.body.appendChild(menu);
 
-    const closeHandler = (e) => {
-      if (!menu.contains(e.target)) {
-        menu.remove();
-        document.removeEventListener('click', closeHandler);
-      }
+    // Cierre centralizado: quita menú + todos los listeners
+    const closeMenu = () => {
+      menu.remove();
+      document.removeEventListener('click', onClickOutside);
+      document.removeEventListener('scroll', closeMenu, true);
+      window.removeEventListener('resize', closeMenu);
+      document.removeEventListener('keydown', onEscape);
+      if (this._openBookMenu === menu) this._openBookMenu = null;
+      this._cleanupBookMenu = null;
     };
-    setTimeout(() => document.addEventListener('click', closeHandler), 10);
+    this._openBookMenu = menu;
+    this._cleanupBookMenu = closeMenu;
+
+    const onClickOutside = (e) => {
+      if (!menu.contains(e.target)) closeMenu();
+    };
+    const onEscape = (e) => {
+      if (e.key === 'Escape') closeMenu();
+    };
+
+    setTimeout(() => document.addEventListener('click', onClickOutside), 10);
+    // capture:true atrapa scroll de window + cualquier contenedor (main, sidebar)
+    document.addEventListener('scroll', closeMenu, { capture: true, passive: true });
+    window.addEventListener('resize', closeMenu);
+    document.addEventListener('keydown', onEscape);
 
     menu.querySelector('[data-opt="read"]').addEventListener('click', () => {
-      menu.remove();
+      closeMenu();
       this.selectCurrentBook(book);
       if (this.onOpenBook) this.onOpenBook(book.id);
     });
 
     menu.querySelector('[data-opt="edit"]').addEventListener('click', () => {
-      menu.remove();
+      closeMenu();
       this.promptEditBook(book);
     });
 
     menu.querySelector('[data-opt="collections"]').addEventListener('click', () => {
-      menu.remove();
+      closeMenu();
       CollectionModal.openAssignModal(book, () => this.updateBadges());
     });
 
     const downloadBtn = menu.querySelector('[data-opt="download"]');
     if (downloadBtn) {
       downloadBtn.addEventListener('click', () => {
-        menu.remove();
+        closeMenu();
         this.downloadBookEpub(book);
       });
     }
 
     menu.querySelector('[data-opt="delete"]').addEventListener('click', () => {
-      menu.remove();
+      closeMenu();
       this.confirmDeleteBook(book);
     });
   }

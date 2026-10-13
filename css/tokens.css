@@ -146,7 +146,8 @@
      09. ESTADOS SEMÁNTICOS (por tema)
      ----------------------------------------------------------
      NOTA: --state-success / --state-success-bg / --state-danger /
-     --state-danger-bg y --color-gold viven en themes.css,
+     --state-danger-bg, --color-gold (decorativo), --color-accent-gold /
+     --color-accent-gold-text y --shadow-sm/md/lg/xl viven en themes.css,
      definidos por cada [data-theme] para armonizar con su paleta.
      No definir valores globales aquí. */
 }

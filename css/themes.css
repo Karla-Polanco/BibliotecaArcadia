@@ -1,488 +1,480 @@
-/* ============================================================================
+/* ==================================================================
    SISTEMA DE TEMAS DINÁMICOS - BIBLIOTECA ARCADIA
-   ============================================================================ */
+   ================================================================== */
 
-/* ============================================================================
+/* ==================================================================
    01. MARINO & BLANCO (NAVY & WHITE)
-   ----------------------------------------------------------------------------
+   ------------------------------------------------------------------
    Identidad: Académico · Sobrio · Preciso · Editorial
    Ambiente: Estudio · Documentación · Ensayos · Lectura Analítica
-   ============================================================================ */
+   ================================================================== */
 
 [data-theme="navy-white"] {
-  /* Lienzo y Superficies */
-  --color-background: #EDF1F6;
-  --color-surface: #F9FBFD;
-  --color-surface-secondary: #DCE3EC;
-  --color-surface-elevated: #FFFFFF;
+    /* Lienzo y Superficies */
+    --color-background: #EDF1F6;
+    --color-surface: #F9FBFD;
+    --color-surface-secondary: #DCE3EC;
+    --color-surface-elevated: #FFFFFF;
 
-  --color-surface-hover: rgba(48, 72, 97, 0.045);
-  --color-surface-active: rgba(48, 72, 97, 0.09);
+    --color-surface-hover: rgba(48, 72, 97, 0.045);
+    --color-surface-active: rgba(48, 72, 97, 0.09);
 
-  /* Paleta Primaria y Secundaria */
-  --color-primary-dark: #1C2D40;
-  --color-primary: #304861;
-  --color-primary-light: #62778F;
-  --color-primary-glow: rgba(48, 72, 97, 0.16);
+    /* Paleta Primaria y Secundaria */
+    --color-primary-dark: #1C2D40;
+    --color-primary: #304861;
+    --color-primary-light: #62778F;
+    --color-primary-glow: rgba(48, 72, 97, 0.16);
 
-  --color-secondary: #8797A9;
+    --color-secondary: #748291;
 
-  /* Tipografía y Lectura */
-  --color-text: #18222D;
-  --color-text-secondary: #3B4A59;
-  --color-text-muted: #697887;
-  --color-text-inverse: #FFFFFF;
+    /* Tipografía y Lectura */
+    --color-text: #18222D;
+    --color-text-secondary: #3B4A59;
+    --color-text-muted: #596673;
+    --color-text-inverse: #FFFFFF;
 
-  /* Bordes, Divisiones y Anillos */
-  --color-border: #C6D0DC;
-  --color-border-subtle: #E0E6ED;
-  --color-border-focus: #304861;
-  --focus-ring: 0 0 0 2px rgba(48, 72, 97, 0.12);
+    /* Bordes, Divisiones y Anillos */
+    --color-border: #C6D0DC;
+    --color-border-subtle: #E0E6ED;
+    --color-border-focus: #304861;
+    --focus-ring: 0 0 0 3px rgba(48, 72, 97, 0.28);
 
-  /* Etiquetas, Badges y Acentos */
-  --color-badge-bg: rgba(48, 72, 97, 0.065);
-  --color-accent-gold: #9A7A3D;
-  --color-gold: #C8A561;
+    /* Etiquetas, Badges y Acentos */
+    --color-badge-bg: rgba(48, 72, 97, 0.065);
+    --color-accent-gold: #9A7A3D;
+    --color-accent-gold-text: #7A6030;
+    /* Compat: dorado decorativo para portadas oscuras (placeholder-author) */
+    --color-gold: #C8A561;
 
-  /* Estados semánticos */
-  --state-success: #477A5B;
-  --state-success-bg: rgba(71, 122, 91, 0.11);
-  --state-danger: #A95752;
-  --state-danger-bg: rgba(169, 87, 82, 0.11);
-  --state-warning: #B45309;
+    /* Estados semánticos */
+    --state-success: #406E52;
+    --state-success-bg: rgba(64, 110, 82, 0.11);
+    --state-danger: #9A4F4B;
+    --state-danger-bg: rgba(154, 79, 75, 0.11);
+    --state-warning: #A24B08;
 
-  /* Modales y Capas Superpuestas */
-  --modal-backdrop: rgba(24, 34, 45, 0.52);
-  --shadow-sm: 0 1px 3px rgba(24, 34, 45, 0.045);
-  --shadow-xl: 0 20px 35px -5px rgba(24, 34, 45, 0.11), 0 10px 15px -5px rgba(24, 34, 45, 0.045);
+    /* Modales y Capas Superpuestas */
+    --modal-backdrop: rgba(24, 34, 45, 0.52);
+    --shadow-sm: 0 1px 3px rgba(24, 34, 45, 0.045);
+    --shadow-md: 0 4px 10px -2px rgba(24, 34, 45, 0.08), 0 2px 4px -2px rgba(24, 34, 45, 0.05);
+    --shadow-lg: 0 10px 22px -3px rgba(24, 34, 45, 0.10), 0 4px 8px -2px rgba(24, 34, 45, 0.05);
+    --shadow-xl: 0 20px 35px -5px rgba(24, 34, 45, 0.11), 0 10px 15px -5px rgba(24, 34, 45, 0.045);
 
-  /* Gráficos de Encabezado y Marca */
-  --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #E9EEF4 52%, #D5DFEA 100%);
-  --brand-wordmark-color: #1C2D40;
+    /* Gráficos de Encabezado y Marca */
+    --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #E9EEF4 52%, #D5DFEA 100%);
+    --brand-wordmark-color: #1C2D40;
 
-  /* Motor de Lectura */
-  --reader-bg: #F6F8FA;
-  --reader-text: #1A222C;
+    /* Motor de Lectura */
+    --reader-bg: #F6F8FA;
+    --reader-text: #1A222C;
 
-  /* Patrón de Fondo Global */
-  --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #EEF2F6 55%, #D9E2EB 100%);
+    /* Patrón de Fondo Global */
+    --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #EEF2F6 55%, #D9E2EB 100%);
 
-  color-scheme: light;
+    color-scheme: light;
 }
 
-/* ============================================================================
+/* ==================================================================
    02. AMATISTA & MARFIL (AMETHYST & IVORY)
-   ----------------------------------------------------------------------------
+   ------------------------------------------------------------------
    Identidad: Culto · Sereno · Elegante · Reflexivo
    Ambiente: Literatura · Filosofía · Poesía · Lectura Contemplativa
-   ============================================================================ */
+   ================================================================== */
 
 [data-theme="amethyst-ivory"] {
-  /* Lienzo y Superficies */
-  --color-background: #F2F0F3;
-  --color-surface: #FBF9FC;
-  --color-surface-secondary: #E5DFE8;
-  --color-surface-elevated: #FFFFFF;
+    --color-background: #F2F0F3;
+    --color-surface: #FBF9FC;
+    --color-surface-secondary: #E5DFE8;
+    --color-surface-elevated: #FFFFFF;
 
-  --color-surface-hover: rgba(88, 75, 95, 0.045);
-  --color-surface-active: rgba(88, 75, 95, 0.09);
+    --color-surface-hover: rgba(88, 75, 95, 0.045);
+    --color-surface-active: rgba(88, 75, 95, 0.09);
 
-  /* Paleta Primaria y Secundaria */
-  --color-primary-dark: #332A38;
-  --color-primary: #584B5F;
-  --color-primary-light: #796C80;
-  --color-primary-glow: rgba(88, 75, 95, 0.16);
+    --color-primary-dark: #332A38;
+    --color-primary: #584B5F;
+    --color-primary-light: #796C80;
+    --color-primary-glow: rgba(88, 75, 95, 0.16);
 
-  --color-secondary: #918593;
+    --color-secondary: #887D8A;
 
-  /* Tipografía y Lectura */
-  --color-text: #272129;
-  --color-text-secondary: #473E4A;
-  --color-text-muted: #706773;
-  --color-text-inverse: #FFFFFF;
+    --color-text: #272129;
+    --color-text-secondary: #473E4A;
+    --color-text-muted: #69616C;
+    --color-text-inverse: #FFFFFF;
 
-  /* Bordes, Divisiones y Anillos */
-  --color-border: #CEC6D1;
-  --color-border-subtle: #E5E0E7;
-  --color-border-focus: #584B5F;
-  --focus-ring: 0 0 0 2px rgba(88, 75, 95, 0.12);
+    --color-border: #CEC6D1;
+    --color-border-subtle: #E5E0E7;
+    --color-border-focus: #584B5F;
+    --focus-ring: 0 0 0 3px rgba(88, 75, 95, 0.28);
 
-  /* Etiquetas, Badges y Acentos */
-  --color-badge-bg: rgba(88, 75, 95, 0.065);
-  --color-accent-gold: #967C4A;
-  --color-gold: #C7A656;
+    --color-badge-bg: rgba(88, 75, 95, 0.065);
+    --color-accent-gold: #967C4A;
+    --color-accent-gold-text: #75613A;
+    /* Compat: dorado decorativo para portadas oscuras */
+    --color-gold: #C7A656;
 
-  /* Estados semánticos */
-  --state-success: #4A795D;
-  --state-success-bg: rgba(74, 121, 93, 0.11);
-  --state-danger: #A6535B;
-  --state-danger-bg: rgba(166, 83, 91, 0.11);
-  --state-warning: #B45309;
+    --state-success: #436D54;
+    --state-success-bg: rgba(67, 109, 84, 0.11);
+    --state-danger: #9A4D55;
+    --state-danger-bg: rgba(154, 77, 85, 0.11);
+    --state-warning: #A24B08;
 
-  /* Modales y Capas Superpuestas */
-  --modal-backdrop: rgba(39, 33, 41, 0.52);
-  --shadow-sm: 0 1px 3px rgba(39, 33, 41, 0.045);
-  --shadow-xl: 0 20px 35px -5px rgba(39, 33, 41, 0.11), 0 10px 15px -5px rgba(39, 33, 41, 0.045);
+    --modal-backdrop: rgba(39, 33, 41, 0.52);
+    --shadow-sm: 0 1px 3px rgba(39, 33, 41, 0.045);
+    --shadow-md: 0 4px 10px -2px rgba(39, 33, 41, 0.08), 0 2px 4px -2px rgba(39, 33, 41, 0.05);
+    --shadow-lg: 0 10px 22px -3px rgba(39, 33, 41, 0.10), 0 4px 8px -2px rgba(39, 33, 41, 0.05);
+    --shadow-xl: 0 20px 35px -5px rgba(39, 33, 41, 0.11), 0 10px 15px -5px rgba(39, 33, 41, 0.045);
 
-  /* Gráficos de Encabezado y Marca */
-  --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #F0ECF2 52%, #DDD5E1 100%);
-  --brand-wordmark-color: #332A38;
+    --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #F0ECF2 52%, #DDD5E1 100%);
+    --brand-wordmark-color: #332A38;
 
-  /* Motor de Lectura */
-  --reader-bg: #F7F5F8;
-  --reader-text: #29232B;
+    --reader-bg: #F7F5F8;
+    --reader-text: #29232B;
+    --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #F1EDF2 55%, #DDD6E0 100%);
 
-  /* Patrón de Fondo Global */
-  --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #F1EDF2 55%, #DDD6E0 100%);
-
-  color-scheme: light;
+    color-scheme: light;
 }
 
-/* ============================================================================
+/* ==================================================================
    03. OLIVA & MARFIL (OLIVE & IVORY)
-   ----------------------------------------------------------------------------
+   ------------------------------------------------------------------
    Identidad: Natural · Sereno · Editorial · Atemporal
    Ambiente: Ensayos · Historia · Literatura · Lecturas Prolongadas
-   ============================================================================ */
+   ================================================================== */
 
 [data-theme="olive-ivory"] {
-  /* Lienzo y Superficies */
-  --color-background: #F0F1EC;
-  --color-surface: #FAFAF6;
-  --color-surface-secondary: #E0E4D9;
-  --color-surface-elevated: #FFFFFF;
+    --color-background: #F0F1EC;
+    --color-surface: #FAFAF6;
+    --color-surface-secondary: #E0E4D9;
+    --color-surface-elevated: #FFFFFF;
 
-  --color-surface-hover: rgba(79, 91, 72, 0.045);
-  --color-surface-active: rgba(79, 91, 72, 0.09);
+    --color-surface-hover: rgba(79, 91, 72, 0.045);
+    --color-surface-active: rgba(79, 91, 72, 0.09);
 
-  /* Paleta Primaria y Secundaria */
-  --color-primary-dark: #2A3228;
-  --color-primary: #4F5B48;
-  --color-primary-light: #707C69;
-  --color-primary-glow: rgba(79, 91, 72, 0.16);
+    --color-primary-dark: #2A3228;
+    --color-primary: #4F5B48;
+    --color-primary-light: #707C69;
+    --color-primary-glow: rgba(79, 91, 72, 0.16);
 
-  --color-secondary: #919A8B;
+    --color-secondary: #7B8376;
 
-  /* Tipografía y Lectura */
-  --color-text: #20251B;
-  --color-text-secondary: #394137;
-  --color-text-muted: #687164;
-  --color-text-inverse: #FFFFFF;
+    --color-text: #20251B;
+    --color-text-secondary: #394137;
+    --color-text-muted: #5F675B;
+    --color-text-inverse: #FFFFFF;
 
-  /* Bordes, Divisiones y Anillos */
-  --color-border: #CBD1C5;
-  --color-border-subtle: #E2E5DE;
-  --color-border-focus: #4F5B48;
-  --focus-ring: 0 0 0 2px rgba(79, 91, 72, 0.12);
+    --color-border: #CBD1C5;
+    --color-border-subtle: #E2E5DE;
+    --color-border-focus: #4F5B48;
+    --focus-ring: 0 0 0 3px rgba(79, 91, 72, 0.28);
 
-  /* Etiquetas, Badges y Acentos */
-  --color-badge-bg: rgba(79, 91, 72, 0.065);
-  --color-accent-gold: #927C4A;
-  --color-gold: #C7A656;
+    --color-badge-bg: rgba(79, 91, 72, 0.065);
+    --color-accent-gold: #927C4A;
+    --color-accent-gold-text: #75633B;
+    /* Compat: dorado decorativo para portadas oscuras */
+    --color-gold: #C7A656;
 
-  /* Estados semánticos */
-  --state-success: #4F7A5B;
-  --state-success-bg: rgba(79, 122, 91, 0.11);
-  --state-danger: #A65C50;
-  --state-danger-bg: rgba(166, 92, 80, 0.11);
-  --state-warning: #A16207;
+    --state-success: #466D51;
+    --state-success-bg: rgba(70, 109, 81, 0.11);
+    --state-danger: #955348;
+    --state-danger-bg: rgba(149, 83, 72, 0.11);
+    --state-warning: #915806;
 
-  /* Modales y Capas Superpuestas */
-  --modal-backdrop: rgba(32, 38, 30, 0.52);
-  --shadow-sm: 0 1px 3px rgba(32, 38, 30, 0.045);
-  --shadow-xl: 0 20px 35px -5px rgba(32, 38, 30, 0.11), 0 10px 15px -5px rgba(32, 38, 30, 0.045);
+    --modal-backdrop: rgba(32, 38, 30, 0.52);
+    --shadow-sm: 0 1px 3px rgba(32, 38, 30, 0.045);
+    --shadow-md: 0 4px 10px -2px rgba(32, 38, 30, 0.08), 0 2px 4px -2px rgba(32, 38, 30, 0.05);
+    --shadow-lg: 0 10px 22px -3px rgba(32, 38, 30, 0.10), 0 4px 8px -2px rgba(32, 38, 30, 0.05);
+    --shadow-xl: 0 20px 35px -5px rgba(32, 38, 30, 0.11), 0 10px 15px -5px rgba(32, 38, 30, 0.045);
 
-  /* Gráficos de Encabezado y Marca */
-  --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #EDF0E9 52%, #D9DED3 100%);
-  --brand-wordmark-color: #2A3228;
+    --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #EDF0E9 52%, #D9DED3 100%);
+    --brand-wordmark-color: #2A3228;
 
-  /* Motor de Lectura */
-  --reader-bg: #F6F7F3;
-  --reader-text: #222720;
+    --reader-bg: #F6F7F3;
+    --reader-text: #222720;
+    --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #EFF1EB 55%, #DBE0D5 100%);
 
-  /* Patrón de Fondo Global */
-  --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #EFF1EB 55%, #DBE0D5 100%);
-
-  color-scheme: light;
+    color-scheme: light;
 }
 
-/* ============================================================================
+/* ==================================================================
    04. CLÁSICO CLARO (CLASSIC LIGHT)
-   ----------------------------------------------------------------------------
+   ------------------------------------------------------------------
    Identidad: Atemporal · Universal · Limpio · Editorial
-   Ambiente: Lectura Cotidiana · Novelas · Estudio · Cualquier Contenido
-   ============================================================================ */
+   Ambiente: Lectura Cotidiana · Novelas · Estudio
+   ================================================================== */
 
+:root,
 [data-theme="classic-light"] {
-  /* Lienzo y Superficies */
-  --color-background: #F1F1F2;
-  --color-surface: #FAFAFA;
-  --color-surface-secondary: #E4E4E6;
-  --color-surface-elevated: #FFFFFF;
+    --color-background: #F1F1F2;
+    --color-surface: #FAFAFA;
+    --color-surface-secondary: #E4E4E6;
+    --color-surface-elevated: #FFFFFF;
 
-  --color-surface-hover: rgba(38, 39, 43, 0.04);
-  --color-surface-active: rgba(38, 39, 43, 0.08);
+    --color-surface-hover: rgba(38, 39, 43, 0.04);
+    --color-surface-active: rgba(38, 39, 43, 0.08);
 
-  /* Paleta Primaria y Secundaria */
-  --color-primary-dark: #17181B;
-  --color-primary: #34363C;
-  --color-primary-light: #60636B;
-  --color-primary-glow: rgba(52, 54, 60, 0.15);
+    --color-primary-dark: #17181B;
+    --color-primary: #34363C;
+    --color-primary-light: #60636B;
+    --color-primary-glow: rgba(52, 54, 60, 0.15);
 
-  --color-secondary: #858890;
+    --color-secondary: #7E8189;
 
-  /* Tipografía y Lectura */
-  --color-text: #17181B;
-  --color-text-secondary: #3D3F45;
-  --color-text-muted: #696C74;
-  --color-text-inverse: #FFFFFF;
+    --color-text: #17181B;
+    --color-text-secondary: #3D3F45;
+    --color-text-muted: #63666D;
+    --color-text-inverse: #FFFFFF;
 
-  /* Bordes, Divisiones y Anillos */
-  --color-border: #CBCDD2;
-  --color-border-subtle: #E3E4E7;
-  --color-border-focus: #34363C;
-  --focus-ring: 0 0 0 2px rgba(52, 54, 60, 0.12);
+    --color-border: #CBCDD2;
+    --color-border-subtle: #E3E4E7;
+    --color-border-focus: #34363C;
+    --focus-ring: 0 0 0 3px rgba(52, 54, 60, 0.28);
 
-  /* Etiquetas, Badges y Acentos */
-  --color-badge-bg: rgba(52, 54, 60, 0.055);
-  --color-accent-gold: #987B45;
-  --color-gold: #C8A261;
+    --color-badge-bg: rgba(52, 54, 60, 0.055);
+    --color-accent-gold: #987B45;
+    --color-accent-gold-text: #7A6237;
+    /* Compat: dorado decorativo para portadas oscuras */
+    --color-gold: #C8A261;
 
-  /* Estados semánticos */
-  --state-success: #4E785C;
-  --state-success-bg: rgba(78, 120, 92, 0.10);
-  --state-danger: #A65752;
-  --state-danger-bg: rgba(166, 87, 82, 0.10);
-  --state-warning: #B45309;
+    --state-success: #486E55;
+    --state-success-bg: rgba(72, 110, 85, 0.10);
+    --state-danger: #9A514C;
+    --state-danger-bg: rgba(154, 81, 76, 0.10);
+    --state-warning: #A64C08;
 
-  /* Modales y Capas Superpuestas */
-  --modal-backdrop: rgba(23, 24, 27, 0.50);
-  --shadow-sm: 0 1px 3px rgba(23, 24, 27, 0.045);
-  --shadow-xl: 0 20px 35px -5px rgba(23, 24, 27, 0.11), 0 10px 15px -5px rgba(23, 24, 27, 0.045);
+    --modal-backdrop: rgba(23, 24, 27, 0.50);
+    --shadow-sm: 0 1px 3px rgba(23, 24, 27, 0.045);
+    --shadow-md: 0 4px 10px -2px rgba(23, 24, 27, 0.08), 0 2px 4px -2px rgba(23, 24, 27, 0.05);
+    --shadow-lg: 0 10px 22px -3px rgba(23, 24, 27, 0.10), 0 4px 8px -2px rgba(23, 24, 27, 0.05);
+    --shadow-xl: 0 20px 35px -5px rgba(23, 24, 27, 0.11), 0 10px 15px -5px rgba(23, 24, 27, 0.045);
 
-  /* Gráficos de Encabezado y Marca */
-  --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #ECECEE 52%, #DCDDE0 100%);
-  --brand-wordmark-color: #17181B;
+    --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #ECECEE 52%, #DCDDE0 100%);
+    --brand-wordmark-color: #17181B;
 
-  /* Motor de Lectura */
-  --reader-bg: #F7F7F7;
-  --reader-text: #1B1C20;
+    --reader-bg: #F7F7F7;
+    --reader-text: #1B1C20;
+    --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #F0F0F2 55%, #DEDFE2 100%);
 
-  /* Patrón de Fondo Global */
-  --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #F0F0F2 55%, #DEDFE2 100%);
-
-  color-scheme: light;
+    color-scheme: light;
 }
 
-/* ============================================================================
+/* ==================================================================
    05. SEPIA & CAFÉ (SEPIA & COFFEE)
-   ----------------------------------------------------------------------------
+   ------------------------------------------------------------------
    Identidad: Cálido · Literario · Clásico · Acogedor
-   Ambiente: Novelas · Historia · Lectura Vespertina · Libros Tradicionales
-   ============================================================================ */
+   Ambiente: Novelas · Historia · Lectura Vespertina · Tradicionales
+   ================================================================== */
 
 [data-theme="sepia-coffee"] {
-  /* Lienzo y Superficies */
-  --color-background: #F3F0EA;
-  --color-surface: #FBFAF7;
-  --color-surface-secondary: #E7E1D7;
-  --color-surface-elevated: #FFFFFF;
+    --color-background: #F3F0EA;
+    --color-surface: #FBFAF7;
+    --color-surface-secondary: #E7E1D7;
+    --color-surface-elevated: #FFFFFF;
 
-  --color-surface-hover: rgba(78, 66, 54, 0.045);
-  --color-surface-active: rgba(78, 66, 54, 0.09);
+    --color-surface-hover: rgba(78, 66, 54, 0.045);
+    --color-surface-active: rgba(78, 66, 54, 0.09);
 
-  /* Paleta Primaria y Secundaria */
-  --color-primary-dark: #332C25;
-  --color-primary: #5B5146;
-  --color-primary-light: #7B7063;
-  --color-primary-glow: rgba(91, 81, 70, 0.16);
+    --color-primary-dark: #332C25;
+    --color-primary: #5B5146;
+    --color-primary-light: #7B7063;
+    --color-primary-glow: rgba(91, 81, 70, 0.16);
 
-  --color-secondary: #958A7C;
+    --color-secondary: #897F72;
 
-  /* Tipografía y Lectura */
-  --color-text: #27231E;
-  --color-text-secondary: #484138;
-  --color-text-muted: #70685E;
-  --color-text-inverse: #FFFFFF;
+    --color-text: #27231E;
+    --color-text-secondary: #484138;
+    --color-text-muted: #6A6359;
+    --color-text-inverse: #FFFFFF;
 
-  /* Bordes, Divisiones y Anillos */
-  --color-border: #D3CCC1;
-  --color-border-subtle: #E9E4DC;
-  --color-border-focus: #5B5146;
-  --focus-ring: 0 0 0 2px rgba(91, 81, 70, 0.12);
+    --color-border: #D3CCC1;
+    --color-border-subtle: #E9E4DC;
+    --color-border-focus: #5B5146;
+    --focus-ring: 0 0 0 3px rgba(91, 81, 70, 0.28);
 
-  /* Etiquetas, Badges y Acentos */
-  --color-badge-bg: rgba(91, 81, 70, 0.065);
-  --color-accent-gold: #92784A;
-  --color-gold: #C59A45;
+    --color-badge-bg: rgba(91, 81, 70, 0.065);
+    --color-accent-gold: #92784A;
+    --color-accent-gold-text: #76613C;
+    /* Compat: dorado decorativo para portadas oscuras */
+    --color-gold: #C59A45;
 
-  /* Estados semánticos */
-  --state-success: #52765D;
-  --state-success-bg: rgba(82, 118, 93, 0.11);
-  --state-danger: #A65D52;
-  --state-danger-bg: rgba(166, 93, 82, 0.11);
-  --state-warning: #A16207;
+    --state-success: #4B6B55;
+    --state-success-bg: rgba(75, 107, 85, 0.11);
+    --state-danger: #925248;
+    --state-danger-bg: rgba(146, 82, 72, 0.11);
+    --state-warning: #8F5706;
 
-  /* Modales y Capas Superpuestas */
-  --modal-backdrop: rgba(39, 35, 30, 0.52);
-  --shadow-sm: 0 1px 3px rgba(48, 40, 32, 0.045);
-  --shadow-xl: 0 20px 35px -5px rgba(48, 40, 32, 0.11), 0 10px 15px -5px rgba(48, 40, 32, 0.045);
+    --modal-backdrop: rgba(39, 35, 30, 0.52);
+    --shadow-sm: 0 1px 3px rgba(48, 40, 32, 0.045);
+    --shadow-md: 0 4px 10px -2px rgba(48, 40, 32, 0.08), 0 2px 4px -2px rgba(48, 40, 32, 0.05);
+    --shadow-lg: 0 10px 22px -3px rgba(48, 40, 32, 0.10), 0 4px 8px -2px rgba(48, 40, 32, 0.05);
+    --shadow-xl: 0 20px 35px -5px rgba(48, 40, 32, 0.11), 0 10px 15px -5px rgba(48, 40, 32, 0.045);
 
-  /* Gráficos de Encabezado y Marca */
-  --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #F1EDE6 52%, #DDD5C8 100%);
-  --brand-wordmark-color: #332C25;
+    --banner-gradient: linear-gradient(135deg, #FFFFFF 0%, #F1EDE6 52%, #DDD5C8 100%);
+    --brand-wordmark-color: #332C25;
 
-  /* Motor de Lectura */
-  --reader-bg: #F8F5EF;
-  --reader-text: #28231D;
+    --reader-bg: #F8F5EF;
+    --reader-text: #28231D;
+    --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #F3EEE7 55%, #DFD6C9 100%);
 
-  /* Patrón de Fondo Global */
-  --theme-bg-pattern: linear-gradient(135deg, #FFFFFF 0%, #F3EEE7 55%, #DFD6C9 100%);
-
-  color-scheme: light;
+    color-scheme: light;
 }
 
-/* ============================================================================
+/* ==================================================================
    06. NEGRO & PLATEADO (NOIR & SILVER)
-   ----------------------------------------------------------------------------
+   ------------------------------------------------------------------
    Identidad: Elegante · Sobrio · Cinemático · Refinado
-   Ambiente: Lectura Nocturna · Bibliotecas Oscuras · Sesiones Prolongadas
-   ============================================================================ */
+   Ambiente: Lectura Nocturna · Bibliotecas Oscuras
+   ================================================================== */
 
 [data-theme="noir-silver"] {
-  /* Lienzo y Superficies */
-  --color-background: #101214;
-  --color-surface: #17191C;
-  --color-surface-secondary: #1E2125;
-  --color-surface-elevated: #25292E;
+    --color-background: #101214;
+    --color-surface: #17191C;
+    --color-surface-secondary: #1E2125;
+    --color-surface-elevated: #25292E;
 
-  --color-surface-hover: rgba(235, 238, 242, 0.055);
-  --color-surface-active: rgba(235, 238, 242, 0.10);
+    --color-surface-hover: rgba(235, 238, 242, 0.055);
+    --color-surface-active: rgba(235, 238, 242, 0.10);
 
-  /* Paleta Primaria y Secundaria */
-  --color-primary-dark: #FFFFFF;
-  --color-primary: #E2E5E8;
-  --color-primary-light: #B8BEC5;
-  --color-primary-glow: rgba(226, 229, 232, 0.16);
+    --color-primary-dark: #FFFFFF;
+    --color-primary: #E2E5E8;
+    --color-primary-light: #B8BEC5;
+    --color-primary-glow: rgba(226, 229, 232, 0.16);
 
-  --color-secondary: #969DA5;
+    --color-secondary: #969DA5;
 
-  /* Tipografía y Lectura */
-  --color-text: #EDEFF1;
-  --color-text-secondary: #B8BEC5;
-  --color-text-muted: #7F8790;
-  --color-text-inverse: #101214;
+    --color-text: #EDEFF1;
+    --color-text-secondary: #B8BEC5;
+    --color-text-muted: #899199;
+    --color-text-inverse: #101214;
 
-  /* Bordes, Divisiones y Anillos */
-  --color-border: #343940;
-  --color-border-subtle: #282C31;
-  --color-border-focus: #DCE1E5;
-  --focus-ring: 0 0 0 2px rgba(226, 229, 232, 0.14);
+    --color-border: #343940;
+    --color-border-subtle: #282C31;
+    --color-border-focus: #DCE1E5;
+    --focus-ring: 0 0 0 3px rgba(226, 229, 232, 0.35);
 
-  /* Etiquetas, Badges y Acentos */
-  --color-badge-bg: rgba(226, 229, 232, 0.085);
-  --color-accent-gold: #C8A96B;
-  --color-gold: #DFBD6C;
+    --color-badge-bg: rgba(226, 229, 232, 0.085);
+    --color-accent-gold: #C8A96B;
+    --color-accent-gold-text: #C8A96B;
+    /* Compat: dorado decorativo */
+    --color-gold: #DFBD6C;
 
-  /* Estados semánticos */
-  --state-success: #69B58A;
-  --state-success-bg: rgba(105, 181, 138, 0.14);
-  --state-danger: #D97870;
-  --state-danger-bg: rgba(217, 120, 112, 0.14);
-  --state-warning: #F59E0B;
+    --state-success: #69B58A;
+    --state-success-bg: rgba(105, 181, 138, 0.14);
+    --state-danger: #D97870;
+    --state-danger-bg: rgba(217, 120, 112, 0.14);
+    --state-warning: #F59E0B;
 
-  /* Modales y Capas Superpuestas */
-  --modal-backdrop: rgba(5, 6, 7, 0.80);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 4px 10px -2px rgba(0, 0, 0, 0.45), 0 2px 4px -2px rgba(0, 0, 0, 0.30);
-  --shadow-lg: 0 10px 22px -3px rgba(0, 0, 0, 0.55), 0 4px 8px -2px rgba(0, 0, 0, 0.35);
-  --shadow-xl: 0 20px 35px -5px rgba(0, 0, 0, 0.62), 0 10px 15px -5px rgba(0, 0, 0, 0.42);
+    --modal-backdrop: rgba(5, 6, 7, 0.80);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 4px 10px -2px rgba(0, 0, 0, 0.45), 0 2px 4px -2px rgba(0, 0, 0, 0.30);
+    --shadow-lg: 0 10px 22px -3px rgba(0, 0, 0, 0.55), 0 4px 8px -2px rgba(0, 0, 0, 0.35);
+    --shadow-xl: 0 20px 35px -5px rgba(0, 0, 0, 0.62), 0 10px 15px -5px rgba(0, 0, 0, 0.42);
 
-  /* Gráficos de Encabezado y Marca */
-  --banner-gradient: linear-gradient(135deg, #272B30 0%, #1B1E22 50%, #101214 100%);
-  --brand-wordmark-color: #F5F6F7;
+    --banner-gradient: linear-gradient(135deg, #272B30 0%, #1B1E22 50%, #101214 100%);
+    --brand-wordmark-color: #F5F6F7;
 
-  /* Motor de Lectura */
-  --reader-bg: #14171A;
-  --reader-text: #D9DDE1;
+    --reader-bg: #14171A;
+    --reader-text: #D9DDE1;
+    --theme-bg-pattern: linear-gradient(135deg, #1C1F23 0%, #15181B 55%, #101214 100%);
 
-  /* Patrón de Fondo Global */
-  --theme-bg-pattern: linear-gradient(135deg, #1C1F23 0%, #15181B 55%, #101214 100%);
-
-  color-scheme: dark;
+    color-scheme: dark;
 }
 
-/* ============================================================================
+/* ==================================================================
    07. TEMA PERSONALIZADO (CONTROL DINÁMICO POR EL USUARIO)
-   ----------------------------------------------------------------------------
-   Inyecta o actualiza directamente las 4 variables maestras en el elemento:
-     --custom-bg
-     --custom-surface
-     --custom-text
-     --custom-primary
-   El resto de la UI (bordes, hover, lector, etc.) se adapta automáticamente.
-   ============================================================================ */
+   ================================================================== */
 
 [data-theme="custom"] {
-  /* 4 Variables Maestras Configurables */
-  --color-background: var(--custom-bg, #10141A);
-  --color-surface: var(--custom-surface, #1A202C);
-  --color-text: var(--custom-text, #F3F4F6);
-  --color-primary: var(--custom-primary, #3B82F6);
+    /* Variables maestras */
+    --color-background: var(--custom-bg, #10141A);
+    --color-surface: var(--custom-surface, #1A202C);
+    --color-text: var(--custom-text, #F3F4F6);
+    --color-primary: var(--custom-primary, #3B82F6);
 
-  /* Superficies y Capas Derivadas */
-  --color-surface-secondary: color-mix(in srgb, var(--color-surface) 85%, var(--color-text) 15%);
-  --color-surface-elevated: color-mix(in srgb, var(--color-surface) 90%, #FFFFFF 10%);
+    /* Superficies derivadas */
+    --color-surface-secondary: color-mix(in srgb, var(--color-surface) 85%, var(--color-text) 15%);
+    --color-surface-elevated: color-mix(in srgb, var(--color-surface) 90%, #FFFFFF 10%);
+    --color-surface-hover: color-mix(in srgb, var(--color-text) 6%, transparent);
+    --color-surface-active: color-mix(in srgb, var(--color-text) 12%, transparent);
 
-  --color-surface-hover: color-mix(in srgb, var(--color-text) 6%, transparent);
-  --color-surface-active: color-mix(in srgb, var(--color-text) 12%, transparent);
+    /* Paleta primaria derivada */
+    --color-primary-dark: color-mix(in srgb, var(--color-primary) 70%, #000000 30%);
+    --color-primary-light: color-mix(in srgb, var(--color-primary) 75%, #FFFFFF 25%);
+    --color-primary-glow: color-mix(in srgb, var(--color-primary) 20%, transparent);
+    --color-secondary: color-mix(in srgb, var(--color-text) 55%, var(--color-surface) 45%);
 
-  /* Paleta Primaria Derivada */
-  --color-primary-dark: color-mix(in srgb, var(--color-primary) 70%, #000000 30%);
-  --color-primary-light: color-mix(in srgb, var(--color-primary) 75%, #FFFFFF 25%);
-  --color-primary-glow: color-mix(in srgb, var(--color-primary) 20%, transparent);
-  --color-secondary: color-mix(in srgb, var(--color-text) 55%, var(--color-surface) 45%);
+    /* Tipografía */
+    --color-text-secondary: color-mix(in srgb, var(--color-text) 78%, var(--color-surface) 22%);
+    --color-text-muted: color-mix(in srgb, var(--color-text) 62%, var(--color-surface) 38%);
+    --color-text-inverse: #FFFFFF;
 
-  /* Tipografía */
-  --color-text-secondary: color-mix(in srgb, var(--color-text) 75%, var(--color-surface) 25%);
-  --color-text-muted: color-mix(in srgb, var(--color-text) 50%, var(--color-surface) 50%);
-  --color-text-inverse: var(--color-background);
+    /* Bordes y foco */
+    --color-border: color-mix(in srgb, var(--color-surface) 75%, var(--color-text) 25%);
+    --color-border-subtle: color-mix(in srgb, var(--color-surface) 88%, var(--color-text) 12%);
+    --color-border-focus: var(--color-primary);
+    --focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-primary) 40%, transparent);
 
-  /* Bordes y Foco */
-  --color-border: color-mix(in srgb, var(--color-surface) 75%, var(--color-text) 25%);
-  --color-border-subtle: color-mix(in srgb, var(--color-surface) 88%, var(--color-text) 12%);
-  --color-border-focus: var(--color-primary);
-  --focus-ring: 0 0 0 2px color-mix(in srgb, var(--color-primary) 18%, transparent);
+    /* Insignias y acentos */
+    --color-badge-bg: color-mix(in srgb, var(--color-primary) 12%, transparent);
+    --color-accent-gold: #C8A261;
+    --color-accent-gold-text: #C8A261;
+    /* Compat: dorado decorativo */
+    --color-gold: #C8A261;
 
-  /* Insignias y Acentos */
-  --color-badge-bg: color-mix(in srgb, var(--color-primary) 12%, transparent);
-  --color-accent-gold: #C8A261;
-  --color-gold: #C8A261;
+    /* Estados (variante para fondo oscuro) */
+    --state-success: #52B788;
+    --state-success-bg: rgba(82, 183, 136, 0.14);
+    --state-danger: #E07A70;
+    --state-danger-bg: rgba(224, 122, 112, 0.14);
+    --state-warning: #F59E0B;
 
-  /* Estados Semánticos */
-  --state-success: #52B788;
-  --state-success-bg: rgba(82, 183, 136, 0.14);
-  --state-danger: #E07A70;
-  --state-danger-bg: rgba(224, 122, 112, 0.14);
-  --state-warning: #F59E0B;
+    /* Modales y sombras (variante oscura) */
+    --modal-backdrop: rgba(0, 0, 0, 0.75);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.40);
+    --shadow-md: 0 4px 10px -2px rgba(0, 0, 0, 0.45), 0 2px 4px -2px rgba(0, 0, 0, 0.30);
+    --shadow-lg: 0 10px 22px -3px rgba(0, 0, 0, 0.55), 0 4px 8px -2px rgba(0, 0, 0, 0.35);
+    --shadow-xl: 0 20px 35px -5px rgba(0, 0, 0, 0.65), 0 10px 15px -5px rgba(0, 0, 0, 0.45);
 
-  /* Modales y Sombras */
-  --modal-backdrop: rgba(0, 0, 0, 0.75);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.40);
-  --shadow-md: 0 4px 10px -2px rgba(0, 0, 0, 0.45), 0 2px 4px -2px rgba(0, 0, 0, 0.30);
-  --shadow-lg: 0 10px 22px -3px rgba(0, 0, 0, 0.55), 0 4px 8px -2px rgba(0, 0, 0, 0.35);
-  --shadow-xl: 0 20px 35px -5px rgba(0, 0, 0, 0.65), 0 10px 15px -5px rgba(0, 0, 0, 0.45);
+    /* Encabezado y motor de lectura */
+    --banner-gradient: linear-gradient(135deg, var(--color-surface-secondary) 0%, var(--color-surface) 50%, var(--color-background) 100%);
+    --brand-wordmark-color: var(--color-text);
+    --reader-bg: var(--color-background);
+    --reader-text: var(--color-text);
+    --theme-bg-pattern: linear-gradient(135deg, var(--color-surface) 0%, var(--color-background) 100%);
 
-  /* Encabezado y Motor de Lectura */
-  --banner-gradient: linear-gradient(135deg, var(--color-surface-secondary) 0%, var(--color-surface) 50%, var(--color-background) 100%);
-  --brand-wordmark-color: var(--color-text);
-
-  --reader-bg: var(--color-background);
-  --reader-text: var(--color-text);
-  --theme-bg-pattern: linear-gradient(135deg, var(--color-surface) 0%, var(--color-background) 100%);
-
-  color-scheme: dark;
+    color-scheme: dark;
 }
 
-/* NOTA: las vistas previas de tema usan .theme-card-preview-box y
-   .theme-dot (library.css); no se necesitan swatches por tema. */
+@supports (color: oklch(from red l c h)) {
+    [data-theme="custom"] {
+        --color-text-inverse: oklch(from var(--color-primary) clamp(0, (0.62 - l) * 1000, 1) 0 0);
+    }
+}
+
+[data-theme="custom"][data-custom-mode="light"] {
+    --color-surface-elevated: color-mix(in srgb, var(--color-surface) 40%, #FFFFFF 60%);
+    --color-primary-dark: color-mix(in srgb, var(--color-primary) 65%, #000000 35%);
+
+    --color-accent-gold: #9A7A3D;
+    --color-accent-gold-text: #7A6030;
+    /* Compat: dorado decorativo en modo claro */
+    --color-gold: #C8A261;
+
+    --state-success: #2F6F4E;
+    --state-success-bg: rgba(47, 111, 78, 0.11);
+    --state-danger: #A3443C;
+    --state-danger-bg: rgba(163, 68, 60, 0.11);
+    --state-warning: #9A4A06;
+
+    --modal-backdrop: rgba(20, 24, 30, 0.52);
+    --shadow-sm: 0 1px 3px rgba(20, 24, 30, 0.05);
+    --shadow-md: 0 4px 10px -2px rgba(20, 24, 30, 0.08), 0 2px 4px -2px rgba(20, 24, 30, 0.05);
+    --shadow-lg: 0 10px 22px -3px rgba(20, 24, 30, 0.10), 0 4px 8px -2px rgba(20, 24, 30, 0.05);
+    --shadow-xl: 0 20px 35px -5px rgba(20, 24, 30, 0.12), 0 10px 15px -5px rgba(20, 24, 30, 0.05);
+
+    color-scheme: light;
+}
+
+/* NOTA: --color-gold se conserva como alias decorativo (portadas sobre
+   fondo oscuro). Para texto/iconos sobre fondo claro usar
+   --color-accent-gold-text, que sí cumple contraste. */
