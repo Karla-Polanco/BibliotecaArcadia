@@ -2,7 +2,7 @@
    ARCADIA SERVICE WORKER - PWA, Caché Offline y Actualización Automática
    ============================================================================ */
 
-const CACHE_NAME = 'arcadia-pwa-v176';
+const CACHE_NAME = 'arcadia-pwa-v179';
 
 // App Shell: Archivos esenciales precacheados durante la instalación para soporte offline
 const APP_SHELL_ASSETS = [
@@ -14,6 +14,7 @@ const APP_SHELL_ASSETS = [
     './assets/icons/icons.svg',
     './assets/icons/icon-192.png',
     './assets/icons/icon-512.png',
+    './assets/icons/icon-512-maskable.png',
     './assets/icons/favicon.svg',
     './assets/icons/favicon.ico',
     './assets/icons/logo-transparent.png',
