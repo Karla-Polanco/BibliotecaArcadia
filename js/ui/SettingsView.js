@@ -245,9 +245,9 @@ export class SettingsView {
               </div>
             </div>
 
-            <!-- 6. Negro & Plateado -->
-            <div class="theme-card-item ${currentTheme === 'noir-silver' ? 'selected' : ''}" data-theme-value="noir-silver" style="--theme-accent-color: #969DA5;" tabindex="0" role="button" aria-pressed="${currentTheme === 'noir-silver' ? 'true' : 'false'}">
-              <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #272B30 0%, #101214 100%);">
+            <!-- 6. Clásico Noche -->
+            <div class="theme-card-item ${currentTheme === 'classic-night' ? 'selected' : ''}" data-theme-value="classic-night" style="--theme-accent-color: #FFFFFF;" tabindex="0" role="button" aria-pressed="${currentTheme === 'classic-night' ? 'true' : 'false'}">
+              <div class="theme-card-preview-box" style="background: linear-gradient(135deg, #2A2A2A 0%, #000000 100%);">
                 <div class="theme-card-preview-top">
                   <div class="theme-card-check-badge">
                     <svg aria-hidden="true"><use href="./assets/icons/icons.svg#check"></use></svg>
@@ -255,15 +255,15 @@ export class SettingsView {
                   <div class="theme-card-mini-pill" style="background: rgba(255,255,255,0.2);"></div>
                 </div>
                 <div class="theme-card-preview-dots">
-                  <span class="theme-dot" style="background: #E2E5E8;"></span>
-                  <span class="theme-dot" style="background: #B8BEC5;"></span>
-                  <span class="theme-dot" style="background: #969DA5;"></span>
-                  <span class="theme-dot" style="background: #343940;"></span>
+                  <span class="theme-dot" style="background: #FFFFFF;"></span>
+                  <span class="theme-dot" style="background: #D4D4D4;"></span>
+                  <span class="theme-dot" style="background: #A3A3A3;"></span>
+                  <span class="theme-dot" style="background: #2E2E2E;"></span>
                 </div>
               </div>
               <div class="theme-card-meta">
-                <h4 class="theme-card-title">Negro & Plateado</h4>
-                <p class="theme-card-desc">Elegante, sobrio y refinado.</p>
+                <h4 class="theme-card-title">Clásico Noche</h4>
+                <p class="theme-card-desc">Opuesto al Claro: negro y blanco.</p>
               </div>
             </div>
           </div>

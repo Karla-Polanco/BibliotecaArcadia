@@ -140,9 +140,9 @@
       background-color var(--transition-fast);
 }
 
-.search-box:hover {
-   border-color: var(--color-text-secondary);
-   background-color: var(--color-surface-hover);
+.search-box:hover:not(:focus-within) {
+   border-color: var(--color-text-muted);
+   background-color: var(--color-field-hover);
 }
 
 .search-box:focus-within {
@@ -221,16 +221,17 @@
    align-items: center;
 }
 
-.sort-select:hover {
-   border-color: var(--color-text-secondary);
-   background-color: var(--color-surface-hover);
+.sort-select:hover:not(:focus) {
+   border-color: var(--color-text-muted);
+   background-color: var(--color-field-hover);
 }
 
 .sort-select:focus,
 .sort-select:focus-visible {
    outline: none;
-   border-color: var(--color-border-focus);
+   border-color: var(--color-border);
    box-shadow: var(--focus-ring);
+   background-color: var(--color-surface);
 }
 
 .sort-select option {
@@ -298,7 +299,7 @@
 }
 
 .toggle-btn.active {
-   background-color: color-mix(in srgb, var(--color-surface-elevated, #FFFFFF) 62%, var(--color-surface-secondary) 38%);
+   background-color: color-mix(in oklch, var(--color-surface-elevated, #FFFFFF) 62%, var(--color-surface-secondary) 38%);
    color: var(--color-text);
    font-weight: var(--weight-semibold, 600);
    box-shadow: var(--shadow-xs);
@@ -376,7 +377,7 @@
 .book-card:hover .book-cover-container {
    transform: translateY(-4px);
    box-shadow: var(--shadow-lg);
-   border-color: color-mix(in srgb, var(--color-primary-light) 40%, var(--color-border));
+   border-color: color-mix(in oklch, var(--color-primary-light) 40%, var(--color-border));
 }
 
 .book-card:focus-visible .book-cover-container {
@@ -420,7 +421,7 @@
          rgba(0, 0, 0, 0.4) 0%,
          rgba(255, 255, 255, 0.08) 50%,
          transparent 100%);
-   border-right: color-mix(in srgb, var(--color-accent-gold) 35%, transparent);
+   border-right: color-mix(in oklab, var(--color-accent-gold) 35%, transparent);
 }
 
 .placeholder-icon-emblem {
@@ -520,7 +521,7 @@
 .btn-book-fav.is-fav {
    color: var(--color-accent-gold, #C8A261);
    background: rgba(8, 12, 22, 0.65);
-   border-color: color-mix(in srgb, var(--color-accent-gold) 60%, transparent);
+   border-color: color-mix(in oklab, var(--color-accent-gold) 60%, transparent);
 }
 
 .btn-book-fav:hover {
@@ -908,7 +909,7 @@
 .list-progress-bar {
    flex: 1;
    height: 6px;
-   background-color: color-mix(in srgb, var(--color-text) 14%, var(--color-surface-secondary));
+   background-color: color-mix(in oklch, var(--color-text) 14%, var(--color-surface-secondary));
    border-radius: var(--radius-full);
    overflow: hidden;
 }
@@ -950,15 +951,15 @@
 }
 
 .list-status-badge.reading {
-   background-color: color-mix(in srgb, var(--color-primary-light) 14%, transparent);
+   background-color: color-mix(in oklab, var(--color-primary-light) 14%, transparent);
    color: var(--color-primary);
-   border-color: color-mix(in srgb, var(--color-primary-light) 28%, transparent);
+   border-color: color-mix(in oklab, var(--color-primary-light) 28%, transparent);
 }
 
 .list-status-badge.completed {
    background-color: var(--state-success-bg, rgba(77, 139, 111, 0.12));
    color: var(--state-success, #4D8B6F);
-   border-color: color-mix(in srgb, var(--state-success, #4D8B6F) 26%, transparent);
+   border-color: color-mix(in oklab, var(--state-success, #4D8B6F) 26%, transparent);
 }
 
 .list-status-badge.to_read {
@@ -1058,7 +1059,7 @@
    min-width: 48px;
    padding: 0;
    border-radius: var(--radius-sm, 8px);
-   background-color: color-mix(in srgb, var(--color-surface) 65%, var(--color-surface-secondary) 35%);
+   background-color: color-mix(in oklch, var(--color-surface) 65%, var(--color-surface-secondary) 35%);
    border: 1px solid var(--color-border-subtle);
    color: var(--color-text);
    font-family: var(--font-sans);
@@ -1309,17 +1310,18 @@
    box-sizing: border-box;
 }
 
-.cselect-btn:hover {
-   border-color: color-mix(in srgb, var(--color-primary-light) 40%, transparent);
-   background-color: var(--color-surface-hover);
+.cselect-btn:hover:not(:focus) {
+   border-color: var(--color-text-muted);
+   background-color: var(--color-field-hover);
 }
 
 .cselect.open .cselect-btn,
 .cselect-btn:focus,
 .cselect-btn:focus-visible {
-   border-color: var(--color-border-focus);
+   border-color: var(--color-border);
    box-shadow: var(--focus-ring);
    outline: none;
+   background-color: var(--color-surface);
 }
 
 .cselect-label {
@@ -1358,7 +1360,7 @@
    margin: 0;
    padding: 4px;
    list-style: none;
-   background-color: color-mix(in srgb, var(--color-surface-elevated, var(--color-surface)) 97%, transparent);
+   background-color: color-mix(in oklab, var(--color-surface-elevated, var(--color-surface)) 97%, transparent);
    backdrop-filter: blur(12px) saturate(1.1);
    -webkit-backdrop-filter: blur(12px) saturate(1.1);
    border: 1px solid var(--color-border);
@@ -1388,7 +1390,7 @@
 
 .cselect-option:hover,
 .cselect-option.focused {
-   background-color: var(--color-surface-hover);
+   background-color: var(--color-field-hover);
    color: var(--color-text);
 }
 
@@ -1482,9 +1484,9 @@
    margin-bottom: var(--space-md, 16px);
    padding: 18px 22px;
    border-radius: var(--radius-lg, 16px);
-   background-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 7%, var(--color-surface-elevated, var(--color-surface)));
+   background-color: color-mix(in oklch, var(--col-accent, var(--color-primary-light)) 7%, var(--color-surface-elevated, var(--color-surface)));
    background-image: none;
-   border: 1px solid color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 22%, var(--color-border-subtle));
+   border: 1px solid color-mix(in oklch, var(--col-accent, var(--color-primary-light)) 22%, var(--color-border-subtle));
    box-shadow: var(--shadow-sm);
    display: flex;
    flex-direction: column;
@@ -1536,22 +1538,22 @@
 }
 
 .header-card-icon-box--notes {
-   background-color: color-mix(in srgb, var(--color-secondary) 12%, transparent);
+   background-color: color-mix(in oklab, var(--color-secondary) 12%, transparent);
    border-color: var(--color-border-subtle);
    color: var(--color-secondary);
 }
 
 .collection-header-panel .header-card-icon-box {
-   background-color: color-mix(in srgb,
+   background-color: color-mix(in oklch,
          var(--col-accent, var(--color-primary-light)) 14%,
          var(--color-surface) 86%);
-   border-color: color-mix(in srgb,
+   border-color: color-mix(in oklab,
          var(--col-accent, var(--color-primary-light)) 28%,
          transparent);
-   color: color-mix(in srgb,
+   color: color-mix(in oklch,
          var(--col-accent, var(--color-primary-light)) 90%,
          #000 10%);
-   box-shadow: 0 0 0 1px color-mix(in srgb,
+   box-shadow: 0 0 0 1px color-mix(in oklab,
          var(--col-accent, var(--color-primary-light)) 28%,
          transparent);
 }
@@ -1610,8 +1612,8 @@
 }
 
 .collection-header-panel .collection-count-pill {
-   background-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 10%, var(--color-surface));
-   border-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 20%, var(--color-border));
+   background-color: color-mix(in oklch, var(--col-accent, var(--color-primary-light)) 10%, var(--color-surface));
+   border-color: color-mix(in oklch, var(--col-accent, var(--color-primary-light)) 20%, var(--color-border));
    color: var(--color-text);
 }
 
@@ -1620,12 +1622,25 @@
    border-radius: var(--radius-full);
    font-size: 0.76rem;
    font-weight: 600;
-   background-color: var(--color-surface-secondary);
+   background-color: var(--color-surface);
    border: 1px solid var(--color-border);
    color: var(--color-text);
    outline: none;
    cursor: pointer;
    min-height: 30px;
+}
+
+.header-card-select:hover:not(:focus) {
+   border-color: var(--color-text-muted);
+   background-color: var(--color-field-hover);
+}
+
+.header-card-select:focus,
+.header-card-select:focus-visible {
+   outline: none;
+   border-color: var(--color-border);
+   box-shadow: var(--focus-ring);
+   background-color: var(--color-surface);
 }
 
 .panel-search-bar {
@@ -1644,13 +1659,13 @@
    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
 }
 
-.panel-search-bar:hover {
-   border-color: var(--color-text-secondary);
-   background-color: var(--color-surface-hover);
+.panel-search-bar:hover:not(:focus-within) {
+   border-color: var(--color-text-muted);
+   background-color: var(--color-field-hover);
 }
 
 .panel-search-bar:focus-within {
-   border-color: var(--color-border-focus);
+   border-color: var(--color-border);
    box-shadow: var(--focus-ring);
    background-color: var(--color-surface);
 }
@@ -1660,13 +1675,13 @@
    border: 1px solid var(--color-border);
 }
 
-.collection-header-panel .panel-search-bar:hover {
-   border-color: var(--color-text-secondary);
-   background-color: var(--color-surface-hover);
+.collection-header-panel .panel-search-bar:hover:not(:focus-within) {
+   border-color: var(--color-text-muted);
+   background-color: var(--color-field-hover);
 }
 
 .collection-header-panel .panel-search-bar:focus-within {
-   border-color: var(--color-border-focus);
+   border-color: var(--color-border);
    box-shadow: var(--focus-ring);
    background-color: var(--color-surface);
 }
@@ -1705,25 +1720,25 @@
 .annotation-card.annot--note {
    --annot-accent: var(--color-primary);
    --annot-deep: var(--color-primary);
-   --annot-soft: var(--color-badge-bg, color-mix(in srgb, var(--color-primary) 10%, transparent));
-   --annot-quote: color-mix(in srgb, var(--color-primary) 7%, var(--color-surface, #FFFFFF));
-   --annot-dash: color-mix(in srgb, var(--color-primary) 30%, var(--color-border));
+   --annot-soft: var(--color-badge-bg, color-mix(in oklab, var(--color-primary) 10%, transparent));
+   --annot-quote: color-mix(in oklch, var(--color-primary) 7%, var(--color-surface, #FFFFFF));
+   --annot-dash: color-mix(in oklch, var(--color-primary) 30%, var(--color-border));
 }
 
 .annotation-card.annot--highlight {
    --annot-accent: #C65D7F;
    --annot-deep: #A83A5C;
-   --annot-soft: color-mix(in srgb, #C65D7F 14%, var(--color-surface, #FFFFFF));
-   --annot-quote: color-mix(in srgb, #C65D7F 8%, var(--color-surface, #FFFFFF));
-   --annot-dash: color-mix(in srgb, #C65D7F 35%, var(--color-border, #EFC3D1));
+   --annot-soft: color-mix(in oklch, #C65D7F 14%, var(--color-surface, #FFFFFF));
+   --annot-quote: color-mix(in oklch, #C65D7F 8%, var(--color-surface, #FFFFFF));
+   --annot-dash: color-mix(in oklch, #C65D7F 35%, var(--color-border, #EFC3D1));
 }
 
 .annotation-card.annot--underline {
    --annot-accent: #4E8CC7;
    --annot-deep: #2F6DA3;
-   --annot-soft: color-mix(in srgb, #4E8CC7 14%, var(--color-surface, #FFFFFF));
-   --annot-quote: color-mix(in srgb, #4E8CC7 8%, var(--color-surface, #FFFFFF));
-   --annot-dash: color-mix(in srgb, #4E8CC7 35%, var(--color-border, #B4D0E8));
+   --annot-soft: color-mix(in oklch, #4E8CC7 14%, var(--color-surface, #FFFFFF));
+   --annot-quote: color-mix(in oklch, #4E8CC7 8%, var(--color-surface, #FFFFFF));
+   --annot-dash: color-mix(in oklch, #4E8CC7 35%, var(--color-border, #B4D0E8));
 }
 
 .annotation-card {
@@ -1755,7 +1770,7 @@
 .annotation-card:hover {
    transform: var(--hover-lift, translateY(-1px));
    box-shadow: var(--shadow-md);
-   border-color: color-mix(in srgb, var(--annot-accent, var(--color-primary-light)) 35%, var(--color-border));
+   border-color: color-mix(in oklch, var(--annot-accent, var(--color-primary-light)) 35%, var(--color-border));
 }
 
 .annotation-card-header {
@@ -1854,7 +1869,7 @@
 }
 
 .annotation-user-note {
-   background: color-mix(in srgb, var(--annot-accent) 4%, var(--color-surface));
+   background: color-mix(in oklch, var(--annot-accent) 4%, var(--color-surface));
    border: 1px dashed var(--annot-dash);
    border-radius: var(--radius-md, 12px);
    padding: 10px 12px;
@@ -1962,10 +1977,10 @@
 }
 
 .btn-jump-cfi:hover {
-   background-color: color-mix(in srgb, var(--annot-deep) 16%, var(--annot-soft));
+   background-color: color-mix(in oklch, var(--annot-deep) 16%, var(--annot-soft));
    color: var(--annot-deep);
-   border-color: color-mix(in srgb, var(--annot-deep) 45%, transparent);
-   box-shadow: 0 1px 4px color-mix(in srgb, var(--annot-deep) 18%, transparent);
+   border-color: color-mix(in oklab, var(--annot-deep) 45%, transparent);
+   box-shadow: 0 1px 4px color-mix(in oklab, var(--annot-deep) 18%, transparent);
 }
 
 .btn-jump-cfi:hover svg,
@@ -2020,7 +2035,7 @@
 .vocab-card:hover {
    transform: var(--hover-lift, translateY(-1px));
    box-shadow: var(--shadow-md);
-   border-color: color-mix(in srgb, var(--color-primary-light) 30%, var(--color-border));
+   border-color: color-mix(in oklch, var(--color-primary-light) 30%, var(--color-border));
 }
 
 .vocab-card-header {
@@ -2065,21 +2080,21 @@
 }
 
 .btn-card-edit:hover {
-   background-color: color-mix(in srgb, var(--color-primary) 14%, var(--color-surface));
+   background-color: color-mix(in oklch, var(--color-primary) 14%, var(--color-surface));
    color: var(--color-primary);
-   border-color: color-mix(in srgb, var(--color-primary) 35%, transparent);
+   border-color: color-mix(in oklab, var(--color-primary) 35%, transparent);
 }
 
 .btn-card-del {
    background-color: var(--state-danger-bg);
    color: var(--state-danger);
-   border-color: color-mix(in srgb, var(--state-danger) 28%, transparent);
+   border-color: color-mix(in oklab, var(--state-danger) 28%, transparent);
 }
 
 .btn-card-del:hover {
-   background-color: color-mix(in srgb, var(--state-danger) 18%, transparent);
+   background-color: color-mix(in oklab, var(--state-danger) 18%, transparent);
    color: var(--state-danger);
-   border-color: color-mix(in srgb, var(--state-danger) 45%, transparent);
+   border-color: color-mix(in oklab, var(--state-danger) 45%, transparent);
 }
 
 .vocab-phonetic-row {
@@ -2095,7 +2110,7 @@
    gap: 5px;
    padding: 3px 10px;
    border-radius: var(--radius-full, 999px);
-   background: color-mix(in srgb, var(--color-primary-light) 12%, var(--color-surface));
+   background: color-mix(in oklch, var(--color-primary-light) 12%, var(--color-surface));
    color: var(--color-primary-light);
    font-size: var(--control-font-size-sm, 0.76rem);
    font-weight: var(--weight-medium, 500);
@@ -2103,7 +2118,7 @@
 }
 
 .vocab-definition-box {
-   background: color-mix(in srgb, var(--color-primary-light) 6%, var(--color-surface));
+   background: color-mix(in oklch, var(--color-primary-light) 6%, var(--color-surface));
    border-left: 3px solid var(--color-primary-light);
    border-radius: var(--radius-md, 12px);
    padding: 10px 14px;
@@ -2130,8 +2145,8 @@
 }
 
 .vocab-context-box {
-   background: color-mix(in srgb, var(--color-primary-light) 4%, var(--color-surface));
-   border-left: 3px solid color-mix(in srgb, var(--color-primary-light) 50%, transparent);
+   background: color-mix(in oklch, var(--color-primary-light) 4%, var(--color-surface));
+   border-left: 3px solid color-mix(in oklab, var(--color-primary-light) 50%, transparent);
    border-radius: var(--radius-sm, 8px);
    padding: 8px 12px;
    font-family: var(--font-serif);
@@ -2145,7 +2160,7 @@
    display: flex;
    align-items: center;
    justify-content: space-between;
-   border-top: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
+   border-top: 1px solid color-mix(in oklab, var(--color-border) 60%, transparent);
    padding-top: 8px;
    margin-top: 2px;
    font-size: 0.78rem;
@@ -2179,7 +2194,7 @@
    gap: 8px;
    padding-top: 8px;
    margin-top: 2px;
-   border-top: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
+   border-top: 1px solid color-mix(in oklab, var(--color-border) 60%, transparent);
 }
 
 .vocab-pill-btn {
@@ -2193,25 +2208,25 @@
 }
 
 .btn-listen-word {
-   background-color: color-mix(in srgb, var(--color-primary-light) 12%, var(--color-surface));
+   background-color: color-mix(in oklch, var(--color-primary-light) 12%, var(--color-surface));
    color: var(--color-primary-light);
    border-color: transparent;
 }
 
 .btn-listen-word:hover {
-   background-color: color-mix(in srgb, var(--color-primary-light) 22%, var(--color-surface));
+   background-color: color-mix(in oklch, var(--color-primary-light) 22%, var(--color-surface));
    color: var(--color-primary);
-   border-color: color-mix(in srgb, var(--color-primary-light) 35%, transparent);
+   border-color: color-mix(in oklab, var(--color-primary-light) 35%, transparent);
 }
 
 .btn-copy-word {
-   background-color: color-mix(in srgb, var(--color-primary-light) 8%, var(--color-surface));
-   color: color-mix(in srgb, var(--color-text) 80%, var(--color-primary-light));
+   background-color: color-mix(in oklch, var(--color-primary-light) 8%, var(--color-surface));
+   color: color-mix(in oklch, var(--color-text) 80%, var(--color-primary-light));
    border-color: transparent;
 }
 
 .btn-copy-word:hover {
-   background-color: color-mix(in srgb, var(--color-primary-light) 16%, var(--color-surface));
+   background-color: color-mix(in oklch, var(--color-primary-light) 16%, var(--color-surface));
    color: var(--color-text);
    border-color: transparent;
 }
@@ -2290,7 +2305,7 @@
    font-size: var(--text-2xs, 0.70rem);
    padding: 3px 9px;
    border-radius: var(--radius-full, 999px);
-   background: color-mix(in srgb, var(--color-primary-light) 12%, transparent);
+   background: color-mix(in oklab, var(--color-primary-light) 12%, transparent);
    color: var(--color-primary);
    font-weight: var(--weight-semibold, 600);
    white-space: nowrap;
@@ -2317,7 +2332,7 @@
 
 /* Icono de cabecera de ajustes — hereda de .header-card-icon-box */
 .settings-header-icon {
-   background-color: color-mix(in srgb, var(--color-primary-light) 18%, var(--color-surface));
+   background-color: color-mix(in oklch, var(--color-primary-light) 18%, var(--color-surface));
    color: var(--color-primary-light);
 }
 
@@ -2378,7 +2393,7 @@
 
 .custom-preset-pill.active {
    border-color: var(--color-primary);
-   background-color: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface));
+   background-color: color-mix(in oklch, var(--color-primary) 8%, var(--color-surface));
 }
 
 .custom-apply-row {

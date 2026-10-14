@@ -320,62 +320,67 @@
 }
 
 /* ==================================================================
-   06. NEGRO & PLATEADO (NOIR & SILVER)
+   06. CLÁSICO NOCHE (CLASSIC NIGHT)
    ------------------------------------------------------------------
-   Identidad: Elegante · Sobrio · Cinemático · Refinado
-   Ambiente: Lectura Nocturna · Bibliotecas Oscuras
+   Identidad: Opuesto exacto a Clásico Claro · Negro & Blanco puro
+   Ambiente: Lectura Nocturna · Alto Contraste · Sin plateados
    ================================================================== */
 
-[data-theme="noir-silver"] {
-    --color-background: #101214;
-    --color-surface: #17191C;
-    --color-surface-secondary: #1E2125;
-    --color-surface-elevated: #25292E;
+[data-theme="classic-night"] {
+    /* Opuesto a classic-light: fondo negro puro, superficies negras */
+    --color-background: #000000;
+    --color-surface: #0A0A0A;
+    --color-surface-secondary: #1B1B1B;
+    --color-surface-elevated: #242424;
 
-    --color-surface-hover: rgba(235, 238, 242, 0.055);
-    --color-surface-active: rgba(235, 238, 242, 0.10);
+    --color-surface-hover: rgba(255, 255, 255, 0.06);
+    --color-surface-active: rgba(255, 255, 255, 0.11);
 
+    /* Opuesto a #17181B / #34363C / #60636B → blancos neutros (sin tinte plata) */
     --color-primary-dark: #FFFFFF;
-    --color-primary: #E2E5E8;
-    --color-primary-light: #B8BEC5;
-    --color-primary-glow: rgba(226, 229, 232, 0.16);
+    --color-primary: #FFFFFF;
+    --color-primary-light: #B5B5B5;
+    --color-primary-glow: rgba(255, 255, 255, 0.16);
 
-    --color-secondary: #969DA5;
+    --color-secondary: #A3A3A3;
 
-    --color-text: #EDEFF1;
-    --color-text-secondary: #B8BEC5;
-    --color-text-muted: #899199;
-    --color-text-inverse: #101214;
+    /* Opuesto a #17181B / #3D3F45 / #63666D → blancos neutros */
+    --color-text: #FFFFFF;
+    --color-text-secondary: #D4D4D4;
+    --color-text-muted: #A3A3A3;
+    --color-text-inverse: #000000;
 
-    --color-border: #343940;
-    --color-border-subtle: #282C31;
-    --color-border-focus: #DCE1E5;
-    --focus-ring: 0 0 0 3px rgba(226, 229, 232, 0.35);
+    /* Opuesto a #CBCDD2 / #E3E4E7 → grises neutros oscuros */
+    --color-border: #2E2E2E;
+    --color-border-subtle: #1C1C1C;
+    --color-border-focus: #FFFFFF;
+    --focus-ring: 0 0 0 3px rgba(255, 255, 255, 0.35);
 
-    --color-badge-bg: rgba(226, 229, 232, 0.085);
-    --color-accent-gold: #C8A96B;
-    --color-accent-gold-text: #C8A96B;
+    --color-badge-bg: rgba(255, 255, 255, 0.08);
+    --color-accent-gold: #D6B46A;
+    --color-accent-gold-text: #D6B46A;
     /* Compat: dorado decorativo */
-    --color-gold: #DFBD6C;
+    --color-gold: #E0BE72;
 
     --state-success: #69B58A;
     --state-success-bg: rgba(105, 181, 138, 0.14);
     --state-danger: #D97870;
     --state-danger-bg: rgba(217, 120, 112, 0.14);
-    --state-warning: #F59E0B;
+    --state-warning: #FBBF24;
 
-    --modal-backdrop: rgba(5, 6, 7, 0.80);
+    --modal-backdrop: rgba(0, 0, 0, 0.80);
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
     --shadow-md: 0 4px 10px -2px rgba(0, 0, 0, 0.45), 0 2px 4px -2px rgba(0, 0, 0, 0.30);
     --shadow-lg: 0 10px 22px -3px rgba(0, 0, 0, 0.55), 0 4px 8px -2px rgba(0, 0, 0, 0.35);
     --shadow-xl: 0 20px 35px -5px rgba(0, 0, 0, 0.62), 0 10px 15px -5px rgba(0, 0, 0, 0.42);
 
-    --banner-gradient: linear-gradient(135deg, #272B30 0%, #1B1E22 50%, #101214 100%);
-    --brand-wordmark-color: #F5F6F7;
+    /* Opuesto a classic-light (blanco → negro) */
+    --banner-gradient: linear-gradient(135deg, #2A2A2A 0%, #141414 50%, #000000 100%);
+    --brand-wordmark-color: #FFFFFF;
 
-    --reader-bg: #14171A;
-    --reader-text: #D9DDE1;
-    --theme-bg-pattern: linear-gradient(135deg, #1C1F23 0%, #15181B 55%, #101214 100%);
+    --reader-bg: #000000;
+    --reader-text: #FFFFFF;
+    --theme-bg-pattern: linear-gradient(135deg, #1A1A1A 0%, #0A0A0A 55%, #000000 100%);
 
     color-scheme: dark;
 }
@@ -392,30 +397,30 @@
     --color-primary: var(--custom-primary, #3B82F6);
 
     /* Superficies derivadas */
-    --color-surface-secondary: color-mix(in srgb, var(--color-surface) 85%, var(--color-text) 15%);
-    --color-surface-elevated: color-mix(in srgb, var(--color-surface) 90%, #FFFFFF 10%);
-    --color-surface-hover: color-mix(in srgb, var(--color-text) 6%, transparent);
-    --color-surface-active: color-mix(in srgb, var(--color-text) 12%, transparent);
+    --color-surface-secondary: color-mix(in oklch, var(--color-surface) 85%, var(--color-text) 15%);
+    --color-surface-elevated: color-mix(in oklch, var(--color-surface) 90%, #FFFFFF 10%);
+    --color-surface-hover: color-mix(in oklab, var(--color-text) 6%, transparent);
+    --color-surface-active: color-mix(in oklab, var(--color-text) 12%, transparent);
 
     /* Paleta primaria derivada */
-    --color-primary-dark: color-mix(in srgb, var(--color-primary) 70%, #000000 30%);
-    --color-primary-light: color-mix(in srgb, var(--color-primary) 75%, #FFFFFF 25%);
-    --color-primary-glow: color-mix(in srgb, var(--color-primary) 20%, transparent);
-    --color-secondary: color-mix(in srgb, var(--color-text) 55%, var(--color-surface) 45%);
+    --color-primary-dark: color-mix(in oklch, var(--color-primary) 70%, #000000 30%);
+    --color-primary-light: color-mix(in oklch, var(--color-primary) 75%, #FFFFFF 25%);
+    --color-primary-glow: color-mix(in oklab, var(--color-primary) 20%, transparent);
+    --color-secondary: color-mix(in oklch, var(--color-text) 55%, var(--color-surface) 45%);
 
     /* Tipografía */
-    --color-text-secondary: color-mix(in srgb, var(--color-text) 78%, var(--color-surface) 22%);
-    --color-text-muted: color-mix(in srgb, var(--color-text) 62%, var(--color-surface) 38%);
+    --color-text-secondary: color-mix(in oklch, var(--color-text) 78%, var(--color-surface) 22%);
+    --color-text-muted: color-mix(in oklch, var(--color-text) 62%, var(--color-surface) 38%);
     --color-text-inverse: #FFFFFF;
 
     /* Bordes y foco */
-    --color-border: color-mix(in srgb, var(--color-surface) 75%, var(--color-text) 25%);
-    --color-border-subtle: color-mix(in srgb, var(--color-surface) 88%, var(--color-text) 12%);
+    --color-border: color-mix(in oklch, var(--color-surface) 75%, var(--color-text) 25%);
+    --color-border-subtle: color-mix(in oklch, var(--color-surface) 88%, var(--color-text) 12%);
     --color-border-focus: var(--color-primary);
-    --focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-primary) 40%, transparent);
+    --focus-ring: 0 0 0 3px color-mix(in oklab, var(--color-primary) 40%, transparent);
 
     /* Insignias y acentos */
-    --color-badge-bg: color-mix(in srgb, var(--color-primary) 12%, transparent);
+    --color-badge-bg: color-mix(in oklab, var(--color-primary) 12%, transparent);
     --color-accent-gold: #C8A261;
     --color-accent-gold-text: #C8A261;
     /* Compat: dorado decorativo */
@@ -452,8 +457,8 @@
 }
 
 [data-theme="custom"][data-custom-mode="light"] {
-    --color-surface-elevated: color-mix(in srgb, var(--color-surface) 40%, #FFFFFF 60%);
-    --color-primary-dark: color-mix(in srgb, var(--color-primary) 65%, #000000 35%);
+    --color-surface-elevated: color-mix(in oklch, var(--color-surface) 40%, #FFFFFF 60%);
+    --color-primary-dark: color-mix(in oklch, var(--color-primary) 65%, #000000 35%);
 
     --color-accent-gold: #9A7A3D;
     --color-accent-gold-text: #7A6030;

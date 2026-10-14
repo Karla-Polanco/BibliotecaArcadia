@@ -16,10 +16,11 @@
         if (savedTheme === 'clear-sky' || savedTheme === 'classic-ivory' || savedTheme === 'cozy-brown') savedTheme = 'sepia-coffee';
         if (savedTheme === 'enchanted-forest' || savedTheme === 'mint' || savedTheme === 'olive-green' || savedTheme === 'sage-cream') savedTheme = 'olive-ivory';
         if (savedTheme === 'light') savedTheme = 'classic-light';
-        if (savedTheme === 'serene-fog' || savedTheme === 'wine-poetry' || savedTheme === 'wine' || savedTheme === 'antique-pink' || savedTheme === 'toasted-ash') savedTheme = 'noir-silver';
-        if (savedTheme === 'abyss-dark' || savedTheme === 'mystic-night' || savedTheme === 'deep-twilight' || savedTheme === 'night-ink' || savedTheme === 'system') savedTheme = 'noir-silver';
+        if (savedTheme === 'noir-silver') savedTheme = 'classic-night';
+        if (savedTheme === 'serene-fog' || savedTheme === 'wine-poetry' || savedTheme === 'wine' || savedTheme === 'antique-pink' || savedTheme === 'toasted-ash') savedTheme = 'classic-night';
+        if (savedTheme === 'abyss-dark' || savedTheme === 'mystic-night' || savedTheme === 'deep-twilight' || savedTheme === 'night-ink' || savedTheme === 'system') savedTheme = 'classic-night';
 
-        var known = ['navy-white','amethyst-ivory','olive-ivory','classic-light','sepia-coffee','noir-silver','custom'];
+        var known = ['navy-white','amethyst-ivory','olive-ivory','classic-light','sepia-coffee','classic-night','custom'];
         if (known.indexOf(savedTheme) === -1) savedTheme = 'classic-light';
         document.documentElement.setAttribute('data-theme', savedTheme);
         // Modo claro/oscuro temprano para tema personalizado (evita flash dark→light)
@@ -37,7 +38,7 @@
             document.documentElement.removeAttribute('data-custom-mode');
           }
         } catch (e3) {}
-        var themeColors = { 'navy-white':'#EDF1F6','amethyst-ivory':'#F2F0F3','olive-ivory':'#F0F1EC','classic-light':'#F1F1F2','sepia-coffee':'#F3F0EA','noir-silver':'#101214','custom':'#10141A' };
+        var themeColors = { 'navy-white':'#EDF1F6','amethyst-ivory':'#F2F0F3','olive-ivory':'#F0F1EC','classic-light':'#F1F1F2','sepia-coffee':'#F3F0EA','classic-night':'#000000','custom':'#10141A' };
         var tc = themeColors[savedTheme] || '#F1F1F2';
         var meta = document.querySelector('meta[name="theme-color"]');
         if (meta) { meta.setAttribute('content', tc); }
@@ -45,7 +46,7 @@
         // Function to update theme-color when theme changes programmatically
         window.updateArcadiaThemeColor = function() {
           var currentTheme = document.documentElement.getAttribute('data-theme') || 'classic-light';
-          var themeColors = { 'navy-white':'#EDF1F6','amethyst-ivory':'#F2F0F3','olive-ivory':'#F0F1EC','classic-light':'#F1F1F2','sepia-coffee':'#F3F0EA','noir-silver':'#101214','custom':'#10141A' };
+          var themeColors = { 'navy-white':'#EDF1F6','amethyst-ivory':'#F2F0F3','olive-ivory':'#F0F1EC','classic-light':'#F1F1F2','sepia-coffee':'#F3F0EA','classic-night':'#000000','custom':'#10141A' };
           var tc = themeColors[currentTheme] || '#F1F1F2';
           if (meta) meta.setAttribute('content', tc);
         };
@@ -85,10 +86,10 @@
 
   <!-- PWA Web App Manifest e Iconos para Android -->
   <link rel="manifest" href="manifest.json">
-  <link rel="icon" id="app-favicon" type="image/svg+xml" href="assets/icons/favicon.svg?v=3">
+  <link rel="icon" id="app-favicon" type="image/svg+xml" href="assets/icons/favicon.svg?v=4">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="assets/icons/icon-512.png">
-  <link rel="shortcut icon" href="assets/icons/favicon.ico?v=3">
+  <link rel="shortcut icon" href="assets/icons/favicon.ico?v=4">
   <meta name="mobile-web-app-capable" content="yes">
 
   <!-- Fuentes Tipográficas Literarias y de Marca (Poppins, Literata, Source Serif 4, Lora, EB Garamond, Playfair, Atkinson Hyperlegible, Inter, Roboto, Lexend, Cinzel) -->
@@ -180,7 +181,7 @@
 
           <button type="button" class="nav-item" data-nav-filter="vocabulary">
             <div class="nav-item-content">
-              <svg class="nav-icon" aria-hidden="true"><use href="./assets/icons/icons.svg#bookmark"></use></svg>
+              <svg class="nav-icon" aria-hidden="true"><use href="./assets/icons/icons.svg#vocabulary"></use></svg>
               <span>Vocabulario</span>
             </div>
           </button>

@@ -71,7 +71,7 @@ export class FloatingMenu {
 
       <!-- Definir Vocabulario -->
       <button class="floating-btn" id="btn-float-define" title="Definición y fonética" aria-label="Definir palabra">
-        <svg aria-hidden="true"><use href="./assets/icons/icons.svg#icon-library"></use></svg>
+        <svg aria-hidden="true"><use href="./assets/icons/icons.svg#vocabulary"></use></svg>
         <span>Definir</span>
       </button>
 

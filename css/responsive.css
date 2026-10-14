@@ -191,9 +191,9 @@
   color: var(--color-text);
   font-weight: var(--weight-semibold);
   background: linear-gradient(180deg,
-    color-mix(in srgb, var(--color-primary-light) 14%, transparent),
-    color-mix(in srgb, var(--color-primary-light) 7%, transparent));
-  border-color: color-mix(in srgb, var(--color-primary-light) 22%, transparent);
+    color-mix(in oklab, var(--color-primary-light) 14%, transparent),
+    color-mix(in oklab, var(--color-primary-light) 7%, transparent));
+  border-color: color-mix(in oklab, var(--color-primary-light) 22%, transparent);
 }
 
 .mobile-nav-link.active::after {

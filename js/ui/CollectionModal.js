@@ -219,7 +219,15 @@ export class CollectionModal {
 
     const closeModal = () => overlay.remove();
     overlay.querySelector('#btn-close-assign-modal').addEventListener('click', closeModal);
-    overlay.querySelector('#btn-done-assign').addEventListener('click', closeModal);
+    const btnDoneAssign = overlay.querySelector('#btn-done-assign');
+    btnDoneAssign.addEventListener('click', closeModal);
+
+    // «Listo» deshabilitado hasta seleccionar al menos una colección
+    const assignChecks = [...overlay.querySelectorAll('input[type="checkbox"]')];
+    const syncDoneAssignState = () => {
+      if (btnDoneAssign) btnDoneAssign.disabled = assignChecks.length > 0 && !assignChecks.some(chk => chk.checked);
+    };
+    syncDoneAssignState();
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) closeModal();
     });
@@ -239,6 +247,7 @@ export class CollectionModal {
           Toast.info('Libro retirado de la colección.');
           if(label){label.classList.remove('selected');if(checkEl){checkEl.textContent='';}}
         }
+        syncDoneAssignState();
         if (onChanged) onChanged();
       });
       // click en label ya toggles checkbox nativo, pero asegurar

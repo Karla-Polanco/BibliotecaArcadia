@@ -54,7 +54,7 @@ html {
 }
 
 /* Temas oscuros */
-[data-theme="noir-silver"],
+[data-theme="classic-night"],
 [data-theme="custom"] {
   color-scheme: dark;
 }
@@ -240,21 +240,22 @@ textarea::placeholder {
   opacity: 0.8;
 }
 
-/* Hover en controles */
-input:not([type="checkbox"]):not([type="radio"]):hover,
-select:hover,
-textarea:hover {
-  border-color: var(--color-text-secondary);
-  background-color: var(--color-surface-hover);
+/* Hover en controles — borde claro y sin efecto cuando ya hay foco */
+input:not([type="checkbox"]):not([type="radio"]):hover:not(:focus),
+select:hover:not(:focus),
+textarea:hover:not(:focus) {
+  border-color: var(--color-text-muted);
+  background-color: var(--color-field-hover);
 }
 
-/* Foco en controles */
+/* Foco en controles — como el buscador: sin cambio de border, solo anillo */
 input:focus,
 select:focus,
 textarea:focus {
-  border-color: var(--color-border-focus);
+  border-color: var(--color-border);
   box-shadow: var(--focus-ring);
   outline: none;
+  background-color: var(--color-surface);
 }
 
 input:disabled,
@@ -631,7 +632,7 @@ body {
 .btn--ghost:hover {
   background-color: var(--color-surface-hover);
   color: var(--color-text);
-  border-color: color-mix(in srgb, var(--color-primary) 35%, var(--color-border));
+  border-color: color-mix(in oklch, var(--color-primary) 35%, var(--color-border));
   transform: translateY(-1px);
 }
 
@@ -642,7 +643,7 @@ body {
 .col-action-btn--delete {
   background-color: var(--state-danger-bg, rgba(200, 90, 84, 0.12));
   color: var(--state-danger, #C85A54);
-  border: 1px solid color-mix(in srgb, var(--state-danger, #C85A54) 28%, transparent);
+  border: 1px solid color-mix(in oklab, var(--state-danger, #C85A54) 28%, transparent);
   font-weight: var(--weight-semibold, 600);
 }
 
@@ -657,9 +658,9 @@ body {
 .btn-card-del:hover,
 .btn-delete-annot:hover,
 .col-action-btn--delete:hover {
-  background-color: color-mix(in srgb, var(--state-danger, #C85A54) 22%, transparent);
+  background-color: color-mix(in oklab, var(--state-danger, #C85A54) 22%, transparent);
   color: var(--state-danger, #C85A54);
-  border-color: color-mix(in srgb, var(--state-danger, #C85A54) 55%, transparent);
+  border-color: color-mix(in oklab, var(--state-danger, #C85A54) 55%, transparent);
   transform: translateY(-1px);
   box-shadow: none;
 }
@@ -672,7 +673,7 @@ body {
 }
 
 .btn--danger:focus-visible {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--state-danger, #C85A54) 35%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--state-danger, #C85A54) 35%, transparent);
 }
 
 /* 4. Botones de Solo Icono (Icon Buttons) */
@@ -829,7 +830,7 @@ body {
   min-height: var(--control-height-md, 38px);
   border-radius: var(--radius-sm, 8px);
   border: 1px solid var(--color-border);
-  background-color: var(--color-surface-secondary);
+  background-color: var(--color-surface);
   color: var(--color-text);
   font-family: var(--font-sans);
   font-size: var(--control-font-size-md, 0.84rem);
@@ -844,7 +845,7 @@ body {
 .theme-modal-dialog textarea {
   border-radius: var(--radius-sm, 8px);
   border: 1px solid var(--color-border);
-  background-color: var(--color-surface-secondary);
+  background-color: var(--color-surface);
   color: var(--color-text);
   font-family: var(--font-sans);
   font-size: var(--control-font-size-md, 0.84rem);
@@ -858,20 +859,22 @@ body {
     background-color var(--transition-fast);
 }
 
-.arcadia-modal-card input:hover,
-.arcadia-modal-card textarea:hover,
-.theme-modal-dialog input:hover,
-.theme-modal-dialog textarea:hover {
-  border-color: var(--color-text-secondary);
+.arcadia-modal-card input:hover:not(:focus),
+.arcadia-modal-card textarea:hover:not(:focus),
+.theme-modal-dialog input:hover:not(:focus),
+.theme-modal-dialog textarea:hover:not(:focus) {
+  border-color: var(--color-text-muted);
+  background-color: var(--color-field-hover);
 }
 
 .arcadia-modal-card input:focus,
 .arcadia-modal-card textarea:focus,
 .theme-modal-dialog input:focus,
 .theme-modal-dialog textarea:focus {
-  border-color: var(--color-border-focus);
+  border-color: var(--color-border);
   box-shadow: var(--focus-ring);
   outline: none;
+  background-color: var(--color-surface);
 }
 
 /* -----------------------------------------------------------------
@@ -899,9 +902,9 @@ body {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background-color: color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 18%, transparent);
+  background-color: color-mix(in oklab, var(--col-accent, var(--color-primary-light)) 18%, transparent);
   color: var(--col-accent, var(--color-primary-light));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--col-accent, var(--color-primary-light)) 25%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--col-accent, var(--color-primary-light)) 25%, transparent);
 }
 
 .col-action-badge svg {
@@ -988,13 +991,13 @@ body {
 /* Botón Destructivo Dinámico */
 .col-action-btn--delete {
   background-color: var(--state-danger-bg, rgba(200, 90, 84, 0.12));
-  border-color: color-mix(in srgb, var(--state-danger, #C85A54) 28%, transparent);
+  border-color: color-mix(in oklab, var(--state-danger, #C85A54) 28%, transparent);
   color: var(--state-danger, #C85A54);
 }
 
 .col-action-btn--delete:hover {
-  background-color: color-mix(in srgb, var(--state-danger, #C85A54) 18%, transparent);
-  border-color: color-mix(in srgb, var(--state-danger, #C85A54) 45%, transparent);
+  background-color: color-mix(in oklab, var(--state-danger, #C85A54) 18%, transparent);
+  border-color: color-mix(in oklab, var(--state-danger, #C85A54) 45%, transparent);
   color: var(--state-danger, #C85A54);
 }
 
@@ -1027,7 +1030,7 @@ body {
 
 .context-menu-floating {
   position: fixed;
-  background-color: color-mix(in srgb, var(--color-surface-elevated, var(--color-surface)) 96%, transparent);
+  background-color: color-mix(in oklab, var(--color-surface-elevated, var(--color-surface)) 96%, transparent);
   backdrop-filter: blur(12px) saturate(1.1);
   -webkit-backdrop-filter: blur(12px) saturate(1.1);
   border: 1px solid var(--color-border);
@@ -1105,7 +1108,7 @@ body {
 }
 
 .menu-action-btn--active {
-  background-color: color-mix(in srgb, var(--color-primary-light) 12%, transparent);
+  background-color: color-mix(in oklab, var(--color-primary-light) 12%, transparent);
 }
 
 .menu-action-btn--danger {
@@ -1114,7 +1117,7 @@ body {
 }
 
 .menu-action-btn--danger:hover {
-  background-color: color-mix(in srgb, var(--state-danger) 18%, transparent);
+  background-color: color-mix(in oklab, var(--state-danger) 18%, transparent);
   color: var(--state-danger);
 }
 
@@ -1142,7 +1145,7 @@ body {
   font-size: var(--text-2xs, 0.68rem);
   padding: 2px 6px;
   border-radius: var(--radius-full, 999px);
-  background: color-mix(in srgb, var(--color-primary-light) 14%, transparent);
+  background: color-mix(in oklab, var(--color-primary-light) 14%, transparent);
   color: var(--color-primary);
   font-weight: var(--weight-bold, 700);
   flex-shrink: 0;
@@ -1285,7 +1288,7 @@ body {
   width: 100%;
   min-height: 120px;
   box-sizing: border-box;
-  background-color: var(--color-surface-secondary);
+  background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm, 8px);
   padding: 10px var(--control-padding-x-md, 14px);
@@ -1303,14 +1306,16 @@ body {
   opacity: 0.8;
 }
 
-.note-margin-textarea:hover {
-  border-color: var(--color-text-secondary);
+.note-margin-textarea:hover:not(:focus) {
+  border-color: var(--color-text-muted);
+  background-color: var(--color-field-hover);
 }
 
 .note-margin-textarea:focus {
-  border-color: var(--color-border-focus);
+  border-color: var(--color-border);
   box-shadow: var(--focus-ring);
   outline: none;
+  background-color: var(--color-surface);
 }
 
 .note-margin-actions {
@@ -1557,14 +1562,20 @@ body {
   display: flex;
   flex-direction: column;
   gap: var(--space-md, 16px);
-  margin-bottom: var(--space-md, 16px);
+  margin-bottom: 0;
+}
+
+/* Modal vocabulario: compacto, sin espacios dobles (el gap de la tarjeta
+   ya separa cabecera, campos y acciones) */
+.vocab-modal-card .theme-modal-header {
+  margin-bottom: 0;
 }
 
 .vocab-modal-field {
   width: 100%;
   height: var(--control-height-md, 38px);
   min-height: var(--control-height-md, 38px);
-  background-color: var(--color-surface-secondary);
+  background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm, 8px);
   color: var(--color-text);
@@ -1583,14 +1594,16 @@ textarea.vocab-modal-field {
   resize: vertical;
 }
 
-.vocab-modal-field:hover {
-  border-color: var(--color-text-secondary);
+.vocab-modal-field:hover:not(:focus) {
+  border-color: var(--color-text-muted);
+  background-color: var(--color-field-hover);
 }
 
 .vocab-modal-field:focus {
-  border-color: var(--color-border-focus);
+  border-color: var(--color-border);
   box-shadow: var(--focus-ring);
   outline: none;
+  background-color: var(--color-surface);
 }
 
 .vocab-modal-field.textarea-def {
@@ -1675,7 +1688,7 @@ textarea.vocab-modal-field {
 
 .arcadia-modal-icon--danger {
   background-color: var(--state-danger-bg);
-  border-color: color-mix(in srgb, var(--state-danger) 28%, transparent);
+  border-color: color-mix(in oklab, var(--state-danger) 28%, transparent);
   color: var(--state-danger);
 }
 
@@ -1755,7 +1768,7 @@ textarea.vocab-modal-field {
 }
 
 .assign-item.selected {
-  background-color: color-mix(in srgb, var(--color-primary) 10%, var(--color-surface));
+  background-color: color-mix(in oklch, var(--color-primary) 10%, var(--color-surface));
   border-color: var(--color-primary);
 }
 
@@ -2001,7 +2014,7 @@ textarea.vocab-modal-field {
   display: none;
   font-size: var(--text-xs, 0.82rem);
   color: var(--color-text-secondary);
-  background: color-mix(in srgb, var(--color-primary-light) 8%, var(--color-surface-secondary));
+  background: color-mix(in oklch, var(--color-primary-light) 8%, var(--color-surface-secondary));
   border: 1px solid var(--color-primary-glow);
   border-radius: var(--radius-sm, 8px);
   padding: 12px 14px;

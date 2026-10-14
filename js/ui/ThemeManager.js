@@ -3,7 +3,7 @@
  * THEME MANAGER - CONTROLADOR DE TEMAS CSS Y CREADOR DE TEMAS PERSONALIZADOS
  * ============================================================================
  * Soporta Marino & Blanco, Amatista & Marfil, Oliva & Marfil, Clásico Claro,
- * Sepia & Café, Negro & Plateado y Creador de Temas Personalizados (Color Picker).
+ * Sepia & Café, Clásico Noche y Creador de Temas Personalizados (Color Picker).
  */
 
 export class ThemeManager {
@@ -13,7 +13,9 @@ export class ThemeManager {
     OLIVE_IVORY: 'olive-ivory',
     CLASSIC_LIGHT: 'classic-light',
     SEPIA_COFFEE: 'sepia-coffee',
-    NOIR_SILVER: 'noir-silver',
+    CLASSIC_NIGHT: 'classic-night',
+    // Alias legacy: noir-silver → classic-night
+    NOIR_SILVER: 'classic-night',
     CUSTOM: 'custom'
   };
 
@@ -88,9 +90,11 @@ export class ThemeManager {
     else if (themeName === 'enchanted-forest' || themeName === 'mint' || themeName === 'olive-green' || themeName === 'sage-cream') themeName = ThemeManager.THEMES.OLIVE_IVORY;
     // light → classic-light (nuevo nombre del tema por defecto)
     else if (themeName === 'light') themeName = ThemeManager.THEMES.CLASSIC_LIGHT;
-    // oscuros cálidos y fríos → noir-silver (único oscuro)
-    else if (themeName === 'serene-fog' || themeName === 'wine-poetry' || themeName === 'wine' || themeName === 'antique-pink' || themeName === 'toasted-ash') themeName = ThemeManager.THEMES.NOIR_SILVER;
-    else if (themeName === 'abyss-dark' || themeName === 'mystic-night' || themeName === 'deep-twilight' || themeName === 'system' || themeName === 'night-ink') themeName = ThemeManager.THEMES.NOIR_SILVER;
+    // noir-silver legacy → classic-night (opuesto a classic-light, negro & blanco)
+    else if (themeName === 'noir-silver') themeName = ThemeManager.THEMES.CLASSIC_NIGHT;
+    // oscuros cálidos y fríos → classic-night (único oscuro)
+    else if (themeName === 'serene-fog' || themeName === 'wine-poetry' || themeName === 'wine' || themeName === 'antique-pink' || themeName === 'toasted-ash') themeName = ThemeManager.THEMES.CLASSIC_NIGHT;
+    else if (themeName === 'abyss-dark' || themeName === 'mystic-night' || themeName === 'deep-twilight' || themeName === 'system' || themeName === 'night-ink') themeName = ThemeManager.THEMES.CLASSIC_NIGHT;
 
     const knownThemes = new Set([
       ThemeManager.THEMES.NAVY_WHITE,
@@ -98,7 +102,7 @@ export class ThemeManager {
       ThemeManager.THEMES.OLIVE_IVORY,
       ThemeManager.THEMES.CLASSIC_LIGHT,
       ThemeManager.THEMES.SEPIA_COFFEE,
-      ThemeManager.THEMES.NOIR_SILVER,
+      ThemeManager.THEMES.CLASSIC_NIGHT,
       ThemeManager.THEMES.CUSTOM
     ]);
 
@@ -207,7 +211,7 @@ export class ThemeManager {
       'olive-ivory': { bg: '#F0F1EC', surface: '#FAFAF6', dark: false },
       'classic-light': { bg: '#F1F1F2', surface: '#FAFAFA', dark: false },
       'sepia-coffee': { bg: '#F3F0EA', surface: '#FBFAF7', dark: false },
-      'noir-silver': { bg: '#101214', surface: '#17191C', dark: true }
+      'classic-night': { bg: '#000000', surface: '#0A0A0A', dark: true }
     };
 
     let current = themeColors[themeName] || themeColors['classic-light'];

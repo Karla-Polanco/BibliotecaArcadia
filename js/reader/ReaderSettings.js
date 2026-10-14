@@ -479,8 +479,9 @@ export class ReaderSettings {
     if (themeName === 'clear-sky' || themeName === 'classic-ivory' || themeName === 'cozy-brown') themeName = 'sepia-coffee';
     if (themeName === 'enchanted-forest' || themeName === 'mint' || themeName === 'olive-green' || themeName === 'sage-cream') themeName = 'olive-ivory';
     if (themeName === 'light') themeName = 'classic-light';
-    if (themeName === 'serene-fog' || themeName === 'wine-poetry' || themeName === 'wine' || themeName === 'antique-pink' || themeName === 'toasted-ash') themeName = 'noir-silver';
-    if (themeName === 'abyss-dark' || themeName === 'mystic-night' || themeName === 'deep-twilight' || themeName === 'night-ink') themeName = 'noir-silver';
+    if (themeName === 'noir-silver') themeName = 'classic-night';
+    if (themeName === 'serene-fog' || themeName === 'wine-poetry' || themeName === 'wine' || themeName === 'antique-pink' || themeName === 'toasted-ash') themeName = 'classic-night';
+    if (themeName === 'abyss-dark' || themeName === 'mystic-night' || themeName === 'deep-twilight' || themeName === 'night-ink') themeName = 'classic-night';
 
     if (themeName === 'navy-white') {
       return {
@@ -522,12 +523,12 @@ export class ReaderSettings {
         accent: '#5B5146'
       };
     }
-    if (themeName === 'noir-silver') {
+    if (themeName === 'classic-night') {
       return {
-        bg: '#14171A',
-        text: '#D9DDE1',
+        bg: '#000000',
+        text: '#FFFFFF',
         heading: '#FFFFFF',
-        accent: '#E2E5E8'
+        accent: '#FFFFFF'
       };
     }
     if (themeName === 'pergamino') {

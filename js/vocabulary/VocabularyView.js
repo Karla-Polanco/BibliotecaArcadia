@@ -65,7 +65,7 @@ export class VocabularyView {
         <div class="header-card-top">
           <div class="header-card-brand-group">
             <div class="header-card-icon-box header-card-icon-box--vocab">
-              <svg class="icon-lg" aria-hidden="true"><use href="./assets/icons/icons.svg#icon-library"></use></svg>
+              <svg class="icon-lg" aria-hidden="true"><use href="./assets/icons/icons.svg#vocabulary"></use></svg>
             </div>
             <div class="header-card-text">
               <span class="panel-category-tag">CUADERNO LÉXICO</span>
@@ -94,7 +94,7 @@ export class VocabularyView {
         ${filtered.length === 0 ? `
           <div class="library-empty-state">
             <div class="empty-state-icon">
-              <svg class="icon-lg color-primary-light" aria-hidden="true"><use href="./assets/icons/icons.svg#icon-library"></use></svg>
+              <svg class="icon-lg color-primary-light" aria-hidden="true"><use href="./assets/icons/icons.svg#vocabulary"></use></svg>
             </div>
             <h3 class="empty-state-title">${this.searchQuery ? 'Sin resultados' : 'Tu cuaderno está vacío'}</h3>
             <p class="empty-state-desc">
@@ -288,8 +288,8 @@ export class VocabularyView {
     overlay.className = 'arcadia-modal-overlay';
 
     overlay.innerHTML = `
-      <div class="arcadia-modal-card arcadia-modal-card--md">
-        <div class="theme-modal-header mb-3">
+      <div class="arcadia-modal-card arcadia-modal-card--md vocab-modal-card">
+        <div class="theme-modal-header">
           <div>
             <h2 class="theme-modal-title">${isEditing ? 'Editar palabra' : 'Añadir palabra al vocabulario'}</h2>
             <p class="theme-modal-subtitle">${isEditing ? 'Modifica los campos y guarda los cambios.' : 'Completa los campos para agregar un nuevo término.'}</p>

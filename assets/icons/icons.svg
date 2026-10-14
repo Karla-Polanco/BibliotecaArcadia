@@ -108,6 +108,18 @@
   </symbol>
 
   <!-- ========================================================================== -->
+  <!-- Icono: Vocabulario (Libro con texto para el cuaderno léxico) -->
+  <!-- ========================================================================== -->
+  <symbol id="vocabulary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m5 8 6 6"/>
+    <path d="m4 14 6-6 2-3"/>
+    <path d="M2 5h12"/>
+    <path d="M7 2h1"/>
+    <path d="m22 22-5-10-5 10"/>
+    <path d="M14 18h6"/>
+  </symbol>
+
+  <!-- ========================================================================== -->
   <!-- Icono: Ajustes / ConfiguraciÃ³n (Engranaje de configuraciÃ³n de la aplicaciÃ³n) -->
   <!-- ========================================================================== -->
   <symbol id="settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -339,6 +351,17 @@
   <!-- ========================================================================== -->
   <symbol id="archive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M19 11H5m14 0a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2m14 0V9a2 2 0 0 0-2-2M5 11V9a2 2 0 0 1 2-2m0 0V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2M7 7h10"/>
+  </symbol>
+
+  <!-- ========================================================================== -->
+  <!-- Icono: Colecciones (Hojas apiladas para colecciones personales) -->
+  <!-- ========================================================================== -->
+  <symbol id="collections" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 5.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666" />
+    <path d="M4.012 7.26a2.005 2.005 0 0 0 -1.012 1.737v10c0 1.1 .9 2 2 2h10c.75 0 1.158 -.385 1.5 -1" />
+    <path d="M11 7h5" />
+    <path d="M11 10h6" />
+    <path d="M11 13h3" />
   </symbol>
 
   <!-- ========================================================================== -->

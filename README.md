@@ -46,7 +46,7 @@
   - *Oliva & Marfil (`olive-ivory`)*: Natural, sereno y atemporal.
   - *Clásico Claro (`classic-light`)*: Atemporal, universal y limpio.
   - *Sepia & Café (`sepia-coffee`)*: Cálido, literario y acogedor.
-  - *Negro & Plateado (`noir-silver`)*: Elegante, sobrio y refinado.
+  - *Clásico Noche (`classic-night`)*: Opuesto al Claro, negro y blanco puro.
   - *Tema Personalizado (`custom`)*: Creador interactivo con paleta dinámica (fondo, superficie, acento y texto).
 
 ### 4. ✍️ Motor de Selección, Resaltados, Subrayados y Notas

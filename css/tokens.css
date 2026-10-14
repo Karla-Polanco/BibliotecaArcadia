@@ -107,6 +107,10 @@
   --hover-scale: 1.01;
 
   --hover-surface: var(--color-surface-hover);
+  /* Hover de campos (input/select/textarea): gris sólido idéntico en
+     cualquier fondo. surface-hover es translúcido y se veía distinto
+     sobre la página gris vs. sobre el modal blanco. */
+  --color-field-hover: color-mix(in oklab, var(--color-surface) 94%, var(--color-text) 6%);
   --hover-border: var(--color-border);
   --hover-border-focus: var(--color-border-focus);
   --hover-shadow-sm: var(--shadow-sm);
@@ -140,7 +144,7 @@
      08. ACCESIBILIDAD, FOCO Y SELECCIÓN
      ---------------------------------------------------------- */
   --color-border-focus: var(--color-primary);
-  --focus-ring: 0 0 0 2px color-mix(in srgb, var(--color-primary) 18%, transparent);
+  --focus-ring: 0 0 0 2px color-mix(in oklab, var(--color-primary) 18%, transparent);
 
   /* ----------------------------------------------------------
      09. ESTADOS SEMÁNTICOS (por tema)

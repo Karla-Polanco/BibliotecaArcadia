@@ -837,9 +837,10 @@ export class ReaderView {
         if (v === 'clear-sky' || v === 'classic-ivory' || v === 'cozy-brown') return 'sepia-coffee';
         if (v === 'enchanted-forest' || v === 'mint' || v === 'olive-green') return 'olive-ivory';
         if (v === 'light') return 'classic-light';
-        if (v === 'serene-fog' || v === 'wine-poetry' || v === 'wine' || v === 'antique-pink' || v === 'toasted-ash') return 'noir-silver';
-        if (v === 'abyss-dark' || v === 'mystic-night' || v === 'deep-twilight' || v === 'night-ink') return 'noir-silver';
-        if (v === 'navy-white' || v === 'amethyst-ivory' || v === 'olive-ivory' || v === 'classic-light' || v === 'sepia-coffee' || v === 'noir-silver') return v;
+        if (v === 'noir-silver') return 'classic-night';
+        if (v === 'serene-fog' || v === 'wine-poetry' || v === 'wine' || v === 'antique-pink' || v === 'toasted-ash') return 'classic-night';
+        if (v === 'abyss-dark' || v === 'mystic-night' || v === 'deep-twilight' || v === 'night-ink') return 'classic-night';
+        if (v === 'navy-white' || v === 'amethyst-ivory' || v === 'olive-ivory' || v === 'classic-light' || v === 'sepia-coffee' || v === 'classic-night') return v;
         if (v === 'pergamino' || v === 'terracota' || v === 'moca' || v === 'ambar' || v === 'niebla' || v === 'pizarra' || v === 'melocoton') return v;
         return v;
       };

@@ -68,7 +68,8 @@ export function normalizeThemeName(t) {
   if (t === 'clear-sky' || t === 'classic-ivory' || t === 'cozy-brown') t = 'sepia-coffee';
   if (t === 'enchanted-forest' || t === 'mint' || t === 'olive-green' || t === 'sage-cream') t = 'olive-ivory';
   if (t === 'light') t = 'classic-light';
-  if (t === 'serene-fog' || t === 'wine-poetry' || t === 'wine' || t === 'antique-pink' || t === 'toasted-ash') t = 'noir-silver';
-  if (t === 'abyss-dark' || t === 'mystic-night' || t === 'deep-twilight' || t === 'night-ink' || t === 'system') t = 'noir-silver';
+  if (t === 'serene-fog' || t === 'wine-poetry' || t === 'wine' || t === 'antique-pink' || t === 'toasted-ash') t = 'classic-night';
+  if (t === 'abyss-dark' || t === 'mystic-night' || t === 'deep-twilight' || t === 'night-ink' || t === 'system') t = 'classic-night';
+  if (t === 'noir-silver') t = 'classic-night';
   return t;
 }

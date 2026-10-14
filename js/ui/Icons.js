@@ -44,6 +44,11 @@ export const Icons = {
   // 12. Leer / Libro
   BOOK: `<svg class="btn-icon-svg" aria-hidden="true"><use href="./assets/icons/icons.svg#book"></use></svg>`,
 
+  // 13. Colecciones (Hojas apiladas)
+  COLLECTIONS: `<svg class="btn-icon-svg" aria-hidden="true"><use href="./assets/icons/icons.svg#collections"></use></svg>`,
+
+  // 14. Vocabulario (Libro con texto)
+  VOCABULARY: `<svg class="btn-icon-svg" aria-hidden="true"><use href="./assets/icons/icons.svg#vocabulary"></use></svg>`,
   // 13. Fuego / Racha (llama multicolor días seguidos)
   FIRE: `<svg class="icon-md" aria-hidden="true"><use href="./assets/icons/icons.svg#fire"></use></svg>`,
 
